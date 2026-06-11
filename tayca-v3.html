@@ -2460,7 +2460,7 @@ document.addEventListener('click', function(e){
   const speakEl = e.target.closest('[data-speak]');
   if(speakEl){ speak(speakEl.dataset.speak, speakEl.dataset.slow==='1', speakEl.dataset.gender||''); return; }
   const starEl = e.target.closest('[data-star]');
-  if(starEl){ toggleStar(starEl.dataset.star, starEl.dataset.stype||'word', starEl.dataset.th||'', starEl.dataset.ro||'', starEl.dataset.tr||'', starEl); return; }
+  if(starEl){ toggleStar(starEl.dataset.star, starEl.dataset.stype||'word', starEl.dataset.th||'', starEl.dataset.ro||'', starEl.dataset.tr||'', starEl, starEl.dataset.bd||''); return; }
   const wordEl = e.target.closest('[data-word-idx]');
   if(wordEl){ showWordIdx(parseInt(wordEl.dataset.wordIdx)); return; }
   const gramEl = e.target.closest('[data-gram]');
@@ -2501,9 +2501,13 @@ function clearDialogHighlight(di){
 }
 
 // =================== STAR ===================
-function toggleStar(key, type, th, ro, tr, el){
+function toggleStar(key, type, th, ro, tr, el, bd){
   if(starred[key]){ delete starred[key]; }
-  else { starred[key]={type,th,ro,tr}; }
+  else {
+    const obj = {type,th,ro,tr};
+    if(bd){ try{ obj.bd = typeof bd==='string'?JSON.parse(bd):bd; }catch(e){} }
+    starred[key] = obj;
+  }
   saveStars();
   if(el) el.classList.toggle('on', !!starred[key]);
   if(document.getElementById('list-view').classList.contains('active')) renderList();
@@ -2594,7 +2598,7 @@ function buildLessonHTML(L, meta){
         <div class="ex-actions">
           <button class="sm-abtn" data-speak="${esc(e.th||e.ro)}" data-slow="0">🔊</button>
           <button class="sm-abtn" data-speak="${esc(e.th||e.ro)}" data-slow="1">🐢</button>
-          <button class="sbtn ${starred[esk]?'on':''}" data-star="${esc(esk)}" data-stype="example" data-th="${esc(e.th||'')}" data-ro="${esc(e.ro)}" data-tr="${esc(e.tr)}">⭐</button>
+          <button class="sbtn ${starred[esk]?'on':''}" data-star="${esc(esk)}" data-stype="example" data-th="${esc(e.th||'')}" data-ro="${esc(e.ro)}" data-tr="${esc(e.tr)}" data-bd="${esc(JSON.stringify(e.bd||[]))}">⭐</button>
         </div>
       </div>`;
     }).join('');
@@ -2679,7 +2683,7 @@ function buildLessonHTML(L, meta){
           <div class="dline-actions">
             <button class="sm-abtn" data-speak="${esc(l.th||l.ro)}" data-slow="0" data-gender="${l.s.toLowerCase()==='ali'?'m':'f'}">🔊</button>
             <button class="sm-abtn" data-speak="${esc(l.th||l.ro)}" data-slow="1" data-gender="${l.s.toLowerCase()==='ali'?'m':'f'}">🐢</button>
-            <button class="sbtn ${starred[dsk]?'on':''}" data-star="${esc(dsk)}" data-stype="dialogue" data-th="${esc(l.th||'')}" data-ro="${esc(l.ro)}" data-tr="${esc(l.tr)}">⭐</button>
+            <button class="sbtn ${starred[dsk]?'on':''}" data-star="${esc(dsk)}" data-stype="dialogue" data-th="${esc(l.th||'')}" data-ro="${esc(l.ro)}" data-tr="${esc(l.tr)}" data-bd="${esc(JSON.stringify(l.bd||[]))}">⭐</button>
           </div>
         </div>`;
       }).join('')}
@@ -3104,7 +3108,13 @@ function renderList(){
     document.getElementById('list-container').innerHTML='<div style="text-align:center;padding:40px;color:#bbb;">⭐<br><br>Henuz yildizlanan sozuk yok.</div>';
     return;
   }
-  document.getElementById('list-container').innerHTML = items.map(([k,v])=>`
+  document.getElementById('list-container').innerHTML = items.map(([k,v])=>{
+    // bd varsa analiz butonu göster
+    const hasBd = v.bd && Array.isArray(v.bd) && v.bd.length > 0;
+    const bdJson = hasBd ? esc(JSON.stringify(v.bd)) : '';
+    const thEsc = esc(v.th||'');
+    const trEsc = esc(v.tr||'');
+    return `
     <div class="word-card">
       <div class="word-top">
         <div>
@@ -3113,15 +3123,14 @@ function renderList(){
           <div class="word-tr">${v.tr}</div>
         </div>
         <div class="word-btns">
-          <button class="sbtn on" data-star="${esc(k)}" data-stype="${v.type}" data-th="${esc(v.th||'')}" data-ro="${esc(v.ro)}" data-tr="${esc(v.tr)}">⭐</button>
+          <button class="sbtn on" data-star="${esc(k)}" data-stype="${v.type}" data-th="${thEsc}" data-ro="${esc(v.ro)}" data-tr="${trEsc}">⭐</button>
           <button class="abtn" data-speak="${esc(v.th||v.ro)}" data-slow="0">🔊</button>
           <button class="abtn slow" data-speak="${esc(v.th||v.ro)}" data-slow="1">🐢</button>
         </div>
       </div>
-      <div style="font-size:10px;color:#0d9488;margin-top:4px;">
-        ${v.type==='word'?'📚 Sözcük':v.type==='example'?'💬 Örnek':v.type==='dialogue'?'👥 Diyalog':'📖 Gramer'}
-      </div>
-    </div>`).join('');
+      ${hasBd ? `<button onclick='openGramModal(${JSON.stringify(v.th||"")},${JSON.stringify(v.tr||"")},${JSON.stringify(v.bd)})' style="margin-top:6px;background:none;border:1px solid #e0f2f1;border-radius:6px;padding:3px 10px;font-size:11px;color:#0d9488;cursor:pointer;">📖 Cümle Analizi</button>` : ''}
+    </div>`;
+  }).join('');
 }
 
 // =================== MODAL ===================
