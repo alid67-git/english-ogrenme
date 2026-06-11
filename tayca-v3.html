@@ -48,6 +48,12 @@ header{background:linear-gradient(135deg,#0d9488,#06b6d4);color:white;padding:14
 
 .pfill{height:100%;width:5%;background:white;border-radius:99px;transition:.3s;}
 .hbtn{background:rgba(255,255,255,.2);color:white;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:15px;}
+/* TEST MODÜLİ */
+.test-cat-btn{padding:6px 12px;background:white;border:1.5px solid #e0e0e0;border-radius:20px;cursor:pointer;font-size:12px;font-weight:700;color:#666;transition:.15s;}
+.test-cat-btn.active{background:#e0f2f1;border-color:#0d9488;color:#0d9488;}
+.test-mode-btn{padding:12px 8px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;transition:.15s;text-align:center;}
+.test-mode-btn.active{background:#f0fdf9;border-color:#0d9488;}
+
 .vbadge{font-size:10px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.04em;white-space:nowrap;margin-right:2px;}
 
 /* NAV */
@@ -284,7 +290,7 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.08</span>
+  <span class="vbadge" id="app-version">v3.12</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -301,7 +307,11 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 <main>
   <div id="lessons-view" class="view active"><div id="lesson-list-wrap"></div></div>
   <div id="detail-view" class="view"><div id="detail-content"></div></div>
-  <div id="test-view" class="view"><div style="text-align:center;padding:60px 20px;color:#bbb;"><div style="font-size:48px;margin-bottom:12px">📝</div>Test modülü yakında</div></div>
+  <div id="test-view" class="view">
+    <div id="test-content" style="max-width:520px;margin:0 auto;padding:12px 14px 80px;">
+      <!-- renderTestView() buraya yazar -->
+    </div>
+  </div>
   <div id="translate-view" class="view"><div style="text-align:center;padding:60px 20px;color:#bbb;"><div style="font-size:48px;margin-bottom:12px">🌐</div>Çeviri modülü yakında</div></div>
   <div id="list-view" class="view">
     <h2>⭐ Yıldızladığım Sözcükler</h2>
@@ -451,7 +461,7 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
         </div>
         <div class="help-tab-row">
           <span class="htag" style="background:#f3e5f5;color:#4a148c;">👥 Diyalog</span>
-          <span>Ali (erkek) ve Nada (kadın) arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.</span>
+          <span>Ali ve Nada (kadın) arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.</span>
         </div>
         <div class="help-tab-row">
           <span class="htag" style="background:#e8eaf6;color:#283593;">🎧 Dinleme</span>
@@ -591,6 +601,22 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
+            <div class="changelog-ver">v3.12</div>
+            <div class="changelog-desc">Test modülü: ders bazlı test, konu filtresi (Zamirler/İfadeler/Gramer), kart modu (Flashcard/MC/Karma), yön seçimi, sonuç ekranı</div>
+          </div>
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.11</div>
+            <div class="changelog-desc">Gramer 9 ozne ornekleri 12 ye cikarildi (her zamirden 2er) · Quiz 20 soruya yukseltildi: 6 soru ozne odakli</div>
+          </div>
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.10</div>
+            <div class="changelog-desc">Ders 1 Sözcükler sekmesine kişi zamirleri tablosu · Gramer 9. kural: Zamirler + örnekler · khrap/kha tekrarları temizlendi · chan/rao/khao kelimeleri eklendi</div>
+          </div>
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.09</div>
+            <div class="changelog-desc">khrap/kha tekrarları kaldırıldı · chan (w15), rao (w16), khao (w17) kelimeleri eklendi · (erkek)/(kadın) etiketleri temizlendi · w2 yapısal hata düzeltildi</div>
+          </div>
+          <div class="changelog-item">
             <div class="changelog-ver">v3.08</div>
             <div class="changelog-desc">Sekme ziyaret silme: uzun bas yerine çift tıklama sistemi</div>
           </div>
@@ -667,7 +693,7 @@ const LESSONS_META = [
 // =================== VERİ: DERS 1 (L1+L2 birleşik) ===================
 const L1 = {
   words:[
-    {id:'w1',th:'',ro:'sa-wat-dee-khrap',tr:'Merhaba (erkek)',
+    {id:'w1',th:'',ro:'sa-wat-dee-khrap',tr:'Merhaba',
      tip:'Sondaki -p sesi agizda yutulur, disar cikmiyor.',
      ctx:'Erkek olarak sen hep bu formu kullan. Her durumda gecerli.',
      examples:[
@@ -681,16 +707,6 @@ const L1 = {
       {th:' ',ro:'wan-nii-pen-yang-rai',tr:'bugun nasil?',bd:[{ro:'wan-nii',tr:'bugün',role:'S - Ozne'},{ro:'pen-yang-rai',tr:'nasıl',role:'V - Yuklem'}]},
       {th:' ',ro:'choern-khao-maa',tr:'buyurun iceri.',bd:[{ro:'choern-khao',tr:'gir',role:'V - Yuklem'},{ro:'maa',tr:'gel',role:'V - Yuklem'}]},
       {th:' ',ro:'khob-khun-tii-maa',tr:'geldiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'}]},
-     ]},
-    {id:'w2',th:'',ro:'sa-wat-dee-kha',tr:'Merhaba (kadın)',
-     tip:'Duser ton ile biter. Uzun ve acik KHAaaa sesi.',
-     ctx:'Kadin konusmacilar kullanir. Duydugunuzda sen savasdee-KHRAP ile cevap verirsin.',
-     examples:[
-      {th:' ',ro:'yin-dee-ton-rap',tr:'hos geldiniz. (kadin)',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'ton-rap',tr:'selamlamak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:' ',ro:'khun-pen-khrai',tr:'sen kimsin? (kadin)',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'pen',tr:'olmak',role:'V - Yuklem'},{ro:'khrai',tr:'kim',role:'Soru/Olumsuz'}]},
-      {th:' ',ro:'sa-bai-dee-mai-kha',tr:'nasilsin? (kadin soru)',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:' ',ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'tanistigima memnun. (kadin)',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:' ',ro:'khob-khun-tii-maa-kha',tr:'geldiginiz icin tesekkurler. (kadin)',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
      ]},
     {id:'w3',th:'',ro:'khob-khun',tr:'Teşekkür ederim',
      tip:'KHOBp kisaltilir; KHUN uzun ve yumusak.',
@@ -711,8 +727,7 @@ const L1 = {
      tip:'YIN yuksek ton; DEE orta; ruu-jak hizli soylenecek.',
      ctx:'Selamlasmadan hemen sonra ilk tanismada soylenir.',
      examples:[
-      {th:'',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun. (erkek)',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'Tanistigima memnun. (kadin)',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
+      {th:'',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
       {th:'',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'chen-kan',tr:'aynı şekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
       {th:'',ro:'pom-yin-dee-tii-dai-ruu-jak-khun-maak-khrap',tr:'Seninle tanismak cok guzeldi.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak-khun-maak',tr:'seninle tanışmaktan çok',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
       {th:'',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanisma firsati bulduğuma memnunum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
@@ -723,15 +738,14 @@ const L1 = {
      tip:'MAI yuksek ton; PEN orta; RAI yuksek. Uc farkli ton birada!',
      ctx:'Ozur dilenince veya sikinti olunca. No worries gibi rahatca kullanilir.',
      examples:[
-      {th:'',ro:'mai-pen-rai-khrap',tr:'Sorun degil. (erkek)',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'mai-pen-rai-kha',tr:'Sorun degil. (kadin)',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
+      {th:'',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
       {th:' ',ro:'mai-pen-rai mai-tong-pen-huang-khrap',tr:'Sorun degil, endiselenme.',bd:[{ro:'mai-pen-rai',tr:'mai-pen-rai',role:'Kelime'},{ro:'mai-tong-pen-huang-khrap',tr:'mai-tong-pen-huang-khrap',role:'Kelime'}]},
       {th:' ',ro:'mai-pen-rai man-koet-kheun-dai',tr:'Sorun degil, olur boyle.',bd:[{ro:'mai-pen-rai',tr:'mai-pen-rai',role:'Kelime'},{ro:'man-koet-kheun-dai',tr:'man-koet-kheun-dai',role:'Kelime'}]},
       {th:' ',ro:'o-kee-khrap mai-pen-rai',tr:'Tamam, bir sey degil.',bd:[{ro:'o-kee-khrap',tr:'o-kee-khrap',role:'Kelime'},{ro:'mai-pen-rai',tr:'mai-pen-rai',role:'Kelime'}]},
       {th:' ',ro:'mai-pen-rai-khrap koet-kheun-kap-thuk-khon',tr:'Sorun degil, herkese olur.',bd:[{ro:'mai-pen-rai-khrap',tr:'mai-pen-rai-khrap',role:'Kelime'},{ro:'koet-kheun-kap-thuk-khon',tr:'koet-kheun-kap-thuk-khon',role:'Kelime'}]},
       {th:' ',ro:'mai-pen-rai-khrap pom-khao-jai',tr:'Sorun degil, anliyorum.',bd:[{ro:'mai-pen-rai-khrap',tr:'mai-pen-rai-khrap',role:'Kelime'},{ro:'pom-khao-jai',tr:'pom-khao-jai',role:'Kelime'}]},
      ]},
-    {id:'w6',th:'',ro:'khrap',tr:'Kibar eki (erkek)',
+    {id:'w6',th:'',ro:'khrap',tr:'Kibar eki',
      tip:'-p sesi agizda yutulur. Hizli konusmada KHAP da duyarsın.',
      ctx:'Her cumle sonuna ekle. Phuket\'te bu eki kullanmayan yabanci kaba gorunur.',
      examples:[
@@ -747,24 +761,8 @@ const L1 = {
       {th:'',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
       {th:'',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
      ]},
-    {id:'w7',th:'',ro:'kha',tr:'Kibar eki (kadın)',
-     tip:'Dusen ton ile KHAaaa. Soru cumlelerinde yukselen ton olur.',
-     ctx:'Kadinlarin kibar eki. Duydugunuzda sen krap ile cevap verirsin.',
-     examples:[
-      {th:'',ro:'chai-kha',tr:'Evet. (kadin)',bd:[{ro:'chai',tr:'evet',role:'Onay'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'mai-kha',tr:'Hayir. (kadin)',bd:[{ro:'mai',tr:'hayır',role:'Olumsuz'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-kha',tr:'Tesekkur ederim. (kadin)',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'dai-kha',tr:'Olur. (kadin)',bd:[{ro:'dai',tr:'olur',role:'Modal'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'mai-pen-rai-kha',tr:'Sorun degil. (kadin)',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khao-jai-kha',tr:'Anliyorum. (kadin)',bd:[{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'o-kee-kha',tr:'Tamam. (kadin)',bd:[{ro:'o-kee',tr:'tamam',role:'Onay'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khor-thot-kha',tr:'Ozur dilerim. (kadin)',bd:[{ro:'khor-thot',tr:'özür dile',role:'V - Yuklem'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'Tanistigima memnun. (kadin)',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'ror-sak-khru-na-kha',tr:'Bir dakika bekle. (kadin)',bd:[{ro:'ror',tr:'bekle',role:'V - Yuklem'},{ro:'sak-khru',tr:'biraz',role:'Zaman'},{ro:'na',tr:'lütfen',role:'Edat'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:'',ro:'mai-saap-kha',tr:'Bilmiyorum. (kadin)',bd:[{ro:'mai',tr:'yok',role:'Olumsuz'},{ro:'saap',tr:'bilmek',role:'V - Yuklem'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-     ]},
     // --- L2 kelimeleri ---
-    {id:'w8',th:'ผม',ro:'pom',tr:'Ben (erkek)',
+    {id:'w8',th:'ผม',ro:'pom',tr:'Ben',
      tip:'Erkek zamiri. Kadin icin "chan" kullanilir.',
      ctx:'Her cumleye pom ile baslamayı aliskanlık yap.',
      examples:[
@@ -829,8 +827,32 @@ const L1 = {
      examples:[
        {th:'ผมอายุ 35 ปีครับ',ro:'pom ayu 35 pii khrap',tr:'35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'35 pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
        {th:'คุณอายุเท่าไรครับ',ro:'khun ayu thao-rai khrap',tr:'Kac yasindasiniz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'ayu',tr:'yasindasiniz',role:'V - Yuklem'},{ro:'thao-rai',tr:'kac',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'น้องอายุสิบเอ็ดปีค่ะ',ro:'nong ayu sip-et pii kha',tr:'Kiz kardesi 11 yasinda.',bd:[{ro:'nong',tr:'kucuk kardes',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'sip-et pii',tr:'11 yas',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {th:'พี่อายุสามสิบปีแล้วค่ะ',ro:'phii ayu saam-sip pii laeo kha',tr:'Agabey 30 yasina girdi.',bd:[{ro:'phii',tr:'buyuk kardes',role:'S - Ozne'},{ro:'ayu',tr:'yas',role:'V - Yuklem'},{ro:'saam-sip pii',tr:'30 yas',role:'O - Nesne'},{ro:'laeo',tr:'artik',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {th:'ผมอายุสามสิบห้าปีครับ',ro:'pom ayu saam-sip-haa pii khrap',tr:'35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'saam-sip-haa pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+     ]},
+  {id:'w15',th:'ฉัน',ro:'chan',tr:'Ben (kadın)',
+     tip:'Kadin konusmacilar pom yerine chan der. Erkekler pom kullanir.',
+     ctx:'Günlük konuşmada kadınlar her zaman chan kullanır.',
+     examples:[
+       {th:'ฉันชื่ออะไร',ro:'chan chue a-rai',tr:'Benim adım ne?',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'chue',tr:'adı',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'}]},
+       {th:'ฉันมาจากตุรกีค่ะ',ro:'chan maa jaak tur-gii kha',tr:'Türkiyeden geliyorum.',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'tur-gii',tr:'Türkiye',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {th:'ฉันเข้าใจค่ะ',ro:'chan khao-jai kha',tr:'Anlıyorum.',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {th:'ฉันอยู่ที่ภูเก็ตค่ะ',ro:'chan yuu thii phu-ket kha',tr:'Phuket te yasıyorum.',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'yuu thii',tr:'yasıyorum',role:'V - Yuklem'},{ro:'phu-ket',tr:'Phuket',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+     ]},
+  {id:'w16',th:'เรา',ro:'rao',tr:'Biz / Ben (samimi)',
+     tip:'"Rao" hem "biz" hem de arkadaşça "ben" anlamına gelir.',
+     ctx:'Arkadaşlar arasında pom/chan yerine rao kullanmak çok yaygın ve samimi.',
+     examples:[
+       {th:'เราไปด้วยกันครับ',ro:'rao pai duay-kan khrap',tr:'Birlikte gidelim.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'pai',tr:'gitmek',role:'V - Yuklem'},{ro:'duay-kan',tr:'birlikte',role:'Vurgu'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'เราเป็นเพื่อนกัน',ro:'rao pen phuean-kan',tr:'Biz arkadaşız.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'pen',tr:'olmak',role:'V - Yuklem'},{ro:'phuean-kan',tr:'arkadaşlar',role:'O - Nesne'}]},
+       {th:'เราชอบภูเก็ตมาก',ro:'rao chop phu-ket maak',tr:'Phuket cok seviyoruz.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'chop',tr:'sevmek',role:'V - Yuklem'},{ro:'phu-ket maak',tr:'Phuket çok',role:'O - Nesne'}]},
+     ]},
+  {id:'w17',th:'เขา',ro:'khao',tr:'O (o kişi)',
+     tip:'"Khao" hem erkek hem kadin icin kullanilir. Thaice cinsiyet ayrimi yok.',
+     ctx:'Aynı kelime hem "he" hem "she" anlamına gelir.',
+     examples:[
+       {th:'เขาชื่ออะไรครับ',ro:'khao chue a-rai khrap',tr:'Onun adı ne?',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'chue',tr:'adı',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'เขามาจากไหนครับ',ro:'khao maa jaak nai khrap',tr:'O nereden geliyor?',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyor',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'เขาพูดภาษาไทยได้',ro:'khao phut pha-saa-thai dai',tr:'O Tayca konuşabiliyor.',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'phut',tr:'konuşmak',role:'V - Yuklem'},{ro:'pha-saa-thai',tr:'Tayca',role:'O - Nesne'},{ro:'dai',tr:'yapabiliyor',role:'Aspect'}]},
      ]},
   ],
 
@@ -867,13 +889,12 @@ const L1 = {
       ]
     },
     {
-      title:'2. Kibar Ekler: krap (erkek) / kha (kadin)',
-      formula:'[Herhangi bir cumle] + KRAP (erkek) veya KHA (kadin)',
+      title:'2. Kibar Ekler: krap / kha (kadin)',
+      formula:'[Herhangi bir cumle] + KRAP veya KHA (kadin)',
       explain:'Tayland\'da kibar konusmak cok onemlidir. Her cumle sonuna bu ekler gelir. Erkekler HEP krap, kadinlar HEP kha kullanir. Bu ek hem saygi hem cinsiyet gostergesidir.',
       tips:['Krap: erkekler icin, -p sesi agizda yutulur','Kha: kadinlar icin, dusen ton ile uzun aa sesi','Ka (soru): kadinlar soru cumlelerinde kha yerine ka kullanir'],
       examples:[
-        {th:'ขอบคุณครับ',ro:'khob-khun khrap',tr:'Tesekkur ederim. (erkek)',bd:[{ro:'khob-khun',tr:'tesekkur',role:'Fiil'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-        {th:'ขอบคุณค่ะ',ro:'khob-khun kha',tr:'Tesekkur ederim. (kadin)',bd:[{ro:'khob-khun',tr:'tesekkur',role:'Fiil'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+        {th:'ขอบคุณครับ',ro:'khob-khun khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'Fiil'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
         {th:'ใช่ครับ',ro:'chai khrap',tr:'Evet. (erkek kibar)',bd:[{ro:'chai',tr:'evet / dogru',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
         {th:'ได้ครับ',ro:'dai khrap',tr:'Olur. Yapabilirim.',bd:[{ro:'dai',tr:'olur / yapabilir',role:'Modal'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
         {th:'สบายดีไหมคะ',ro:'sa-bai-dee mai kha',tr:'Iyi misin? (kadin soru)',bd:[{ro:'sa-bai-dee',tr:'iyi / rahat',role:'Sifat'},{ro:'mai',tr:'soru eki',role:'Soru (SONDA)'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
@@ -936,7 +957,7 @@ const L1 = {
       title:'7. Sahiplik: Khong (ait olan)',
       formula:'ISIM + KHONG + SAHIP',
       explain:'"Khong" = ait, ...nin. Turkcedeki iyelik eki gibi ama ayri bir sozcuk olarak kullanilir.',
-      tips:['khong pom = benim (erkek)','khong chan = benim (kadin)','khong khun = senin','khong khao = onun','khong rao = bizim'],
+      tips:['khong pom = benim','khong chan = benim (kadin)','khong khun = senin','khong khao = onun','khong rao = bizim'],
       examples:[
         {th:'นั่นของผมครับ',ro:'nan khong pom khrap',tr:'O benim.',bd:[{ro:'nan',tr:'o',role:'Kelime'},{ro:'khong',tr:'ait',role:'Kelime'},{ro:'pom',tr:'ben',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
         {th:'รถของคุณอยู่ที่ไหน',ro:'rot khong khun yuu tii-nai',tr:'Arabin nerede?',bd:[{ro:'rot',tr:'araba',role:'Kelime'},{ro:'khong khun',tr:'senin',role:'Kelime'},{ro:'yuu tii-nai',tr:'nerede',role:'Kelime'}]},
@@ -956,10 +977,36 @@ const L1 = {
         {th:'วันนี้ร้อนกว่าเมื่อวานครับ',ro:'wan-nii ron kwaa meua-waan khrap',tr:'Bugun dunden daha sicak.',bd:[{ro:'wan-nii',tr:'bugun',role:'Kelime'},{ro:'ron kwaa',tr:'daha sicak',role:'Kelime'},{ro:'meua-waan',tr:'dun',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
       ]
     },
+    {title:'9. Kisi Zamirleri — Ben / Sen / O / Biz / Siz / Onlar',
+     formula:'[Ozne] + [Yuklem] + [Nesne/Tamamlayici]',
+     explain:'Thai zamirlerinde cinsiyet ayrimi yoktur (o = hem he hem she). Konusmacilik cinsiyeti kibar ekte belli olur: erkek khrap, kadin kha der. Ozne cogu zaman baglamdan anlasildiginda atlanabilir.',
+     tips:[
+       'Erkek: pom (ben) | Kadin: chan (ben)',
+       'Khun = sen/siz — kibar, yabanciya ve buyuklere',
+       'Khao = o — hem erkek hem kadin, cinsiyet farki yok',
+       'Rao = biz — ayrica samimi ortamda tek basina "ben" yerine de kullanilir',
+       'Phuak-khao = onlar — phuak (grup) + khao (o)',
+       'Ozne cogu zaman baglamdan anlasilinca atlanir: "Pai" = (Ben) gidiyorum',
+     ],
+     examples:[
+       {th:'ผมมาจากตุรกีครับ',ro:'pom maa jaak tur-gii khrap',tr:'Ben Turkiyeden geliyorum.',bd:[{ro:'pom',tr:'ben (erkek)',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'tur-gii',tr:'Turkiye',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'ผมอยู่ที่ภูเก็ตครับ',ro:'pom yuu thii phu-ket khrap',tr:'Ben Phuket te yasiyorum.',bd:[{ro:'pom',tr:'ben (erkek)',role:'S - Ozne'},{ro:'yuu thii',tr:'yasiyorum',role:'V - Yuklem'},{ro:'phu-ket',tr:'Phuket',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'ฉันทำงานที่นี่ค่ะ',ro:'chan tham-ngaan thii-nii kha',tr:'Ben burada calisiyorum.',bd:[{ro:'chan',tr:'ben (kadin)',role:'S - Ozne'},{ro:'tham-ngaan',tr:'calismak',role:'V - Yuklem'},{ro:'thii-nii',tr:'burada',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {th:'ฉันไม่เข้าใจค่ะ',ro:'chan mai khao-jai kha',tr:'Ben anlamiyorum.',bd:[{ro:'chan',tr:'ben (kadin)',role:'S - Ozne'},{ro:'mai',tr:'degil',role:'Soru/Olumsuz'},{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {th:'คุณชื่ออะไรครับ',ro:'khun chue a-rai khrap',tr:'Senin adin ne?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'คุณอยู่ที่นี่นานไหมครับ',ro:'khun yuu thii-nii naan mai khrap',tr:'Burada uzun suredir misin?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'yuu thii-nii',tr:'buradasin',role:'V - Yuklem'},{ro:'naan mai',tr:'uzun suredir mi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'เขาชื่ออะไรครับ',ro:'khao chue a-rai khrap',tr:'Onun adi ne?',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'เขาไม่ได้อยู่ที่นี่ครับ',ro:'khao mai dai yuu thii-nii khrap',tr:'O burada degil.',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'mai dai',tr:'degil',role:'Soru/Olumsuz'},{ro:'yuu thii-nii',tr:'burada',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'เราสบายดีครับ',ro:'rao sa-bai-dee khrap',tr:'Biz iyiyiz.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'sa-bai-dee',tr:'iyiyiz',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'เราไม่รู้จักเขาครับ',ro:'rao mai ruu-jak khao khrap',tr:'Biz onu tanımıyoruz.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'mai ruu-jak',tr:'tanimiyoruz',role:'V - Yuklem'},{ro:'khao',tr:'onu',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'พวกคุณมาจากไหนครับ',ro:'phuak-khun maa jaak nai khrap',tr:'Siz nereden geliyorsunuz?',bd:[{ro:'phuak-khun',tr:'siz',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorsunuz',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {th:'พวกเขาทำงานที่ภูเก็ตครับ',ro:'phuak-khao tham-ngaan thii phu-ket khrap',tr:'Onlar Phuket te calisiyor.',bd:[{ro:'phuak-khao',tr:'onlar',role:'S - Ozne'},{ro:'tham-ngaan',tr:'calismak',role:'V - Yuklem'},{ro:'thii phu-ket',tr:'Phuket te',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+     ]
+    },
   ],
 
   speaking:[
-    {task:'Selamlas (erkek)', th:'', ro:'sa-wat-dee-khrap', tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'selam',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Selamlas', th:'', ro:'sa-wat-dee-khrap', tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'selam',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Tesekkur et', th:'', ro:'khob-khun-khrap', tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Tanis', th:'', ro:'yin-dee-tii-dai-ruu-jak-khrap', tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'mutlu',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanismak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Ozur dile', th:'', ro:'khor-thot-khrap', tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dilerim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -977,45 +1024,35 @@ const L1 = {
     {title:'🏪 Markette Karsilasma',
      lines:[
        {s:'Ali',th:'สวัสดีครับ',ro:'sa-wat-dee-khrap',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Selam'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'สวัสดีค่ะ',ro:'sa-wat-dee-kha',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Selam'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
        {s:'Ali',th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ยินดีที่ได้รู้จักค่ะ',ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
      ]},
     {title:'🙏 Tesekkur Alisverisi',
      lines:[
        {s:'Ali',th:'ขอบคุณมากครับ',ro:'khob-khun-maak-khrap',tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'maak',tr:'çok',role:'Şiddetlendirme'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ไม่เป็นไรค่ะ',ro:'mai-pen-rai-kha',tr:'Bir sey degil.',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
        {s:'Ali',th:'คุณใจดีมากครับ',ro:'khun-jai-dee-maak-khrap',tr:'Cok iyi kalplisiniz.',bd:[{ro:'khun-jai',tr:'kalbiniz',role:'O - Nesne'},{ro:'dee-maak',tr:'çok iyi',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ขอบคุณค่ะ',ro:'khob-khun-kha',tr:'Tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
      ]},
     {title:'😅 Kazara Carpma',
      lines:[
        {s:'Ali',th:'ขอโทษครับ',ro:'khor-thot-khrap',tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'özür dile',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ไม่เป็นไรค่ะ',ro:'mai-pen-rai-kha',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
        {s:'Ali',th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'สบายดีไหมคะ',ro:'sa-bai-dee-mai-kha',tr:'Iyi misin?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
        {s:'Ali',th:'สบายดีครับ ขอบคุณ',ro:'sa-bai-dee-khrap khob-khun',tr:'Iyiyim, tesekkurler.',bd:[{ro:'sa-bai-dee-khrap',tr:'Iyiyim',role:'Kelime'},{ro:'khob-khun',tr:'tesekkurler',role:'Kelime'}]},
      ]},
     {title:'🤝 Is Yerinde Tanisma',
      lines:[
        {s:'Ali',th:'สวัสดีครับผมชื่ออาลีครับ',ro:'sa-wat-dee-khrap pom chue Ali khrap',tr:'Merhaba, benim adim Ali.',bd:[{ro:'sa-wat-dee-khrap',tr:'merhaba',role:'Kelime'},{ro:'pom chue Ali',tr:'adim Ali',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'สวัสดีค่ะยินดีที่ได้รู้จักค่ะ',ro:'sa-wat-dee-kha yin-dee-tii-dai-ruu-jak-kha',tr:'Merhaba, tanistigima memnun.',bd:[{ro:'sa-wat-dee-kha',tr:'merhaba',role:'Kelime'},{ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'memnun (kadin)',role:'Kelime'}]},
        {s:'Ali',th:'ยินดีที่ได้รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'chen-kan',tr:'aynı şekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'คุณมาจากไหนคะ',ro:'khun-maa-jaak-nai-kha',tr:'Nereden geliyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'maa-jaak',tr:'geliyorsunuz',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
        {s:'Ali',th:'ผมมาจากตุรกีครับอยู่ภูเก็ต',ro:'pom-maa-jaak-tur-gii-khrap yuu-phu-get',tr:'Turkiyeden geliyorum, Phuket\'te yasiyorum.',bd:[{ro:'pom maa jaak tur-gii',tr:'Turkiyeden geliyorum',role:'Kelime'},{ro:'yuu phu-get',tr:'Phuket te',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
     {title:'🌅 Sabah Selamlasmasi',
      lines:[
        {s:'Ali',th:'สบายดีไหม',ro:'sa-bai-dee-mai',tr:'Nasilsin?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'}]},
-       {s:'Nada',th:'สบายดีค่ะขอบคุณค่ะ',ro:'sa-bai-dee-kha khob-khun-kha',tr:'Iyiyim, tesekkurler.',bd:[{ro:'sa-bai-dee-kha',tr:'Iyiyim (kadin)',role:'Kelime'},{ro:'khob-khun-kha',tr:'tesekkurler',role:'Kelime'}]},
        {s:'Ali',th:'วันนี้อากาศดีมากครับ',ro:'wan-nii-a-gat-dee-maak-khrap',tr:'Bugun hava cok guzel.',bd:[{ro:'wan-nii',tr:'bugün',role:'S - Ozne'},{ro:'a-gat',tr:'hava',role:'O - Nesne'},{ro:'dee-maak',tr:'çok güzel',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ใช่ค่ะร้อนมากเลยค่ะ',ro:'chai-kha ron-maak-loey-kha',tr:'Evet, cok sicak.',bd:[{ro:'chai-kha',tr:'evet (kadin)',role:'Kelime'},{ro:'ron-maak-loey-kha',tr:'cok sicak (kadin)',role:'Kelime'}]},
        {s:'Ali',th:'แล้วเจอกันครับ',ro:'laeo-joe-kan-khrap',tr:'Gorusuruuz.',bd:[{ro:'laeo',tr:'sonra',role:'Zaman'},{ro:'joe-kan',tr:'göruşürüz',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
      ]},
   ],
 
   listening:[
-    {diff:'easy',  th:'สวัสดีครับ',        q:'Ne duydu?', opts:['Selam (erkek)','Tesekkur','Sorun degil'], c:0},
+    {diff:'easy',  th:'สวัสดีครับ',        q:'Ne duydu?', opts:['Selam','Tesekkur','Sorun degil'], c:0},
     {diff:'easy',  th:'ขอบคุณค่ะ',         q:'Ne duydu?', opts:['Tesekkur ederim','Tanistigima memnun','Sorun degil'], c:0},
     {diff:'easy',  th:'ยินดีที่ได้รู้จักครับ', q:'Ne duydu?', opts:['Tesekkur','Tanistigima memnun','Sorun degil'], c:1},
     {diff:'medium',th:'ขอโทษครับ',          q:'Ne duydu?', opts:['Tesekkur','Ozur dilerim','Sorun degil'], c:1},
@@ -1028,18 +1065,26 @@ const L1 = {
   ],
 
   quiz:[
-    {q:'สวัสดีครับ ne demek?', opts:['Selam (erkek kibar)','Tesekkur','Ozur dilerim','Hoscakal'], c:0},
-    {q:'Erkek kibar eki hangisi?', opts:['kha','khrap','mai','ka'], c:1},
-    {q:'สวัสดีค่ะ ne zaman kullanilir?', opts:['Her zaman','Sadece erkekler','Kadinlar kibar konusmada','Yemek ismarlarken'], c:2},
-    {q:'Kadin kibar eki hangisi?', opts:['mai','khrap','kha','ka'], c:2},
-    {q:'ไม่เป็นไร ne demek?', opts:['Tesekkur','Ozur dilerim','Sorun degil','Hoscakal'], c:2},
-    {q:'Thai ton sistemi kac ton?', opts:['3','4','5','6'], c:2},
-    {q:'ขอบคุณมากครับ ne demek?', opts:['Tesekkur','Cok tesekkur ederim','Ozur dilerim','Hoscakal'], c:1},
-    {q:'ยินดีที่ได้รู้จักครับ ne demek?', opts:['Tesekkur','Ozur dilerim','Tanistigima memnun','Hoscakal'], c:2},
-    {q:'pom ne demek?', opts:['Ben (erkek)','Sen','O','Biz'], c:0},
-    {q:'pom chue Ali khrap ne demek?', opts:['Ali nerede?','Benim adim Ali','Sen Ali misin?','Adi ne?'], c:1},
-    {q:'pom pen kon Tuerk ne demek?', opts:['Turk ten geliyorum','Ben Turk um','Turkce biliyorum','Turk istiyorum'], c:1},
-    {q:'Nereden geliyorsunuz? Tayca?', opts:['khun yuu nai?','khun pen krai?','khun maa jaak nai?','khun tham a-rai?'], c:2},
+    {q:'"pom" kimin icin kullanilir?',opts:['Kadin konusmaci','Erkek konusmaci','Ikisi de','Cocuklar'],c:1},
+    {q:'"chan" ne demek?',opts:['Sen (kadin)','Ben (kadin)','O (kadin)','Biz'],c:1},
+    {q:'"khun" hangi durumda kullanilir?',opts:['Sadece erkeklere','Sadece kadinlara','Kibar hitap - herkese','Sadece yaslilara'],c:2},
+    {q:'"khao" Taycada ne demek?',opts:['Ben','Sen','O (erkek veya kadin)','Biz'],c:2},
+    {q:'"rao" tek basina ne anlama gelir?',opts:['Sadece biz','Biz + samimi ben','Sadece sen','Onlar'],c:1},
+    {q:'"phuak-khao" ne demek?',opts:['Siz (cogul)','Onlar','Biz','Sen ve ben'],c:1},
+    {q:'"pom yuu thii phu-ket khrap" ne demek?',opts:['Phuket nerede?','Phuket e gidiyorum','Ben Phuket te yasiyorum','Phuket i seviyorum'],c:2},
+    {q:'"khun maa jaak nai" ne demek?',opts:['Adin ne?','Nerelisin?','Nereye gidiyorsun?','Ne yapiyorsun?'],c:1},
+    {q:'Taycada "o" zamiri kac cinsiyet icin kullanilir?',opts:['Sadece erkek','Sadece kadin','Ikisi de - ayni kelime','Uc cinsiyet var'],c:2},
+    {q:'"khao mai khao-jai" ne demek?',opts:['O anlıyor','O anlamiyor','O biliyor','O istemiyor'],c:1},
+    {q:'สวัสดีครับ ne demek?',opts:['Tesekkurler','Merhaba','Hoscakal','Ozur dilerim'],c:1},
+    {q:'ขอบคุณมากครับ ne demek?',opts:['Merhaba','Cok tesekkur ederim','Hoscakal','Sorun degil'],c:1},
+    {q:'ไม่เป็นไร ne demek?',opts:['Tesekkurler','Anliyorum','Sorun degil','Ozur dilerim'],c:2},
+    {q:'ยินดีที่ได้รู้จักครับ ne demek?',opts:['Nasilsin?','Merhaba','Tanistigima memnun','Ozur dilerim'],c:2},
+    {q:'Erkek kibar eki hangisi?',opts:['kha','mai','khun','khrap'],c:3},
+    {q:'"pom chue a-rai" cumlesinde "chue" ne demek?',opts:['Yasinda','Adi','Nereli','Nerede'],c:1},
+    {q:'"mai" kelimesi cumlede ne islevi gorur?',opts:['Kibar eki','Olumsuzluk eki','Zaman eki','Ozne'],c:1},
+    {q:'"sa-bai-dee mai" cumlesinin sonu neden "mai" ile bitiyor?',opts:['Olumsuz yapmak icin','Soru sormak icin','Zaman belirtmek icin','Kibar olmak icin'],c:1},
+    {q:'Thai ton sistemi kac ton icerir?',opts:['3','4','5','6'],c:2},
+    {q:'"phuak-khun maa jaak nai" ne demek?',opts:['Siz nereye gidiyorsunuz?','Siz nereden geliyorsunuz?','Siz nerede yasiyorsunuz?','Siz kimsiniz?'],c:1},
   ],
 };
 
@@ -1149,7 +1194,6 @@ const L2 = {
     {title:'🛒 Markette Fiyat Sorma',
      lines:[
        {s:'Ali',th:'นี่เท่าไรครับ',ro:'nii thao-rai khrap',tr:'Bu kac para?',bd:[{ro:'nii thao-rai khrap',tr:'Bu ne kadar?',role:'Kelime'}]},
-       {s:'Nada',th:'ร้อยบาทค่ะ',ro:'roi baht kha',tr:'100 Baht.',bd:[{ro:'roi baht kha',tr:'100 Baht (kadin)',role:'Kelime'}]},
        {s:'Ali',th:'ลดราคาได้ไหมครับ',ro:'lot raa-khaa dai mai khrap',tr:'Indirim yapabilir misiniz?',bd:[{ro:'lot raa-khaa dai mai khrap',tr:'Indirim var mi?',role:'Kelime'}]},
        {s:'Nada',th:'ได้ค่ะ แปดสิบบาทค่ะ',ro:'dai kha paet-sip baht kha',tr:'Olur, 80 Baht.',bd:[{ro:'dai',tr:'olur',role:'Kelime'},{ro:'paet-sip baht',tr:'80 Baht',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
      ]},
@@ -1386,7 +1430,6 @@ const L3 = {
        {s:'Ali',th:'ขอโทษครับ กี่โมงแล้วครับ',ro:'khor-thot khrap kii-mong laeo khrap',tr:'Özür dilerim, saat kaç oldu?',bd:[{ro:'khor-thot',tr:'özür',role:'Kelime'},{ro:'kii-mong laeo',tr:'saat kaç',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
        {s:'Nada',th:'บ่ายสามโมงค่ะ',ro:'bai sam mong kha',tr:'Öğleden sonra saat 3.',bd:[{ro:'bai sam mong',tr:'15:00',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
        {s:'Ali',th:'ขอบคุณครับ',ro:'khob-khun khrap',tr:'Teşekkürler.',bd:[{ro:'khob-khun khrap',tr:'Teşekkürler',role:'Kelime'}]},
-       {s:'Nada',th:'ไม่เป็นไรค่ะ',ro:'mai-pen-rai kha',tr:'Bir şey değil.',bd:[{ro:'mai-pen-rai kha',tr:'Bir şey değil (kadın)',role:'Kelime'}]},
      ]},
     {title:'📅 Randevu Alma',
      lines:[
@@ -1462,7 +1505,7 @@ const L4 = {
        {th:'มีอาหารมังสวิรัติไหมครับ',ro:'mii aa-haan mang-sa-wi-rat mai khrap',tr:'Vejetaryen yemek var mı?',bd:[{ro:'mii',tr:'var mı',role:'V - Yuklem'},{ro:'aa-haan mang-sa-wi-rat',tr:'vejetaryen yemek',role:'O - Nesne'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
     {id:'w3',th:'เมนู',ro:'me-nuu',tr:'Menü',
-     tip:'İngilizce\'den alıntı. Telaffuz: me-NUU.',
+     tip:'İngilizce\den alıntı. Telaffuz: me-NUU.',
      ctx:'Her restorantta ilk söyleyeceğin kelime.',
      examples:[
        {th:'ขอเมนูหน่อยครับ',ro:'khor me-nuu noi khrap',tr:'Menüyü alabilir miyim?',bd:[{ro:'khor',tr:'istiyorum',role:'V - Yuklem'},{ro:'me-nuu',tr:'menü',role:'O - Nesne'},{ro:'noi',tr:'biraz/lütfen',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2145,7 +2188,7 @@ const L7 = {
   tones:[],
   words:[
     {id:'w1',th:'แท็กซี่',ro:'taek-sii',tr:'Taksi',
-     tip:'İngilizce\'den. Phuket\'te metre kullanılmaz, önce pazarlık yap.',
+     tip:'İngilizce\den. Phuket\'te metre kullanılmaz, önce pazarlık yap.',
      ctx:'Phuket\'te en çok kullanılan ulaşım. Grab daha güvenli.',
      examples:[
        {th:'ขอแท็กซี่ครับ',ro:'khor taek-sii khrap',tr:'Taksi istiyorum.',bd:[{ro:'khor taek-sii',tr:'taksi istiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2215,7 +2258,7 @@ const L7 = {
        {th:'รถของผมจอดอยู่ตรงนั้นครับ',ro:'rot khong pom jot yuu trong-nan khrap',tr:'Arabam şurada park ediyor.',bd:[{ro:'rot khong pom',tr:'arabam',role:'S - Ozne'},{ro:'jot yuu trong-nan',tr:'şurada park ediyor',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
     {id:'w9',th:'แอปเกรบ',ro:'aep Grab',tr:'Grab uygulaması',
-     tip:'Phuket\'te en güvenilir ve fiyatlı ulaşım. Standart fiyat.',
+     tip:'Phuket\te en güvenilir ve fiyatlı ulaşım. Standart fiyat.',
      ctx:'Her yerde geçerli. Sürücüye sadece "Grab" de.',
      examples:[
        {th:'ผมสั่งแกร็บครับ',ro:'pom sang Grab khrap',tr:'Grab çağırıyorum.',bd:[{ro:'pom sang Grab',tr:'Grab çağırıyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2288,7 +2331,6 @@ const L7 = {
     {title:'⏰ Yavaşla / Dur',
      lines:[
        {s:'Ali',th:'ช้าลงหน่อยครับ ขับเร็วไปครับ',ro:'chaa long noi khrap khap reo pai khrap',tr:'Biraz yavaşlayın, çok hızlı gidiyorsunuz.',bd:[{ro:'chaa long noi',tr:'biraz yavaşla',role:'V - Yuklem'},{ro:'khap reo pai',tr:'çok hızlı',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ขอโทษค่ะ',ro:'khor-thot kha',tr:'Özür dilerim.',bd:[{ro:'khor-thot kha',tr:'özür (kadın)',role:'Kelime'}]},
        {s:'Ali',th:'จอดตรงนี้ได้เลยครับ',ro:'jot trong-nii dai loey khrap',tr:'Tam burada durabilirsiniz.',bd:[{ro:'jot trong-nii dai loey',tr:'tam burada dur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
        {s:'Nada',th:'ถึงแล้วค่ะ สองร้อยห้าสิบบาทค่ะ',ro:'thueng laeo kha song-roi-haa-sip baht kha',tr:'Geldik, 250 Baht.',bd:[{ro:'thueng laeo',tr:'geldik',role:'Kelime'},{ro:'song-roi-haa-sip baht',tr:'250 Baht',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
      ]},
@@ -2339,7 +2381,7 @@ const L8 = {
        {th:'โรงแรมมีสระว่ายน้ำไหมครับ',ro:'roong-raem mii sra-waai-naam mai khrap',tr:'Otelde yüzme havuzu var mı?',bd:[{ro:'roong-raem mii',tr:'otelde var mı',role:'V - Yuklem'},{ro:'sra-waai-naam',tr:'yüzme havuzu',role:'O - Nesne'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
     {id:'w2',th:'เช็คอิน',ro:'chek-in',tr:'Check-in yapmak',
-     tip:'İngilizce\'den. "Chek-in" / "Chek-awt" aynı şekilde kullanılır.',
+     tip:'İngilizce\den. "Chek-in" / "Chek-awt" aynı şekilde kullanılır.',
      ctx:'Otele giriş saati genellikle 14:00.',
      examples:[
        {th:'เช็คอินได้กี่โมงครับ',ro:'chek-in dai kii-mong khrap',tr:'Saat kaçta check-in yapabilirim?',bd:[{ro:'chek-in dai',tr:'check-in yapabilir',role:'V - Yuklem'},{ro:'kii-mong',tr:'saat kaçta',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2374,7 +2416,7 @@ const L8 = {
        {th:'ขยายการเข้าพักได้ไหมครับ',ro:'kha-yaai gaan-khao-phak dai mai khrap',tr:'Konaklamayı uzatabilir miyim?',bd:[{ro:'kha-yaai gaan-khao-phak',tr:'konaklama uzat',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
     {id:'w6',th:'แอร์',ro:'aae',tr:'Klima (Air-con)',
-     tip:'İngilizce "air"den. Phuket\'te klima zorunluluk!',
+     tip:'İngilizce "air"den. Phuket\te klima zorunluluk!',
      ctx:'Oda sorunu bildirirken.',
      examples:[
        {th:'แอร์ไม่เย็นครับ',ro:'aae mai yen khrap',tr:'Klima soğutmuyor.',bd:[{ro:'aae mai yen',tr:'klima soğutmuyor',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2422,7 +2464,7 @@ const L8 = {
       title:'1. Otel Check-in Kalıpları',
       formula:'POM JONG WAI LAEO = rezervasyonum var | KHOR HONG + TİP + KHUENG = kaç gecelik oda',
       explain:'Check-in sürecinde sıkça kullanılan kalıplar. Rezervasyon numarası + isim + süre temel bilgiler.',
-      tips:['jong wai laeo = rezervasyonum var','chue pom = adım (erkek)','song khueng = iki gece','ruam aa-haan-chao = kahvaltı dahil','wi-fai = WiFi','ra-hat wi-fai = WiFi şifresi'],
+      tips:['jong wai laeo = rezervasyonum var','chue pom = adım','song khueng = iki gece','ruam aa-haan-chao = kahvaltı dahil','wi-fai = WiFi','ra-hat wi-fai = WiFi şifresi'],
       examples:[
         {th:'ผมจองไว้แล้วครับ ชื่ออาลีครับ',ro:'pom jong wai laeo khrap chue Ali khrap',tr:'Rezervasyonum var, adım Ali.',bd:[{ro:'pom jong wai laeo',tr:'rezervasyonum var',role:'V - Yuklem'},{ro:'chue Ali',tr:'adım Ali',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
         {th:'พักสองคืนครับ',ro:'phak song khueng khrap',tr:'İki gece kalıyorum.',bd:[{ro:'phak song khueng',tr:'iki gece',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2515,7 +2557,7 @@ const L9 = {
   tones:[],
   words:[
     {id:'w1',th:'มอเตอร์ไซค์',ro:'mot-toe-sai',tr:'Motorsiklet',
-     tip:'İngilizce "motorcycle"dan. Phuket\'te en yaygın ulaşım.',
+     tip:'İngilizce "motorcycle"dan. Phuket\te en yaygın ulaşım.',
      ctx:'Phuket\'te her yerde kiralık motorsiklet var.',
      examples:[
        {th:'เช่ามอเตอร์ไซค์ได้ที่ไหนครับ',ro:'chao mot-toe-sai dai thii-nai khrap',tr:'Motorsiklet nerede kiralayabilirim?',bd:[{ro:'chao mot-toe-sai',tr:'motorsiklet kirala',role:'V - Yuklem'},{ro:'dai thii-nai',tr:'nerede yapabilirim',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2532,7 +2574,7 @@ const L9 = {
        {th:'เช่าราคาถูกที่สุดตัวไหนครับ',ro:'chao raa-khaa thuuk-thii-sut tua-nai khrap',tr:'En ucuz hangisi?',bd:[{ro:'chao raa-khaa thuuk-thii-sut',tr:'en ucuz kiralık',role:'Kelime'},{ro:'tua-nai',tr:'hangisi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
     {id:'w3',th:'หมวกกันน็อก',ro:'muak-gan-nok',tr:'Kask / Baret',
-     tip:'"Muak" = şapka, "gan-nok" = koruma. Phuket\'te kask takmak zorunlu.',
+     tip:'"Muak" = şapka, "gan-nok" = koruma. Phuket\te kask takmak zorunlu.',
      ctx:'Trafik polisi kask kontrolü yapıyor. Zorunlu!',
      examples:[
        {th:'มีหมวกกันน็อกไหมครับ',ro:'mii muak-gan-nok mai khrap',tr:'Kask var mı?',bd:[{ro:'mii muak-gan-nok mai',tr:'kask var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
@@ -2921,6 +2963,7 @@ function switchView(v, btn){
   if(btn) btn.classList.add('active');
   if(v==='list') renderList();
   if(v==='review') renderReview();
+  if(v==='test') renderTestView();
 }
 
 // =================== DERS LİSTESİ ===================
@@ -3078,6 +3121,28 @@ function buildLessonHTML(L, meta){
       <div class="examples-wrap">${exs}</div>
     </div>`;
   }).join('');
+
+  // L1 için Sözcükler başına özne tablosu
+  const pronounTable = meta.num===1 ? `
+    <div style="background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:12px;padding:12px 14px;margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:700;color:#0d9488;margin-bottom:10px;">👤 Kişi Zamirleri — Hızlı Referans</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <tr style="border-bottom:1px solid #b2dfdb;">
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Kişi</th>
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Thai</th>
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Okunuş</th>
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Not</th>
+        </tr>
+        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Ben (E)</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">ผม</td><td style="padding:6px 6px;font-weight:700;">pom</td><td style="padding:6px 6px;color:#888;">Erkek</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Ben (K)</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">ฉัน</td><td style="padding:6px 6px;font-weight:700;">chan</td><td style="padding:6px 6px;color:#888;">Kadın</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Sen/Siz</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">คุณ</td><td style="padding:6px 6px;font-weight:700;">khun</td><td style="padding:6px 6px;color:#888;">Kibar, herkese</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">O</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">เขา</td><td style="padding:6px 6px;font-weight:700;">khao</td><td style="padding:6px 6px;color:#888;">E+K aynı kelime</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Biz</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">เรา</td><td style="padding:6px 6px;font-weight:700;">rao</td><td style="padding:6px 6px;color:#888;">+ samimi "ben"</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Siz(çoğul)</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">พวกคุณ</td><td style="padding:6px 6px;font-weight:700;">phuak-khun</td><td style="padding:6px 6px;color:#888;">Grup hitabı</td></tr>
+        <tr><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Onlar</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">พวกเขา</td><td style="padding:6px 6px;font-weight:700;">phuak-khao</td><td style="padding:6px 6px;color:#888;">phuak=grup</td></tr>
+      </table>
+      <div style="font-size:10px;color:#888;margin-top:8px;">💡 Detaylı örnekler → Gramer sekmesi → Kural 9</div>
+    </div>` : '';
 
   // TONLAR (sadece hasTones varsa render edilir)
   const tones = (L.tones && L.tones.length>0) ? L.tones.map(t=>`
@@ -3308,7 +3373,7 @@ function buildLessonHTML(L, meta){
     <h2>${meta.emoji} ${meta.title}</h2>
     <div class="ltabs" id="ltabs-wrap">${tabs}</div>
     ${tabNames.map(t=>`<div id="lc-${t}" class="lcontent">${
-      t==='words'?words:t==='tones'?tones:t==='grammar'?grammar:
+      t==='words'?(pronounTable+words):t==='tones'?tones:t==='grammar'?grammar:
       t==='speaking'?speaking:t==='dialogue'?dialogues:
       t==='listening'?listening:t==='numbers'?numbersHtml:
       t==='calc'?calcHtml:quiz
@@ -3481,6 +3546,405 @@ function updateLessonScoreDisplay(){
   el.style.color = pct>=70 ? '#0d9488' : pct>=40 ? '#f59e0b' : '#ef4444';
 }
 
+
+
+// =================== TEST MODÜLİ ===================
+let testState = {
+  lessonNum: null,
+  cards: [],
+  idx: 0,
+  correct: 0,
+  wrong: 0,
+  mode: 'fc',       // 'fc' flashcard | 'mc' çoktan seçmeli
+  dir: 'th2tr',     // 'th2tr' | 'tr2th'
+  category: 'all',  // 'all' | 'pronouns' | 'phrases' | 'grammar'
+  history: [],      // {card, result}
+};
+
+// Ders 1 için kart havuzu oluştur
+function buildTestCards(lessonNum, category){
+  const L = LESSONS[lessonNum];
+  if(!L) return [];
+  const cards = [];
+
+  // Kelimeler + örnekler
+  (L.words||[]).forEach(w=>{
+    // Kelime kendisi
+    if(w.th && w.ro && w.tr){
+      const cat = getPronounCategory(w.ro) ? 'pronouns' : 'phrases';
+      cards.push({type:'word', th:w.th, ro:w.ro, tr:w.tr, cat, hint:w.tip||''});
+    }
+    // Örnekler
+    (w.examples||[]).forEach(e=>{
+      if(!e.th||!e.ro||!e.tr) return;
+      const cat = hasPronouns(e.ro) ? 'pronouns' : 'phrases';
+      cards.push({type:'example', th:e.th, ro:e.ro, tr:e.tr, cat, bd:e.bd||[]});
+    });
+  });
+
+  // Gramer örnekleri
+  (L.grammar||[]).forEach(g=>{
+    (g.examples||[]).forEach(e=>{
+      if(!e.th||!e.ro||!e.tr) return;
+      cards.push({type:'grammar', th:e.th, ro:e.ro, tr:e.tr, cat:'grammar', bd:e.bd||[]});
+    });
+  });
+
+  // Konuşma
+  (L.speaking||[]).forEach(s=>{
+    if(!s.th&&!s.ro) return;
+    cards.push({type:'speaking', th:s.th||'', ro:s.ro, tr:s.tr||'', cat:'phrases'});
+  });
+
+  // Filtrele
+  const filtered = category==='all' ? cards : cards.filter(c=>c.cat===category);
+  return filtered.sort(()=>Math.random()-0.5);
+}
+
+function getPronounCategory(ro){
+  return ['pom','chan','khun','khao','rao','phuak-khao','phuak-khun'].some(p=>ro===p);
+}
+function hasPronouns(ro){
+  return ['pom','chan','khun ','khao ','rao ','phuak'].some(p=>ro.includes(p));
+}
+
+// Tüm kartlardan yanlış seçenekleri al
+function getWrongOptions(correctTr, count, lessonNum){
+  const L = LESSONS[lessonNum];
+  if(!L) return [];
+  const pool = [];
+  (L.words||[]).forEach(w=>{
+    if(w.tr && w.tr!==correctTr) pool.push(w.tr);
+    (w.examples||[]).forEach(e=>{ if(e.tr && e.tr!==correctTr) pool.push(e.tr); });
+  });
+  // Shuffle ve al
+  return pool.sort(()=>Math.random()-0.5).slice(0,count);
+}
+
+function renderTestView(){
+  const wrap = document.getElementById('test-content');
+  if(!wrap) return;
+
+  const cats = [
+    {id:'all', label:'🗂️ Tümü'},
+    {id:'pronouns', label:'👤 Zamirler'},
+    {id:'phrases', label:'💬 İfadeler'},
+    {id:'grammar', label:'📖 Gramer'},
+  ];
+
+  const lessonRows = LESSONS_META.filter(m=>m.hasContent).map(m=>{
+    const db = SRS.load();
+    const srsCards = Object.values(db).filter(c=>c.lessonNum===m.num).length;
+    const due = Object.values(db).filter(c=>c.lessonNum===m.num && c.nextReview<=Date.now()).length;
+    const done = isCompleted(m.num);
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #f0f0f0;cursor:pointer;"
+           onclick="openTestLesson(${m.num})"
+           onmouseenter="this.style.background='#f0fdf9'" onmouseleave="this.style.background=''">
+        <div style="font-size:20px">${m.emoji}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:#222;">Ders ${m.num}: ${m.title}</div>
+          <div style="font-size:11px;color:#888;margin-top:2px;">
+            ${srsCards>0 ? srsCards+' kart' : 'SRS eklenmedi'}
+            ${due>0 ? ' · <span style="color:#ef4444;font-weight:700;">'+due+' tekrar bekliyor</span>' : ''}
+            ${done ? ' · <span style="color:#0d9488;font-weight:700;">✓ Tamamlandı</span>' : ''}
+          </div>
+        </div>
+        <div style="font-size:18px;color:#ccc">›</div>
+      </div>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <!-- BAŞLIK -->
+    <div style="background:linear-gradient(135deg,#0d9488,#06b6d4);border-radius:14px;padding:16px;margin-bottom:16px;color:white;">
+      <div style="font-size:16px;font-weight:700;margin-bottom:4px;">📝 Ders Testi</div>
+      <div style="font-size:12px;opacity:.8;">Bir ders seç, kart modunu belirle ve başla.</div>
+    </div>
+
+    <!-- DERS LİSTESİ -->
+    <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;overflow:hidden;margin-bottom:16px;">
+      <div style="padding:10px 12px;background:#f8f9fa;border-bottom:1px solid #e8e8e8;font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;">
+        Ders Seç
+      </div>
+      ${lessonRows}
+    </div>
+  `;
+}
+
+function openTestLesson(num){
+  const wrap = document.getElementById('test-content');
+  const meta = LESSONS_META.find(m=>m.num===num);
+  if(!meta) return;
+
+  const totalCards = buildTestCards(num,'all').length;
+  const pronounCards = buildTestCards(num,'pronouns').length;
+  const phraseCards = buildTestCards(num,'phrases').length;
+  const gramCards = buildTestCards(num,'grammar').length;
+
+  wrap.innerHTML = `
+    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Dersler</button>
+
+    <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;padding:14px;margin-bottom:14px;">
+      <div style="font-size:15px;font-weight:700;color:#222;margin-bottom:4px;">${meta.emoji} Ders ${meta.num}: ${meta.title}</div>
+      <div style="font-size:11px;color:#888;">${totalCards} kart mevcut</div>
+    </div>
+
+    <!-- KATEGORİ SEÇ -->
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Konu Filtresi</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
+      <button class="test-cat-btn active" data-cat="all" onclick="selectTestCat(this,'all')">🗂️ Tümü (${totalCards})</button>
+      ${pronounCards>0?`<button class="test-cat-btn" data-cat="pronouns" onclick="selectTestCat(this,'pronouns')">👤 Zamirler (${pronounCards})</button>`:''}
+      ${phraseCards>0?`<button class="test-cat-btn" data-cat="phrases" onclick="selectTestCat(this,'phrases')">💬 İfadeler (${phraseCards})</button>`:''}
+      ${gramCards>0?`<button class="test-cat-btn" data-cat="grammar" onclick="selectTestCat(this,'grammar')">📖 Gramer (${gramCards})</button>`:''}
+    </div>
+
+    <!-- MOD SEÇ -->
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Kart Modu</div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button class="test-mode-btn active" data-mode="fc" onclick="selectTestMode(this,'fc')" style="flex:1">
+        <div style="font-size:18px;margin-bottom:3px;">🃏</div>
+        <div style="font-size:12px;font-weight:700;">Flashcard</div>
+        <div style="font-size:10px;color:#888;margin-top:2px;">Gör → Tahmin et</div>
+      </button>
+      <button class="test-mode-btn" data-mode="mc" onclick="selectTestMode(this,'mc')" style="flex:1">
+        <div style="font-size:18px;margin-bottom:3px;">☑️</div>
+        <div style="font-size:12px;font-weight:700;">Çoktan Seçmeli</div>
+        <div style="font-size:10px;color:#888;margin-top:2px;">4 seçenek</div>
+      </button>
+      <button class="test-mode-btn" data-mode="mix" onclick="selectTestMode(this,'mix')" style="flex:1">
+        <div style="font-size:18px;margin-bottom:3px;">🎲</div>
+        <div style="font-size:12px;font-weight:700;">Karma</div>
+        <div style="font-size:10px;color:#888;margin-top:2px;">Rastgele</div>
+      </button>
+    </div>
+
+    <!-- YÖN SEÇ -->
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Yön</div>
+    <div style="display:flex;gap:8px;margin-bottom:20px;">
+      <button class="test-dir-btn active" data-dir="th2tr" onclick="selectTestDir(this,'th2tr')" style="flex:1;padding:8px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;color:#0d9488;">🇹🇭 → Türkçe</button>
+      <button class="test-dir-btn" data-dir="tr2th" onclick="selectTestDir(this,'tr2th')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;color:#888;">Türkçe → 🇹🇭</button>
+      <button class="test-dir-btn" data-dir="mix" onclick="selectTestDir(this,'mix')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;color:#888;">🎲 Karma</button>
+    </div>
+
+    <!-- BAŞLA -->
+    <button onclick="startLessonTest(${num})"
+      style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.03em;">
+      🚀 Testi Başlat
+    </button>
+  `;
+
+  // State güncelle
+  testState.lessonNum = num;
+  testState.category = 'all';
+  testState.mode = 'fc';
+  testState.dir = 'th2tr';
+}
+
+function selectTestCat(btn, cat){
+  document.querySelectorAll('.test-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  testState.category = cat;
+}
+function selectTestMode(btn, mode){
+  document.querySelectorAll('.test-mode-btn').forEach(b=>{ b.classList.remove('active'); b.style.background='white'; b.style.borderColor='#e0e0e0'; b.querySelector('div:nth-child(2)').style.color='#222'; });
+  btn.classList.add('active'); btn.style.background='#f0fdf9'; btn.style.borderColor='#0d9488';
+  btn.querySelector('div:nth-child(2)').style.color='#0d9488';
+  testState.mode = mode;
+}
+function selectTestDir(btn, dir){
+  document.querySelectorAll('.test-dir-btn').forEach(b=>{ b.style.background='white'; b.style.borderColor='#e0e0e0'; b.style.color='#888'; });
+  btn.style.background='#f0fdf9'; btn.style.borderColor='#0d9488'; btn.style.color='#0d9488';
+  testState.dir = dir;
+}
+
+function startLessonTest(num){
+  const cards = buildTestCards(num, testState.category);
+  if(cards.length===0){ alert('Bu kategoride kart bulunamadı.'); return; }
+  testState.lessonNum = num;
+  testState.cards = cards;
+  testState.idx = 0;
+  testState.correct = 0;
+  testState.wrong = 0;
+  testState.history = [];
+  showTestCard();
+}
+
+function showTestCard(){
+  const wrap = document.getElementById('test-content');
+  const {cards, idx, correct, wrong, mode, dir, lessonNum} = testState;
+  if(idx >= cards.length){ showTestResult(); return; }
+
+  const card = cards[idx];
+  const total = cards.length;
+  const pct = Math.round(idx/total*100);
+
+  // Yön belirle
+  let actualDir = dir;
+  if(dir==='mix') actualDir = Math.random()<0.6 ? 'th2tr' : 'tr2th';
+
+  // Mod belirle
+  let actualMode = mode;
+  if(mode==='mix') actualMode = Math.random()<0.5 ? 'fc' : 'mc';
+
+  testState._curDir = actualDir;
+  testState._curMode = actualMode;
+
+  const questionText = actualDir==='th2tr'
+    ? `<div style="font-family:'Noto Sans Thai',sans-serif;font-size:28px;font-weight:700;color:#0d9488;margin-bottom:6px;">${card.th||card.ro}</div>
+       <div style="font-size:13px;color:#888;font-style:italic;">${card.ro}</div>`
+    : `<div style="font-size:20px;font-weight:700;color:#222;margin-bottom:6px;">${card.tr}</div>`;
+
+  const progressBar = `
+    <div style="background:#f0f0f0;border-radius:99px;height:4px;margin-bottom:16px;overflow:hidden;">
+      <div style="background:#0d9488;height:100%;width:${pct}%;transition:.3s;border-radius:99px;"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:16px;">
+      <span>${idx+1} / ${total}</span>
+      <span>✅ ${correct} &nbsp; ❌ ${wrong}</span>
+    </div>`;
+
+  if(actualMode==='fc'){
+    wrap.innerHTML = `
+      <button onclick="openTestLesson(${lessonNum})" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Ders</button>
+      ${progressBar}
+      <div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:24px 20px;text-align:center;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">
+        <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':'Gramer'}</div>
+        ${questionText}
+        <button onclick="if(window.speechSynthesis){const u=new SpeechSynthesisUtterance('${(card.th||card.ro).replace(/'/g,"\'")}');u.lang='th-TH';u.rate=.82;speechSynthesis.cancel();speechSynthesis.speak(u);}" style="margin-top:12px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>
+      </div>
+      <div id="fc-answer" style="display:none;background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:12px;padding:14px 16px;margin-bottom:14px;text-align:center;">
+        ${actualDir==='th2tr'
+          ? `<div style="font-size:16px;font-weight:700;color:#0d9488;">${card.tr}</div>`
+          : `<div style="font-family:'Noto Sans Thai',sans-serif;font-size:22px;font-weight:700;color:#0d9488;">${card.th||''}</div><div style="font-size:12px;color:#888;margin-top:3px;">${card.ro}</div>`}
+      </div>
+      <div id="fc-verdict-wrap">
+        <button onclick="document.getElementById('fc-answer').style.display='block';document.getElementById('fc-btn-show').style.display='none';document.getElementById('fc-verdict-btns').style.display='flex';"
+          id="fc-btn-show"
+          style="width:100%;padding:13px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;cursor:pointer;">
+          Cevabı Gör
+        </button>
+        <div id="fc-verdict-btns" style="display:none;gap:8px;">
+          <button onclick="recordTestAnswer(false)" style="flex:1;padding:12px;background:#fef2f2;border:1.5px solid #fecaca;border-radius:10px;font-size:13px;font-weight:700;color:#ef4444;cursor:pointer;">❌ Bilmedim</button>
+          <button onclick="recordTestAnswer(true)"  style="flex:1;padding:12px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;font-size:13px;font-weight:700;color:#16a34a;cursor:pointer;">✅ Bildim</button>
+        </div>
+      </div>`;
+  } else {
+    // MC
+    const correctAnswer = actualDir==='th2tr' ? card.tr : (card.th||card.ro);
+    const wrongPool = getWrongOptions(card.tr, 5, lessonNum);
+    const wrongs = actualDir==='th2tr' ? wrongPool.slice(0,3) : buildTestCards(lessonNum,'all').filter(c=>c.tr!==card.tr).slice(0,3).map(c=>c.th||c.ro);
+    const opts = [correctAnswer, ...wrongs.slice(0,3)].sort(()=>Math.random()-0.5);
+
+    // MC butonlarını ayrı fonksiyonla oluştur — apostrof sorununu önlemek için
+    window._testMCOpts = opts;
+    window._testMCCorrect = correctAnswer;
+    window._testMCFull = actualDir==='th2tr' ? card.tr : card.ro;
+
+    wrap.innerHTML = [
+      '<button onclick="openTestLesson('+lessonNum+')" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">&larr; Ders</button>',
+      progressBar,
+      '<div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:20px;text-align:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">',
+      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">'+(card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':'Gramer')+'</div>',
+      questionText,
+      '<button onclick="speakTestWord()" style="margin-top:10px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>',
+      '</div>',
+      '<div id="mc-opts-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;"></div>',
+      '<div id="mc-feedback" style="min-height:20px;text-align:center;font-size:13px;font-weight:700;margin-bottom:8px;"></div>',
+      '<button id="mc-next-btn" onclick="recordTestAnswer(testState._mcCorrect)" style="display:none;width:100%;padding:13px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;cursor:pointer;">Devam &rarr;</button>'
+    ].join('');
+
+    // Butonları DOM'a sonradan ekle
+    const grid = document.getElementById('mc-opts-grid');
+    opts.forEach(opt=>{
+      const btn = document.createElement('button');
+      btn.className = 'mc-opt';
+      btn.dataset.correct = (opt===correctAnswer).toString();
+      btn.style.cssText = 'padding:12px 8px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;color:#222;transition:.15s;line-height:1.3;text-align:center;';
+      btn.textContent = opt;
+      btn.onclick = ()=>checkMCAnswer(btn, opt, correctAnswer, window._testMCFull);
+      grid.appendChild(btn);
+    });
+  }
+}
+
+function speakTestWord(){
+  const card = testState.cards[testState.idx];
+  if(!card) return;
+  if(window.speechSynthesis){
+    const u = new SpeechSynthesisUtterance(card.th||card.ro);
+    u.lang='th-TH'; u.rate=.82; speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }
+}
+function checkMCAnswer(btn, selected, correct, correctFull){
+  document.querySelectorAll('.mc-opt').forEach(b=>b.disabled=true);
+  const isCorrect = selected===correct;
+  testState._mcCorrect = isCorrect;
+  if(isCorrect){
+    btn.style.background='#f0fdf4'; btn.style.borderColor='#16a34a'; btn.style.color='#16a34a';
+    document.getElementById('mc-feedback').innerHTML='<span style="color:#16a34a">✅ Doğru!</span>';
+  } else {
+    btn.style.background='#fef2f2'; btn.style.borderColor='#ef4444'; btn.style.color='#ef4444';
+    document.querySelectorAll('.mc-opt').forEach(b=>{ if(b.dataset.correct==='true'){ b.style.background='#f0fdf4'; b.style.borderColor='#16a34a'; b.style.color='#16a34a'; } });
+    document.getElementById('mc-feedback').innerHTML=`<span style="color:#ef4444">❌ Doğrusu: ${correctFull}</span>`;
+  }
+  document.getElementById('mc-next-btn').style.display='block';
+}
+
+function recordTestAnswer(correct){
+  const card = testState.cards[testState.idx];
+  testState.history.push({card, correct});
+  if(correct) testState.correct++; else testState.wrong++;
+  testState.idx++;
+  showTestCard();
+}
+
+function showTestResult(){
+  const wrap = document.getElementById('test-content');
+  const {correct, wrong, history, lessonNum, cards} = testState;
+  const total = correct + wrong;
+  const pct = Math.round((correct/total)*100);
+  const meta = LESSONS_META.find(m=>m.num===lessonNum);
+
+  const wrongItems = history.filter(h=>!h.correct).map(h=>`
+    <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0f0f0;align-items:flex-start;">
+      <div style="font-family:'Noto Sans Thai',sans-serif;font-size:16px;color:#0d9488;min-width:50px;">${h.card.th||''}</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#333;">${h.card.ro}</div>
+        <div style="font-size:11px;color:#888;">${h.card.tr}</div>
+      </div>
+    </div>`).join('');
+
+  wrap.innerHTML = `
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:48px;margin-bottom:8px;">${pct>=80?'🏆':pct>=60?'🎯':pct>=40?'👍':'📚'}</div>
+      <div style="font-size:20px;font-weight:700;color:#222;margin-bottom:4px;">${pct>=80?'Harika!':pct>=60?'İyi!':pct>=40?'Fena değil!':'Çalışmaya devam!'}</div>
+      <div style="font-size:36px;font-weight:700;color:#0d9488;margin:8px 0;">${pct}%</div>
+      <div style="font-size:13px;color:#888;">${correct} doğru / ${total} soru</div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:22px;font-weight:700;color:#16a34a;">${correct}</div>
+        <div style="font-size:11px;color:#666;">Doğru</div>
+      </div>
+      <div style="flex:1;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:22px;font-weight:700;color:#ef4444;">${wrong}</div>
+        <div style="font-size:11px;color:#666;">Yanlış</div>
+      </div>
+    </div>
+
+    ${wrongItems ? `
+      <div style="background:white;border:1px solid #e0e0e0;border-radius:10px;padding:12px;margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:700;color:#ef4444;margin-bottom:8px;">🔁 Yanlışlar — Tekrar Bak</div>
+        ${wrongItems}
+      </div>` : ''}
+
+    <div style="display:flex;gap:8px;">
+      <button onclick="startLessonTest(${lessonNum})" style="flex:1;padding:12px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:13px;font-weight:700;cursor:pointer;">🔄 Tekrar</button>
+      <button onclick="openTestLesson(${lessonNum})" style="flex:1;padding:12px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;color:#555;font-size:13px;font-weight:700;cursor:pointer;">⚙️ Ayarlar</button>
+    </div>
+  `;
+}
 
 // =================== TEKRAR (SRS) ===================
 let reviewQueue = [];
