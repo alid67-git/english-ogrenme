@@ -221,45 +221,7 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 </style>
 </head>
 <body>
-<script type="application/json" id="thai-data">
-{
-  "words":[
-    {"id":"w1","th":"สวัสดีครับ","examples":["คุณชื่ออะไร","ยินดีที่รู้จัก","สบายดีไหม","ผมชื่ออาลี","คุณมาจากไหน","ยินดีต้อนรับ","ขอโทษที่รอ","วันนี้เป็นอย่างไร","เชิญเข้ามา","ขอบคุณที่มา"]},
-    {"id":"w2","th":"สวัสดีค่ะ","examples":["ยินดีต้อนรับ","คุณเป็นใคร","สบายดีไหมคะ","ยินดีที่รู้จักค่ะ","ขอบคุณที่มาค่ะ"]},
-    {"id":"w3","th":"ขอบคุณ","examples":["ขอบคุณครับ","ขอบคุณมากครับ","ขอบคุณมากๆ ครับ","ขอบคุณสำหรับอาหารครับ","ขอบคุณที่ช่วยครับ","ขอบคุณที่รอครับ","ขอบคุณสำหรับทุกอย่างครับ","ขอบคุณที่มาครับ","ขอบคุณที่สอนครับ","ขอบคุณล่วงหน้าครับ"]},
-    {"id":"w4","th":"ยินดีที่รู้จัก","examples":["ยินดีที่รู้จักครับ","ยินดีที่รู้จักค่ะ","ยินดีที่รู้จักเช่นกันครับ","ผมยินดีที่รู้จักคุณมากครับ","ยินดีที่ได้รู้จักครับ","ยินดีที่รู้จัก","ผมชื่ออาลี ยินดีที่รู้จักครับ"]},
-    {"id":"w5","th":"ไม่เป็นไร","examples":["ไม่เป็นไรครับ","ไม่เป็นไรค่ะ","ขอโทษครับ ไม่เป็นไร","ไม่เป็นไร ไม่ต้องเป็นห่วงครับ","ไม่เป็นไร มันเกิดขึ้นได้","โอเคครับ ไม่เป็นไร","ไม่เป็นไรครับ เกิดขึ้นกับทุกคน","ไม่เป็นไรครับ ผมเข้าใจ"]},
-    {"id":"w6","th":"ครับ","examples":["ใช่ครับ","ไม่ครับ","โอเคครับ","ได้ครับ","เข้าใจครับ","ทราบแล้วครับ","รอสักครู่ครับ","ขอโทษครับ","ขอบคุณครับ","สวัสดีครับ","ไม่เป็นไรครับ","ยินดีที่รู้จักครับ"]},
-    {"id":"w7","th":"ค่ะ","examples":["ใช่ค่ะ","ไม่ค่ะ","ขอบคุณค่ะ","ได้ค่ะ","ไม่เป็นไรค่ะ","เข้าใจค่ะ","โอเคค่ะ","ขอโทษค่ะ","สวัสดีค่ะ","ยินดีที่รู้จักค่ะ","รอสักครู่นะคะ","ไม่ทราบค่ะ"]}
-  ],
-  "tones":[
-    {"words":["กา","มา","ปลา","ดี","นา"]},
-    {"words":["ข่า","ป่า","ข่าว","ยาก","ล่าง"]},
-    {"words":["น้ำ","ข้าว","ค่ะ","น้อย","ฟ้า"]},
-    {"words":["ขา","ไม่","ใหม่","หมา","นา"]},
-    {"words":["ม้า","หน้า","ป๊า","ฝา","ข้า"]}
-  ],
-  "grammar":[
-    {"examples":["ผมชื่ออาลีครับ","คุณชื่ออะไร","ผมมาจากตุรกีครับ","ผมอยู่ที่ภูเก็ต","ผมกินข้าวครับ"]},
-    {"examples":["ขอบคุณครับ","ขอบคุณค่ะ","ใช่ครับ","ได้ครับ","สบายดีไหมคะ"]},
-    {"examples":["ไม่เป็นไรครับ","ไม่ครับ","ไม่ทราบครับ","ไม่เข้าใจครับ","ไม่เอาครับ","ไม่ได้ครับ"]},
-    {"examples":["สบายดีไหม","คุณชื่ออะไร","ห้องน้ำอยู่ที่ไหน","คุณมาจากไหน","นี่เท่าไร","ทำไมไม่มา"]},
-    {"examples":["ผมกำลังกินข้าวครับ","ผมกินข้าวแล้วครับ","ผมจะไปภูเก็ตครับ","ผมยังไม่ไปครับ","ผมเคยไปภูเก็ตครับ"]},
-    {"examples":["สองคนครับ","สามตัวครับ","หนึ่งใบครับ","ร้อยบาทครับ","ผมมีแฟนหนึ่งคนครับ"]},
-    {"examples":["นั่นของผมครับ","รถของคุณอยู่ที่ไหน","นี่ของคุณไหม","บ้านของผมอยู่ภูเก็ต"]},
-    {"examples":["อาหารไทยดีกว่าครับ","ภูเก็ตดีที่สุดครับ","นี่แพงกว่าครับ","วันนี้ร้อนกว่าเมื่อวานครับ"]}
-  ],
-  "speaking":["สวัสดีครับ","ขอบคุณครับ","ยินดีที่รู้จักครับ","ขอโทษครับ","ไม่เป็นไรครับ","ยินดีที่รู้จัก","ขอบคุณมากครับ","ขอบคุณที่ช่วยครับ"],
-  "dialogues":[
-    ["สวัสดีครับ","สวัสดีค่ะ","ยินดีที่รู้จักครับ","ยินดีที่รู้จักค่ะ"],
-    ["ขอบคุณมากครับ","ไม่เป็นไรค่ะ","คุณใจดีมากครับ","ขอบคุณค่ะ"],
-    ["ขอโทษครับ","ไม่เป็นไรค่ะ","ขอบคุณครับ","สบายดีไหมคะ","สบายดีครับ ขอบคุณ"],
-    ["ผมชื่ออาลีครับ","ยินดีที่รู้จักค่ะ","ยินดีที่รู้จักเช่นกันครับ","คุณมาจากไหนคะ","ผมมาจากตุรกีครับ อยู่ภูเก็ต"],
-    ["สบายดีไหม","สบายดีค่ะ ขอบคุณค่ะ","วันนี้อากาศดีมากครับ","ใช่ค่ะ ร้อนมากเลยค่ะ","แล้วเจอกันครับ"]
-  ],
-  "listening":["สวัสดีครับ","ขอบคุณค่ะ","ยินดีที่รู้จักครับ","ขอโทษครับ","สวัสดีครับ","สวัสดีค่ะ","ขอบคุณมากครับ","ไม่เป็นไรค่ะ","ยินดีที่รู้จักครับ","ขอบคุณที่ช่วยครับ"]
-}
-</script>
+<script type="application/json" id="thai-data">{"words": [{"id": "w1", "th": "สวัสดีครับ", "examples": ["คุณชื่ออะไร", "ยินดีที่ได้รู้จัก", "สบายดีไหม", "ผมชื่ออาลี", "คุณมาจากไหน", "ยินดีต้อนรับ", "ขอโทษที่รอ", "วันนี้เป็นอย่างไร", "เชิญเข้ามา", "ขอบคุณที่มา"]}, {"id": "w2", "th": "สวัสดีค่ะ", "examples": ["ยินดีต้อนรับ", "คุณเป็นใคร", "สบายดีไหมคะ", "ยินดีที่ได้รู้จักค่ะ", "ขอบคุณที่มาค่ะ"]}, {"id": "w3", "th": "ขอบคุณ", "examples": ["ขอบคุณครับ", "ขอบคุณมากครับ", "ขอบคุณมากๆ ครับ", "ขอบคุณสำหรับอาหารครับ", "ขอบคุณที่ช่วยครับ", "ขอบคุณที่รอครับ", "ขอบคุณสำหรับทุกอย่างครับ", "ขอบคุณที่มาครับ", "ขอบคุณที่สอนครับ", "ขอบคุณล่วงหน้าครับ"]}, {"id": "w4", "th": "ยินดีที่ได้รู้จัก", "examples": ["ยินดีที่ได้รู้จักครับ", "ยินดีที่ได้รู้จักค่ะ", "ยินดีที่ได้รู้จักเช่นกันครับ", "ผมยินดีที่ได้รู้จักคุณมากครับ", "ยินดีที่ได้รู้จักครับ", "ยินดีที่ได้รู้จัก", "ผมชื่ออาลี ยินดีที่ได้รู้จักครับ"]}, {"id": "w5", "th": "ไม่เป็นไร", "examples": ["ไม่เป็นไรครับ", "ไม่เป็นไรค่ะ", "ขอโทษครับ ไม่เป็นไร", "ไม่เป็นไร ไม่ต้องเป็นห่วงครับ", "ไม่เป็นไร มันเกิดขึ้นได้", "โอเคครับ ไม่เป็นไร", "ไม่เป็นไรครับ เกิดขึ้นกับทุกคน", "ไม่เป็นไรครับ ผมเข้าใจ"]}, {"id": "w6", "th": "ครับ", "examples": ["ใช่ครับ", "ไม่ครับ", "โอเคครับ", "ได้ครับ", "เข้าใจครับ", "ทราบแล้วครับ", "รอสักครู่ครับ", "ขอโทษครับ", "ขอบคุณครับ", "สวัสดีครับ", "ไม่เป็นไรครับ", "ยินดีที่ได้รู้จักครับ"]}, {"id": "w7", "th": "ค่ะ", "examples": ["ใช่ค่ะ", "ไม่ค่ะ", "ขอบคุณค่ะ", "ได้ค่ะ", "ไม่เป็นไรค่ะ", "เข้าใจค่ะ", "โอเคค่ะ", "ขอโทษค่ะ", "สวัสดีค่ะ", "ยินดีที่ได้รู้จักค่ะ", "รอสักครู่นะคะ", "ไม่ทราบค่ะ"]}], "tones": [{"words": ["กา", "มา", "ปลา", "ดี", "นา"]}, {"words": ["ข่า", "ป่า", "ข่าว", "ยาก", "ล่าง"]}, {"words": ["น้ำ", "ข้าว", "ค่ะ", "น้อย", "ฟ้า"]}, {"words": ["ขา", "ไม่", "ใหม่", "หมา", "นา"]}, {"words": ["ม้า", "หน้า", "ป๊า", "ฝา", "ข้า"]}], "grammar": [{"examples": ["ผมชื่ออาลีครับ", "คุณชื่ออะไร", "ผมมาจากตุรกีครับ", "ผมอยู่ที่ภูเก็ต", "ผมกินข้าวครับ"]}, {"examples": ["ขอบคุณครับ", "ขอบคุณค่ะ", "ใช่ครับ", "ได้ครับ", "สบายดีไหมคะ"]}, {"examples": ["ไม่เป็นไรครับ", "ไม่ครับ", "ไม่ทราบครับ", "ไม่เข้าใจครับ", "ไม่เอาครับ", "ไม่ได้ครับ"]}, {"examples": ["สบายดีไหม", "คุณชื่ออะไร", "ห้องน้ำอยู่ที่ไหน", "คุณมาจากไหน", "นี่เท่าไร", "ทำไมไม่มา"]}, {"examples": ["ผมกำลังกินข้าวครับ", "ผมกินข้าวแล้วครับ", "ผมจะไปภูเก็ตครับ", "ผมยังไม่ไปครับ", "ผมเคยไปภูเก็ตครับ"]}, {"examples": ["สองคนครับ", "สามตัวครับ", "หนึ่งใบครับ", "ร้อยบาทครับ", "ผมมีแฟนหนึ่งคนครับ"]}, {"examples": ["นั่นของผมครับ", "รถของคุณอยู่ที่ไหน", "นี่ของคุณไหม", "บ้านของผมอยู่ภูเก็ต"]}, {"examples": ["อาหารไทยดีกว่าครับ", "ภูเก็ตดีที่สุดครับ", "นี่แพงกว่าครับ", "วันนี้ร้อนกว่าเมื่อวานครับ"]}], "speaking": ["สวัสดีครับ", "ขอบคุณครับ", "ยินดีที่ได้รู้จักครับ", "ขอโทษครับ", "ไม่เป็นไรครับ", "ยินดีที่ได้รู้จัก", "ขอบคุณมากครับ", "ขอบคุณที่ช่วยครับ"], "dialogues": [["สวัสดีครับ", "สวัสดีค่ะ", "ยินดีที่ได้รู้จักครับ", "ยินดีที่ได้รู้จักค่ะ"], ["ขอบคุณมากครับ", "ไม่เป็นไรค่ะ", "คุณใจดีมากครับ", "ขอบคุณค่ะ"], ["ขอโทษครับ", "ไม่เป็นไรค่ะ", "ขอบคุณครับ", "สบายดีไหมคะ", "สบายดีครับ ขอบคุณ"], ["ผมชื่ออาลีครับ", "ยินดีที่ได้รู้จักค่ะ", "ยินดีที่ได้รู้จักเช่นกันครับ", "คุณมาจากไหนคะ", "ผมมาจากตุรกีครับ อยู่ภูเก็ต"], ["สบายดีไหม", "สบายดีค่ะ ขอบคุณค่ะ", "วันนี้อากาศดีมากครับ", "ใช่ค่ะ ร้อนมากเลยค่ะ", "แล้วเจอกันครับ"]], "listening": ["สวัสดีครับ", "ขอบคุณค่ะ", "ยินดีที่ได้รู้จักครับ", "ขอโทษครับ", "สวัสดีครับ", "สวัสดีค่ะ", "ขอบคุณมากครับ", "ไม่เป็นไรค่ะ", "ยินดีที่ได้รู้จักครับ", "ขอบคุณที่ช่วยครับ"]}</script>
 
 <header>
   <div class="brand">🇹🇭 Tayca</div>
@@ -669,8 +631,8 @@ const L1 = {
      lines:[
        {s:'Ali',th:'สวัสดีครับ',ro:'sa-wat-dee-khrap',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Selam'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
        {s:'Nada',th:'สวัสดีค่ะ',ro:'sa-wat-dee-kha',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Selam'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ยินดีที่รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ยินดีที่รู้จักค่ะ',ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
+       {s:'Ali',th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'ยินดีที่ได้รู้จักค่ะ',ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
      ]},
     {title:'🙏 Tesekkur Alisverisi',
      lines:[
@@ -690,8 +652,8 @@ const L1 = {
     {title:'🤝 Is Yerinde Tanisma',
      lines:[
        {s:'Ali',th:'สวัสดีครับผมชื่ออาลีครับ',ro:'sa-wat-dee-khrap pom chue Ali khrap',tr:'Merhaba, benim adim Ali.',bd:[{ro:'sa-wat-dee-khrap',tr:'merhaba',role:'Kelime'},{ro:'pom chue Ali',tr:'adim Ali',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'สวัสดีค่ะยินดีที่รู้จักค่ะ',ro:'sa-wat-dee-kha yin-dee-tii-dai-ruu-jak-kha',tr:'Merhaba, tanistigima memnun.',bd:[{ro:'sa-wat-dee-kha',tr:'merhaba',role:'Kelime'},{ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'memnun (kadin)',role:'Kelime'}]},
-       {s:'Ali',th:'ยินดีที่รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'chen-kan',tr:'aynı şekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'สวัสดีค่ะยินดีที่ได้รู้จักค่ะ',ro:'sa-wat-dee-kha yin-dee-tii-dai-ruu-jak-kha',tr:'Merhaba, tanistigima memnun.',bd:[{ro:'sa-wat-dee-kha',tr:'merhaba',role:'Kelime'},{ro:'yin-dee-tii-dai-ruu-jak-kha',tr:'memnun (kadin)',role:'Kelime'}]},
+       {s:'Ali',th:'ยินดีที่ได้รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'chen-kan',tr:'aynı şekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
        {s:'Nada',th:'คุณมาจากไหนคะ',ro:'khun-maa-jaak-nai-kha',tr:'Nereden geliyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'maa-jaak',tr:'geliyorsunuz',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
        {s:'Ali',th:'ผมมาจากตุรกีครับอยู่ภูเก็ต',ro:'pom-maa-jaak-tur-gii-khrap yuu-phu-get',tr:'Turkiyeden geliyorum, Phuket\'te yasiyorum.',bd:[{ro:'pom maa jaak tur-gii',tr:'Turkiyeden geliyorum',role:'Kelime'},{ro:'yuu phu-get',tr:'Phuket te',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
@@ -708,13 +670,13 @@ const L1 = {
   listening:[
     {diff:'easy',  th:'สวัสดีครับ',        q:'Ne duydu?', opts:['Selam (erkek)','Tesekkur','Sorun degil'], c:0},
     {diff:'easy',  th:'ขอบคุณค่ะ',         q:'Ne duydu?', opts:['Tesekkur ederim','Tanistigima memnun','Sorun degil'], c:0},
-    {diff:'easy',  th:'ยินดีที่รู้จักครับ', q:'Ne duydu?', opts:['Tesekkur','Tanistigima memnun','Sorun degil'], c:1},
+    {diff:'easy',  th:'ยินดีที่ได้รู้จักครับ', q:'Ne duydu?', opts:['Tesekkur','Tanistigima memnun','Sorun degil'], c:1},
     {diff:'medium',th:'ขอโทษครับ',          q:'Ne duydu?', opts:['Tesekkur','Ozur dilerim','Sorun degil'], c:1},
     {diff:'medium',th:'สวัสดีครับ',         q:'Erkek mi kadin mi?', opts:['Erkek','Kadin','Belirtilmiyor'], c:0},
     {diff:'medium',th:'สวัสดีค่ะ',          q:'Erkek mi kadin mi?', opts:['Erkek','Kadin','Belirtilmiyor'], c:1},
     {diff:'medium',th:'ขอบคุณมากครับ',      q:'Ne duydu?', opts:['Tesekkur','Cok tesekkur','Sorun degil'], c:1},
     {diff:'hard',  th:'ไม่เป็นไรค่ะ',       q:'"Ozur dilerim"e cevap?', opts:['Sorun degil','Tesekkur','Evet'], c:0},
-    {diff:'hard',  th:'ยินดีที่รู้จักครับ',  q:'Selamlasmada sonraki adim?', opts:['Ozur dile','Hoscakal','Tanis cumlesi','Yemek ismarla'], c:2},
+    {diff:'hard',  th:'ยินดีที่ได้รู้จักครับ',  q:'Selamlasmada sonraki adim?', opts:['Ozur dile','Hoscakal','Tanis cumlesi','Yemek ismarla'], c:2},
     {diff:'hard',  th:'ขอบคุณที่ช่วยครับ',   q:'Ne demek?', opts:['Tesekkur yok','Yardim icin tesekkurler','Ozur dilerim','Sorun degil'], c:1},
   ],
 
@@ -726,7 +688,7 @@ const L1 = {
     {q:'ไม่เป็นไร ne demek?', opts:['Tesekkur','Ozur dilerim','Sorun degil','Hoscakal'], c:2},
     {q:'Thai ton sistemi kac ton?', opts:['3','4','5','6'], c:2},
     {q:'ขอบคุณมากครับ ne demek?', opts:['Tesekkur','Cok tesekkur ederim','Ozur dilerim','Hoscakal'], c:1},
-    {q:'ยินดีที่รู้จักครับ ne demek?', opts:['Tesekkur','Ozur dilerim','Tanistigima memnun','Hoscakal'], c:2},
+    {q:'ยินดีที่ได้รู้จักครับ ne demek?', opts:['Tesekkur','Ozur dilerim','Tanistigima memnun','Hoscakal'], c:2},
     {q:'pom ne demek?', opts:['Ben (erkek)','Sen','O','Biz'], c:0},
     {q:'pom chue Ali khrap ne demek?', opts:['Ali nerede?','Benim adim Ali','Sen Ali misin?','Adi ne?'], c:1},
     {q:'pom pen kon Tuerk ne demek?', opts:['Turk ten geliyorum','Ben Turk um','Turkce biliyorum','Turk istiyorum'], c:1},
