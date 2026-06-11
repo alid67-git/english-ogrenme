@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Kolay Tayca Öğrenme</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -276,6 +279,27 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .srs-add-btn{padding:5px 10px;background:#0d9488;color:white;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
 
 </style>
+<script>
+// Cache temizleme — GitHub Pages kısayolu güncelleme sorunu için
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(regs=>{
+    regs.forEach(reg=>reg.unregister());
+  });
+}
+// Versiyon kontrolü — yeni versiyon varsa cache temizle
+const APP_VERSION = 'v3.17';
+const storedVersion = localStorage.getItem('app_version');
+if(storedVersion && storedVersion !== APP_VERSION){
+  // Yeni versiyon → caches temizle
+  if('caches' in window){
+    caches.keys().then(names=>{
+      names.forEach(name=>caches.delete(name));
+    });
+  }
+  console.log('Yeni versiyon: '+APP_VERSION+', cache temizlendi.');
+}
+localStorage.setItem('app_version', APP_VERSION);
+</script>
 </head>
 <body>
 <script type="application/json" id="thai-data">{"words": [{"id": "w1", "th": "สวัสดีครับ", "examples": ["คุณชื่ออะไร", "ยินดีที่ได้รู้จัก", "สบายดีไหม", "ผมชื่ออาลี", "คุณมาจากไหน", "ยินดีต้อนรับ", "ขอโทษที่รอ", "วันนี้เป็นอย่างไร", "เชิญเข้ามา", "ขอบคุณที่มา"]}, {"id": "w2", "th": "สวัสดีค่ะ", "examples": ["ยินดีต้อนรับ", "คุณเป็นใคร", "สบายดีไหมคะ", "ยินดีที่ได้รู้จักค่ะ", "ขอบคุณที่มาค่ะ"]}, {"id": "w3", "th": "ขอบคุณ", "examples": ["ขอบคุณครับ", "ขอบคุณมากครับ", "ขอบคุณมากๆ ครับ", "ขอบคุณสำหรับอาหารครับ", "ขอบคุณที่ช่วยครับ", "ขอบคุณที่รอครับ", "ขอบคุณสำหรับทุกอย่างครับ", "ขอบคุณที่มาครับ", "ขอบคุณที่สอนครับ", "ขอบคุณล่วงหน้าครับ"]}, {"id": "w4", "th": "ยินดีที่ได้รู้จัก", "examples": ["ยินดีที่ได้รู้จักครับ", "ยินดีที่ได้รู้จักค่ะ", "ยินดีที่ได้รู้จักเช่นกันครับ", "ผมยินดีที่ได้รู้จักคุณมากครับ", "ยินดีที่ได้รู้จักครับ", "ยินดีที่ได้รู้จัก", "ผมชื่ออาลี ยินดีที่ได้รู้จักครับ"]}, {"id": "w5", "th": "ไม่เป็นไร", "examples": ["ไม่เป็นไรครับ", "ไม่เป็นไรค่ะ", "ขอโทษครับ ไม่เป็นไร", "ไม่เป็นไร ไม่ต้องเป็นห่วงครับ", "ไม่เป็นไร มันเกิดขึ้นได้", "โอเคครับ ไม่เป็นไร", "ไม่เป็นไรครับ เกิดขึ้นกับทุกคน", "ไม่เป็นไรครับ ผมเข้าใจ"]}, {"id": "w6", "th": "ครับ", "examples": ["ใช่ครับ", "ไม่ครับ", "โอเคครับ", "ได้ครับ", "เข้าใจครับ", "ทราบแล้วครับ", "รอสักครู่ครับ", "ขอโทษครับ", "ขอบคุณครับ", "สวัสดีครับ", "ไม่เป็นไรครับ", "ยินดีที่ได้รู้จักครับ"]}, {"id": "w7", "th": "ค่ะ", "examples": ["ใช่ค่ะ", "ไม่ค่ะ", "ขอบคุณค่ะ", "ได้ค่ะ", "ไม่เป็นไรค่ะ", "เข้าใจค่ะ", "โอเคค่ะ", "ขอโทษค่ะ", "สวัสดีค่ะ", "ยินดีที่ได้รู้จักค่ะ", "รอสักครู่นะคะ", "ไม่ทราบค่ะ"]}], "tones": [{"words": ["กา", "มา", "ปลา", "ดี", "นา"]}, {"words": ["ข่า", "ป่า", "ข่าว", "ยาก", "ล่าง"]}, {"words": ["น้ำ", "ข้าว", "ค่ะ", "น้อย", "ฟ้า"]}, {"words": ["ขา", "ไม่", "ใหม่", "หมา", "นา"]}, {"words": ["ม้า", "หน้า", "ป๊า", "ฝา", "ข้า"]}], "grammar": [{"examples": ["ผมชื่ออาลีครับ", "คุณชื่ออะไร", "ผมมาจากตุรกีครับ", "ผมอยู่ที่ภูเก็ต", "ผมกินข้าวครับ"]}, {"examples": ["ขอบคุณครับ", "ขอบคุณค่ะ", "ใช่ครับ", "ได้ครับ", "สบายดีไหมคะ"]}, {"examples": ["ไม่เป็นไรครับ", "ไม่ครับ", "ไม่ทราบครับ", "ไม่เข้าใจครับ", "ไม่เอาครับ", "ไม่ได้ครับ"]}, {"examples": ["สบายดีไหม", "คุณชื่ออะไร", "ห้องน้ำอยู่ที่ไหน", "คุณมาจากไหน", "นี่เท่าไร", "ทำไมไม่มา"]}, {"examples": ["ผมกำลังกินข้าวครับ", "ผมกินข้าวแล้วครับ", "ผมจะไปภูเก็ตครับ", "ผมยังไม่ไปครับ", "ผมเคยไปภูเก็ตครับ"]}, {"examples": ["สองคนครับ", "สามตัวครับ", "หนึ่งใบครับ", "ร้อยบาทครับ", "ผมมีแฟนหนึ่งคนครับ"]}, {"examples": ["นั่นของผมครับ", "รถของคุณอยู่ที่ไหน", "นี่ของคุณไหม", "บ้านของผมอยู่ภูเก็ต"]}, {"examples": ["อาหารไทยดีกว่าครับ", "ภูเก็ตดีที่สุดครับ", "นี่แพงกว่าครับ", "วันนี้ร้อนกว่าเมื่อวานครับ"]}], "speaking": ["สวัสดีครับ", "ขอบคุณครับ", "ยินดีที่ได้รู้จักครับ", "ขอโทษครับ", "ไม่เป็นไรครับ", "ยินดีที่ได้รู้จัก", "ขอบคุณมากครับ", "ขอบคุณที่ช่วยครับ"], "dialogues": [["สวัสดีครับ", "สวัสดีค่ะ", "ยินดีที่ได้รู้จักครับ", "ยินดีที่ได้รู้จักค่ะ"], ["ขอบคุณมากครับ", "ไม่เป็นไรค่ะ", "คุณใจดีมากครับ", "ขอบคุณค่ะ"], ["ขอโทษครับ", "ไม่เป็นไรค่ะ", "ขอบคุณครับ", "สบายดีไหมคะ", "สบายดีครับ ขอบคุณ"], ["ผมชื่ออาลีครับ", "ยินดีที่ได้รู้จักค่ะ", "ยินดีที่ได้รู้จักเช่นกันครับ", "คุณมาจากไหนคะ", "ผมมาจากตุรกีครับ อยู่ภูเก็ต"], ["สบายดีไหม", "สบายดีค่ะ ขอบคุณค่ะ", "วันนี้อากาศดีมากครับ", "ใช่ค่ะ ร้อนมากเลยค่ะ", "แล้วเจอกันครับ"]], "listening": ["สวัสดีครับ", "ขอบคุณค่ะ", "ยินดีที่ได้รู้จักครับ", "ขอโทษครับ", "สวัสดีครับ", "สวัสดีค่ะ", "ขอบคุณมากครับ", "ไม่เป็นไรค่ะ", "ยินดีที่ได้รู้จักครับ", "ขอบคุณที่ช่วยครับ"]}</script>
@@ -290,7 +314,7 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.16</span>
+  <span class="vbadge" id="app-version">v3.17</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -600,6 +624,10 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.17</div>
+            <div class="changelog-desc">Cache-busting: meta tagları + SW temizleme + versiyon kontrolü — GitHub Pages kısayolu güncellenme sorunu çözüldü</div>
+          </div>
           <div class="changelog-item">
             <div class="changelog-ver">v3.16</div>
             <div class="changelog-desc">Tüm Dersler testi sadece tamamlanmış dersleri getiriyor</div>
