@@ -2850,8 +2850,9 @@ function openLesson(num){
     const tab = e.target.closest('.ltab').dataset.tab;
     switchLessonTab(tab, e.target.closest('.ltab'));
   }));
-  switchLessonTab('words');
-  visitedTabs['L'+currentLesson.num+'_words'] = true;
+  const firstTab = getTabsForLesson(meta)[0];
+  switchLessonTab(firstTab);
+  visitedTabs['L'+currentLesson.num+'_'+firstTab] = true;
   saveVisited();
 }
 
