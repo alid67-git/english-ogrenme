@@ -290,7 +290,7 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.12</span>
+  <span class="vbadge" id="app-version">v3.16</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -600,6 +600,22 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.16</div>
+            <div class="changelog-desc">Tüm Dersler testi sadece tamamlanmış dersleri getiriyor</div>
+          </div>
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.15</div>
+            <div class="changelog-desc">Flashcard ses butonu inline JS kaldırıldı · testGoBack() ile akıllı geri navigasyon</div>
+          </div>
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.14</div>
+            <div class="changelog-desc">Test Script error düzeltildi: lessonNum null koruması, getWrongOptions tüm ders havuzu, sonuç butonları güncellendi</div>
+          </div>
+          <div class="changelog-item">
+            <div class="changelog-ver">v3.13</div>
+            <div class="changelog-desc">Test ana menüsü 3 seçeneğe dönüştürüldü: Tek Ders / Tüm Dersler / Yıldızlılar</div>
+          </div>
           <div class="changelog-item">
             <div class="changelog-ver">v3.12</div>
             <div class="changelog-desc">Test modülü: ders bazlı test, konu filtresi (Zamirler/İfadeler/Gramer), kart modu (Flashcard/MC/Karma), yön seçimi, sonuç ekranı</div>
@@ -3610,14 +3626,17 @@ function hasPronouns(ro){
 
 // Tüm kartlardan yanlış seçenekleri al
 function getWrongOptions(correctTr, count, lessonNum){
-  const L = LESSONS[lessonNum];
-  if(!L) return [];
   const pool = [];
-  (L.words||[]).forEach(w=>{
-    if(w.tr && w.tr!==correctTr) pool.push(w.tr);
-    (w.examples||[]).forEach(e=>{ if(e.tr && e.tr!==correctTr) pool.push(e.tr); });
+  // lessonNum=0 veya null ise tüm derslerden al
+  const lessons = (lessonNum && LESSONS[lessonNum])
+    ? [LESSONS[lessonNum]]
+    : Object.values(LESSONS).filter(Boolean);
+  lessons.forEach(L=>{
+    (L.words||[]).forEach(w=>{
+      if(w.tr && w.tr!==correctTr) pool.push(w.tr);
+      (w.examples||[]).forEach(e=>{ if(e.tr && e.tr!==correctTr) pool.push(e.tr); });
+    });
   });
-  // Shuffle ve al
   return pool.sort(()=>Math.random()-0.5).slice(0,count);
 }
 
@@ -3625,147 +3644,224 @@ function renderTestView(){
   const wrap = document.getElementById('test-content');
   if(!wrap) return;
 
-  const cats = [
-    {id:'all', label:'🗂️ Tümü'},
-    {id:'pronouns', label:'👤 Zamirler'},
-    {id:'phrases', label:'💬 İfadeler'},
-    {id:'grammar', label:'📖 Gramer'},
-  ];
+  // İstatistikler
+  const db = SRS.load();
+  const allCards = Object.values(db);
+  const starred = JSON.parse(localStorage.getItem('tv3_star')||'{}');
+  const starCount = Object.keys(starred).length;
+  const completedCount = completedLessons.length;
+  const totalLessons = LESSONS_META.filter(m=>m.hasContent).length;
 
-  const lessonRows = LESSONS_META.filter(m=>m.hasContent).map(m=>{
-    const db = SRS.load();
-    const srsCards = Object.values(db).filter(c=>c.lessonNum===m.num).length;
-    const due = Object.values(db).filter(c=>c.lessonNum===m.num && c.nextReview<=Date.now()).length;
-    const done = isCompleted(m.num);
-    return `
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #f0f0f0;cursor:pointer;"
-           onclick="openTestLesson(${m.num})"
-           onmouseenter="this.style.background='#f0fdf9'" onmouseleave="this.style.background=''">
-        <div style="font-size:20px">${m.emoji}</div>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:700;color:#222;">Ders ${m.num}: ${m.title}</div>
-          <div style="font-size:11px;color:#888;margin-top:2px;">
-            ${srsCards>0 ? srsCards+' kart' : 'SRS eklenmedi'}
-            ${due>0 ? ' · <span style="color:#ef4444;font-weight:700;">'+due+' tekrar bekliyor</span>' : ''}
-            ${done ? ' · <span style="color:#0d9488;font-weight:700;">✓ Tamamlandı</span>' : ''}
-          </div>
-        </div>
-        <div style="font-size:18px;color:#ccc">›</div>
-      </div>`;
-  }).join('');
+  // Tüm derslerden toplam kart sayısı
+  let allTestCards = [];
+  LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).forEach(m=>{
+    allTestCards = allTestCards.concat(buildTestCards(m.num,'all'));
+  });
+
+  // Yıldızlı kartlar
+  const starredCards = Object.entries(starred).map(([k,v])=>({
+    type: v.type||'word', th:v.th||'', ro:v.ro||k, tr:v.tr||'', cat:'phrases', bd:v.bd||[]
+  })).filter(c=>c.ro);
 
   wrap.innerHTML = `
     <!-- BAŞLIK -->
-    <div style="background:linear-gradient(135deg,#0d9488,#06b6d4);border-radius:14px;padding:16px;margin-bottom:16px;color:white;">
-      <div style="font-size:16px;font-weight:700;margin-bottom:4px;">📝 Ders Testi</div>
-      <div style="font-size:12px;opacity:.8;">Bir ders seç, kart modunu belirle ve başla.</div>
+    <div style="background:linear-gradient(135deg,#0d9488,#06b6d4);border-radius:14px;padding:16px 18px;margin-bottom:18px;color:white;">
+      <div style="font-size:16px;font-weight:700;margin-bottom:3px;">📝 Test</div>
+      <div style="font-size:12px;opacity:.8;">${completedCount}/${totalLessons} ders tamamlandı · ${allTestCards.length} kart mevcut</div>
     </div>
 
-    <!-- DERS LİSTESİ -->
-    <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;overflow:hidden;margin-bottom:16px;">
-      <div style="padding:10px 12px;background:#f8f9fa;border-bottom:1px solid #e8e8e8;font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;">
-        Ders Seç
+    <!-- 3 ANA SEÇENEK -->
+    <!-- 1. TEK DERS -->
+    <div onclick="openTestModeMenu('lesson')"
+      style="background:white;border:1.5px solid #e0e0e0;border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:.15s;"
+      onmouseenter="this.style.borderColor='#0d9488';this.style.background='#f0fdf9'"
+      onmouseleave="this.style.borderColor='#e0e0e0';this.style.background='white'">
+      <div style="font-size:32px;flex-shrink:0;">📚</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700;color:#222;margin-bottom:3px;">Tek Ders</div>
+        <div style="font-size:12px;color:#888;line-height:1.5;">Bir dersin kelimelerini, örneklerini ve gramer cümlelerini test et. Konu filtresi ve mod seçimi yapılabilir.</div>
       </div>
-      ${lessonRows}
+      <div style="font-size:20px;color:#ccc">›</div>
+    </div>
+
+    <!-- 2. TÜM DERSLER -->
+    <div onclick="openTestModeMenu('all')"
+      style="background:white;border:1.5px solid #e0e0e0;border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:.15s;"
+      onmouseenter="this.style.borderColor='#0d9488';this.style.background='#f0fdf9'"
+      onmouseleave="this.style.borderColor='#e0e0e0';this.style.background='white'">
+      <div style="font-size:32px;flex-shrink:0;">🗂️</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700;color:#222;margin-bottom:3px;">Tüm Dersler</div>
+        <div style="font-size:12px;color:#888;line-height:1.5;">Tamamlanan ${completedCount} dersin tüm kartları karışık gelir. ${allTestCards.length} kart havuzu.</div>
+      </div>
+      <div style="font-size:20px;color:#ccc">›</div>
+    </div>
+
+    <!-- 3. YILDIZLILAR -->
+    <div onclick="${starCount>0 ? 'openTestModeMenu(\'starred\')' : ''}"
+      style="background:${starCount>0?'white':'#f8f8f8'};border:1.5px solid ${starCount>0?'#e0e0e0':'#ebebeb'};border-radius:14px;padding:16px;margin-bottom:10px;cursor:${starCount>0?'pointer':'default'};display:flex;align-items:center;gap:14px;transition:.15s;"
+      ${starCount>0?'onmouseenter="this.style.borderColor=\'#f59e0b\';this.style.background=\'#fffbeb\'" onmouseleave="this.style.borderColor=\'#e0e0e0\';this.style.background=\'white\'"':''}>
+      <div style="font-size:32px;flex-shrink:0;">⭐</div>
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:700;color:${starCount>0?'#222':'#bbb'};margin-bottom:3px;">Yıldızlılar</div>
+        <div style="font-size:12px;color:#888;line-height:1.5;">${starCount>0 ? starCount+' yıldızlı kart — Kaydettiğin önemli cümle ve kelimeler.' : 'Henüz yıldızlı kart yok. Derslerde ⭐ ile işaretle.'}</div>
+      </div>
+      <div style="font-size:20px;color:#ccc">${starCount>0?'›':'·'}</div>
     </div>
   `;
 }
 
-function openTestLesson(num){
+function openTestModeMenu(source){
   const wrap = document.getElementById('test-content');
-  const meta = LESSONS_META.find(m=>m.num===num);
-  if(!meta) return;
 
-  const totalCards = buildTestCards(num,'all').length;
-  const pronounCards = buildTestCards(num,'pronouns').length;
-  const phraseCards = buildTestCards(num,'phrases').length;
-  const gramCards = buildTestCards(num,'grammar').length;
+  // Kart havuzunu belirle
+  let cards = [];
+  let title = '';
+  let subtitle = '';
+
+  if(source==='all'){
+    LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).forEach(m=>{
+      cards = cards.concat(buildTestCards(m.num,'all'));
+    });
+    title = '🗂️ Tüm Dersler';
+    subtitle = cards.length + ' kart';
+  } else if(source==='starred'){
+    const starred = JSON.parse(localStorage.getItem('tv3_star')||'{}');
+    cards = Object.entries(starred).map(([k,v])=>({
+      type:v.type||'word', th:v.th||'', ro:v.ro||k, tr:v.tr||'', cat:'phrases', bd:v.bd||[], lessonNum:0
+    })).filter(c=>c.ro);
+    title = '⭐ Yıldızlılar';
+    subtitle = cards.length + ' kart';
+  } else {
+    // Ders seçimi göster
+    renderLessonPicker();
+    return;
+  }
+
+  // Kaydet ve mod menüsü göster
+  testState._sourceCards = cards;
+  testState._sourceLabel = title;
+  renderModeMenu(title, subtitle);
+}
+
+function renderLessonPicker(){
+  const wrap = document.getElementById('test-content');
+  const rows = LESSONS_META.filter(m=>m.hasContent).map(m=>{
+    const cnt = buildTestCards(m.num,'all').length;
+    const done = isCompleted(m.num);
+    return `<div onclick="selectTestLesson(${m.num})"
+      style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;"
+      onmouseenter="this.style.background='#f0fdf9'" onmouseleave="this.style.background=''">
+      <div style="font-size:20px;">${m.emoji}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;color:#222;">Ders ${m.num}: ${m.title}</div>
+        <div style="font-size:11px;color:#888;margin-top:1px;">${cnt} kart${done?' · <span style="color:#0d9488">✓ Tamamlandı</span>':''}</div>
+      </div>
+      <div style="color:#ccc;font-size:18px;">›</div>
+    </div>`;
+  }).join('');
 
   wrap.innerHTML = `
-    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Dersler</button>
+    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Geri</button>
+    <div style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;overflow:hidden;">
+      <div style="padding:10px 14px;background:#f8f9fa;border-bottom:1px solid #e8e8e8;font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;">Ders Seç</div>
+      ${rows}
+    </div>`;
+}
+
+function selectTestLesson(num){
+  const meta = LESSONS_META.find(m=>m.num===num);
+  const allCards = buildTestCards(num,'all');
+  const pronounCards = buildTestCards(num,'pronouns');
+  const phraseCards = buildTestCards(num,'phrases');
+  const gramCards = buildTestCards(num,'grammar');
+
+  testState._sourceLabel = meta.emoji+' Ders '+num;
+  testState._lessonNum = num;
+  testState._sourceCards = allCards; // default all
+
+  const wrap = document.getElementById('test-content');
+  wrap.innerHTML = `
+    <button onclick="renderLessonPicker()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Dersler</button>
 
     <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;padding:14px;margin-bottom:14px;">
-      <div style="font-size:15px;font-weight:700;color:#222;margin-bottom:4px;">${meta.emoji} Ders ${meta.num}: ${meta.title}</div>
-      <div style="font-size:11px;color:#888;">${totalCards} kart mevcut</div>
+      <div style="font-size:15px;font-weight:700;color:#222;margin-bottom:2px;">${meta.emoji} Ders ${num}: ${meta.title}</div>
+      <div style="font-size:11px;color:#888;">${allCards.length} kart</div>
     </div>
 
-    <!-- KATEGORİ SEÇ -->
     <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Konu Filtresi</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
-      <button class="test-cat-btn active" data-cat="all" onclick="selectTestCat(this,'all')">🗂️ Tümü (${totalCards})</button>
-      ${pronounCards>0?`<button class="test-cat-btn" data-cat="pronouns" onclick="selectTestCat(this,'pronouns')">👤 Zamirler (${pronounCards})</button>`:''}
-      ${phraseCards>0?`<button class="test-cat-btn" data-cat="phrases" onclick="selectTestCat(this,'phrases')">💬 İfadeler (${phraseCards})</button>`:''}
-      ${gramCards>0?`<button class="test-cat-btn" data-cat="grammar" onclick="selectTestCat(this,'grammar')">📖 Gramer (${gramCards})</button>`:''}
+      <button class="test-cat-btn active" onclick="selectTestCat(this,'all',${num})">🗂️ Tümü (${allCards.length})</button>
+      ${pronounCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'pronouns',${num})">👤 Zamirler (${pronounCards.length})</button>`:''}
+      ${phraseCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'phrases',${num})">💬 İfadeler (${phraseCards.length})</button>`:''}
+      ${gramCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'grammar',${num})">📖 Gramer (${gramCards.length})</button>`:''}
     </div>
 
-    <!-- MOD SEÇ -->
-    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Kart Modu</div>
-    <div style="display:flex;gap:8px;margin-bottom:16px;">
-      <button class="test-mode-btn active" data-mode="fc" onclick="selectTestMode(this,'fc')" style="flex:1">
-        <div style="font-size:18px;margin-bottom:3px;">🃏</div>
-        <div style="font-size:12px;font-weight:700;">Flashcard</div>
-        <div style="font-size:10px;color:#888;margin-top:2px;">Gör → Tahmin et</div>
-      </button>
-      <button class="test-mode-btn" data-mode="mc" onclick="selectTestMode(this,'mc')" style="flex:1">
-        <div style="font-size:18px;margin-bottom:3px;">☑️</div>
-        <div style="font-size:12px;font-weight:700;">Çoktan Seçmeli</div>
-        <div style="font-size:10px;color:#888;margin-top:2px;">4 seçenek</div>
-      </button>
-      <button class="test-mode-btn" data-mode="mix" onclick="selectTestMode(this,'mix')" style="flex:1">
-        <div style="font-size:18px;margin-bottom:3px;">🎲</div>
-        <div style="font-size:12px;font-weight:700;">Karma</div>
-        <div style="font-size:10px;color:#888;margin-top:2px;">Rastgele</div>
-      </button>
-    </div>
+    ${renderModeOptions()}
 
-    <!-- YÖN SEÇ -->
-    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Yön</div>
-    <div style="display:flex;gap:8px;margin-bottom:20px;">
-      <button class="test-dir-btn active" data-dir="th2tr" onclick="selectTestDir(this,'th2tr')" style="flex:1;padding:8px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;color:#0d9488;">🇹🇭 → Türkçe</button>
-      <button class="test-dir-btn" data-dir="tr2th" onclick="selectTestDir(this,'tr2th')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;color:#888;">Türkçe → 🇹🇭</button>
-      <button class="test-dir-btn" data-dir="mix" onclick="selectTestDir(this,'mix')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;color:#888;">🎲 Karma</button>
-    </div>
-
-    <!-- BAŞLA -->
-    <button onclick="startLessonTest(${num})"
-      style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.03em;">
-      🚀 Testi Başlat
-    </button>
+    <button onclick="startFromState()" style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;">🚀 Testi Başlat</button>
   `;
-
-  // State güncelle
   testState.lessonNum = num;
   testState.category = 'all';
   testState.mode = 'fc';
   testState.dir = 'th2tr';
 }
 
-function selectTestCat(btn, cat){
+function selectTestCat(btn, cat, num){
   document.querySelectorAll('.test-cat-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   testState.category = cat;
-}
-function selectTestMode(btn, mode){
-  document.querySelectorAll('.test-mode-btn').forEach(b=>{ b.classList.remove('active'); b.style.background='white'; b.style.borderColor='#e0e0e0'; b.querySelector('div:nth-child(2)').style.color='#222'; });
-  btn.classList.add('active'); btn.style.background='#f0fdf9'; btn.style.borderColor='#0d9488';
-  btn.querySelector('div:nth-child(2)').style.color='#0d9488';
-  testState.mode = mode;
-}
-function selectTestDir(btn, dir){
-  document.querySelectorAll('.test-dir-btn').forEach(b=>{ b.style.background='white'; b.style.borderColor='#e0e0e0'; b.style.color='#888'; });
-  btn.style.background='#f0fdf9'; btn.style.borderColor='#0d9488'; btn.style.color='#0d9488';
-  testState.dir = dir;
+  testState._sourceCards = buildTestCards(num, cat);
+  testState._lessonNum = num;
 }
 
-function startLessonTest(num){
-  const cards = buildTestCards(num, testState.category);
-  if(cards.length===0){ alert('Bu kategoride kart bulunamadı.'); return; }
-  testState.lessonNum = num;
+function renderModeOptions(){
+  return `
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Kart Modu</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <button class="test-mode-btn active" onclick="selectTestMode(this,'fc')" style="flex:1;padding:10px 6px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:10px;cursor:pointer;text-align:center;">
+        <div style="font-size:16px;">🃏</div><div style="font-size:11px;font-weight:700;color:#0d9488;margin-top:2px;">Flashcard</div>
+      </button>
+      <button class="test-mode-btn" onclick="selectTestMode(this,'mc')" style="flex:1;padding:10px 6px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;text-align:center;">
+        <div style="font-size:16px;">☑️</div><div style="font-size:11px;font-weight:700;color:#888;margin-top:2px;">Çoktan Seçmeli</div>
+      </button>
+      <button class="test-mode-btn" onclick="selectTestMode(this,'mix')" style="flex:1;padding:10px 6px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;text-align:center;">
+        <div style="font-size:16px;">🎲</div><div style="font-size:11px;font-weight:700;color:#888;margin-top:2px;">Karma</div>
+      </button>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Yön</div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button class="test-dir-btn active" onclick="selectTestDir(this,'th2tr')" style="flex:1;padding:8px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#0d9488;">🇹🇭→TR</button>
+      <button class="test-dir-btn" onclick="selectTestDir(this,'tr2th')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">TR→🇹🇭</button>
+      <button class="test-dir-btn" onclick="selectTestDir(this,'mix')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">🎲 Karma</button>
+    </div>`;
+}
+
+function renderModeMenu(title, subtitle){
+  const wrap = document.getElementById('test-content');
+  wrap.innerHTML = `
+    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Geri</button>
+    <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;padding:14px;margin-bottom:14px;">
+      <div style="font-size:15px;font-weight:700;color:#222;margin-bottom:2px;">${title}</div>
+      <div style="font-size:11px;color:#888;">${subtitle}</div>
+    </div>
+    ${renderModeOptions()}
+    <button onclick="startFromState()" style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;">🚀 Testi Başlat</button>
+  `;
+  testState.mode = 'fc';
+  testState.dir = 'th2tr';
+}
+
+function startFromState(){
+  const cards = (testState._sourceCards||[]).sort(()=>Math.random()-0.5);
+  if(cards.length===0){ alert('Kart bulunamadı.'); return; }
   testState.cards = cards;
   testState.idx = 0;
   testState.correct = 0;
   testState.wrong = 0;
   testState.history = [];
+  // lessonNum: ders testinde dersin num'u, diğerlerinde 0 (tüm havuz kullan)
+  testState.lessonNum = testState._lessonNum || 0;
   showTestCard();
 }
 
@@ -3805,12 +3901,12 @@ function showTestCard(){
 
   if(actualMode==='fc'){
     wrap.innerHTML = `
-      <button onclick="openTestLesson(${lessonNum})" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Ders</button>
+      <button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Ders</button>
       ${progressBar}
       <div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:24px 20px;text-align:center;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">
         <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':'Gramer'}</div>
         ${questionText}
-        <button onclick="if(window.speechSynthesis){const u=new SpeechSynthesisUtterance('${(card.th||card.ro).replace(/'/g,"\'")}');u.lang='th-TH';u.rate=.82;speechSynthesis.cancel();speechSynthesis.speak(u);}" style="margin-top:12px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>
+        <button onclick="speakTestWord()" style="margin-top:12px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>
       </div>
       <div id="fc-answer" style="display:none;background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:12px;padding:14px 16px;margin-bottom:14px;text-align:center;">
         ${actualDir==='th2tr'
@@ -3831,8 +3927,12 @@ function showTestCard(){
   } else {
     // MC
     const correctAnswer = actualDir==='th2tr' ? card.tr : (card.th||card.ro);
-    const wrongPool = getWrongOptions(card.tr, 5, lessonNum);
-    const wrongs = actualDir==='th2tr' ? wrongPool.slice(0,3) : buildTestCards(lessonNum,'all').filter(c=>c.tr!==card.tr).slice(0,3).map(c=>c.th||c.ro);
+    const wrongPool = getWrongOptions(card.tr, 5, lessonNum||0);
+    // tr2th yönü için: tüm kartlardan veya ders kartlarından yanlış seçenekler
+    const wrongThPool = lessonNum
+      ? buildTestCards(lessonNum,'all').filter(c=>c.tr!==card.tr)
+      : testState.cards.filter(c=>c.tr!==card.tr);
+    const wrongs = actualDir==='th2tr' ? wrongPool.slice(0,3) : wrongThPool.slice(0,3).map(c=>c.th||c.ro);
     const opts = [correctAnswer, ...wrongs.slice(0,3)].sort(()=>Math.random()-0.5);
 
     // MC butonlarını ayrı fonksiyonla oluştur — apostrof sorununu önlemek için
@@ -3841,7 +3941,7 @@ function showTestCard(){
     window._testMCFull = actualDir==='th2tr' ? card.tr : card.ro;
 
     wrap.innerHTML = [
-      '<button onclick="openTestLesson('+lessonNum+')" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">&larr; Ders</button>',
+      '<button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">&larr; Geri</button>',
       progressBar,
       '<div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:20px;text-align:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">',
       '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">'+(card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':'Gramer')+'</div>',
@@ -3864,6 +3964,15 @@ function showTestCard(){
       btn.onclick = ()=>checkMCAnswer(btn, opt, correctAnswer, window._testMCFull);
       grid.appendChild(btn);
     });
+  }
+}
+
+function testGoBack(){
+  // Nereden geldik? lessonNum varsa ders seçimine, yoksa ana menüye
+  if(testState._lessonNum){
+    selectTestLesson(testState._lessonNum);
+  } else {
+    renderTestView();
   }
 }
 
@@ -3940,8 +4049,8 @@ function showTestResult(){
       </div>` : ''}
 
     <div style="display:flex;gap:8px;">
-      <button onclick="startLessonTest(${lessonNum})" style="flex:1;padding:12px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:13px;font-weight:700;cursor:pointer;">🔄 Tekrar</button>
-      <button onclick="openTestLesson(${lessonNum})" style="flex:1;padding:12px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;color:#555;font-size:13px;font-weight:700;cursor:pointer;">⚙️ Ayarlar</button>
+      <button onclick="startFromState()" style="flex:1;padding:12px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:13px;font-weight:700;cursor:pointer;">🔄 Tekrar</button>
+      <button onclick="renderTestView()" style="flex:1;padding:12px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;color:#555;font-size:13px;font-weight:700;cursor:pointer;">← Ana Menü</button>
     </div>
   `;
 }
