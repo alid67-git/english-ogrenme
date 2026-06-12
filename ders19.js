@@ -273,48 +273,48 @@ const L19 = {
       id:'d1',
       title:'Sahne 1 — Sabah: Kahvaltı ve Pazar',
       lines:[
-        {speaker:'Tom',th:'สวัสดีตอนเช้าครับ ตื่นนอนแล้วหิวมากเลยครับ',ro:'sa-wat-dii ton chao khrap tuen-non lae-o hiw maak loei khrap',tr:'Günaydın efendim. Uyandım ve çok acıktım.'},
-        {speaker:'Lucy',th:'สวัสดีตอนเช้าค่ะ กินอาหารเช้าด้วยกันไหมคะ',ro:'sa-wat-dii ton chao kha gin aa-haan-chao duai gan mai kha',tr:'Günaydın efendim. Kahvaltıyı birlikte yer miyiz?'},
-        {speaker:'Tom',th:'ยินดีมากเลยครับ ไปตลาดเช้าด้วยกันได้ไหมครับ',ro:'yin-dii maak loei khrap pai ta-laat chao duai gan dai mai khrap',tr:'Çok memnuniyetle efendim. Sabah pazarına da birlikte gidebilir miyiz?'},
-        {speaker:'Lucy',th:'ได้เลยค่ะ ตลาดอยู่แถวนี้เลยค่ะ เปิดตั้งแต่เช้ามากค่ะ',ro:'dai loei kha ta-laat yuu thaeo nii loei kha poet tang-tae chao maak kha',tr:'Tabii efendim. Pazar buranın hemen yakınında, sabah çok erkenden açılıyor.'},
-        {speaker:'Tom',th:'เยี่ยมมากครับ ไปได้เลยครับ',ro:'yiam maak khrap pai dai loei khrap',tr:'Harika efendim, gidebiliriz.'},
-        {speaker:'Lucy',th:'ที่ตลาดต่อรองราคาได้นะคะ อย่าลืมนะคะ',ro:'thii ta-laat to-rong raa-khaa dai na kha ya luem na kha',tr:'Pazarda pazarlık yapabilirsin efendim, unutma.'}
+        {s:'Tom',th:'สวัสดีตอนเช้าครับ ตื่นนอนแล้วหิวมากเลยครับ',ro:'sa-wat-dii ton chao khrap tuen-non lae-o hiw maak loei khrap',tr:'Günaydın efendim. Uyandım ve çok acıktım.'},
+        {s:'Lucy',th:'สวัสดีตอนเช้าค่ะ กินอาหารเช้าด้วยกันไหมคะ',ro:'sa-wat-dii ton chao kha gin aa-haan-chao duai gan mai kha',tr:'Günaydın efendim. Kahvaltıyı birlikte yer miyiz?'},
+        {s:'Tom',th:'ยินดีมากเลยครับ ไปตลาดเช้าด้วยกันได้ไหมครับ',ro:'yin-dii maak loei khrap pai ta-laat chao duai gan dai mai khrap',tr:'Çok memnuniyetle efendim. Sabah pazarına da birlikte gidebilir miyiz?'},
+        {s:'Lucy',th:'ได้เลยค่ะ ตลาดอยู่แถวนี้เลยค่ะ เปิดตั้งแต่เช้ามากค่ะ',ro:'dai loei kha ta-laat yuu thaeo nii loei kha poet tang-tae chao maak kha',tr:'Tabii efendim. Pazar buranın hemen yakınında, sabah çok erkenden açılıyor.'},
+        {s:'Tom',th:'เยี่ยมมากครับ ไปได้เลยครับ',ro:'yiam maak khrap pai dai loei khrap',tr:'Harika efendim, gidebiliriz.'},
+        {s:'Lucy',th:'ที่ตลาดต่อรองราคาได้นะคะ อย่าลืมนะคะ',ro:'thii ta-laat to-rong raa-khaa dai na kha ya luem na kha',tr:'Pazarda pazarlık yapabilirsin efendim, unutma.'}
       ]
     },
     {
       id:'d2',
       title:'Sahne 2 — Öğleden Sonra: Plaj ve Masaj',
       lines:[
-        {speaker:'Tom',th:'กินข้าวแล้วไปหาดดีไหมครับ',ro:'gin khao lae-o pai haat dii mai khrap',tr:'Yemek yiyince plaja gitsek güzel olmaz mıydı efendim?'},
-        {speaker:'Lucy',th:'ดีมากเลยค่ะ อากาศวันนี้ดีมากค่ะ',ro:'dii maak loei kha aa-kaat wan nii dii maak kha',tr:'Çok güzel olur efendim. Bugünkü hava çok güzel.'},
-        {speaker:'Tom',th:'พักผ่อนที่ชายหาดสักครู่แล้วไปนวดไหมครับ',ro:'phak-phon thii chaai-haat sak khruu lae-o pai nuat mai khrap',tr:'Biraz plajda dinlenince masaja gitsek mi efendim?'},
-        {speaker:'Lucy',th:'โอ้โห ชอบมากเลยค่ะ นวดไทยดีมากนะคะ',ro:'o-ho chop maak loei kha nuat thai dii maak na kha',tr:'Vay canına, çok seviyorum efendim! Tai masajı gerçekten çok iyi.'},
-        {speaker:'Tom',th:'นวดไทยชั่วโมงละเท่าไหร่ครับที่นี่',ro:'nuat thai chua-mong la thao-rai khrap thii nii',tr:'Burada Tai masajı saat başı ne kadar efendim?'},
-        {speaker:'Lucy',th:'ประมาณสามร้อยบาทค่ะ ถูกมากนะคะ',ro:'pra-maan saam roi baht kha thuuk maak na kha',tr:'Yaklaşık 300 baht efendim. Çok ucuz değil mi?'}
+        {s:'Tom',th:'กินข้าวแล้วไปหาดดีไหมครับ',ro:'gin khao lae-o pai haat dii mai khrap',tr:'Yemek yiyince plaja gitsek güzel olmaz mıydı efendim?'},
+        {s:'Lucy',th:'ดีมากเลยค่ะ อากาศวันนี้ดีมากค่ะ',ro:'dii maak loei kha aa-kaat wan nii dii maak kha',tr:'Çok güzel olur efendim. Bugünkü hava çok güzel.'},
+        {s:'Tom',th:'พักผ่อนที่ชายหาดสักครู่แล้วไปนวดไหมครับ',ro:'phak-phon thii chaai-haat sak khruu lae-o pai nuat mai khrap',tr:'Biraz plajda dinlenince masaja gitsek mi efendim?'},
+        {s:'Lucy',th:'โอ้โห ชอบมากเลยค่ะ นวดไทยดีมากนะคะ',ro:'o-ho chop maak loei kha nuat thai dii maak na kha',tr:'Vay canına, çok seviyorum efendim! Tai masajı gerçekten çok iyi.'},
+        {s:'Tom',th:'นวดไทยชั่วโมงละเท่าไหร่ครับที่นี่',ro:'nuat thai chua-mong la thao-rai khrap thii nii',tr:'Burada Tai masajı saat başı ne kadar efendim?'},
+        {s:'Lucy',th:'ประมาณสามร้อยบาทค่ะ ถูกมากนะคะ',ro:'pra-maan saam roi baht kha thuuk maak na kha',tr:'Yaklaşık 300 baht efendim. Çok ucuz değil mi?'}
       ]
     },
     {
       id:'d3',
       title:'Sahne 3 — Akşam: Gün Batımı ve Akşam Yemeği',
       lines:[
-        {speaker:'Tom',th:'ไปดูพระอาทิตย์ตกที่แหลมพรหมเทพด้วยกันไหมครับ',ro:'pai duu phra-aa-thit-tok thii laem phrom-thep duai gan mai khrap',tr:'Promthep Burnu\'nda gün batımını birlikte izlemeye gidelim mi efendim?'},
-        {speaker:'Lucy',th:'ไปเลยค่ะ สวยมากเลยที่นั่นค่ะ',ro:'pai loei kha suai maak loei thii nan kha',tr:'Gidelim efendim! Orası çok güzel.'},
-        {speaker:'Tom',th:'ดูพระอาทิตย์ตกแล้วไปกินอาหารเย็นด้วยกันนะครับ',ro:'duu phra-aa-thit-tok lae-o pai gin aa-haan yen duai gan na khrap',tr:'Gün batımını izleyince akşam yemeğini birlikte yiyelim efendim.'},
-        {speaker:'Lucy',th:'ยินดีมากค่ะ มีร้านอาหารทะเลอร่อยมากแถวนั้นค่ะ',ro:'yin-dii maak kha mii raan aa-haan tha-le a-roi maak thaeo nan kha',tr:'Çok memnuniyetle efendim. O tarafta çok lezzetli deniz mahsulleri restoranları var.'},
-        {speaker:'Tom',th:'ยอดเยี่ยมมากครับ กินเสร็จแล้วเก็บบิลด้วยนะครับ',ro:'yot-yiam maak khrap gin set lae-o kep bin duai na khrap',tr:'Mükemmel efendim. Yemek bitince hesabı getirin lütfen.'},
-        {speaker:'Lucy',th:'ค่ะ ไม่ต้องกังวลค่ะ ฉันจัดการเองค่ะ',ro:'kha mai tong gang-won kha chan jat-kaan eng kha',tr:'Efendim, merak etmeyin, ben hallederim.'}
+        {s:'Tom',th:'ไปดูพระอาทิตย์ตกที่แหลมพรหมเทพด้วยกันไหมครับ',ro:'pai duu phra-aa-thit-tok thii laem phrom-thep duai gan mai khrap',tr:'Promthep Burnu\'nda gün batımını birlikte izlemeye gidelim mi efendim?'},
+        {s:'Lucy',th:'ไปเลยค่ะ สวยมากเลยที่นั่นค่ะ',ro:'pai loei kha suai maak loei thii nan kha',tr:'Gidelim efendim! Orası çok güzel.'},
+        {s:'Tom',th:'ดูพระอาทิตย์ตกแล้วไปกินอาหารเย็นด้วยกันนะครับ',ro:'duu phra-aa-thit-tok lae-o pai gin aa-haan yen duai gan na khrap',tr:'Gün batımını izleyince akşam yemeğini birlikte yiyelim efendim.'},
+        {s:'Lucy',th:'ยินดีมากค่ะ มีร้านอาหารทะเลอร่อยมากแถวนั้นค่ะ',ro:'yin-dii maak kha mii raan aa-haan tha-le a-roi maak thaeo nan kha',tr:'Çok memnuniyetle efendim. O tarafta çok lezzetli deniz mahsulleri restoranları var.'},
+        {s:'Tom',th:'ยอดเยี่ยมมากครับ กินเสร็จแล้วเก็บบิลด้วยนะครับ',ro:'yot-yiam maak khrap gin set lae-o kep bin duai na khrap',tr:'Mükemmel efendim. Yemek bitince hesabı getirin lütfen.'},
+        {s:'Lucy',th:'ค่ะ ไม่ต้องกังวลค่ะ ฉันจัดการเองค่ะ',ro:'kha mai tong gang-won kha chan jat-kaan eng kha',tr:'Efendim, merak etmeyin, ben hallederim.'}
       ]
     },
     {
       id:'d4',
       title:'Sahne 4 — Gece: Eve Dönüş ve İyi Geceler',
       lines:[
-        {speaker:'Tom',th:'วันนี้สนุกมากเลยครับ ขอบคุณนะครับ',ro:'wan nii sa-nuk maak loei khrap khop-khun na khrap',tr:'Bugün çok eğlendim efendim, teşekkürler.'},
-        {speaker:'Lucy',th:'ฉันก็สนุกมากค่ะ ทำอะไรชอบที่สุดคะ',ro:'chan ko sa-nuk maak kha tham a-rai chop thii sut kha',tr:'Ben de çok eğlendim efendim. En çok neyi sevdin?'},
-        {speaker:'Tom',th:'ชอบดูพระอาทิตย์ตกที่สุดครับ สวยมากเลยครับ',ro:'chop duu phra-aa-thit-tok thii sut khrap suai maak loei khrap',tr:'En çok gün batımını izlemeyi sevdim efendim. Çok güzeldi.'},
-        {speaker:'Lucy',th:'ใช่ค่ะ Phuket สวยมากเลยค่ะ โดยเฉพาะตอนเย็นค่ะ',ro:'chai kha Phuket suai maak loei kha doi-cha-pho ton yen kha',tr:'Evet efendim, Phuket çok güzel, özellikle akşamları.'},
-        {speaker:'Tom',th:'กลับบ้านแล้วนะครับ ฝันดีนะครับ',ro:'glap baan lae-o na khrap fan dii na khrap',tr:'Artık eve gidiyorum efendim, tatlı rüyalar.'},
-        {speaker:'Lucy',th:'กลับบ้านระวังด้วยนะคะ ฝันดีค่ะ พรุ่งนี้เจอกันใหม่นะคะ',ro:'glap baan ra-wang duai na kha fan dii kha phrung-nii joe gan mai na kha',tr:'Eve giderken dikkat et efendim, tatlı rüyalar. Yarın tekrar görüşürüz.'}
+        {s:'Tom',th:'วันนี้สนุกมากเลยครับ ขอบคุณนะครับ',ro:'wan nii sa-nuk maak loei khrap khop-khun na khrap',tr:'Bugün çok eğlendim efendim, teşekkürler.'},
+        {s:'Lucy',th:'ฉันก็สนุกมากค่ะ ทำอะไรชอบที่สุดคะ',ro:'chan ko sa-nuk maak kha tham a-rai chop thii sut kha',tr:'Ben de çok eğlendim efendim. En çok neyi sevdin?'},
+        {s:'Tom',th:'ชอบดูพระอาทิตย์ตกที่สุดครับ สวยมากเลยครับ',ro:'chop duu phra-aa-thit-tok thii sut khrap suai maak loei khrap',tr:'En çok gün batımını izlemeyi sevdim efendim. Çok güzeldi.'},
+        {s:'Lucy',th:'ใช่ค่ะ Phuket สวยมากเลยค่ะ โดยเฉพาะตอนเย็นค่ะ',ro:'chai kha Phuket suai maak loei kha doi-cha-pho ton yen kha',tr:'Evet efendim, Phuket çok güzel, özellikle akşamları.'},
+        {s:'Tom',th:'กลับบ้านแล้วนะครับ ฝันดีนะครับ',ro:'glap baan lae-o na khrap fan dii na khrap',tr:'Artık eve gidiyorum efendim, tatlı rüyalar.'},
+        {s:'Lucy',th:'กลับบ้านระวังด้วยนะคะ ฝันดีค่ะ พรุ่งนี้เจอกันใหม่นะคะ',ro:'glap baan ra-wang duai na kha fan dii kha phrung-nii joe gan mai na kha',tr:'Eve giderken dikkat et efendim, tatlı rüyalar. Yarın tekrar görüşürüz.'}
       ]
     }
   ],

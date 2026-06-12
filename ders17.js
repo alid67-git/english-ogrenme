@@ -271,46 +271,46 @@ const L17 = {
       id:'d1',
       title:'Alışveriş Merkezinde Yardım',
       lines:[
-        {speaker:'Tom',th:'ขอโทษครับ ห้องน้ำอยู่ที่ไหนครับ',ro:'kho-thot khrap hong-naam yuu thii nai khrap',tr:'Affedersiniz, tuvalet nerede efendim?'},
-        {speaker:'Lucy',th:'ห้องน้ำอยู่ชั้นสองค่ะ ทางนั้นเลยค่ะ',ro:'hong-naam yuu chan song kha thang nan loei kha',tr:'Tuvalet ikinci katta efendim, o tarafta.'},
-        {speaker:'Tom',th:'ชั้นสองใช่ไหมครับ ขึ้นลิฟต์ไหนครับ',ro:'chan song chai mai khrap khuean lift nai khrap',tr:'İkinci kat mı efendim? Hangi asansörü kullanayım?'},
-        {speaker:'Lucy',th:'ลิฟต์อยู่ทางขวามือค่ะ ใกล้ทางเข้าค่ะ',ro:'lift yuu thang khwa mue kha klai thang khao kha',tr:'Asansör sağ tarafta efendim, girişin yanında.'},
-        {speaker:'Tom',th:'ขอบคุณมากครับ',ro:'khop-khun maak khrap',tr:'Çok teşekkür ederim efendim.'},
-        {speaker:'Lucy',th:'ยินดีค่ะ',ro:'yin-dii kha',tr:'Rica ederim efendim.'}
+        {s:'Tom',th:'ขอโทษครับ ห้องน้ำอยู่ที่ไหนครับ',ro:'kho-thot khrap hong-naam yuu thii nai khrap',tr:'Affedersiniz, tuvalet nerede efendim?'},
+        {s:'Lucy',th:'ห้องน้ำอยู่ชั้นสองค่ะ ทางนั้นเลยค่ะ',ro:'hong-naam yuu chan song kha thang nan loei kha',tr:'Tuvalet ikinci katta efendim, o tarafta.'},
+        {s:'Tom',th:'ชั้นสองใช่ไหมครับ ขึ้นลิฟต์ไหนครับ',ro:'chan song chai mai khrap khuean lift nai khrap',tr:'İkinci kat mı efendim? Hangi asansörü kullanayım?'},
+        {s:'Lucy',th:'ลิฟต์อยู่ทางขวามือค่ะ ใกล้ทางเข้าค่ะ',ro:'lift yuu thang khwa mue kha klai thang khao kha',tr:'Asansör sağ tarafta efendim, girişin yanında.'},
+        {s:'Tom',th:'ขอบคุณมากครับ',ro:'khop-khun maak khrap',tr:'Çok teşekkür ederim efendim.'},
+        {s:'Lucy',th:'ยินดีค่ะ',ro:'yin-dii kha',tr:'Rica ederim efendim.'}
       ]
     },
     {
       id:'d2',
       title:'Restoran Menüsü Okuma',
       lines:[
-        {speaker:'Tom',th:'เมนูนี้ราคาเท่าไหร่ครับ',ro:'me-nuu nii raa-khaa thao-rai khrap',tr:'Bu menünün fiyatı ne kadar efendim?'},
-        {speaker:'Lucy',th:'สองร้อยบาทค่ะ แต่วันนี้ลด 20% ค่ะ',ro:'song roi baht kha tae wan nii lot yii-sip percent kha',tr:'İki yüz baht efendim, ama bugün %20 indirim var.'},
-        {speaker:'Tom',th:'โอ้ ลดด้วย ดีมากเลยครับ',ro:'o lot duai dii maak loei khrap',tr:'Vay, indirimli de, çok güzel efendim.'},
-        {speaker:'Lucy',th:'มีเมนูแนะนำด้วยค่ะ ฟรีของหวานค่ะ',ro:'mii me-nuu nae-nam duai kha frii khong-waan kha',tr:'Önerilen menü de var efendim, tatlı ücretsiz.'},
-        {speaker:'Tom',th:'เอาเมนูแนะนำครับ',ro:'ao me-nuu nae-nam khrap',tr:'Önerilen menüyü alayım efendim.'}
+        {s:'Tom',th:'เมนูนี้ราคาเท่าไหร่ครับ',ro:'me-nuu nii raa-khaa thao-rai khrap',tr:'Bu menünün fiyatı ne kadar efendim?'},
+        {s:'Lucy',th:'สองร้อยบาทค่ะ แต่วันนี้ลด 20% ค่ะ',ro:'song roi baht kha tae wan nii lot yii-sip percent kha',tr:'İki yüz baht efendim, ama bugün %20 indirim var.'},
+        {s:'Tom',th:'โอ้ ลดด้วย ดีมากเลยครับ',ro:'o lot duai dii maak loei khrap',tr:'Vay, indirimli de, çok güzel efendim.'},
+        {s:'Lucy',th:'มีเมนูแนะนำด้วยค่ะ ฟรีของหวานค่ะ',ro:'mii me-nuu nae-nam duai kha frii khong-waan kha',tr:'Önerilen menü de var efendim, tatlı ücretsiz.'},
+        {s:'Tom',th:'เอาเมนูแนะนำครับ',ro:'ao me-nuu nae-nam khrap',tr:'Önerilen menüyü alayım efendim.'}
       ]
     },
     {
       id:'d3',
       title:'Park Yeri Arama',
       lines:[
-        {speaker:'Tom',th:'ที่จอดรถอยู่ที่ไหนครับ',ro:'thii-jot-rot yuu thii nai khrap',tr:'Otopark nerede efendim?'},
-        {speaker:'Lucy',th:'ที่จอดรถอยู่ด้านหลังอาคารค่ะ',ro:'thii-jot-rot yuu dan lang aa-khaan kha',tr:'Otopark binanın arkasında efendim.'},
-        {speaker:'Tom',th:'ไปทางไหนครับ ทางออกนี้ใช่ไหมครับ',ro:'pai thang nai khrap thang ok nii chai mai khrap',tr:'Hangi taraftan gideyim, bu çıkıştan mı efendim?'},
-        {speaker:'Lucy',th:'ไม่ใช่ค่ะ ทางออกฉุกเฉินอยู่ทางนั้นค่ะ ไม่ได้ค่ะ',ro:'mai chai kha thang ok chuk-choen yuu thang nan kha mai dai kha',tr:'Hayır efendim, acil çıkış o tarafta, oradan olmaz.'},
-        {speaker:'Tom',th:'อ้อ ขอบคุณครับ ระวังด้วยนะครับ',ro:'o khop-khun khrap ra-wang duai na khrap',tr:'Aa, teşekkürler efendim, dikkat edin.'}
+        {s:'Tom',th:'ที่จอดรถอยู่ที่ไหนครับ',ro:'thii-jot-rot yuu thii nai khrap',tr:'Otopark nerede efendim?'},
+        {s:'Lucy',th:'ที่จอดรถอยู่ด้านหลังอาคารค่ะ',ro:'thii-jot-rot yuu dan lang aa-khaan kha',tr:'Otopark binanın arkasında efendim.'},
+        {s:'Tom',th:'ไปทางไหนครับ ทางออกนี้ใช่ไหมครับ',ro:'pai thang nai khrap thang ok nii chai mai khrap',tr:'Hangi taraftan gideyim, bu çıkıştan mı efendim?'},
+        {s:'Lucy',th:'ไม่ใช่ค่ะ ทางออกฉุกเฉินอยู่ทางนั้นค่ะ ไม่ได้ค่ะ',ro:'mai chai kha thang ok chuk-choen yuu thang nan kha mai dai kha',tr:'Hayır efendim, acil çıkış o tarafta, oradan olmaz.'},
+        {s:'Tom',th:'อ้อ ขอบคุณครับ ระวังด้วยนะครับ',ro:'o khop-khun khrap ra-wang duai na khrap',tr:'Aa, teşekkürler efendim, dikkat edin.'}
       ]
     },
     {
       id:'d4',
       title:'Mağaza Açık mı Kapalı mı?',
       lines:[
-        {speaker:'Tom',th:'ร้านเปิดหรือยังครับ',ro:'raan poet rue yang khrap',tr:'Dükkan açık mı henüz efendim?'},
-        {speaker:'Lucy',th:'ยังปิดอยู่ค่ะ เปิดสิบโมงค่ะ',ro:'yang pit yuu kha poet sip mong kha',tr:'Henüz kapalı efendim, saat onda açılıyor.'},
-        {speaker:'Tom',th:'ตอนนี้กี่โมงแล้วครับ',ro:'ton nii kii mong lae-o khrap',tr:'Şu an saat kaç efendim?'},
-        {speaker:'Lucy',th:'เก้าโมงครึ่งค่ะ อีกสามสิบนาทีค่ะ',ro:'kao mong khrueng kha iik saam-sip naa-thii kha',tr:'Dokuz buçuk efendim, otuz dakika daha var.'},
-        {speaker:'Tom',th:'โอเค รอได้ครับ มีร้านกาแฟแถวนี้ไหมครับ',ro:'o-khe ro dai khrap mii raan kaa-fae thaeo nii mai khrap',tr:'Tamam, bekleyebilirim. Buralarda kahve dükkanı var mı efendim?'},
-        {speaker:'Lucy',th:'มีค่ะ ชั้นหนึ่งค่ะ ใกล้ทางเข้าเลยค่ะ',ro:'mii kha chan nueng kha klai thang khao loei kha',tr:'Var efendim, birinci katta, girişin hemen yanında.'}
+        {s:'Tom',th:'ร้านเปิดหรือยังครับ',ro:'raan poet rue yang khrap',tr:'Dükkan açık mı henüz efendim?'},
+        {s:'Lucy',th:'ยังปิดอยู่ค่ะ เปิดสิบโมงค่ะ',ro:'yang pit yuu kha poet sip mong kha',tr:'Henüz kapalı efendim, saat onda açılıyor.'},
+        {s:'Tom',th:'ตอนนี้กี่โมงแล้วครับ',ro:'ton nii kii mong lae-o khrap',tr:'Şu an saat kaç efendim?'},
+        {s:'Lucy',th:'เก้าโมงครึ่งค่ะ อีกสามสิบนาทีค่ะ',ro:'kao mong khrueng kha iik saam-sip naa-thii kha',tr:'Dokuz buçuk efendim, otuz dakika daha var.'},
+        {s:'Tom',th:'โอเค รอได้ครับ มีร้านกาแฟแถวนี้ไหมครับ',ro:'o-khe ro dai khrap mii raan kaa-fae thaeo nii mai khrap',tr:'Tamam, bekleyebilirim. Buralarda kahve dükkanı var mı efendim?'},
+        {s:'Lucy',th:'มีค่ะ ชั้นหนึ่งค่ะ ใกล้ทางเข้าเลยค่ะ',ro:'mii kha chan nueng kha klai thang khao loei kha',tr:'Var efendim, birinci katta, girişin hemen yanında.'}
       ]
     }
   ],

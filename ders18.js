@@ -282,46 +282,46 @@ const L18 = {
       id:'d1',
       title:'LINE ID Alışverişi',
       lines:[
-        {speaker:'Tom',th:'คุณมีไลน์ไหมครับ',ro:'khun mii lain mai khrap',tr:'LINE\'ınız var mı efendim?'},
-        {speaker:'Lucy',th:'มีค่ะ ไอดีไลน์คือ lucy_phuket ค่ะ',ro:'mii kha ai-dii lain khue lucy_phuket kha',tr:'Var efendim. LINE ID\'m lucy_phuket.'},
-        {speaker:'Tom',th:'โอเค ผมจะเพิ่มเพื่อนนะครับ',ro:'o-khe phom ja phoem phuean na khrap',tr:'Tamam, arkadaş olarak ekleyeceğim efendim.'},
-        {speaker:'Lucy',th:'ได้เลยค่ะ ส่งข้อความมาหาฉันได้นะคะ',ro:'dai loei kha song kho-khwaam maa haa chan dai na kha',tr:'Tabii efendim, bana mesaj atabilirsiniz.'},
-        {speaker:'Tom',th:'ขอบคุณครับ ผมจะส่งสวัสดีก่อนนะครับ',ro:'khop-khun khrap phom ja song sa-wat-dii kon na khrap',tr:'Teşekkürler efendim, önce merhaba mesajı atayım.'},
-        {speaker:'Lucy',th:'รอนะคะ จะรับเลยค่ะ',ro:'ro na kha ja rap loei kha',tr:'Bekliyorum efendim, hemen kabul edeceğim.'}
+        {s:'Tom',th:'คุณมีไลน์ไหมครับ',ro:'khun mii lain mai khrap',tr:'LINE\'ınız var mı efendim?'},
+        {s:'Lucy',th:'มีค่ะ ไอดีไลน์คือ lucy_phuket ค่ะ',ro:'mii kha ai-dii lain khue lucy_phuket kha',tr:'Var efendim. LINE ID\'m lucy_phuket.'},
+        {s:'Tom',th:'โอเค ผมจะเพิ่มเพื่อนนะครับ',ro:'o-khe phom ja phoem phuean na khrap',tr:'Tamam, arkadaş olarak ekleyeceğim efendim.'},
+        {s:'Lucy',th:'ได้เลยค่ะ ส่งข้อความมาหาฉันได้นะคะ',ro:'dai loei kha song kho-khwaam maa haa chan dai na kha',tr:'Tabii efendim, bana mesaj atabilirsiniz.'},
+        {s:'Tom',th:'ขอบคุณครับ ผมจะส่งสวัสดีก่อนนะครับ',ro:'khop-khun khrap phom ja song sa-wat-dii kon na khrap',tr:'Teşekkürler efendim, önce merhaba mesajı atayım.'},
+        {s:'Lucy',th:'รอนะคะ จะรับเลยค่ะ',ro:'ro na kha ja rap loei kha',tr:'Bekliyorum efendim, hemen kabul edeceğim.'}
       ]
     },
     {
       id:'d2',
       title:'Arama Sorunu',
       lines:[
-        {speaker:'Tom',th:'ฮัลโหล ลูซี่ ได้ยินไหมครับ',ro:'han-lo luu-sii dai yin mai khrap',tr:'Alo Lucy, duyuyor musunuz efendim?'},
-        {speaker:'Lucy',th:'ได้ยินค่ะ แต่สัญญาณไม่ดีเลยค่ะ',ro:'dai yin kha tae san-yaan mai dii loei kha',tr:'Duyuyorum efendim ama sinyal hiç iyi değil.'},
-        {speaker:'Tom',th:'ใช่ครับ โทรไม่ค่อยได้เลยครับ แบตก็ใกล้หมดแล้วด้วยครับ',ro:'chai khrap tho mai khoi dai loei khrap baet ko klai mot lae-o duai khrap',tr:'Evet efendim, arama da pek olmuyor. Batarya da neredeyse bitti.'},
-        {speaker:'Lucy',th:'งั้นส่งข้อความในไลน์ดีกว่าค่ะ',ro:'ngan song kho-khwaam nai lain dii kwaa kha',tr:'O zaman LINE\'dan mesaj atmak daha iyi olur efendim.'},
-        {speaker:'Tom',th:'โอเค ครับ จะส่งไลน์แทนครับ',ro:'o-khe khrap ja song lain thaen khrap',tr:'Tamam efendim, LINE\'dan göndereceğim.'}
+        {s:'Tom',th:'ฮัลโหล ลูซี่ ได้ยินไหมครับ',ro:'han-lo luu-sii dai yin mai khrap',tr:'Alo Lucy, duyuyor musunuz efendim?'},
+        {s:'Lucy',th:'ได้ยินค่ะ แต่สัญญาณไม่ดีเลยค่ะ',ro:'dai yin kha tae san-yaan mai dii loei kha',tr:'Duyuyorum efendim ama sinyal hiç iyi değil.'},
+        {s:'Tom',th:'ใช่ครับ โทรไม่ค่อยได้เลยครับ แบตก็ใกล้หมดแล้วด้วยครับ',ro:'chai khrap tho mai khoi dai loei khrap baet ko klai mot lae-o duai khrap',tr:'Evet efendim, arama da pek olmuyor. Batarya da neredeyse bitti.'},
+        {s:'Lucy',th:'งั้นส่งข้อความในไลน์ดีกว่าค่ะ',ro:'ngan song kho-khwaam nai lain dii kwaa kha',tr:'O zaman LINE\'dan mesaj atmak daha iyi olur efendim.'},
+        {s:'Tom',th:'โอเค ครับ จะส่งไลน์แทนครับ',ro:'o-khe khrap ja song lain thaen khrap',tr:'Tamam efendim, LINE\'dan göndereceğim.'}
       ]
     },
     {
       id:'d3',
       title:'Konum Paylaşma',
       lines:[
-        {speaker:'Tom',th:'ผมหาร้านไม่เจอครับ แชร์โลเคชั่นได้ไหมครับ',ro:'phom haa raan mai joe khrap chaer lo-khe-chan dai mai khrap',tr:'Dükkanı bulamıyorum efendim, konumu paylaşabilir misiniz?'},
-        {speaker:'Lucy',th:'ได้เลยค่ะ รอแปบนึงนะคะ',ro:'dai loei kha ro paep nueng na kha',tr:'Tabii efendim, bir saniye bekleyin.'},
-        {speaker:'Tom',th:'ขอบคุณครับ ส่งมาในไลน์ได้เลยครับ',ro:'khop-khun khrap song maa nai lain dai loei khrap',tr:'Teşekkürler efendim, LINE\'da gönderebilirsiniz.'},
-        {speaker:'Lucy',th:'ส่งแล้วค่ะ เห็นไหมคะ',ro:'song lae-o kha hen mai kha',tr:'Gönderdim efendim, görüyor musunuz?'},
-        {speaker:'Tom',th:'เห็นแล้วครับ เดี๋ยวไปเลยครับ',ro:'hen lae-o khrap diao pai loei khrap',tr:'Gördüm efendim, hemen geliyorum.'}
+        {s:'Tom',th:'ผมหาร้านไม่เจอครับ แชร์โลเคชั่นได้ไหมครับ',ro:'phom haa raan mai joe khrap chaer lo-khe-chan dai mai khrap',tr:'Dükkanı bulamıyorum efendim, konumu paylaşabilir misiniz?'},
+        {s:'Lucy',th:'ได้เลยค่ะ รอแปบนึงนะคะ',ro:'dai loei kha ro paep nueng na kha',tr:'Tabii efendim, bir saniye bekleyin.'},
+        {s:'Tom',th:'ขอบคุณครับ ส่งมาในไลน์ได้เลยครับ',ro:'khop-khun khrap song maa nai lain dai loei khrap',tr:'Teşekkürler efendim, LINE\'da gönderebilirsiniz.'},
+        {s:'Lucy',th:'ส่งแล้วค่ะ เห็นไหมคะ',ro:'song lae-o kha hen mai kha',tr:'Gönderdim efendim, görüyor musunuz?'},
+        {s:'Tom',th:'เห็นแล้วครับ เดี๋ยวไปเลยครับ',ro:'hen lae-o khrap diao pai loei khrap',tr:'Gördüm efendim, hemen geliyorum.'}
       ]
     },
     {
       id:'d4',
       title:'Görüntülü Arama',
       lines:[
-        {speaker:'Tom',th:'ลูซี่ วิดีโอคอลได้ไหมครับ อยากเห็นหน้าครับ',ro:'luu-sii wi-dii-o-khon dai mai khrap yaak hen naa khrap',tr:'Lucy, görüntülü arayabilir miyim efendim, yüzünü görmek istiyorum.'},
-        {speaker:'Lucy',th:'ได้ค่ะ แต่รอให้ฉันแต่งหน้าก่อนนะคะ',ro:'dai kha tae ro hai chan taeng naa kon na kha',tr:'Olur efendim, ama önce makyaj yapayım.'},
-        {speaker:'Tom',th:'ฮ่าฮ่า โอเค ครับ รอได้ครับ',ro:'haa haa o-khe khrap ro dai khrap',tr:'Ha ha, tamam efendim, bekleyebilirim.'},
-        {speaker:'Lucy',th:'โอเคค่ะ พร้อมแล้วค่ะ วิดีโอคอลมาได้เลยค่ะ',ro:'o-khe kha phrom lae-o kha wi-dii-o-khon maa dai loei kha',tr:'Tamam efendim, hazırım, görüntülü arayabilirsiniz.'},
-        {speaker:'Tom',th:'โทรแล้วนะครับ รับด้วยนะครับ',ro:'tho lae-o na khrap rap duai na khrap',tr:'Arıyorum efendim, açın lütfen.'},
-        {speaker:'Lucy',th:'รับแล้วค่ะ สวัสดีค่ะ',ro:'rap lae-o kha sa-wat-dii kha',tr:'Açtım efendim, merhaba!'}
+        {s:'Tom',th:'ลูซี่ วิดีโอคอลได้ไหมครับ อยากเห็นหน้าครับ',ro:'luu-sii wi-dii-o-khon dai mai khrap yaak hen naa khrap',tr:'Lucy, görüntülü arayabilir miyim efendim, yüzünü görmek istiyorum.'},
+        {s:'Lucy',th:'ได้ค่ะ แต่รอให้ฉันแต่งหน้าก่อนนะคะ',ro:'dai kha tae ro hai chan taeng naa kon na kha',tr:'Olur efendim, ama önce makyaj yapayım.'},
+        {s:'Tom',th:'ฮ่าฮ่า โอเค ครับ รอได้ครับ',ro:'haa haa o-khe khrap ro dai khrap',tr:'Ha ha, tamam efendim, bekleyebilirim.'},
+        {s:'Lucy',th:'โอเคค่ะ พร้อมแล้วค่ะ วิดีโอคอลมาได้เลยค่ะ',ro:'o-khe kha phrom lae-o kha wi-dii-o-khon maa dai loei kha',tr:'Tamam efendim, hazırım, görüntülü arayabilirsiniz.'},
+        {s:'Tom',th:'โทรแล้วนะครับ รับด้วยนะครับ',ro:'tho lae-o na khrap rap duai na khrap',tr:'Arıyorum efendim, açın lütfen.'},
+        {s:'Lucy',th:'รับแล้วค่ะ สวัสดีค่ะ',ro:'rap lae-o kha sa-wat-dii kha',tr:'Açtım efendim, merhaba!'}
       ]
     }
   ],
