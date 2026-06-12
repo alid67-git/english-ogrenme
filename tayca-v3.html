@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.29';
+const APP_VERSION = 'v3.30';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.29</span>
+  <span class="vbadge" id="app-version">v3.30</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -637,6 +637,10 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
+            <div class="changelog-ver">v3.30</div>
+            <div class="changelog-desc">Ders 15-19 eklendi: Immigration, Thai Kültürü, Tabela Okuma, LINE/Telefon, Phuket Tam Gün Simülasyonu — tüm 19 ders tamamlandı</div>
+          </div>
+          <div class="changelog-item">
             <div class="changelog-ver">v3.29</div>
             <div class="changelog-desc">Ders 10-14 eklendi: Plaj, Hastane, Acil Durumlar, Ev/İnternet, Sosyalleşme</div>
           </div>
@@ -763,11 +767,11 @@ const LESSONS_META = [
   {num:12,emoji:'🆘', title:'Acil Durumlar', hasContent:true, hasTones:false},
   {num:13,emoji:'🏠', title:'Ev Yaşamı ve İnternet', hasContent:true, hasTones:false},
   {num:14,emoji:'🎉', title:'Sosyalleşme', hasContent:true, hasTones:false},
-  {num:15,emoji:'🏦', title:'Immigration ve Resmi İşler', hasContent:false, hasTones:false},
-  {num:16,emoji:'🙏', title:'Thai Kültürü', hasContent:false, hasTones:false},
-  {num:17,emoji:'🔤', title:'Tabela ve Menü Okuma', hasContent:false, hasTones:false},
-  {num:18,emoji:'📱', title:'LINE ve Telefon', hasContent:false, hasTones:false},
-  {num:19,emoji:'🌴', title:'Phuket Tam Gün Simülasyonu', hasContent:false, hasTones:false},
+  {num:15,emoji:'🏦', title:'Immigration ve Resmi İşler', hasContent:true, hasTones:false},
+  {num:16,emoji:'🙏', title:'Thai Kültürü', hasContent:true, hasTones:false},
+  {num:17,emoji:'🔤', title:'Tabela ve Menü Okuma', hasContent:true, hasTones:false},
+  {num:18,emoji:'📱', title:'LINE ve Telefon', hasContent:true, hasTones:false},
+  {num:19,emoji:'🌴', title:'Phuket Tam Gün Simülasyonu', hasContent:true, hasTones:false},
 ];
 
 // =================== DERS VERİLERİ (lazy load) ===================
@@ -780,7 +784,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.29`;
+    script.src = `ders${num}.js?v=v3.30`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
