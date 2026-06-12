@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.23';
+const APP_VERSION = 'v3.24';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.23</span>
+  <span class="vbadge" id="app-version">v3.24</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -626,7 +626,7 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.23</div>
+            <div class="changelog-ver">v3.24</div>
             <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
           </div>
           <div class="changelog-item">
@@ -765,7 +765,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.23`;
+    script.src = `ders${num}.js?v=v3.24`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -1695,7 +1695,7 @@ function getWrongOptions(correctTr, count, lessonNum){
 async function initTestView(){
   const wrap = document.getElementById('test-content');
   wrap.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#0d9488;font-size:14px;">⏳ Ders verileri yükleniyor...</div>';
-  const toLoad = LESSONS_META.filter(m=>m.hasContent).map(m=>loadDers(m.num));
+  const toLoad = LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).map(m=>loadDers(m.num));
   await Promise.all(toLoad);
   renderTestView();
 }
@@ -1806,16 +1806,15 @@ function openTestModeMenu(source){
 
 function renderLessonPicker(){
   const wrap = document.getElementById('test-content');
-  const rows = LESSONS_META.filter(m=>m.hasContent).map(m=>{
+  const rows = LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).map(m=>{
     const cnt = buildTestCards(m.num,'all').length;
-    const done = isCompleted(m.num);
     return `<div onclick="selectTestLesson(${m.num})"
       style="display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;"
       onmouseenter="this.style.background='#f0fdf9'" onmouseleave="this.style.background=''">
       <div style="font-size:20px;">${m.emoji}</div>
       <div style="flex:1;">
         <div style="font-size:13px;font-weight:700;color:#222;">Ders ${m.num}: ${m.title}</div>
-        <div style="font-size:11px;color:#888;margin-top:1px;">${cnt} kart${done?' · <span style="color:#0d9488">✓ Tamamlandı</span>':''}</div>
+        <div style="font-size:11px;color:#888;margin-top:1px;">${cnt} kart · <span style="color:#0d9488">✓ Tamamlandı</span></div>
       </div>
       <div style="color:#ccc;font-size:18px;">›</div>
     </div>`;
