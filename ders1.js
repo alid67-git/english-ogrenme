@@ -2,73 +2,73 @@
 // =================== VERİ: DERS 1 (L1+L2 birleşik) ===================
 const L1 = {
   words:[
-    {id:'w1',th:'',ro:'sa-wat-dee-khrap',tr:'Merhaba',
+    {id:'w1',th:'สวัสดีครับ',ro:'sa-wat-dee-khrap',tr:'Merhaba',
      tip:'Sondaki -p sesi agizda yutulur, disar cikmiyor.',
      ctx:'Erkek olarak sen hep bu formu kullan. Her durumda gecerli.',
      examples:[
-      {th:' ',ro:'khun-chue-a-rai',tr:'adin ne?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'}]},
-      {th:' ',ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'}]},
-      {th:' ',ro:'sa-bai-dee-mai',tr:'nasilsin?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'}]},
-      {th:' ',ro:'pom-chue-Ali',tr:'benim adim Ali.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Ali',tr:'Ali',role:'O - Nesne'}]},
-      {th:' ',ro:'khun-maa-jaak-nai',tr:'nerelisin?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'maa-jaak',tr:'geliyorsun',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'}]},
-      {th:' ',ro:'yin-dee-ton-rap',tr:'hos geldiniz.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'ton-rap',tr:'selamlamak',role:'O - Nesne'},{ro:'kha',tr:'kadın kibar eki',role:'Kibar'}]},
-      {th:' ',ro:'khor-thot-tii-ror',tr:'beklettigim icin ozur.',bd:[{ro:'khor-thot',tr:'özür dile',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'ror',tr:'bekle',role:'O - Nesne'}]},
-      {th:' ',ro:'wan-nii-pen-yang-rai',tr:'bugun nasil?',bd:[{ro:'wan-nii',tr:'bugün',role:'S - Ozne'},{ro:'pen-yang-rai',tr:'nasıl',role:'V - Yuklem'}]},
-      {th:' ',ro:'choern-khao-maa',tr:'buyurun iceri.',bd:[{ro:'choern-khao',tr:'gir',role:'V - Yuklem'},{ro:'maa',tr:'gel',role:'V - Yuklem'}]},
-      {th:' ',ro:'khob-khun-tii-maa',tr:'geldiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'}]},
+      {th:'คุณชื่ออะไร',ro:'khun-chue-a-rai',tr:'adin ne?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'}]},
+      {th:'ยินดีที่ได้รู้จัก',ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'}]},
+      {th:'สบายดีไหม',ro:'sa-bai-dee-mai',tr:'nasilsin?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'}]},
+      {th:'ผมชื่ออาลี',ro:'pom-chue-Ali',tr:'benim adim Ali.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Ali',tr:'Ali',role:'O - Nesne'}]},
+      {th:'คุณมาจากไหน',ro:'khun-maa-jaak-nai',tr:'nerelisin?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'maa-jaak',tr:'geliyorsun',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'}]},
+      {th:'ยินดีต้อนรับค่ะ',ro:'yin-dee-ton-rap-kha',tr:'hos geldiniz.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'ton-rap',tr:'selamlamak',role:'O - Nesne'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+      {th:'ขอโทษที่รอครับ',ro:'khor-thot-tii-ror-khrap',tr:'beklettigim icin ozur.',bd:[{ro:'khor-thot',tr:'ozur dile',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'ror',tr:'bekle',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'วันนี้เป็นยังไร',ro:'wan-nii-pen-yang-rai',tr:'bugun nasil?',bd:[{ro:'wan-nii',tr:'bugun',role:'S - Ozne'},{ro:'pen-yang-rai',tr:'nasil',role:'V - Yuklem'}]},
+      {th:'เชิญเข้ามาครับ',ro:'choern-khao-maa-khrap',tr:'buyurun iceri.',bd:[{ro:'choern-khao',tr:'gir',role:'V - Yuklem'},{ro:'maa',tr:'gel',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณที่มาครับ',ro:'khob-khun-tii-maa-khrap',tr:'geldiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
      ]},
-    {id:'w3',th:'',ro:'khob-khun',tr:'Teşekkür ederim',
+    {id:'w3',th:'ขอบคุณ',ro:'khob-khun',tr:'Teşekkür ederim',
      tip:'KHOBp kisaltilir; KHUN uzun ve yumusak.',
      ctx:'Tek basina kisa. Hep krap/kha ekle. Guclendir: khob-khun-MAAK.',
      examples:[
-      {th:'',ro:'khob-khun-khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-maak-khrap',tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'maak',tr:'çok',role:'Şiddetlendirme'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:' ',ro:'khob-khun-maak-maak-khrap',tr:'Cok cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'maak-maak',tr:'çok çok',role:'Şiddetlendirme'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-sam-rap-a-han-khrap',tr:'Yemek icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'sam-rap',tr:'için',role:'Edat'},{ro:'a-han',tr:'yemek',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-tii-chuay-khrap',tr:'Yardimin icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'tii-chuay',tr:'yardımı için',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-tii-ror-khrap',tr:'Beklemek icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'tii-ror',tr:'beklemeyi için',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-sam-rap-thuk-yang-khrap',tr:'Her sey icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'sam-rap-thuk-yang',tr:'her şey için',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-tii-maa-khrap',tr:'Geldiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-tii-son-khrap',tr:'Ogrettiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'tii-son',tr:'öğrettiğiniz için',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-luang-na-khrap',tr:'Onceden tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'luang-na',tr:'önceden',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณมากครับ',ro:'khob-khun-maak-khrap',tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'maak',tr:'cok',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณมากๆ ครับ',ro:'khob-khun-maak-maak-khrap',tr:'Cok cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'maak-maak',tr:'cok cok',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณสำหรับอาหารครับ',ro:'khob-khun-sam-rap-a-han-khrap',tr:'Yemek icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'sam-rap',tr:'icin',role:'Edat'},{ro:'a-han',tr:'yemek',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณที่ช่วยครับ',ro:'khob-khun-tii-chuay-khrap',tr:'Yardimin icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii-chuay',tr:'yardimi icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณที่รอครับ',ro:'khob-khun-tii-ror-khrap',tr:'Beklemek icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii-ror',tr:'beklemeyi icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณสำหรับทุกอย่างครับ',ro:'khob-khun-sam-rap-thuk-yang-khrap',tr:'Her sey icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'sam-rap-thuk-yang',tr:'her sey icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณที่มาครับ',ro:'khob-khun-tii-maa-khrap',tr:'Geldiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณที่สอนครับ',ro:'khob-khun-tii-son-khrap',tr:'Ogrettiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii-son',tr:'ogrettiginiz icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณล่วงหน้าครับ',ro:'khob-khun-luang-na-khrap',tr:'Onceden tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'luang-na',tr:'onceden',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
      ]},
-    {id:'w4',th:'',ro:'yin-dee-tii-dai-ruu-jak',tr:'Tanıştığıma memnun',
+    {id:'w4',th:'ยินดีที่ได้รู้จัก',ro:'yin-dee-tii-dai-ruu-jak',tr:'Tanıştığıma memnun',
      tip:'YIN yuksek ton; DEE orta; ruu-jak hizli soylenecek.',
      ctx:'Selamlasmadan hemen sonra ilk tanismada soylenir.',
      examples:[
-      {th:'',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'chen-kan',tr:'aynı şekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'pom-yin-dee-tii-dai-ruu-jak-khun-maak-khrap',tr:'Seninle tanismak cok guzeldi.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak-khun-maak',tr:'seninle tanışmaktan çok',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanisma firsati bulduğuma memnunum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:' ',ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'}]},
-      {th:' ',ro:'pom-chue-Ali yin-dee-tii-dai-ruu-jak-khrap',tr:'Adim Ali, memnun oldum.',bd:[{ro:'pom-chue-Ali',tr:'pom-chue-Ali',role:'Kelime'},{ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'yin-dee-tii-dai-ruu-jak-khrap',role:'Kelime'}]},
+      {th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ยินดีที่ได้รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'chen-kan',tr:'ayni sekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ผมยินดีที่ได้รู้จักคุณมากครับ',ro:'pom-yin-dee-tii-dai-ruu-jak-khun-maak-khrap',tr:'Seninle tanismak cok guzeldi.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak-khun-maak',tr:'seninle tanismaktan cok',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanisma firsati buldum, memnunum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ยินดีที่ได้รู้จัก',ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'}]},
+      {th:'ผมชื่ออาลี ยินดีที่ได้รู้จักครับ',ro:'pom-chue-Ali yin-dee-tii-dai-ruu-jak-khrap',tr:'Adim Ali, memnun oldum.',bd:[{ro:'pom chue Ali',tr:'adim Ali',role:'S - Ozne'},{ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
      ]},
-    {id:'w5',th:'',ro:'mai-pen-rai',tr:'Sorun değil',
+    {id:'w5',th:'ไม่เป็นไร',ro:'mai-pen-rai',tr:'Sorun değil',
      tip:'MAI yuksek ton; PEN orta; RAI yuksek. Uc farkli ton birada!',
      ctx:'Ozur dilenince veya sikinti olunca. No worries gibi rahatca kullanilir.',
      examples:[
-      {th:'',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:' ',ro:'mai-pen-rai mai-tong-pen-huang-khrap',tr:'Sorun degil, endiselenme.',bd:[{ro:'mai-pen-rai',tr:'mai-pen-rai',role:'Kelime'},{ro:'mai-tong-pen-huang-khrap',tr:'mai-tong-pen-huang-khrap',role:'Kelime'}]},
-      {th:' ',ro:'mai-pen-rai man-koet-kheun-dai',tr:'Sorun degil, olur boyle.',bd:[{ro:'mai-pen-rai',tr:'mai-pen-rai',role:'Kelime'},{ro:'man-koet-kheun-dai',tr:'man-koet-kheun-dai',role:'Kelime'}]},
-      {th:' ',ro:'o-kee-khrap mai-pen-rai',tr:'Tamam, bir sey degil.',bd:[{ro:'o-kee-khrap',tr:'o-kee-khrap',role:'Kelime'},{ro:'mai-pen-rai',tr:'mai-pen-rai',role:'Kelime'}]},
-      {th:' ',ro:'mai-pen-rai-khrap koet-kheun-kap-thuk-khon',tr:'Sorun degil, herkese olur.',bd:[{ro:'mai-pen-rai-khrap',tr:'mai-pen-rai-khrap',role:'Kelime'},{ro:'koet-kheun-kap-thuk-khon',tr:'koet-kheun-kap-thuk-khon',role:'Kelime'}]},
-      {th:' ',ro:'mai-pen-rai-khrap pom-khao-jai',tr:'Sorun degil, anliyorum.',bd:[{ro:'mai-pen-rai-khrap',tr:'mai-pen-rai-khrap',role:'Kelime'},{ro:'pom-khao-jai',tr:'pom-khao-jai',role:'Kelime'}]},
+      {th:'ไม่เป็นไรครับ',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/degil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir sey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ไม่เป็นไร ไม่ต้องเป็นห่วงครับ',ro:'mai-pen-rai mai-tong-pen-huang-khrap',tr:'Sorun degil, endiselenme.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'mai-tong-pen-huang',tr:'endiselenme',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ไม่เป็นไร มันเกิดขึ้นได้',ro:'mai-pen-rai man-koet-kheun-dai',tr:'Sorun degil, olur boyle.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'man-koet-kheun-dai',tr:'olabilir',role:'Kelime'}]},
+      {th:'โอเคครับ ไม่เป็นไร',ro:'o-kee-khrap mai-pen-rai',tr:'Tamam, bir sey degil.',bd:[{ro:'o-kee',tr:'tamam',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'},{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'}]},
+      {th:'ไม่เป็นไรครับ เกิดขึ้นกับทุกคน',ro:'mai-pen-rai-khrap koet-kheun-kap-thuk-khon',tr:'Sorun degil, herkese olur.',bd:[{ro:'mai-pen-rai-khrap',tr:'sorun degil',role:'Kelime'},{ro:'koet-kheun-kap-thuk-khon',tr:'herkese olur',role:'Kelime'}]},
+      {th:'ไม่เป็นไรครับ ผมเข้าใจ',ro:'mai-pen-rai-khrap pom-khao-jai',tr:'Sorun degil, anliyorum.',bd:[{ro:'mai-pen-rai-khrap',tr:'sorun degil',role:'Kelime'},{ro:'pom khao-jai',tr:'anliyorum',role:'Kelime'}]},
      ]},
-    {id:'w6',th:'',ro:'khrap',tr:'Kibar eki',
+    {id:'w6',th:'ครับ',ro:'khrap',tr:'Kibar eki',
      tip:'-p sesi agizda yutulur. Hizli konusmada KHAP da duyarsın.',
      ctx:'Her cumle sonuna ekle. Phuket\'te bu eki kullanmayan yabanci kaba gorunur.',
      examples:[
-      {th:'',ro:'chai-khrap',tr:'Evet.',bd:[{ro:'chai',tr:'evet',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'mai-khrap',tr:'Hayir.',bd:[{ro:'mai',tr:'hayır',role:'Olumsuz'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'o-kee-khrap',tr:'Tamam.',bd:[{ro:'o-kee',tr:'tamam',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'dai-khrap',tr:'Olur.',bd:[{ro:'dai',tr:'olur',role:'Modal'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khao-jai-khrap',tr:'Anliyorum.',bd:[{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'saap-laeo-khrap',tr:'Anlasıldı.',bd:[{ro:'saap',tr:'anlamak',role:'V - Yuklem'},{ro:'laeo',tr:'bitti',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'ror-sak-khru-khrap',tr:'Bir dakika bekle.',bd:[{ro:'ror',tr:'bekle',role:'V - Yuklem'},{ro:'sak-khru',tr:'biraz',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khor-thot-khrap',tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'özür dile',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'khob-khun-khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/değil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir şey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ใช่ครับ',ro:'chai-khrap',tr:'Evet.',bd:[{ro:'chai',tr:'evet',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ไม่ครับ',ro:'mai-khrap',tr:'Hayir.',bd:[{ro:'mai',tr:'hayir',role:'Olumsuz'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'โอเคครับ',ro:'o-kee-khrap',tr:'Tamam.',bd:[{ro:'o-kee',tr:'tamam',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ได้ครับ',ro:'dai-khrap',tr:'Olur.',bd:[{ro:'dai',tr:'olur',role:'Modal'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'เข้าใจครับ',ro:'khao-jai-khrap',tr:'Anliyorum.',bd:[{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ทราบแล้วครับ',ro:'saap-laeo-khrap',tr:'Anlasildi.',bd:[{ro:'saap',tr:'anlamak',role:'V - Yuklem'},{ro:'laeo',tr:'bitti',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'รอสักครู่ครับ',ro:'ror-sak-khru-khrap',tr:'Bir dakika bekle.',bd:[{ro:'ror',tr:'bekle',role:'V - Yuklem'},{ro:'sak-khru',tr:'biraz',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอโทษครับ',ro:'khor-thot-khrap',tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dile',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ไม่เป็นไรครับ',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/degil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir sey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+      {th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
      ]},
     // --- L2 kelimeleri ---
     {id:'w8',th:'ผม',ro:'pom',tr:'Ben',
@@ -315,16 +315,16 @@ const L1 = {
   ],
 
   speaking:[
-    {task:'Selamlas', th:'', ro:'sa-wat-dee-khrap', tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'selam',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Tesekkur et', th:'', ro:'khob-khun-khrap', tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Tanis', th:'', ro:'yin-dee-tii-dai-ruu-jak-khrap', tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'mutlu',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanismak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Ozur dile', th:'', ro:'khor-thot-khrap', tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dilerim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Sorun degil de', th:'', ro:'mai-pen-rai-khrap', tr:'Sorun degil.',bd:[{ro:'mai',tr:'degil',role:'Soru/Olumsuz'},{ro:'pen-rai',tr:'sorun',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Selamlas', th:'สวัสดีครับ', ro:'sa-wat-dee-khrap', tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'selam',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Tesekkur et', th:'ขอบคุณครับ', ro:'khob-khun-khrap', tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Tanis', th:'ยินดีที่ได้รู้จักครับ', ro:'yin-dee-tii-dai-ruu-jak-khrap', tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'mutlu',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanismak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Ozur dile', th:'ขอโทษครับ', ro:'khor-thot-khrap', tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dilerim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Sorun degil de', th:'ไม่เป็นไรครับ', ro:'mai-pen-rai-khrap', tr:'Sorun degil.',bd:[{ro:'mai',tr:'degil',role:'Soru/Olumsuz'},{ro:'pen-rai',tr:'sorun',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Kendini tanitir (adi)', th:'ผมชื่ออาลีครับ', ro:'pom chue Ali khrap', tr:'Benim adim Ali.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Ali',tr:'Ali',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Nerelisin soyle', th:'ผมมาจากตุรกีครับ', ro:'pom maa jaak Tuerkiye khrap', tr:'Turkiyeden geliyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'Tuerkiye',tr:'Turkiye',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Nerede yasadigini soyle', th:'ผมอยู่ภูเก็ตครับ', ro:'pom yuu Phuket khrap', tr:'Phuket te yasiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorum',role:'V - Yuklem'},{ro:'Phuket',tr:'Phuket',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Cok tesekkur', th:'', ro:'khob-khun-maak-khrap', tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'maak',tr:'cok',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yardim icin tesekkur', th:'', ro:'khob-khun-tii-chuay-khrap', tr:'Yardiminiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'tii-chuay',tr:'yardim icin',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Cok tesekkur', th:'ขอบคุณมากครับ', ro:'khob-khun-maak-khrap', tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'maak',tr:'cok',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+    {task:'Yardim icin tesekkur', th:'ขอบคุณที่ช่วยครับ', ro:'khob-khun-tii-chuay-khrap', tr:'Yardiminiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'tii-chuay',tr:'yardim icin',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Meslegini soyle', th:'ผมทำงานที่โรงแรมครับ', ro:'pom tham ngaan thii hotel khrap', tr:'Otelde calisiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'tham ngaan',tr:'calisiyorum',role:'V - Yuklem'},{ro:'thii hotel',tr:'otelde',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
     {task:'Yasini soyle', th:'ผมอายุ 35 ปีครับ', ro:'pom ayu saam-sip-haa pii khrap', tr:'35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'saam-sip-haa pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
   ],
@@ -410,19 +410,12 @@ const L1 = {
 
 LESSONS[1] = L1;
 
-// Thai karakterleri L1 verisine enjekte et
+// words, speaking, dialogues: th degerleri yukarida dogrudan tanimli
+// listening/tones/grammar icin HTML'deki thai-data JSON'undan al
 (function(){
   const thaiDataEl = document.getElementById('thai-data');
   if(!thaiDataEl) return;
   const THAI = JSON.parse(thaiDataEl.textContent);
-  THAI.words.forEach((tw,i)=>{
-    if(L1.words[i]){
-      L1.words[i].th = tw.th;
-      (tw.examples||[]).forEach((ex,j)=>{ if(L1.words[i].examples[j]) L1.words[i].examples[j].th = ex; });
-    }
-  });
-  (THAI.speaking||[]).forEach((th,i)=>{ if(L1.speaking[i]) L1.speaking[i].th = th; });
-  // dialogues: th degerleri ders1.js icinde dogrudan tanimli, injection gerekmiyor
   (THAI.listening||[]).forEach((th,i)=>{ if(L1.listening[i]) L1.listening[i].th = th; });
   (THAI.tones||[]).forEach((t,ti)=>{ (t.words||[]).forEach((th,wi)=>{ if(L1.tones[ti]&&L1.tones[ti].words[wi]) L1.tones[ti].words[wi].th = th; }); });
   (THAI.grammar||[]).forEach((g,gi)=>{ if(L1.grammar[gi]) (g.examples||[]).forEach((th,ei)=>{ if(L1.grammar[gi].examples[ei]) L1.grammar[gi].examples[ei].th = th; }); });
