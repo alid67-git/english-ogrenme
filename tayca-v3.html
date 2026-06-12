@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.25';
+const APP_VERSION = 'v3.26';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.25</span>
+  <span class="vbadge" id="app-version">v3.26</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -336,7 +336,9 @@ localStorage.setItem('app_version', APP_VERSION);
       <!-- renderTestView() buraya yazar -->
     </div>
   </div>
-  <div id="translate-view" class="view"><div style="text-align:center;padding:60px 20px;color:#bbb;"><div style="font-size:48px;margin-bottom:12px">🌐</div>Çeviri modülü yakında</div></div>
+  <div id="translate-view" class="view">
+    <div id="translate-content" style="max-width:520px;margin:0 auto;padding:12px 14px 80px;"></div>
+  </div>
   <div id="list-view" class="view">
     <h2>⭐ Yıldızladığım Sözcükler</h2>
     <div class="list-filter">
@@ -635,7 +637,7 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.25</div>
+            <div class="changelog-ver">v3.26</div>
             <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
           </div>
           <div class="changelog-item">
@@ -774,7 +776,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.25`;
+    script.src = `ders${num}.js?v=v3.26`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -1029,6 +1031,7 @@ function switchView(v, btn){
   if(v==='list') renderList();
   if(v==='review') renderReview();
   if(v==='test') initTestView();
+  if(v==='translate') initTranslateView();
 }
 
 // =================== DERS LİSTESİ ===================
@@ -2454,6 +2457,170 @@ async function gistAutoSync(){
 }
 
 function exportData(){ navigator.clipboard.writeText(JSON.stringify({starred,visitedTabs})).then(()=>alert('Panoya kopyalandi.')); }
+
+// =================== ÇEVİRİ ===================
+async function initTranslateView(){
+  const wrap = document.getElementById('translate-content');
+  wrap.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#0d9488;font-size:14px;">⏳ Yükleniyor...</div>';
+  const toLoad = LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).map(m=>loadDers(m.num));
+  await Promise.all(toLoad);
+  renderTranslateView();
+}
+
+function renderTranslateView(){
+  const wrap = document.getElementById('translate-content');
+  const hasApiKey = !!localStorage.getItem('tayca_api_key');
+  wrap.innerHTML = `
+    <div style="background:linear-gradient(135deg,#0d9488,#06b6d4);border-radius:14px;padding:16px 18px;margin-bottom:16px;color:white;">
+      <div style="font-size:16px;font-weight:700;">🌐 Çeviri</div>
+      <div style="font-size:12px;opacity:.8;margin-top:2px;">Türkçe veya Tayca yaz — önce derslerde arar, bulamazsa Claude çevirir</div>
+    </div>
+    <div style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:12px;margin-bottom:12px;">
+      <textarea id="translate-input" placeholder="Türkçe veya Tayca yaz..."
+        style="width:100%;border:none;outline:none;font-size:15px;resize:none;min-height:72px;font-family:inherit;box-sizing:border-box;"
+        oninput="translateDebounce()"
+      ></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+        <span id="translate-lang-hint" style="font-size:11px;color:#aaa;"></span>
+        <button onclick="doTranslate()" style="background:#0d9488;color:white;border:none;border-radius:8px;padding:7px 18px;font-size:13px;font-weight:700;cursor:pointer;">🔍 Çevir</button>
+      </div>
+    </div>
+    ${!hasApiKey?'<div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:10px 12px;font-size:12px;color:#e65100;margin-bottom:12px;">⚠️ Claude çevirisi için ⚙️ Ayarlar\'dan Anthropic API Key ekle.</div>':''}
+    <div id="translate-results"></div>
+  `;
+  document.getElementById('translate-input').focus();
+}
+
+let _translateTimer = null;
+function translateDebounce(){
+  const q = document.getElementById('translate-input').value;
+  const isThai = /[฀-๿]/.test(q);
+  const hint = document.getElementById('translate-lang-hint');
+  if(hint) hint.textContent = q.trim() ? (isThai ? '🇹🇭 Tayca algılandı' : '🇹🇷 Türkçe algılandı') : '';
+  clearTimeout(_translateTimer);
+  if(q.trim().length >= 2) _translateTimer = setTimeout(doTranslate, 800);
+}
+
+function searchLessons(q){
+  const norm = s => s.toLowerCase().replace(/\s+/g,' ').trim();
+  const nq = norm(q);
+  const isThai = /[฀-๿]/.test(q);
+  const results = [];
+
+  Object.values(LESSONS).forEach(L=>{
+    if(!L) return;
+    const check = (item, source) => {
+      const field = isThai ? item.th : item.tr;
+      if(!field) return;
+      const nf = norm(field);
+      if(nf.includes(nq) || nq.includes(nf)){
+        results.push({...item, _source: source, _score: nf===nq ? 2 : 1});
+      }
+    };
+    (L.words||[]).forEach(w=>{ check(w,'kelime'); (w.examples||[]).forEach(e=>check(e,'örnek')); });
+    (L.grammar||[]).forEach(g=>{ (g.examples||[]).forEach(e=>check(e,'gramer')); });
+    (L.speaking||[]).forEach(s=>check(s,'konuşma'));
+    (L.dialogues||[]).forEach(d=>{ (d.lines||[]).forEach(l=>check(l,'diyalog')); });
+  });
+
+  return results.sort((a,b)=>b._score-a._score).slice(0,5);
+}
+
+async function doTranslate(){
+  const q = document.getElementById('translate-input')?.value?.trim();
+  if(!q) return;
+  const wrap = document.getElementById('translate-results');
+  if(!wrap) return;
+
+  // Ders araması
+  const hits = searchLessons(q);
+  const isThai = /[฀-๿]/.test(q);
+
+  let html = '';
+
+  if(hits.length > 0){
+    html += `<div style="font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">📚 Derslerde Bulundu</div>`;
+    hits.forEach(h=>{
+      const bdHtml = (h.bd||[]).map(p=>`<span style="display:inline-block;background:#f0fdf9;border:1px solid #b2dfdb;border-radius:4px;padding:2px 6px;font-size:10px;margin:2px;color:#0d9488;"><strong>${p.ro}</strong> = ${p.tr}</span>`).join('');
+      html += `
+        <div style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div style="flex:1;">
+              <div style="font-family:'Noto Sans Thai',sans-serif;font-size:20px;font-weight:700;color:#0d9488;">${h.th||''}</div>
+              <div style="font-size:12px;color:#888;font-style:italic;margin-top:1px;">${h.ro||''}</div>
+              <div style="font-size:14px;font-weight:600;color:#222;margin-top:4px;">${h.tr||''}</div>
+              ${bdHtml ? '<div style="margin-top:6px;">'+bdHtml+'</div>' : ''}
+            </div>
+            <button onclick="speak('${(h.th||'').replace(/'/g,'&#39;')}',false,'m')" style="background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 10px;font-size:11px;color:#888;cursor:pointer;flex-shrink:0;margin-left:8px;">🔊</button>
+          </div>
+          <div style="font-size:10px;color:#aaa;margin-top:6px;text-transform:uppercase;">${h._source}</div>
+        </div>`;
+    });
+  }
+
+  // Claude çevirisi — sadece tam eşleşme yoksa veya her zaman
+  const hasExact = hits.some(h=>h._score===2);
+  const apiKey = localStorage.getItem('tayca_api_key');
+
+  if(apiKey && !hasExact){
+    html += `<div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">🤖 Claude Çevirisi</div>`;
+    html += `<div id="claude-result" style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px;"><div style="color:#aaa;font-size:13px;">⏳ Çeviriliyor...</div></div>`;
+    wrap.innerHTML = html;
+    await claudeTranslate(q, isThai);
+    return;
+  }
+
+  if(!apiKey && hits.length===0){
+    html += `<div style="background:#f8f8f8;border-radius:10px;padding:14px;text-align:center;color:#aaa;font-size:13px;">Ders içinde bulunamadı. Claude çevirisi için ⚙️ Ayarlar\'dan API Key ekle.</div>`;
+  }
+
+  wrap.innerHTML = html;
+}
+
+async function claudeTranslate(q, isThai){
+  const apiKey = localStorage.getItem('tayca_api_key');
+  const prompt = isThai
+    ? `Kullanıcı şu Tayca ifadeyi Türkçeye çevirmek istiyor: "${q}"\n\nŞu formatta cevap ver (başka hiçbir şey yazma):\nTürkçe: ...\nRomanizasyon: ...\nAçıklama: ...`
+    : `Kullanıcı şu Türkçe ifadeyi Taycaya çevirmek istiyor: "${q}"\n\nŞu formatta cevap ver (başka hiçbir şey yazma):\nTayca: ...\nRomanizasyon: ...\nTürkçe: ...\nAçıklama: ...`;
+  try{
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'x-api-key':apiKey,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-calls':'true'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:300,
+        system:'Sen bir Tayca öğretmenisin. Kısa, net ve öğretici cevaplar ver. Türk kullanıcılar için Tayca öğretiyorsun.',
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'Çeviri alınamadı.';
+    const el = document.getElementById('claude-result');
+    if(!el) return;
+    // Satırları parse et
+    const lines = text.split('\n').filter(l=>l.trim());
+    let out = '';
+    lines.forEach(line=>{
+      const [label,...rest] = line.split(':');
+      const val = rest.join(':').trim();
+      if(!val) return;
+      if(label.includes('Tayca')){
+        out += `<div style="font-family:'Noto Sans Thai',sans-serif;font-size:22px;font-weight:700;color:#0d9488;margin-bottom:4px;">${val}
+          <button onclick="speak('${val.replace(/'/g,'&#39;')}',false,'m')" style="background:none;border:1px solid #e0e0e0;border-radius:20px;padding:3px 10px;font-size:11px;color:#888;cursor:pointer;margin-left:8px;">🔊</button></div>`;
+      } else if(label.includes('Romanizasyon')){
+        out += `<div style="font-size:13px;color:#888;font-style:italic;margin-bottom:4px;">${val}</div>`;
+      } else if(label.includes('Türkçe')){
+        out += `<div style="font-size:15px;font-weight:600;color:#222;margin-bottom:6px;">${val}</div>`;
+      } else {
+        out += `<div style="font-size:12px;color:#666;border-top:1px solid #f0f0f0;padding-top:8px;margin-top:4px;">${line}</div>`;
+      }
+    });
+    el.innerHTML = out || text;
+  } catch(e){
+    const el = document.getElementById('claude-result');
+    if(el) el.innerHTML = `<div style="color:#dc2626;font-size:13px;">❌ Hata: ${e.message}</div>`;
+  }
+}
 
 // =================== SES LİSTESİ ===================
 function loadVoiceList(){
