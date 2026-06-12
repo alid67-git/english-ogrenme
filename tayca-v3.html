@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.20';
+const APP_VERSION = 'v3.21';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.20</span>
+  <span class="vbadge" id="app-version">v3.21</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -626,6 +626,10 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
+            <div class="changelog-ver">v3.21</div>
+            <div class="changelog-desc">Ali→Tom, Nada→Lucy isim değişikliği; Web Speech API erkek/kadın ses pitch düzeltmesi</div>
+          </div>
+          <div class="changelog-item">
             <div class="changelog-ver">v3.20</div>
             <div class="changelog-desc">ders1.js metin/ses uyumsuzluğu düzeltildi — tüm Thai metinler (w1-w6 kelimeler, speaking görevleri) artık doğrudan veri dosyasında, index kayması hatası giderildi</div>
           </div>
@@ -757,7 +761,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.20`;
+    script.src = `ders${num}.js?v=v3.21`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -898,9 +902,9 @@ function speakWebSpeech(text, slow, gender){
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang='th-TH';
-  if(gender==='m'){ u.pitch=slow?0.65:0.70; u.rate=slow?0.35:0.80; }
-  else if(gender==='f'){ u.pitch=slow?1.65:1.75; u.rate=slow?0.40:0.90; }
-  else { u.pitch=slow?0.95:1.10; u.rate=slow?0.38:0.88; }
+  if(gender==='m'){ u.pitch=slow?0.20:0.25; u.rate=slow?0.38:0.82; }
+  else if(gender==='f'){ u.pitch=slow?0.95:1.05; u.rate=slow?0.40:0.88; }
+  else { u.pitch=slow?0.50:0.55; u.rate=slow?0.38:0.85; }
   const voices=window.speechSynthesis.getVoices();
   const thaiVoices=voices.filter(x=>x.lang==='th-TH'||x.lang==='th');
   if(thaiVoices.length>0){
@@ -975,7 +979,7 @@ function playDialogue(di){
     const gender = lines[i].s.toLowerCase()==='ali' ? 'm' : 'f';
     const u = new SpeechSynthesisUtterance(lines[i].th);
     u.lang = 'th-TH';
-    u.pitch = gender==='m' ? 0.4 : 1.8;
+    u.pitch = gender==='m' ? 0.25 : 1.05;
     u.rate = 0.82;
     const voices = window.speechSynthesis.getVoices();
     const thaiVoices = voices.filter(x => x.lang==='th-TH' || x.lang==='th');
