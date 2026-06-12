@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.28';
+const APP_VERSION = 'v3.29';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.28</span>
+  <span class="vbadge" id="app-version">v3.29</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -637,6 +637,10 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
+            <div class="changelog-ver">v3.29</div>
+            <div class="changelog-desc">Ders 10-14 eklendi: Plaj, Hastane, Acil Durumlar, Ev/İnternet, Sosyalleşme</div>
+          </div>
+          <div class="changelog-item">
             <div class="changelog-ver">v3.28</div>
             <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
           </div>
@@ -754,11 +758,11 @@ const LESSONS_META = [
   {num:7, emoji:'🚗', title:'Grab ve Ulaşım', hasContent:true, hasTones:false},
   {num:8, emoji:'🏨', title:'Otel ve Konaklama', hasContent:true, hasTones:false},
   {num:9, emoji:'🏍️', title:'Motorsiklet ve Trafik', hasContent:true, hasTones:false},
-  {num:10,emoji:'🏖️', title:'Plaj ve Deniz', hasContent:false, hasTones:false},
-  {num:11,emoji:'🏥', title:'Hastane ve Eczane', hasContent:false, hasTones:false},
-  {num:12,emoji:'🆘', title:'Acil Durumlar', hasContent:false, hasTones:false},
-  {num:13,emoji:'🏠', title:'Ev Yaşamı ve İnternet', hasContent:false, hasTones:false},
-  {num:14,emoji:'🎉', title:'Sosyalleşme', hasContent:false, hasTones:false},
+  {num:10,emoji:'🏖️', title:'Plaj ve Deniz', hasContent:true, hasTones:false},
+  {num:11,emoji:'🏥', title:'Hastane ve Eczane', hasContent:true, hasTones:false},
+  {num:12,emoji:'🆘', title:'Acil Durumlar', hasContent:true, hasTones:false},
+  {num:13,emoji:'🏠', title:'Ev Yaşamı ve İnternet', hasContent:true, hasTones:false},
+  {num:14,emoji:'🎉', title:'Sosyalleşme', hasContent:true, hasTones:false},
   {num:15,emoji:'🏦', title:'Immigration ve Resmi İşler', hasContent:false, hasTones:false},
   {num:16,emoji:'🙏', title:'Thai Kültürü', hasContent:false, hasTones:false},
   {num:17,emoji:'🔤', title:'Tabela ve Menü Okuma', hasContent:false, hasTones:false},
@@ -776,7 +780,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.28`;
+    script.src = `ders${num}.js?v=v3.29`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
