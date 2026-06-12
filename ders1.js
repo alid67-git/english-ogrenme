@@ -332,31 +332,42 @@ const L1 = {
   dialogues:[
     {title:'🏪 Markette Karsilasma',
      lines:[
-       {s:'Ali',th:'สวัสดีครับ',ro:'sa-wat-dee-khrap',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Selam'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'สวัสดีครับ',ro:'sa-wat-dee-khrap',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'สวัสดีค่ะ',ro:'sa-wat-dee-kha',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanistigima',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'ยินดีที่ได้รู้จักเช่นกันค่ะ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-kha',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanistigima',role:'O - Nesne'},{ro:'chen-kan',tr:'ayni sekilde',role:'Vurgu'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
      ]},
     {title:'🙏 Tesekkur Alisverisi',
      lines:[
-       {s:'Ali',th:'ขอบคุณมากครับ',ro:'khob-khun-maak-khrap',tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'maak',tr:'çok',role:'Şiddetlendirme'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'คุณใจดีมากครับ',ro:'khun-jai-dee-maak-khrap',tr:'Cok iyi kalplisiniz.',bd:[{ro:'khun-jai',tr:'kalbiniz',role:'O - Nesne'},{ro:'dee-maak',tr:'çok iyi',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'ขอบคุณมากครับ',ro:'khob-khun-maak-khrap',tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'maak',tr:'cok',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'ไม่เป็นไรค่ะ',ro:'mai-pen-rai-kha',tr:'Sorun degil.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'คุณใจดีมากครับ',ro:'khun-jai-dee-maak-khrap',tr:'Cok iyi kalplisiniz.',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'jai-dee-maak',tr:'cok iyi kalpli',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'ขอบคุณค่ะ',ro:'khob-khun-kha',tr:'Tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
      ]},
     {title:'😅 Kazara Carpma',
      lines:[
-       {s:'Ali',th:'ขอโทษครับ',ro:'khor-thot-khrap',tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'özür dile',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkurler.',bd:[{ro:'khob-khun',tr:'teşekkür et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'สบายดีครับ ขอบคุณ',ro:'sa-bai-dee-khrap khob-khun',tr:'Iyiyim, tesekkurler.',bd:[{ro:'sa-bai-dee-khrap',tr:'Iyiyim',role:'Kelime'},{ro:'khob-khun',tr:'tesekkurler',role:'Kelime'}]},
+       {s:'Ali', th:'ขอโทษครับ',ro:'khor-thot-khrap',tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dile',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'ไม่เป็นไรค่ะ',ro:'mai-pen-rai-kha',tr:'Sorun degil.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'สบายดีไหมคะ',ro:'sa-bai-dee-mai-kha',tr:'Iyi misiniz?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'สบายดีครับ ขอบคุณ',ro:'sa-bai-dee-khrap khob-khun',tr:'Iyiyim, tesekkurler.',bd:[{ro:'sa-bai-dee',tr:'iyiyim',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'},{ro:'khob-khun',tr:'tesekkurler',role:'Kelime'}]},
      ]},
     {title:'🤝 Is Yerinde Tanisma',
      lines:[
-       {s:'Ali',th:'สวัสดีครับผมชื่ออาลีครับ',ro:'sa-wat-dee-khrap pom chue Ali khrap',tr:'Merhaba, benim adim Ali.',bd:[{ro:'sa-wat-dee-khrap',tr:'merhaba',role:'Kelime'},{ro:'pom chue Ali',tr:'adim Ali',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ยินดีที่ได้รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoşlanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gösteren',role:'Edat'},{ro:'dai',tr:'başarılı/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanışmak',role:'O - Nesne'},{ro:'chen-kan',tr:'aynı şekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ผมมาจากตุรกีครับอยู่ภูเก็ต',ro:'pom-maa-jaak-tur-gii-khrap yuu-phu-get',tr:'Turkiyeden geliyorum, Phuket\'te yasiyorum.',bd:[{ro:'pom maa jaak tur-gii',tr:'Turkiyeden geliyorum',role:'Kelime'},{ro:'yuu phu-get',tr:'Phuket te',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'สวัสดีครับ ผมชื่ออาลีครับ',ro:'sa-wat-dee-khrap pom-chue-Ali-khrap',tr:'Merhaba, benim adim Ali.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'pom chue Ali',tr:'adim Ali',role:'S - Ozne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'สวัสดีค่ะ ฉันชื่อนาดาค่ะ',ro:'sa-wat-dee-kha chan-chue-Nada-kha',tr:'Merhaba, benim adim Nada.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'chan chue Nada',tr:'adim Nada',role:'S - Ozne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'ยินดีที่ได้รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanistigima',role:'O - Nesne'},{ro:'chen-kan',tr:'ayni sekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'คุณมาจากไหนคะ',ro:'khun-maa-jaak-nai-kha',tr:'Nerelisiniz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'maa-jaak-nai',tr:'nerelisiniz',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'ผมมาจากตุรกีครับ อยู่ภูเก็ต',ro:'pom-maa-jaak-tur-gii-khrap yuu-phu-get',tr:'Turkiyeden geliyorum, Phuket te yasiyorum.',bd:[{ro:'pom maa jaak tur-gii',tr:'Turkiyeden geliyorum',role:'S - Ozne'},{ro:'yuu phu-get',tr:'Phuket te yasiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
      ]},
     {title:'🌅 Sabah Selamlasmasi',
      lines:[
-       {s:'Ali',th:'สบายดีไหม',ro:'sa-bai-dee-mai',tr:'Nasilsin?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'}]},
-       {s:'Ali',th:'วันนี้อากาศดีมากครับ',ro:'wan-nii-a-gat-dee-maak-khrap',tr:'Bugun hava cok guzel.',bd:[{ro:'wan-nii',tr:'bugün',role:'S - Ozne'},{ro:'a-gat',tr:'hava',role:'O - Nesne'},{ro:'dee-maak',tr:'çok güzel',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'แล้วเจอกันครับ',ro:'laeo-joe-kan-khrap',tr:'Gorusuruuz.',bd:[{ro:'laeo',tr:'sonra',role:'Zaman'},{ro:'joe-kan',tr:'göruşürüz',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'สบายดีไหมครับ',ro:'sa-bai-dee-mai-khrap',tr:'Nasilsiniz?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'สบายดีค่ะ ขอบคุณค่ะ',ro:'sa-bai-dee-kha khob-khun-kha',tr:'Iyiyim, tesekkurler.',bd:[{ro:'sa-bai-dee',tr:'iyiyim',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'},{ro:'khob-khun',tr:'tesekkurler',role:'Kelime'}]},
+       {s:'Ali', th:'วันนี้อากาศดีมากครับ',ro:'wan-nii-a-gat-dee-maak-khrap',tr:'Bugun hava cok guzel.',bd:[{ro:'wan-nii',tr:'bugun',role:'S - Ozne'},{ro:'a-gat',tr:'hava',role:'O - Nesne'},{ro:'dee-maak',tr:'cok guzel',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'ใช่ค่ะ สวยมากค่ะ',ro:'chai-kha suay-maak-kha',tr:'Evet, cok guzel.',bd:[{ro:'chai',tr:'evet',role:'Kelime'},{ro:'suay-maak',tr:'cok guzel',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+       {s:'Ali', th:'แล้วเจอกันครับ',ro:'laeo-joe-kan-khrap',tr:'Gorusuruuz.',bd:[{ro:'laeo',tr:'sonra',role:'Zaman'},{ro:'joe-kan',tr:'gorusuruuz',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {s:'Nada',th:'แล้วเจอกันค่ะ',ro:'laeo-joe-kan-kha',tr:'Gorusuruuz.',bd:[{ro:'laeo',tr:'sonra',role:'Zaman'},{ro:'joe-kan',tr:'gorusuruuz',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
      ]},
   ],
 
@@ -411,7 +422,7 @@ LESSONS[1] = L1;
     }
   });
   (THAI.speaking||[]).forEach((th,i)=>{ if(L1.speaking[i]) L1.speaking[i].th = th; });
-  (THAI.dialogues||[]).forEach((lines,di)=>{ lines.forEach((th,li)=>{ if(L1.dialogues[di]&&L1.dialogues[di].lines[li]) L1.dialogues[di].lines[li].th = th; }); });
+  // dialogues: th degerleri ders1.js icinde dogrudan tanimli, injection gerekmiyor
   (THAI.listening||[]).forEach((th,i)=>{ if(L1.listening[i]) L1.listening[i].th = th; });
   (THAI.tones||[]).forEach((t,ti)=>{ (t.words||[]).forEach((th,wi)=>{ if(L1.tones[ti]&&L1.tones[ti].words[wi]) L1.tones[ti].words[wi].th = th; }); });
   (THAI.grammar||[]).forEach((g,gi)=>{ if(L1.grammar[gi]) (g.examples||[]).forEach((th,ei)=>{ if(L1.grammar[gi].examples[ei]) L1.grammar[gi].examples[ei].th = th; }); });
