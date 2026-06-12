@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.18';
+const APP_VERSION = 'v3.19';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.17</span>
+  <span class="vbadge" id="app-version">v3.19</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -357,6 +357,7 @@ localStorage.setItem('app_version', APP_VERSION);
 <div id="settings-overlay" class="overlay">
   <div class="modal">
     <div class="modal-head"><div class="modal-title">⚙️ Ayarlar</div><button class="modal-close" onclick="closeModal('settings-overlay')">✕</button></div>
+    <div class="setting-row"><div class="setting-label">Google TTS API Key</div><input type="password" id="google-tts-key-input" placeholder="AIza..."><button class="setting-btn" onclick="saveGoogleTTSKey()">Kaydet</button></div>
     <div class="setting-row"><div class="setting-label">Anthropic API Key</div><input type="password" id="api-key-input" placeholder="sk-ant-..."><button class="setting-btn" onclick="saveKey()">Kaydet</button></div>
     <div class="setting-row"><div class="setting-label">GitHub Gist Token</div><input type="password" id="gist-token-input" placeholder="ghp_..."><button class="setting-btn" onclick="saveGist()">Kaydet</button></div>
     <div class="setting-row"><div class="setting-label">Veri</div><button class="setting-btn" onclick="exportData()">💾 Yedekle</button></div>
@@ -625,6 +626,10 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
+            <div class="changelog-ver">v3.19</div>
+            <div class="changelog-desc">Google Cloud TTS (Chirp3-HD) entegrasyonu — Orus (erkek) ve Aoede (kadın) sesleri, Web Speech API fallback</div>
+          </div>
+          <div class="changelog-item">
             <div class="changelog-ver">v3.18</div>
             <div class="changelog-desc">Dosya bölme: ders1-9.js ayrı dosyalar, HTML ana gövde ~100KB oldu — lazy load ile ilk açılış hızlandı</div>
           </div>
@@ -849,31 +854,54 @@ function updateProgressBar(){
 }
 
 // =================== SES ===================
-function speak(text, slow, gender){
-  if(!window.speechSynthesis){ alert('Bu cihaz TTS desteklemiyor.'); return; }
+// =================== GOOGLE TTS ===================
+const GTTS = {
+  cache: new Map(),
+  _current: null,
+  stop(){ if(this._current){ this._current.pause(); this._current=null; } window.speechSynthesis&&window.speechSynthesis.cancel(); },
+  key(){ return localStorage.getItem('tayca_google_tts_key')||''; }
+};
+
+async function speak(text, slow, gender){
+  if(!text||!text.trim()) return;
+  GTTS.stop();
+  const apiKey = GTTS.key();
+  if(!apiKey){ speakWebSpeech(text, slow, gender); return; }
+  const voiceName = gender==='f' ? 'th-TH-Chirp3-HD-Aoede' : 'th-TH-Chirp3-HD-Orus';
+  const rate = slow ? 0.65 : 1.0;
+  const cacheKey = text+'|'+voiceName+'|'+rate;
+  let audioContent = GTTS.cache.get(cacheKey);
+  if(!audioContent){
+    try{
+      const resp = await fetch('https://texttospeech.googleapis.com/v1/text:synthesize?key='+apiKey,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({input:{text},voice:{languageCode:'th-TH',name:voiceName},audioConfig:{audioEncoding:'MP3',speakingRate:rate}})
+      });
+      const data = await resp.json();
+      if(data.error||!data.audioContent){ console.warn('Google TTS hata:',data.error); speakWebSpeech(text,slow,gender); return; }
+      audioContent = data.audioContent;
+      GTTS.cache.set(cacheKey, audioContent);
+    } catch(e){ console.warn('Google TTS baglanti hatasi:',e); speakWebSpeech(text,slow,gender); return; }
+  }
+  const audio = new Audio('data:audio/mp3;base64,'+audioContent);
+  GTTS._current = audio;
+  audio.play();
+}
+
+function speakWebSpeech(text, slow, gender){
+  if(!window.speechSynthesis){ return; }
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang='th-TH';
-  if(gender==='m'){
-    u.pitch = slow ? 0.65 : 0.70;
-    u.rate = slow ? 0.35 : 0.80;
-  } else if(gender==='f'){
-    u.pitch = slow ? 1.65 : 1.75;
-    u.rate = slow ? 0.40 : 0.90;
-  } else {
-    u.pitch = slow ? 0.95 : 1.10;
-    u.rate = slow ? 0.38 : 0.88;
-  }
-  const voices = window.speechSynthesis.getVoices();
-  const thaiVoices = voices.filter(x=>x.lang==='th-TH'||x.lang==='th');
+  if(gender==='m'){ u.pitch=slow?0.65:0.70; u.rate=slow?0.35:0.80; }
+  else if(gender==='f'){ u.pitch=slow?1.65:1.75; u.rate=slow?0.40:0.90; }
+  else { u.pitch=slow?0.95:1.10; u.rate=slow?0.38:0.88; }
+  const voices=window.speechSynthesis.getVoices();
+  const thaiVoices=voices.filter(x=>x.lang==='th-TH'||x.lang==='th');
   if(thaiVoices.length>0){
-    if(gender==='f'){
-      let fv = thaiVoices.find(v=>{ const n=v.name.toLowerCase(); return n.includes('kanya')||n.includes('female')||n.includes('woman'); });
-      u.voice = fv || thaiVoices[Math.max(0, thaiVoices.length-1)];
-    } else {
-      let mv = thaiVoices.find(v=>{ const n=v.name.toLowerCase(); return n.includes('male')||n.includes('man'); });
-      u.voice = mv || thaiVoices[0];
-    }
+    if(gender==='f'){ let fv=thaiVoices.find(v=>{const n=v.name.toLowerCase();return n.includes('kanya')||n.includes('female')||n.includes('woman');}); u.voice=fv||thaiVoices[Math.max(0,thaiVoices.length-1)]; }
+    else { let mv=thaiVoices.find(v=>{const n=v.name.toLowerCase();return n.includes('male')||n.includes('man');}); u.voice=mv||thaiVoices[0]; }
   }
   window.speechSynthesis.speak(u);
 }
@@ -2280,17 +2308,25 @@ function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.overlay').forEach(el=>{
   el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('open'); });
 });
+function saveGoogleTTSKey(){ localStorage.setItem('tayca_google_tts_key',document.getElementById('google-tts-key-input').value.trim()); GTTS.cache.clear(); loadVoiceList(); alert('Kaydedildi.'); }
 function saveKey(){ localStorage.setItem('tayca_api_key',document.getElementById('api-key-input').value); alert('Kaydedildi.'); }
 function saveGist(){ localStorage.setItem('tayca_gist_token',document.getElementById('gist-token-input').value); alert('Kaydedildi.'); }
 function exportData(){ navigator.clipboard.writeText(JSON.stringify({starred,visitedTabs})).then(()=>alert('Panoya kopyalandi.')); }
 
 // =================== SES LİSTESİ ===================
 function loadVoiceList(){
-  let html = '<div style="font-size:12px;color:#666;margin-bottom:8px;">✅ Web Speech API (Cihaz TTS)</div>';
-  html += '<div style="color:#059669;padding:8px;background:#ecfdf5;border-radius:6px;font-size:12px;">';
-  html += '🔵 <strong>Thai Male</strong> — Erkek sesi (pitch: 0.7)<br>';
-  html += '🔴 <strong>Thai Female</strong> — Kadın sesi (pitch: 1.75)';
-  html += '</div>';
+  const hasKey = !!GTTS.key();
+  let html = '';
+  if(hasKey){
+    html = '<div style="font-size:12px;color:#059669;margin-bottom:8px;">✅ Google Cloud TTS (Chirp3-HD)</div>';
+    html += '<div style="color:#059669;padding:8px;background:#ecfdf5;border-radius:6px;font-size:12px;">';
+    html += '🔵 <strong>Orus</strong> — Erkek sesi (Ali)<br>';
+    html += '🔴 <strong>Aoede</strong> — Kadın sesi (Nada)';
+    html += '</div>';
+  } else {
+    html = '<div style="font-size:12px;color:#e65100;margin-bottom:8px;">⚠️ Google TTS key yok — Web Speech API kullanılıyor</div>';
+    html += '<div style="color:#666;padding:8px;background:#fff3e0;border-radius:6px;font-size:12px;">Kaliteli ses için yukarıya Google TTS API Key girin.</div>';
+  }
   document.getElementById('voice-list').innerHTML = html;
   document.getElementById('test-voice-controls').style.display = 'block';
 }
@@ -2314,6 +2350,7 @@ updateProgressBar();
 loadVoiceList();
 document.getElementById('api-key-input').value = localStorage.getItem('tayca_api_key')||'';
 document.getElementById('gist-token-input').value = localStorage.getItem('tayca_gist_token')||'';
+document.getElementById('google-tts-key-input').value = localStorage.getItem('tayca_google_tts_key')||'';
 </script>
 
 <!-- GRAMMAR DETAIL MODAL -->
