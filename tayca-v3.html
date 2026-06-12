@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.24';
+const APP_VERSION = 'v3.25';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.24</span>
+  <span class="vbadge" id="app-version">v3.25</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -359,7 +359,16 @@ localStorage.setItem('app_version', APP_VERSION);
     <div class="modal-head"><div class="modal-title">⚙️ Ayarlar</div><button class="modal-close" onclick="closeModal('settings-overlay')">✕</button></div>
     <div class="setting-row"><div class="setting-label">Google TTS API Key</div><input type="password" id="google-tts-key-input" placeholder="AIza..."><button class="setting-btn" onclick="saveGoogleTTSKey()">Kaydet</button></div>
     <div class="setting-row"><div class="setting-label">Anthropic API Key</div><input type="password" id="api-key-input" placeholder="sk-ant-..."><button class="setting-btn" onclick="saveKey()">Kaydet</button></div>
-    <div class="setting-row"><div class="setting-label">GitHub Gist Token</div><input type="password" id="gist-token-input" placeholder="ghp_..."><button class="setting-btn" onclick="saveGist()">Kaydet</button></div>
+    <div class="setting-row">
+      <div class="setting-label">☁️ Cihazlar Arası Senkron (GitHub Gist)</div>
+      <input type="password" id="gist-token-input" placeholder="ghp_... (gist yetkisi olmalı)" style="margin-top:6px;">
+      <button class="setting-btn" onclick="saveGist()" style="margin-top:6px;">Kaydet</button>
+      <div style="display:flex;gap:6px;margin-top:6px;">
+        <button class="setting-btn" onclick="gistPush()" style="flex:1;background:#0d9488;color:white;border-color:#0d9488;">☁️ Buluta Kaydet</button>
+        <button class="setting-btn" onclick="gistPull()" style="flex:1;">📥 Buluttan Al</button>
+      </div>
+      <div id="gist-status" style="font-size:11px;color:#888;margin-top:6px;"></div>
+    </div>
     <div class="setting-row"><div class="setting-label">Veri</div><button class="setting-btn" onclick="exportData()">💾 Yedekle</button></div>
     <div class="setting-row">
       <div class="setting-label">🔊 Thai Sesleri</div>
@@ -626,7 +635,7 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.24</div>
+            <div class="changelog-ver">v3.25</div>
             <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
           </div>
           <div class="changelog-item">
@@ -765,7 +774,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.24`;
+    script.src = `ders${num}.js?v=v3.25`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -2336,7 +2345,114 @@ document.querySelectorAll('.overlay').forEach(el=>{
 });
 function saveGoogleTTSKey(){ localStorage.setItem('tayca_google_tts_key',document.getElementById('google-tts-key-input').value.trim()); GTTS.cache.clear(); loadVoiceList(); alert('Kaydedildi.'); }
 function saveKey(){ localStorage.setItem('tayca_api_key',document.getElementById('api-key-input').value); alert('Kaydedildi.'); }
-function saveGist(){ localStorage.setItem('tayca_gist_token',document.getElementById('gist-token-input').value); alert('Kaydedildi.'); }
+function saveGist(){
+  localStorage.setItem('tayca_gist_token', document.getElementById('gist-token-input').value.trim());
+  document.getElementById('gist-status').textContent = '✅ Token kaydedildi.';
+}
+
+const GIST_FILENAME = 'tayca-v3-sync.json';
+
+function gistData(){
+  return {
+    tv3_star:     localStorage.getItem('tv3_star')     || '{}',
+    tv3_complete: localStorage.getItem('tv3_complete') || '[]',
+    tv3_srs:      localStorage.getItem('tv3_srs')      || '{}',
+    tv3_stats:    localStorage.getItem('tv3_stats')    || '{}',
+    saved_at:     new Date().toISOString()
+  };
+}
+
+function gistSetStatus(msg, color){
+  const el = document.getElementById('gist-status');
+  if(el){ el.textContent = msg; el.style.color = color||'#888'; }
+}
+
+async function gistPush(){
+  const token = localStorage.getItem('tayca_gist_token');
+  if(!token){ alert('Önce Gist token kaydet.'); return; }
+  gistSetStatus('⏳ Yükleniyor...', '#888');
+  try{
+    const gistId = localStorage.getItem('tayca_gist_id');
+    const url    = gistId ? `https://api.github.com/gists/${gistId}` : 'https://api.github.com/gists';
+    const method = gistId ? 'PATCH' : 'POST';
+    const resp = await fetch(url, {
+      method,
+      headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+      body: JSON.stringify({
+        description:'Tayca Ogren v3 - Kullanici Verisi',
+        public: false,
+        files:{ [GIST_FILENAME]:{ content: JSON.stringify(gistData(), null, 2) } }
+      })
+    });
+    const data = await resp.json();
+    if(!data.id) throw new Error(data.message||'Bilinmeyen hata');
+    localStorage.setItem('tayca_gist_id', data.id);
+    const t = new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+    gistSetStatus('✅ Buluta kaydedildi · '+t, '#059669');
+  } catch(e){ gistSetStatus('❌ Hata: '+e.message, '#dc2626'); }
+}
+
+async function gistPull(){
+  const token = localStorage.getItem('tayca_gist_token');
+  if(!token){ alert('Önce Gist token kaydet.'); return; }
+  gistSetStatus('⏳ Aranıyor...', '#888');
+  try{
+    // Gist ID varsa direkt al, yoksa listeden ara
+    let gistId = localStorage.getItem('tayca_gist_id');
+    if(!gistId){
+      const list = await fetch('https://api.github.com/gists?per_page=30', {
+        headers:{'Authorization':'Bearer '+token}
+      }).then(r=>r.json());
+      const found = list.find && list.find(g=>g.files&&g.files[GIST_FILENAME]);
+      if(!found) throw new Error('Bulutta veri bulunamadı. Önce bir cihazdan "Buluta Kaydet" yap.');
+      gistId = found.id;
+      localStorage.setItem('tayca_gist_id', gistId);
+    }
+    const resp = await fetch(`https://api.github.com/gists/${gistId}`, {
+      headers:{'Authorization':'Bearer '+token}
+    });
+    const data = await resp.json();
+    const raw = data.files?.[GIST_FILENAME]?.content;
+    if(!raw) throw new Error('Gist dosyası bulunamadı.');
+    const payload = JSON.parse(raw);
+    if(payload.tv3_star)     { localStorage.setItem('tv3_star',     payload.tv3_star);     starred = JSON.parse(payload.tv3_star); }
+    if(payload.tv3_complete) { localStorage.setItem('tv3_complete', payload.tv3_complete); completedLessons = JSON.parse(payload.tv3_complete); }
+    if(payload.tv3_srs)        localStorage.setItem('tv3_srs',      payload.tv3_srs);
+    if(payload.tv3_stats)      localStorage.setItem('tv3_stats',    payload.tv3_stats);
+    const t = new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+    const saved = payload.saved_at ? new Date(payload.saved_at).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '?';
+    gistSetStatus('✅ Alındı · Kaydedilme: '+saved, '#059669');
+    renderLessonList();
+    updateProgressBar();
+    updateReviewBadge();
+  } catch(e){ gistSetStatus('❌ '+e.message, '#dc2626'); }
+}
+
+async function gistAutoSync(){
+  const token = localStorage.getItem('tayca_gist_token');
+  const gistId = localStorage.getItem('tayca_gist_id');
+  if(!token || !gistId) return;
+  try{
+    const resp = await fetch(`https://api.github.com/gists/${gistId}`, {
+      headers:{'Authorization':'Bearer '+token}
+    });
+    const data = await resp.json();
+    const raw = data.files?.[GIST_FILENAME]?.content;
+    if(!raw) return;
+    const payload = JSON.parse(raw);
+    const remoteSaved = payload.saved_at ? new Date(payload.saved_at).getTime() : 0;
+    const localSaved  = parseInt(localStorage.getItem('tayca_last_push')||'0');
+    if(remoteSaved > localSaved + 30000){ // 30 saniye tolerans
+      if(payload.tv3_star)     { localStorage.setItem('tv3_star',     payload.tv3_star);     starred = JSON.parse(payload.tv3_star); }
+      if(payload.tv3_complete) { localStorage.setItem('tv3_complete', payload.tv3_complete); completedLessons = JSON.parse(payload.tv3_complete); }
+      if(payload.tv3_srs)        localStorage.setItem('tv3_srs',      payload.tv3_srs);
+      if(payload.tv3_stats)      localStorage.setItem('tv3_stats',    payload.tv3_stats);
+      renderLessonList(); updateProgressBar(); updateReviewBadge();
+      console.log('Gist auto-sync: buluttan güncellendi');
+    }
+  } catch(e){ /* sessiz hata */ }
+}
+
 function exportData(){ navigator.clipboard.writeText(JSON.stringify({starred,visitedTabs})).then(()=>alert('Panoya kopyalandi.')); }
 
 // =================== SES LİSTESİ ===================
@@ -2376,6 +2492,8 @@ updateProgressBar();
 loadVoiceList();
 document.getElementById('api-key-input').value = localStorage.getItem('tayca_api_key')||'';
 document.getElementById('gist-token-input').value = localStorage.getItem('tayca_gist_token')||'';
+// Sayfa açılışta buluttan sessizce güncelle
+gistAutoSync();
 document.getElementById('google-tts-key-input').value = localStorage.getItem('tayca_google_tts_key')||'';
 </script>
 
