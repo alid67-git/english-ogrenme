@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.26';
+const APP_VERSION = 'v3.27';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.26</span>
+  <span class="vbadge" id="app-version">v3.27</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -637,7 +637,7 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.26</div>
+            <div class="changelog-ver">v3.27</div>
             <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
           </div>
           <div class="changelog-item">
@@ -776,7 +776,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.26`;
+    script.src = `ders${num}.js?v=v3.27`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -2558,23 +2558,52 @@ async function doTranslate(){
     });
   }
 
-  // Claude çevirisi — sadece tam eşleşme yoksa veya her zaman
   const hasExact = hits.some(h=>h._score===2);
   const apiKey = localStorage.getItem('tayca_api_key');
 
+  // Google Translate — her zaman göster
+  html += `<div style="font-size:11px;font-weight:700;color:#4285f4;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">🌍 Google Translate</div>`;
+  html += `<div id="google-result" style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px;"><div style="color:#aaa;font-size:13px;">⏳ Çeviriliyor...</div></div>`;
+
+  // Claude — API key varsa ve tam eşleşme yoksa
   if(apiKey && !hasExact){
     html += `<div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">🤖 Claude Çevirisi</div>`;
     html += `<div id="claude-result" style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px;"><div style="color:#aaa;font-size:13px;">⏳ Çeviriliyor...</div></div>`;
-    wrap.innerHTML = html;
-    await claudeTranslate(q, isThai);
-    return;
-  }
-
-  if(!apiKey && hits.length===0){
-    html += `<div style="background:#f8f8f8;border-radius:10px;padding:14px;text-align:center;color:#aaa;font-size:13px;">Ders içinde bulunamadı. Claude çevirisi için ⚙️ Ayarlar\'dan API Key ekle.</div>`;
   }
 
   wrap.innerHTML = html;
+
+  // Paralel çalıştır
+  const tasks = [googleTranslate(q, isThai)];
+  if(apiKey && !hasExact) tasks.push(claudeTranslate(q, isThai));
+  await Promise.all(tasks);
+}
+
+async function googleTranslate(q, isThai){
+  const sl = isThai ? 'th' : 'tr';
+  const tl = isThai ? 'tr' : 'th';
+  try{
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&dt=rm&q=${encodeURIComponent(q)}`;
+    const data = await fetch(url).then(r=>r.json());
+    const translated = (data[0]||[]).map(x=>x[0]||'').join('');
+    const roman = data[0]?.[0]?.[3] || '';
+    const el = document.getElementById('google-result');
+    if(!el) return;
+    if(!translated){ el.innerHTML = '<div style="color:#aaa;font-size:13px;">Çeviri alınamadı.</div>'; return; }
+    if(isThai){
+      el.innerHTML = `<div style="font-size:15px;font-weight:600;color:#222;">${translated}</div>`;
+    } else {
+      el.innerHTML = `
+        <div style="font-family:'Noto Sans Thai',sans-serif;font-size:22px;font-weight:700;color:#0d9488;margin-bottom:4px;">
+          ${translated}
+          <button onclick="speak('${translated.replace(/'/g,'&#39;')}',false,'m')" style="background:none;border:1px solid #e0e0e0;border-radius:20px;padding:3px 10px;font-size:11px;color:#888;cursor:pointer;margin-left:8px;">🔊</button>
+        </div>
+        ${roman ? `<div style="font-size:12px;color:#888;font-style:italic;">${roman}</div>` : ''}`;
+    }
+  } catch(e){
+    const el = document.getElementById('google-result');
+    if(el) el.innerHTML = `<div style="color:#dc2626;font-size:13px;">❌ ${e.message}</div>`;
+  }
 }
 
 async function claudeTranslate(q, isThai){
