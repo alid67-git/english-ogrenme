@@ -111,6 +111,11 @@ main{padding:14px;}
 .ltab .done-dot{display:none;}
 .lcontent{display:none;}
 .lcontent.active{display:block;}
+.tab-timer-wrap{background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:10px;padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.tab-timer-track{flex:1;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden;}
+.tab-timer-fill{height:100%;width:0%;background:#0d9488;border-radius:3px;transition:width 1s linear;}
+.tab-timer-text{font-size:11px;color:#0d9488;font-weight:700;min-width:28px;text-align:right;}
+.ltab.timing::before{content:'⏳';font-size:9px;}
 
 /* WORD CARD — Thai soluk, Romanizasyon net */
 .word-card{background:white;padding:14px;margin-bottom:10px;border-radius:10px;border:1px solid #e8e8e8;}
@@ -287,7 +292,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.30';
+const APP_VERSION = 'v3.32';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +319,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.30</span>
+  <span class="vbadge" id="app-version">v3.32</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -637,8 +642,12 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
+            <div class="changelog-ver">v3.32</div>
+            <div class="changelog-desc">Her sekme için 60 saniyelik zorunlu bekleme — süre dolmadan ders tamamlanamıyor; progress bar ile geri sayım gösteriliyor</div>
+          </div>
+          <div class="changelog-item">
             <div class="changelog-ver">v3.30</div>
-            <div class="changelog-desc">Ders 15-19 eklendi: Immigration, Thai Kültürü, Tabela Okuma, LINE/Telefon, Phuket Tam Gün Simülasyonu — tüm 19 ders tamamlandı</div>
+            <div class="changelog-desc">Ders 10-19 eklendi (tüm 19 ders tamamlandı); listening format düzeltmesi; ders 17-19 diyalog speaker alanı düzeltmesi</div>
           </div>
           <div class="changelog-item">
             <div class="changelog-ver">v3.29</div>
@@ -784,7 +793,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.30`;
+    script.src = `ders${num}.js?v=v3.32`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -1146,6 +1155,7 @@ async function openLesson(num){
 }
 
 function closeLessonDetail(){
+  stopTabTimer();
   stopLessonTimer();
   renderLessonList();
   switchView('lessons', document.querySelector('.nbtn'));
@@ -1460,6 +1470,102 @@ function buildLessonHTML(L, meta){
   `;
 }
 
+// =================== TAB TİMER ===================
+const TAB_DURATION = 60;
+let _tabTimer = {iv:null, elapsed:0, tab:null, lessonNum:null};
+
+function stopTabTimer(){
+  if(_tabTimer.iv){ clearInterval(_tabTimer.iv); _tabTimer.iv=null; }
+  // remove timing class from all ltabs
+  document.querySelectorAll('.ltab.timing').forEach(b=>b.classList.remove('timing'));
+}
+
+function startTabTimer(tab){
+  stopTabTimer();
+  const vkey = 'L'+currentLesson.num+'_'+tab;
+  const el = document.getElementById('lc-'+tab);
+  // already visited — just show completed bar briefly
+  if(visitedTabs[vkey]){
+    _renderTimerBar(tab, TAB_DURATION, TAB_DURATION);
+    return;
+  }
+  _tabTimer = {iv:null, elapsed:0, tab:tab, lessonNum:currentLesson.num};
+  _renderTimerBar(tab, 0, TAB_DURATION);
+  // mark active ltab as timing
+  const tabNames = getTabsForLesson(currentLesson);
+  const tabIdx = tabNames.indexOf(tab);
+  const tabBtns = document.querySelectorAll('.ltab');
+  if(tabBtns[tabIdx]) tabBtns[tabIdx].classList.add('timing');
+
+  _tabTimer.iv = setInterval(()=>{
+    if(_tabTimer.tab !== tab || _tabTimer.lessonNum !== currentLesson.num){ stopTabTimer(); return; }
+    _tabTimer.elapsed++;
+    _renderTimerBar(tab, _tabTimer.elapsed, TAB_DURATION);
+    if(_tabTimer.elapsed >= TAB_DURATION){
+      stopTabTimer();
+      visitedTabs[vkey] = true;
+      saveVisited();
+      _updateTabButtons();
+      _refreshCompleteBtn();
+    }
+  }, 1000);
+}
+
+function _renderTimerBar(tab, elapsed, total){
+  const el = document.getElementById('lc-'+tab);
+  if(!el) return;
+  let wrap = el.querySelector('.tab-timer-wrap');
+  if(!wrap){
+    wrap = document.createElement('div');
+    wrap.className = 'tab-timer-wrap';
+    wrap.innerHTML = '<div class="tab-timer-track"><div class="tab-timer-fill"></div></div><div class="tab-timer-text"></div>';
+    el.insertBefore(wrap, el.firstChild);
+  }
+  const fill = wrap.querySelector('.tab-timer-fill');
+  const txt  = wrap.querySelector('.tab-timer-text');
+  const pct  = Math.min(100, Math.round((elapsed/total)*100));
+  fill.style.width = pct+'%';
+  if(elapsed >= total){
+    fill.style.background = '#22c55e';
+    txt.textContent = '✅';
+    setTimeout(()=>{ wrap.style.display='none'; }, 1200);
+  } else {
+    txt.textContent = (total-elapsed)+'s';
+  }
+}
+
+function _updateTabButtons(){
+  const tabNames = getTabsForLesson(currentLesson);
+  const tabBtns = document.querySelectorAll('.ltab');
+  tabNames.forEach((tabName, idx)=>{
+    if(tabBtns[idx]){
+      const done = visitedTabs['L'+currentLesson.num+'_'+tabName];
+      tabBtns[idx].classList.toggle('visited', !!done);
+      tabBtns[idx].classList.remove('timing');
+    }
+  });
+}
+
+function _refreshCompleteBtn(){
+  const wrap = document.getElementById('complete-btn-wrap');
+  if(!wrap) return;
+  const meta = currentLesson;
+  const allDone = getTabsForLesson(meta).every(t=>visitedTabs['L'+meta.num+'_'+t]);
+  const already = isCompleted(meta.num);
+  if(already) return;
+  if(allDone){
+    wrap.innerHTML = `
+      <div style="background:#f8f9fa;border:1.5px dashed #ccc;border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:13px;color:#888;margin-bottom:10px;">✅ Tüm sekmeler tamamlandı!</div>
+        <button onclick="markLessonDone(${meta.num})"
+          style="background:#0d9488;border:none;border-radius:10px;padding:12px 28px;color:white;font-size:14px;font-weight:700;cursor:pointer;">
+          ✅ Dersi Tamamladım
+        </button>
+      </div>`;
+  }
+}
+// =================== TAB TİMER END ===================
+
 function switchLessonTab(tab, btn){
   document.querySelectorAll('.lcontent').forEach(c=>c.classList.remove('active'));
   const el = document.getElementById('lc-'+tab);
@@ -1467,17 +1573,11 @@ function switchLessonTab(tab, btn){
   document.querySelectorAll('.ltab').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   else{ const first=document.querySelector('.ltab'); if(first) first.classList.add('active'); }
-  const vkey = 'L'+currentLesson.num+'_'+tab;
-  visitedTabs[vkey] = true;
-  saveVisited();
-  const tabNames = getTabsForLesson(currentLesson);
-  const tabBtns = document.querySelectorAll('.ltab');
-  tabNames.forEach((tabName, idx)=>{
-    if(tabBtns[idx]){
-      if(visitedTabs['L'+currentLesson.num+'_'+tabName]){ tabBtns[idx].classList.add('visited'); }
-      else { tabBtns[idx].classList.remove('visited'); }
-    }
-  });
+  startTabTimer(tab);
+  _updateTabButtons();
+  // keep active class on current btn (startTabTimer may have changed it)
+  if(btn) btn.classList.add('active');
+  else{ const first=document.querySelector('.ltab'); if(first) first.classList.add('active'); }
 }
 
 // =================== L2 HESAPLAYICI ===================
