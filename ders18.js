@@ -326,16 +326,16 @@ const L18 = {
     }
   ],
   listening:[
-    {id:'l1',audio_th:'คุณมีไลน์ไหมครับ',audio_ro:'khun mii lain mai khrap',question:'Adam ne soruyor?',answer:'LINE\'ınız var mı?'},
-    {id:'l2',audio_th:'ส่งข้อความมาหาฉันได้นะคะ',audio_ro:'song kho-khwaam maa haa chan dai na kha',question:'Kadın ne söylüyor?',answer:'Bana mesaj atabilirsiniz.'},
-    {id:'l3',audio_th:'แบตหมดแล้วครับ',audio_ro:'baet-mot lae-o khrap',question:'Adam ne diyor?',answer:'Batarya bitti.'},
-    {id:'l4',audio_th:'สัญญาณไม่ดีเลยค่ะ',audio_ro:'san-yaan mai dii loei kha',question:'Sorun ne?',answer:'Sinyal hiç iyi değil.'},
-    {id:'l5',audio_th:'แชร์โลเคชั่นได้ไหมครับ',audio_ro:'chaer lo-khe-chan dai mai khrap',question:'Adam ne istiyor?',answer:'Konumu paylaşmasını istiyor.'},
-    {id:'l6',audio_th:'วิดีโอคอลผมได้เลยนะครับ',audio_ro:'wi-dii-o-khon phom dai loei na khrap',question:'Adam ne söylüyor?',answer:'Beni görüntülü arayabilirsin.'},
-    {id:'l7',audio_th:'เพิ่มเพื่อนในไลน์ได้ยังไงครับ',audio_ro:'phoem phuean nai lain dai yang-ngai khrap',question:'Adam ne soruyor?',answer:'LINE\'da arkadaş nasıl eklenir?'},
-    {id:'l8',audio_th:'ไอดีไลน์คือ tom_phuket ครับ',audio_ro:'ai-dii lain khue tom_phuket khrap',question:'Adam ne söylüyor?',answer:'LINE ID\'si tom_phuket.'},
-    {id:'l9',audio_th:'ส่งรูปในไลน์นะคะ',audio_ro:'song ruup nai lain na kha',question:'Kadın ne istiyor?',answer:'LINE\'dan fotoğraf göndermesini istiyor.'},
-    {id:'l10',audio_th:'โทรไม่ได้เพราะสัญญาณหาย',audio_ro:'tho mai dai phro san-yaan haai',question:'Neden arama yapılamıyor?',answer:'Sinyal gittiği için.'}
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['LINE','Mesaj Gönder','Aramak','Sticker'], c:0, th:'ไลน์'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Mesaj Gönder','Telefon Numarasi','Aramak','Sticker'], c:1, th:'เบอร์โทร'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Mesaj Gönder','Sticker','Aramak','LINE'], c:2, th:'โทรหา'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Aramak','Mesaj Gönder','Sticker','Paylasmak'], c:1, th:'ส่งข้อความ'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Mesaj Gönder','LINE','Sticker','Aramak'], c:2, th:'สติ๊กเกอร์'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Arkadasl Ekle','Paylasmak','Batarya Bitti','Sinyal'], c:0, th:'เพิ่มเพื่อน'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Batarya Bitti','Paylasmak','Sinyal','Görüntülü Arama'], c:1, th:'แชร์'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Sinyal','Batarya Bitti','Paylasmak','Görüntülü Arama'], c:1, th:'แบตหมด'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Görüntülü Arama','Sinyal','Batarya Bitti','LINE'], c:1, th:'สัญญาณ'},
+    {diff:'hard', q:'Bu kelime ne anlama gelir?', opts:['Görüntülü Arama','Sinyal','Mesaj Gönder','Aramak'], c:0, th:'วิดีโอคอล'}
   ],
   quiz:[
     {

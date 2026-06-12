@@ -792,119 +792,16 @@ const L15 = {
     }
   ],
   listening:[
-    {
-      th:'คุณต้องต่ออายุวีซ่าทุกปีครับ',
-      ro:'Khun tong to-aa-yu wii-saa thuk pii khrap',
-      tr:'Her yıl vizenizi uzatmanız gerekiyor.',
-      bd:[
-        {ro:'khun',tr:'siz',role:'S - Ozne'},
-        {ro:'tong',tr:'zorunda',role:'Modal'},
-        {ro:'to-aa-yu wii-saa',tr:'vize uzatmak',role:'V - Yuklem'},
-        {ro:'thuk pii',tr:'her yıl',role:'Zaman'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'สำนักงานอิมมิเกรชั่นอยู่ที่ภูเก็ตทาวน์ค่ะ',
-      ro:'Sam-nak-ngan im-mi-kre-chan yuu thii Phuu-ket Thao kha',
-      tr:'İmmigrasyon ofisi Phuket Town\'da.',
-      bd:[
-        {ro:'sam-nak-ngan im-mi-kre-chan',tr:'immigrasyon ofisi',role:'S - Ozne'},
-        {ro:'yuu thii',tr:'...-de bulunmak',role:'V - Yuklem'},
-        {ro:'Phuu-ket Thao',tr:'Phuket Town',role:'O - Nesne'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ผมต้องนำหนังสือเดินทางและรูปถ่ายมาด้วยครับ',
-      ro:'Phom tong nam nang-suea-doen-thang lae ruup-thaai maa duoi khrap',
-      tr:'Pasaport ve fotoğraf getirmem gerekiyor.',
-      bd:[
-        {ro:'phom',tr:'ben',role:'S - Ozne'},
-        {ro:'tong nam',tr:'getirmek zorunda',role:'Modal'},
-        {ro:'nang-suea-doen-thang',tr:'pasaport',role:'O - Nesne'},
-        {ro:'lae',tr:'ve',role:'Kelime'},
-        {ro:'ruup-thaai',tr:'fotoğraf',role:'O - Nesne'},
-        {ro:'maa duoi',tr:'de beraberinde getirmek',role:'Kelime'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ค่าธรรมเนียมหนึ่งพันเก้าร้อยบาทค่ะ',
-      ro:'Khaa-tham-ma-niam nueng-phan kao-roi baat kha',
-      tr:'Harç bin dokuz yüz Baht.',
-      bd:[
-        {ro:'khaa-tham-ma-niam',tr:'harç',role:'S - Ozne'},
-        {ro:'nueng-phan kao-roi baat',tr:'1900 Baht',role:'Kelime'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'กรุณากรอกแบบฟอร์มให้ครบถ้วนค่ะ',
-      ro:'Ka-ru-naa krok baep-form hai khrop-thuon kha',
-      tr:'Lütfen formu eksiksiz doldurun.',
-      bd:[
-        {ro:'ka-ru-naa',tr:'lütfen',role:'Kibar'},
-        {ro:'krok',tr:'doldurmak',role:'V - Yuklem'},
-        {ro:'baep-form',tr:'form',role:'O - Nesne'},
-        {ro:'hai khrop-thuon',tr:'eksiksiz olarak',role:'Kelime'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'สัญชาติของผมคือตุรกีครับ',
-      ro:'San-chaat khong phom khue Tu-ra-kii khrap',
-      tr:'Uyrumum Türkiye.',
-      bd:[
-        {ro:'san-chaat khong phom',tr:'benim uyruğum',role:'S - Ozne'},
-        {ro:'khue',tr:'olmak',role:'V - Yuklem'},
-        {ro:'Tu-ra-kii',tr:'Türkiye',role:'O - Nesne'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ต้องรอประมาณสองชั่วโมงค่ะ',
-      ro:'Tong ro pra-maan song chua-mong kha',
-      tr:'Yaklaşık iki saat beklemek gerekiyor.',
-      bd:[
-        {ro:'tong ro',tr:'beklemek zorunda',role:'Modal'},
-        {ro:'pra-maan',tr:'yaklaşık',role:'Kelime'},
-        {ro:'song chua-mong',tr:'iki saat',role:'Zaman'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ลายเซ็นของคุณอยู่ตรงนี้ครับ',
-      ro:'Laai-sen khong khun yuu trong nii khrap',
-      tr:'İmzanız buraya.',
-      bd:[
-        {ro:'laai-sen khong khun',tr:'sizin imzanız',role:'S - Ozne'},
-        {ro:'yuu trong nii',tr:'tam burada',role:'V - Yuklem'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ที่อยู่ของผมอยู่ในภูเก็ตครับ',
-      ro:'Thii-yuu khong phom yuu nai Phuu-ket khrap',
-      tr:'Adresim Phuket\'te.',
-      bd:[
-        {ro:'thii-yuu khong phom',tr:'benim adresim',role:'S - Ozne'},
-        {ro:'yuu nai',tr:'içinde',role:'V - Yuklem'},
-        {ro:'Phuu-ket',tr:'Phuket',role:'O - Nesne'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'เอกสารครบแล้วค่ะ เดี๋ยวเรียกชื่อคุณค่ะ',
-      ro:'Ek-ka-saan khrop laeo kha diao riak chuea khun kha',
-      tr:'Belgeler tamam. Birazdan isminizi çağıracağız.',
-      bd:[
-        {ro:'ek-ka-saan khrop laeo',tr:'belgeler tamamdır',role:'Kelime'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'},
-        {ro:'diao',tr:'birazdan',role:'Zaman'},
-        {ro:'riak chuea khun',tr:'isminizi çağırmak',role:'V - Yuklem'}
-      ]
-    }
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Vize','Pasaport','Form','Adres'], c:0, th:'วีซ่า'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Vize','Pasaport','Form','Adres'], c:1, th:'หนังสือเดินทาง'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Uzatmak','Beklemek','Imzalamak','Doldurmak'], c:0, th:'ต่ออายุ'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Ofis','Adres','Uyruk','Harç'], c:0, th:'สำนักงาน'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Vize','Pasaport','Form','Adres'], c:2, th:'แบบฟอร์ม'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Uyruk','Ücret/Harç','Adres','Imza'], c:1, th:'ค่าธรรมเนียม'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Adres','Imza','Uyruk','Vize'], c:1, th:'ลายเซ็น'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Pasaport','Uyruk','Adres','Form'], c:1, th:'สัญชาติ'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Ofis','Uyruk','Adres','Imza'], c:2, th:'ที่อยู่'},
+    {diff:'hard', q:'Bu cümle ne anlama gelir?', opts:['Lütfen bekleyin','Formu doldurun','Pasaportunuzu verin','Vizeyi uzatin'], c:0, th:'รอ'}
   ],
   quiz:[
     {q:'"Vize" Tayca\'da nasıl denir?', opts:['หนังสือเดินทาง','วีซ่า','แบบฟอร์ม','ลายเซ็น'], c:1},

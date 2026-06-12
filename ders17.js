@@ -315,16 +315,16 @@ const L17 = {
     }
   ],
   listening:[
-    {id:'l1',audio_th:'ทางเข้าอยู่ทางขวาครับ',audio_ro:'thang khao yuu thang khwa khrap',question:'Adam nerede olduğunu söylüyor?',answer:'Giriş sağ tarafta.'},
-    {id:'l2',audio_th:'ระวัง! พื้นลื่นค่ะ',audio_ro:'ra-wang phuean luen kha',question:'Kadın ne uyarısı veriyor?',answer:'Dikkat, zemin kaygan.'},
-    {id:'l3',audio_th:'ห้องน้ำอยู่ชั้นสองค่ะ',audio_ro:'hong-naam yuu chan song kha',question:'Tuvalet kaçıncı katta?',answer:'İkinci katta.'},
-    {id:'l4',audio_th:'ร้านนี้ปิดแล้วครับ',audio_ro:'raan nii pit lae-o khrap',question:'Dükkan ne durumda?',answer:'Kapandı.'},
-    {id:'l5',audio_th:'ลด 30% ทุกอย่างค่ะ',audio_ro:'lot saam-sip percent thuk yang kha',question:'İndirim yüzdesi nedir?',answer:'%30 indirim.'},
-    {id:'l6',audio_th:'Wi-Fi ฟรีทั้งร้านครับ',audio_ro:'wai-fai frii thang raan khrap',question:'Wi-Fi hakkında ne söyleniyor?',answer:'Tüm dükkanda ücretsiz.'},
-    {id:'l7',audio_th:'ที่จอดรถอยู่ด้านหลังค่ะ',audio_ro:'thii-jot-rot yuu dan lang kha',question:'Otopark nerede?',answer:'Arka tarafta.'},
-    {id:'l8',audio_th:'ไม่สูบบุหรี่ในร้านนะครับ',audio_ro:'mai suup bu-rii nai raan na khrap',question:'Ne yasak?',answer:'Dükkan içinde sigara içmek yasak.'},
-    {id:'l9',audio_th:'ทางออกฉุกเฉินอยู่ทางนั้นค่ะ',audio_ro:'thang ok chuk-choen yuu thang nan kha',question:'Ne nerede?',answer:'Acil çıkış o tarafta.'},
-    {id:'l10',audio_th:'ราคาสองร้อยห้าสิบบาทครับ',audio_ro:'raa-khaa song roi haa-sip baht khrap',question:'Fiyat ne kadar?',answer:'250 baht.'}
+    {diff:'easy', q:'Bu tabela ne anlama gelir?', opts:['Giriş','Çikiş','Tuvalet','Otopark'], c:0, th:'เข้า'},
+    {diff:'easy', q:'Bu tabela ne anlama gelir?', opts:['Giriş','Çikiş','Tuvalet','Otopark'], c:1, th:'ออก'},
+    {diff:'easy', q:'Bu tabela ne anlama gelir?', opts:['Dikkat','Tuvalet','Kapalı','Açik'], c:1, th:'ห้องน้ำ'},
+    {diff:'easy', q:'Bu tabela ne anlama gelir?', opts:['Kapalı','Dikkat','Açik','Indirim'], c:1, th:'ระวัง'},
+    {diff:'easy', q:'Bu tabela ne anlama gelir?', opts:['Açik','Kapalı','Indirim','Ücretsiz'], c:1, th:'ปิด'},
+    {diff:'medium', q:'Bu tabela ne anlama gelir?', opts:['Kapalı','Açik','Indirim','Otopark'], c:1, th:'เปิด'},
+    {diff:'medium', q:'Bu tabela ne anlama gelir?', opts:['Ücretsiz','Indirim','Otopark','Kat'], c:1, th:'ลด'},
+    {diff:'medium', q:'Bu tabela ne anlama gelir?', opts:['Indirim','Ücretsiz','Otopark','Kat'], c:1, th:'ฟรี'},
+    {diff:'medium', q:'Bu tabela ne anlama gelir?', opts:['Kat','Otopark','Acil Çikiş','Sigara Içilmez'], c:1, th:'ที่จอดรถ'},
+    {diff:'hard', q:'Bu tabela ne anlama gelir?', opts:['Acil Çikiş','Sigara Içilmez','Kat','Otopark'], c:0, th:'ทางออกฉุกเฉิน'}
   ],
   quiz:[
     {

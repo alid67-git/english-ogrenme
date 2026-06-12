@@ -794,114 +794,16 @@ const L16 = {
     }
   ],
   listening:[
-    {
-      th:'ควรไหว้เมื่อเจอผู้ใหญ่ครับ',
-      ro:'Khuan waai mueang joe phuu-yai khrap',
-      tr:'Büyüklerle karşılaşınca wai yapmalısın.',
-      bd:[
-        {ro:'khuan waai',tr:'wai yapman tavsiye edilir',role:'Modal'},
-        {ro:'mueang joe',tr:'karşılaşınca',role:'Zaman'},
-        {ro:'phuu-yai',tr:'büyükler',role:'O - Nesne'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ห้ามถ่ายรูปในวัดบางแห่งค่ะ',
-      ro:'Ham thaat ruup nai wat bang-haeng kha',
-      tr:'Bazı tapınaklarda fotoğraf çekmek yasak.',
-      bd:[
-        {ro:'ham thaat ruup',tr:'fotoğraf çekmek yasak',role:'Soru/Olumsuz'},
-        {ro:'nai wat bang-haeng',tr:'bazı tapınaklarda',role:'Edat'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ผมกราบพระสามครั้งครับ',
-      ro:'Phom kraap phra saam khrang khrap',
-      tr:'Buda\'ya üç kez secde ettim.',
-      bd:[
-        {ro:'phom',tr:'ben',role:'S - Ozne'},
-        {ro:'kraap phra',tr:'Buda\'ya secde etmek',role:'V - Yuklem'},
-        {ro:'saam khrang',tr:'üç kez',role:'Zaman'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'การทำบุญทำให้จิตใจสงบค่ะ',
-      ro:'Kaan tham bun tham hai jit-jai sa-ngop kha',
-      tr:'Sevap yapmak insanı huzura kavuşturur.',
-      bd:[
-        {ro:'kaan tham bun',tr:'sevap yapmak',role:'S - Ozne'},
-        {ro:'tham hai',tr:'yol açmak',role:'V - Yuklem'},
-        {ro:'jit-jai sa-ngop',tr:'huzurlu/dingin zihin',role:'O - Nesne'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ต้องแต่งตัวสุภาพเมื่อไปวัดครับ',
-      ro:'Tong taeng-tua su-phap mueang pai wat khrap',
-      tr:'Tapınağa giderken uygun giyinmek lazım.',
-      bd:[
-        {ro:'tong',tr:'gerekiyor',role:'Modal'},
-        {ro:'taeng-tua su-phap',tr:'uygun giyinmek',role:'V - Yuklem'},
-        {ro:'mueang pai wat',tr:'tapınağa giderken',role:'Zaman'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ขอโทษครับ ผมไม่รู้',
-      ro:'Kho-thot khrap phom mai ruu',
-      tr:'Özür dilerim, bilmiyordum.',
-      bd:[
-        {ro:'kho-thot',tr:'özür dilerim',role:'Kelime'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'},
-        {ro:'phom mai ruu',tr:'bilmiyordum',role:'V - Yuklem'}
-      ]
-    },
-    {
-      th:'โชคดีนะค่ะ',
-      ro:'Chok-dii na kha',
-      tr:'İyi şanslar!',
-      bd:[
-        {ro:'chok-dii',tr:'iyi şans',role:'Kelime'},
-        {ro:'na',tr:'(yumuşatma)',role:'Vurgu'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ไม่ควรชี้นิ้วไปที่พระค่ะ',
-      ro:'Mai khuan chii niu pai thii phra kha',
-      tr:'Buda\'yı parmakla göstermemelisin.',
-      bd:[
-        {ro:'mai khuan',tr:'yapmamalısın',role:'Modal'},
-        {ro:'chii niu',tr:'parmakla göstermek',role:'V - Yuklem'},
-        {ro:'pai thii phra',tr:'Buda\'ya doğru',role:'Edat'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'การเคารพเป็นสิ่งสำคัญในวัฒนธรรมไทยครับ',
-      ro:'Kaan khao-rop pen sing sam-khan nai wat-tha-na-tham Thai khrap',
-      tr:'Saygı, Tayland kültüründe önemli bir şeydir.',
-      bd:[
-        {ro:'kaan khao-rop',tr:'saygı göstermek',role:'S - Ozne'},
-        {ro:'pen sing sam-khan',tr:'önemli bir şeydir',role:'V - Yuklem'},
-        {ro:'nai wat-tha-na-tham Thai',tr:'Tayland kültüründe',role:'Edat'},
-        {ro:'khrap',tr:'(nezaket eki)',role:'Kibar'}
-      ]
-    },
-    {
-      th:'ทอมเรียนรู้วัฒนธรรมไทยได้เก่งมากค่ะ',
-      ro:'Thom rian-ruu wat-tha-na-tham Thai dai keng maak kha',
-      tr:'Tom Tayland kültürünü çok iyi öğreniyor.',
-      bd:[
-        {ro:'Thom',tr:'Tom',role:'S - Ozne'},
-        {ro:'rian-ruu',tr:'öğrenmek',role:'V - Yuklem'},
-        {ro:'wat-tha-na-tham Thai',tr:'Tayland kültürü',role:'O - Nesne'},
-        {ro:'dai keng maak',tr:'çok iyi yapabiliyor',role:'Vurgu'},
-        {ro:'kha',tr:'(nezaket eki, kadın)',role:'Kibar'}
-      ]
-    }
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Wai yapmak','Tapınak','Rahip','Karma'], c:0, th:'ไหว้'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Wai yapmak','Tapınak','Rahip','Karma'], c:1, th:'วัด'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Wai yapmak','Tapınak','Rahip/Buda','Karma'], c:2, th:'พระ'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Saygı','Karma','Kibar','Yasak'], c:1, th:'บุญ'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Kibar','Saygı','Yasak','Karma'], c:1, th:'เคารพ'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Yasak','Kibar','Saygı','Karma'], c:1, th:'สุภาพ'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Kibar','Saygı','Yasak','Karma'], c:2, th:'ห้าม'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Özür','Iyi Sanslar','Derin Saygı','Kibar'], c:1, th:'โชคดี'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Iyi Sanslar','Özür','Derin Saygı','Saygı'], c:1, th:'ขอโทษ'},
+    {diff:'hard', q:'Bu cümle ne anlama gelir?', opts:['Büyüklere derin saygı göster','Tapınaga git','Wai yap','Iyi sanslar dile'], c:0, th:'กราบ'}
   ],
   quiz:[
     {q:'"Wai yapmak" Tayca\'da nasıl denir?', opts:['กราบ','ไหว้','เคารพ','บุญ'], c:1},

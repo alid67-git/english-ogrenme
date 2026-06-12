@@ -319,16 +319,16 @@ const L19 = {
     }
   ],
   listening:[
-    {id:'l1',audio_th:'ผมตื่นนอนตอนหกโมงเช้าครับ',audio_ro:'phom tuen-non ton hok mong chao khrap',question:'Adam saat kaçta uyandı?',answer:'Sabah saat altıda.'},
-    {id:'l2',audio_th:'กินอาหารเช้าด้วยกันไหมคะ',audio_ro:'gin aa-haan-chao duai gan mai kha',question:'Kadın ne öneriyor?',answer:'Kahvaltıyı birlikte yemeyi öneriyor.'},
-    {id:'l3',audio_th:'ที่ตลาดต่อรองราคาได้นะคะ',audio_ro:'thii ta-laat to-rong raa-khaa dai na kha',question:'Kadın ne söylüyor?',answer:'Pazarda pazarlık yapılabilir.'},
-    {id:'l4',audio_th:'กินข้าวแล้วไปหาดดีไหมครับ',audio_ro:'gin khao lae-o pai haat dii mai khrap',question:'Adam ne öneriyor?',answer:'Yemek yiyince plaja gitmeyi öneriyor.'},
-    {id:'l5',audio_th:'พักผ่อนที่ชายหาดสักครู่ค่ะ',audio_ro:'phak-phon thii chaai-haat sak khruu kha',question:'Kadın ne yapıyor?',answer:'Plajda biraz dinleniyor.'},
-    {id:'l6',audio_th:'นวดไทยชั่วโมงละสามร้อยบาทครับ',audio_ro:'nuat thai chua-mong la saam roi baht khrap',question:'Tai masajı ne kadar?',answer:'Saat başı 300 baht.'},
-    {id:'l7',audio_th:'ไปดูพระอาทิตย์ตกด้วยกันไหมครับ',audio_ro:'pai duu phra-aa-thit-tok duai gan mai khrap',question:'Adam ne öneriyor?',answer:'Gün batımını birlikte izlemeye gitmeyi öneriyor.'},
-    {id:'l8',audio_th:'เก็บบิลด้วยครับ',audio_ro:'kep bin duai khrap',question:'Adam ne istiyor?',answer:'Hesabı getirmelerini istiyor.'},
-    {id:'l9',audio_th:'กลับบ้านแล้วนะครับ ฝันดีนะครับ',audio_ro:'glap baan lae-o na khrap fan dii na khrap',question:'Adam ne yapıyor ve ne diliyor?',answer:'Eve dönüyor ve tatlı rüyalar diliyor.'},
-    {id:'l10',audio_th:'ตั้งแต่เช้าอยู่ที่หาดค่ะ',audio_ro:'tang-tae chao yuu thii haat kha',question:'Kadın ne zamandan beri plajda?',answer:'Sabahtan beri plajda.'}
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Uyanmak','Kahvalti','Pazar','Masaj'], c:0, th:'ตื่นนอน'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Uyanmak','Kahvalti','Pazar','Dinlenmek'], c:1, th:'อาหารเช้า'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Uyanmak','Kahvalti','Pazar','Pazarlik'], c:2, th:'ตลาด'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Uyanmak','Pazarlik','Pazar','Dinlenmek'], c:1, th:'ต่อรอง'},
+    {diff:'easy', q:'Bu kelime ne anlama gelir?', opts:['Masaj','Kahvalti','Dinlenmek','Pazar'], c:2, th:'พักผ่อน'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Gün Batimi','Masaj','Eve Dön','Rüya'], c:0, th:'ดูพระอาทิตย์ตก'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Gün Batimi','Masaj','Eve Dön','Hesap'], c:1, th:'นวด'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Masaj','Hesap','Eve Dön','Rüya'], c:1, th:'บิล'},
+    {diff:'medium', q:'Bu kelime ne anlama gelir?', opts:['Hesap','Masaj','Eve Dön','Rüya'], c:2, th:'กลับบ้าน'},
+    {diff:'hard', q:'Bu kelime ne anlama gelir?', opts:['Rüya/Hayal','Eve Dön','Masaj','Hesap'], c:0, th:'ฝัน'}
   ],
   quiz:[
     {
