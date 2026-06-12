@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.22';
+const APP_VERSION = 'v3.23';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.22</span>
+  <span class="vbadge" id="app-version">v3.23</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -626,7 +626,7 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.22</div>
+            <div class="changelog-ver">v3.23</div>
             <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
           </div>
           <div class="changelog-item">
@@ -765,7 +765,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.22`;
+    script.src = `ders${num}.js?v=v3.23`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -1019,7 +1019,7 @@ function switchView(v, btn){
   if(btn) btn.classList.add('active');
   if(v==='list') renderList();
   if(v==='review') renderReview();
-  if(v==='test') renderTestView();
+  if(v==='test') initTestView();
 }
 
 // =================== DERS LİSTESİ ===================
@@ -1690,6 +1690,14 @@ function getWrongOptions(correctTr, count, lessonNum){
     });
   });
   return pool.sort(()=>Math.random()-0.5).slice(0,count);
+}
+
+async function initTestView(){
+  const wrap = document.getElementById('test-content');
+  wrap.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#0d9488;font-size:14px;">⏳ Ders verileri yükleniyor...</div>';
+  const toLoad = LESSONS_META.filter(m=>m.hasContent).map(m=>loadDers(m.num));
+  await Promise.all(toLoad);
+  renderTestView();
 }
 
 function renderTestView(){
