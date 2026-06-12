@@ -287,7 +287,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.21';
+const APP_VERSION = 'v3.22';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -314,7 +314,7 @@ localStorage.setItem('app_version', APP_VERSION);
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.21</span>
+  <span class="vbadge" id="app-version">v3.22</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -626,6 +626,10 @@ localStorage.setItem('app_version', APP_VERSION);
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
+            <div class="changelog-ver">v3.22</div>
+            <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
+          </div>
+          <div class="changelog-item">
             <div class="changelog-ver">v3.21</div>
             <div class="changelog-desc">Ali→Tom, Nada→Lucy isim değişikliği; Web Speech API erkek/kadın ses pitch düzeltmesi</div>
           </div>
@@ -761,7 +765,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.21`;
+    script.src = `ders${num}.js?v=v3.22`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -1651,6 +1655,15 @@ function buildTestCards(lessonNum, category){
     cards.push({type:'speaking', th:s.th||'', ro:s.ro, tr:s.tr||'', cat:'phrases'});
   });
 
+  // Diyalog satırları
+  (L.dialogues||[]).forEach(d=>{
+    (d.lines||[]).forEach(line=>{
+      if(!line.th||!line.ro||!line.tr) return;
+      const gender = line.s==='Lucy' ? 'f' : 'm';
+      cards.push({type:'dialogue', th:line.th, ro:line.ro, tr:line.tr, cat:'phrases', gender, speaker:line.s});
+    });
+  });
+
   // Filtrele
   const filtered = category==='all' ? cards : cards.filter(c=>c.cat===category);
   return filtered.sort(()=>Math.random()-0.5);
@@ -1943,7 +1956,7 @@ function showTestCard(){
       <button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Ders</button>
       ${progressBar}
       <div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:24px 20px;text-align:center;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">
-        <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':'Gramer'}</div>
+        <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':card.type==='dialogue'?'Diyalog'+(card.speaker?' · '+card.speaker:''):card.type==='speaking'?'Konuşma':'Gramer'}</div>
         ${questionText}
         <button onclick="speakTestWord()" style="margin-top:12px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>
       </div>
@@ -1983,7 +1996,7 @@ function showTestCard(){
       '<button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">&larr; Geri</button>',
       progressBar,
       '<div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:20px;text-align:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">',
-      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">'+(card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':'Gramer')+'</div>',
+      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">'+(card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':card.type==='dialogue'?'Diyalog'+(card.speaker?' · '+card.speaker:''):card.type==='speaking'?'Konuşma':'Gramer')+'</div>',
       questionText,
       '<button onclick="speakTestWord()" style="margin-top:10px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>',
       '</div>',
@@ -2018,10 +2031,8 @@ function testGoBack(){
 function speakTestWord(){
   const card = testState.cards[testState.idx];
   if(!card) return;
-  if(window.speechSynthesis){
-    const u = new SpeechSynthesisUtterance(card.th||card.ro);
-    u.lang='th-TH'; u.rate=.82; speechSynthesis.cancel(); speechSynthesis.speak(u);
-  }
+  const gender = card.gender || 'm';
+  speak(card.th || card.ro, false, gender);
 }
 function checkMCAnswer(btn, selected, correct, correctFull){
   document.querySelectorAll('.mc-opt').forEach(b=>b.disabled=true);
