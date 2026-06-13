@@ -1406,8 +1406,6 @@ async function openLesson(num){
   });
   const firstTab = getTabsForLesson(meta)[0];
   switchLessonTab(firstTab);
-  visitedTabs['L'+currentLesson.num+'_'+firstTab] = true;
-  saveVisited();
   startLessonTimer(num);
 }
 
