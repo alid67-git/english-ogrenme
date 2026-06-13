@@ -111,6 +111,7 @@ main{padding:14px;}
 .ltab .done-dot{display:none;}
 .lcontent{display:none;}
 .lcontent.active{display:block;}
+.lang-btn.active{background:#0d9488!important;color:white!important;border-color:#0d9488!important;}
 .tab-timer-wrap{background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:10px;padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .tab-timer-track{flex:1;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden;}
 .tab-timer-fill{height:100%;width:0%;background:#0d9488;border-radius:3px;transition:width 1s linear;}
@@ -292,7 +293,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.32';
+const APP_VERSION = 'v3.33';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -304,6 +305,249 @@ if(storedVersion && storedVersion !== APP_VERSION){
   console.log('Yeni versiyon: '+APP_VERSION+', cache temizlendi.');
 }
 localStorage.setItem('app_version', APP_VERSION);
+
+// =================== DİL SİSTEMİ / LANGUAGE SYSTEM ===================
+let appLang = localStorage.getItem('tv3_lang') || 'tr';
+
+const UI = {
+  tr:{
+    // Nav
+    nav_lessons:'📚 Dersler', nav_test:'📝 Test', nav_translate:'🌐 Çeviri',
+    nav_list:'📋 Liste', nav_review:'🔄 Tekrar', nav_add:'➕ Ekle',
+    // Sekmeler
+    tab_words:'Sözcükler', tab_tones:'Tonlar', tab_grammar:'Gramer',
+    tab_speaking:'Konuşma', tab_dialogue:'Diyalog', tab_listening:'Dinleme',
+    tab_quiz:'Quiz', tab_numbers:'Sayılar', tab_calc:'Hesapla',
+    // Ders içi
+    lesson_back:'← Dersler', lesson_done_msg:'Bu dersi tamamladın!',
+    lesson_redo_hint:'İstersen tekrar işaretleyebilirsin',
+    lesson_unmark:'↺ Tamamlanmadı olarak işaretle',
+    lesson_mark_done:'✅ Dersi Tamamladım',
+    lesson_all_visited:'✅ Tüm sekmeler tamamlandı!',
+    lesson_visit_all:'⚠️ Tüm sekmeleri ziyaret etmeden dersi tamamlayamazsın.',
+    lesson_all_done_q:'✅ Tüm sekmeler ziyaret edildi — dersi tamamladın mı?',
+    lesson_complete_btn_active:'Tüm sekmeler tamamlandı!',
+    tones_ref:"Bu ders için ton bilgisi Ders 1'de verilmiştir.",
+    // Gramer
+    gram_tip_label:'İpucu:',
+    // Konuşma
+    speak_listen:'🔊 Dinle', speak_slow:'🐢 Yavaş',
+    // Diyalog
+    dial_play:'▶ Tümü', dial_stop:'⏹ Durdur',
+    // Dinleme
+    listen_play_btn:'🔊 SESİ DİNLE',
+    listen_easy:'⭐ Kolay', listen_medium:'⭐⭐ Orta', listen_hard:'⭐⭐⭐ Zor',
+    // Test modülü
+    test_loading:'⏳ Ders verileri yükleniyor...',
+    test_single:'Tek Ders',
+    test_single_desc:'Bir dersin kelimelerini, örneklerini ve gramer cümlelerini test et.',
+    test_all:'Tüm Dersler',
+    test_all_desc_suffix:'kart havuzu.',
+    test_starred:'Yıldızlılar',
+    test_starred_desc:'Yıldızladığın kartları test et.',
+    test_select_lesson:'Ders Seç',
+    test_lessons_done:'ders tamamlandı',
+    test_cards_available:'kart mevcut',
+    test_back_btn:'← Ders', test_back_menu:'← Ana Menü', test_back_geri:'← Geri',
+    test_show_answer:'Cevabı Gör',
+    test_knew:'✅ Bildim', test_didnt_know:'❌ Bilmedim',
+    test_continue:'Devam →',
+    test_correct_fb:'✅ Doğru!', test_wrong_prefix:'❌ Doğrusu:',
+    test_retry:'🔄 Tekrar',
+    test_result_great:'Harika!', test_result_good:'İyi!',
+    test_result_ok:'Fena değil!', test_result_keep:'Çalışmaya devam!',
+    test_correct_count:'doğru',
+    test_wrong_items:'🔁 Yanlışlar — Tekrar Bak',
+    test_mode_fc:'Flashcard', test_mode_mc:'Çoktan Seçmeli', test_mode_mix:'Karışık',
+    test_dir_th2tr:'Thai → Anlam', test_dir_tr2th:'Anlam → Thai', test_dir_mix:'Karışık Yön',
+    test_cat_all:'Tümü', test_cat_phrases:'Cümleler', test_cat_grammar:'Gramer', test_cat_pronouns:'Zamirler',
+    test_start:'Başla', test_no_cards:'Kart bulunamadı',
+    test_type_word:'Kelime', test_type_example:'Örnek Cümle',
+    test_type_dialogue:'Diyalog', test_type_speaking:'Konuşma', test_type_grammar:'Gramer',
+    test_no_lessons:'Henüz tamamlanan ders yok.',
+    test_soru:'soru',
+    // Tekrar (SRS)
+    review_title:'🔄 Tekrar (SRS)',
+    review_total:'toplam', review_learned:'öğrenildi', review_due:'bekleyen',
+    review_start:'Tekrara Başla', review_no_cards:'Bugün tekrar edilecek kart yok',
+    review_add_section:'📚 Derse Kart Ekle',
+    review_cards:'kart', review_add_btn:'+ Ekle',
+    review_lesson_prefix:'Ders',
+    review_done_title:'Oturum Tamamlandı!', review_done_sub:'kart tekrar edildi.',
+    review_restart:'Yeniden Başla', review_show_answer:'Cevabı Gör',
+    review_q_th2tr:'🇹🇭 Thai → Türkçe', review_q_tr2th:'🇹🇷 Türkçe → Thai',
+    review_btn_0:'❌ Bilmiyorum', review_btn_1:'😰 Zor',
+    review_btn_2:'👍 Normal', review_btn_3:'⚡ Kolay',
+    review_type_word:'📚 Kelime', review_type_example:'💬 Örnek', review_type_speaking:'🗣️ Konuşma',
+    // Çeviri
+    translate_placeholder:'Tayca veya Türkçe yaz...',
+    translate_btn:'Çevir', translate_tip:'Thai veya Türkçe bir kelime veya cümle yaz.',
+    translate_lesson_matches:'Ders Eşleşmeleri', translate_no_match:'Eşleşme yok',
+    translate_google:'🌐 Google Çeviri', translate_claude:'🤖 Claude AI',
+    translate_loading:'Çeviriliyor...',
+    // Liste
+    list_title:'⭐ Yıldızladığım Sözcükler',
+    list_all:'Tümü', list_words:'Sözcükler', list_examples:'Örnekler', list_dialogue:'Diyalog',
+    list_empty:'⭐<br><br>Henüz yıldızlanan sözcük yok.',
+    list_analysis:'📖 Cümle Analizi',
+    // Ayarlar
+    settings_title:'⚙️ Ayarlar', settings_lang:'🌐 Uygulama Dili',
+    settings_gist:'☁️ Cihazlar Arası Senkron (GitHub Gist)',
+    settings_push:'☁️ Buluta Kaydet', settings_pull:'📥 Buluttan Al',
+    settings_save:'Kaydet', settings_data:'Veri', settings_backup:'💾 Yedekle',
+    settings_voices:'🔊 Thai Sesleri', settings_voices_loading:'Sesler yükleniyor...',
+    settings_test_voice:'Tümünü Dinle',
+    // Alert
+    alert_added:'yeni kart eklendi!', alert_already:'Bu dersin kartları zaten ekli.',
+    alert_backup:'✅ Veri kopyalandı!',
+    // Zamir tablosu (Ders 1)
+    pron_title:'👤 Kişi Zamirleri — Hızlı Referans',
+    pron_col_person:'Kişi', pron_col_thai:'Thai', pron_col_roman:'Okunuş', pron_col_note:'Not',
+    pron_hint:'💡 Detaylı örnekler → Gramer sekmesi → Kural 9',
+    // Ders listesi
+    lesson_no_content:'Yakında',
+    // Sayı modülü
+    num_info:'Sıfır olan basamaklar atlanır. 20 = yîi-sìp (özel!). 11 = sìp-èt. Karta dokun → sesini duy 🔊',
+    num_compound_title:'🔗 Bileşik Sayı Örnekleri',
+    num_compound_info:'Büyük birimden küçüğe sıralanır. Sıfır olan basamaklar atlanır.',
+    calc_info:'Herhangi bir sayıyı gir — Thai karşılığı ve okunuşu anında çıkar. 🔊 ile seslendir.',
+    calc_input_label:'Sayıyı gir (0 – 9.999.999)',
+    calc_listen:'🔊 Dinle', calc_quick:'⚡ Hızlı Örnekler',
+    calc_breakdown:'Basamak dökümü',
+  },
+  en:{
+    // Nav
+    nav_lessons:'📚 Lessons', nav_test:'📝 Test', nav_translate:'🌐 Translate',
+    nav_list:'📋 Starred', nav_review:'🔄 Review', nav_add:'➕ Add',
+    // Tabs
+    tab_words:'Words', tab_tones:'Tones', tab_grammar:'Grammar',
+    tab_speaking:'Speaking', tab_dialogue:'Dialogue', tab_listening:'Listening',
+    tab_quiz:'Quiz', tab_numbers:'Numbers', tab_calc:'Calculator',
+    // Lesson
+    lesson_back:'← Lessons', lesson_done_msg:'You completed this lesson!',
+    lesson_redo_hint:'You can reset this if needed',
+    lesson_unmark:'↺ Mark as Incomplete',
+    lesson_mark_done:'✅ Mark as Complete',
+    lesson_all_visited:'✅ All tabs completed!',
+    lesson_visit_all:'⚠️ You must visit all tabs before completing the lesson.',
+    lesson_all_done_q:'✅ All tabs visited — ready to complete?',
+    lesson_complete_btn_active:'All tabs completed!',
+    tones_ref:'Tone information for this lesson is covered in Lesson 1.',
+    // Grammar
+    gram_tip_label:'Tips:',
+    // Speaking
+    speak_listen:'🔊 Listen', speak_slow:'🐢 Slow',
+    // Dialogue
+    dial_play:'▶ Play All', dial_stop:'⏹ Stop',
+    // Listening
+    listen_play_btn:'🔊 LISTEN',
+    listen_easy:'⭐ Easy', listen_medium:'⭐⭐ Medium', listen_hard:'⭐⭐⭐ Hard',
+    // Test
+    test_loading:'⏳ Loading lesson data...',
+    test_single:'Single Lesson',
+    test_single_desc:'Test words, examples and grammar from one lesson.',
+    test_all:'All Lessons',
+    test_all_desc_suffix:'card pool.',
+    test_starred:'Starred',
+    test_starred_desc:'Test your starred cards.',
+    test_select_lesson:'Select Lesson',
+    test_lessons_done:'lessons completed',
+    test_cards_available:'cards available',
+    test_back_btn:'← Lesson', test_back_menu:'← Main Menu', test_back_geri:'← Back',
+    test_show_answer:'Show Answer',
+    test_knew:'✅ I knew it', test_didnt_know:"❌ I didn't know",
+    test_continue:'Next →',
+    test_correct_fb:'✅ Correct!', test_wrong_prefix:'❌ Answer:',
+    test_retry:'🔄 Retry',
+    test_result_great:'Excellent!', test_result_good:'Good!',
+    test_result_ok:'Not bad!', test_result_keep:'Keep practicing!',
+    test_correct_count:'correct',
+    test_wrong_items:'🔁 Missed — Review These',
+    test_mode_fc:'Flashcard', test_mode_mc:'Multiple Choice', test_mode_mix:'Mixed',
+    test_dir_th2tr:'Thai → Meaning', test_dir_tr2th:'Meaning → Thai', test_dir_mix:'Mixed Direction',
+    test_cat_all:'All', test_cat_phrases:'Phrases', test_cat_grammar:'Grammar', test_cat_pronouns:'Pronouns',
+    test_start:'Start', test_no_cards:'No cards found',
+    test_type_word:'Word', test_type_example:'Example Sentence',
+    test_type_dialogue:'Dialogue', test_type_speaking:'Speaking', test_type_grammar:'Grammar',
+    test_no_lessons:'No completed lessons yet.',
+    test_soru:'questions',
+    // Review
+    review_title:'🔄 Review (SRS)',
+    review_total:'total', review_learned:'learned', review_due:'due today',
+    review_start:'Start Review', review_no_cards:'No cards due today',
+    review_add_section:'📚 Add Lesson Cards',
+    review_cards:'cards', review_add_btn:'+ Add',
+    review_lesson_prefix:'Lesson',
+    review_done_title:'Session Complete!', review_done_sub:'cards reviewed.',
+    review_restart:'Restart', review_show_answer:'Show Answer',
+    review_q_th2tr:'🇹🇭 Thai → English', review_q_tr2th:'🇬🇧 English → Thai',
+    review_btn_0:"❌ Don't know", review_btn_1:'😰 Hard',
+    review_btn_2:'👍 OK', review_btn_3:'⚡ Easy',
+    review_type_word:'📚 Word', review_type_example:'💬 Example', review_type_speaking:'🗣️ Speaking',
+    // Translate
+    translate_placeholder:'Type Thai or English...',
+    translate_btn:'Translate', translate_tip:'Type a Thai or English word or phrase.',
+    translate_lesson_matches:'Lesson Matches', translate_no_match:'No match',
+    translate_google:'🌐 Google Translate', translate_claude:'🤖 Claude AI',
+    translate_loading:'Translating...',
+    // Starred list
+    list_title:'⭐ My Starred Words',
+    list_all:'All', list_words:'Words', list_examples:'Examples', list_dialogue:'Dialogue',
+    list_empty:'⭐<br><br>No starred words yet.',
+    list_analysis:'📖 Sentence Analysis',
+    // Settings
+    settings_title:'⚙️ Settings', settings_lang:'🌐 App Language',
+    settings_gist:'☁️ Cross-Device Sync (GitHub Gist)',
+    settings_push:'☁️ Save to Cloud', settings_pull:'📥 Load from Cloud',
+    settings_save:'Save', settings_data:'Data', settings_backup:'💾 Backup',
+    settings_voices:'🔊 Thai Voices', settings_voices_loading:'Loading voices...',
+    settings_test_voice:'Test All',
+    // Alert
+    alert_added:'new cards added!', alert_already:'Cards from this lesson are already added.',
+    alert_backup:'✅ Data copied!',
+    // Pronoun table (Lesson 1)
+    pron_title:'👤 Personal Pronouns — Quick Reference',
+    pron_col_person:'Person', pron_col_thai:'Thai', pron_col_roman:'Romanization', pron_col_note:'Note',
+    pron_hint:'💡 More examples → Grammar tab → Rule 9',
+    // Lesson list
+    lesson_no_content:'Coming soon',
+    // Numbers module
+    num_info:'Zero digits are skipped. 20 = yîi-sìp (special!). 11 = sìp-èt. Tap a card to hear it 🔊',
+    num_compound_title:'🔗 Compound Number Examples',
+    num_compound_info:'Ordered from largest to smallest unit. Zero digits are skipped.',
+    calc_info:'Enter any number — get the Thai spelling and pronunciation instantly.',
+    calc_input_label:'Enter number (0 – 9,999,999)',
+    calc_listen:'🔊 Listen', calc_quick:'⚡ Quick Examples',
+    calc_breakdown:'Digit breakdown',
+  }
+};
+
+function s(key){ return (UI[appLang]||UI.tr)[key] || UI.tr[key] || key; }
+
+function Lf(item, field){
+  if(!item) return '';
+  if(appLang==='en' && item[field+'_en']!==undefined) return item[field+'_en'];
+  return item[field] || '';
+}
+
+function setLang(lang){
+  appLang = lang;
+  localStorage.setItem('tv3_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  document.querySelectorAll('[data-lk]').forEach(el=>{ el.textContent=s(el.dataset.lk); });
+  // Re-render current view
+  const vid = (document.querySelector('.view.active')||{}).id||'';
+  if(vid==='lessons-view') renderLessonList();
+  else if(vid==='list-view'){ document.querySelector('h2[data-lk]') && (document.querySelector('h2[data-lk]').textContent=s('list_title')); renderList(); }
+  else if(vid==='review-view') renderReview();
+  else if(vid==='test-view') renderTestView();
+  else if(vid==='translate-view') initTranslateView();
+  else if(vid==='detail-view' && currentLesson && currentLesson.num){
+    const LD = LESSONS[currentLesson.num];
+    if(LD) document.getElementById('detail-content').innerHTML = buildLessonHTML(LD, currentLesson);
+  }
+}
+// =================== DİL SİSTEMİ END ===================
 </script>
 </head>
 <body>
@@ -325,12 +569,12 @@ localStorage.setItem('app_version', APP_VERSION);
 </header>
 
 <nav>
-  <button class="nbtn active" onclick="switchView('lessons',this)">📚 Dersler</button>
-  <button class="nbtn" onclick="switchView('test',this)">📝 Test</button>
-  <button class="nbtn" onclick="switchView('translate',this)">🌐 Çeviri</button>
-  <button class="nbtn" onclick="switchView('list',this)">📋 Liste</button>
-  <button class="nbtn" onclick="switchView('review',this)" id="review-nav-btn">🔄 Tekrar <span id="review-badge" style="display:none;background:#ef4444;color:white;border-radius:8px;padding:0 5px;font-size:10px;margin-left:2px;">0</span></button>
-  <button class="nbtn" onclick="switchView('add',this)">➕ Ekle</button>
+  <button class="nbtn active" onclick="switchView('lessons',this)" data-lk="nav_lessons">📚 Dersler</button>
+  <button class="nbtn" onclick="switchView('test',this)" data-lk="nav_test">📝 Test</button>
+  <button class="nbtn" onclick="switchView('translate',this)" data-lk="nav_translate">🌐 Çeviri</button>
+  <button class="nbtn" onclick="switchView('list',this)" data-lk="nav_list">📋 Liste</button>
+  <button class="nbtn" onclick="switchView('review',this)" id="review-nav-btn" data-lk="nav_review">🔄 Tekrar <span id="review-badge" style="display:none;background:#ef4444;color:white;border-radius:8px;padding:0 5px;font-size:10px;margin-left:2px;">0</span></button>
+  <button class="nbtn" onclick="switchView('add',this)" data-lk="nav_add">➕ Ekle</button>
 </nav>
 
 <main>
@@ -345,12 +589,12 @@ localStorage.setItem('app_version', APP_VERSION);
     <div id="translate-content" style="max-width:520px;margin:0 auto;padding:12px 14px 80px;"></div>
   </div>
   <div id="list-view" class="view">
-    <h2>⭐ Yıldızladığım Sözcükler</h2>
+    <h2 data-lk="list_title">⭐ Yıldızladığım Sözcükler</h2>
     <div class="list-filter">
-      <button class="filter-btn active" onclick="filterList('all',this)">Tümü</button>
-      <button class="filter-btn" onclick="filterList('word',this)">Sözcükler</button>
-      <button class="filter-btn" onclick="filterList('example',this)">Örnekler</button>
-      <button class="filter-btn" onclick="filterList('dialogue',this)">Diyalog</button>
+      <button class="filter-btn active" onclick="filterList('all',this)" data-lk="list_all">Tümü</button>
+      <button class="filter-btn" onclick="filterList('word',this)" data-lk="list_words">Sözcükler</button>
+      <button class="filter-btn" onclick="filterList('example',this)" data-lk="list_examples">Örnekler</button>
+      <button class="filter-btn" onclick="filterList('dialogue',this)" data-lk="list_dialogue">Diyalog</button>
     </div>
     <div id="list-container"></div>
   </div>
@@ -363,26 +607,33 @@ localStorage.setItem('app_version', APP_VERSION);
 <!-- SETTINGS -->
 <div id="settings-overlay" class="overlay">
   <div class="modal">
-    <div class="modal-head"><div class="modal-title">⚙️ Ayarlar</div><button class="modal-close" onclick="closeModal('settings-overlay')">✕</button></div>
-    <div class="setting-row"><div class="setting-label">Google TTS API Key</div><input type="password" id="google-tts-key-input" placeholder="AIza..."><button class="setting-btn" onclick="saveGoogleTTSKey()">Kaydet</button></div>
-    <div class="setting-row"><div class="setting-label">Anthropic API Key</div><input type="password" id="api-key-input" placeholder="sk-ant-..."><button class="setting-btn" onclick="saveKey()">Kaydet</button></div>
+    <div class="modal-head"><div class="modal-title" data-lk="settings_title">⚙️ Ayarlar</div><button class="modal-close" onclick="closeModal('settings-overlay')">✕</button></div>
     <div class="setting-row">
-      <div class="setting-label">☁️ Cihazlar Arası Senkron (GitHub Gist)</div>
+      <div class="setting-label" data-lk="settings_lang">🌐 Uygulama Dili</div>
+      <div style="display:flex;gap:8px;margin-top:6px;">
+        <button class="setting-btn lang-btn active" data-lang="tr" onclick="setLang('tr')" style="flex:1;">🇹🇷 Türkçe</button>
+        <button class="setting-btn lang-btn" data-lang="en" onclick="setLang('en')" style="flex:1;">🇬🇧 English</button>
+      </div>
+    </div>
+    <div class="setting-row"><div class="setting-label">Google TTS API Key</div><input type="password" id="google-tts-key-input" placeholder="AIza..."><button class="setting-btn" onclick="saveGoogleTTSKey()" data-lk="settings_save">Kaydet</button></div>
+    <div class="setting-row"><div class="setting-label">Anthropic API Key</div><input type="password" id="api-key-input" placeholder="sk-ant-..."><button class="setting-btn" onclick="saveKey()" data-lk="settings_save">Kaydet</button></div>
+    <div class="setting-row">
+      <div class="setting-label" data-lk="settings_gist">☁️ Cihazlar Arası Senkron (GitHub Gist)</div>
       <input type="password" id="gist-token-input" placeholder="ghp_... (gist yetkisi olmalı)" style="margin-top:6px;">
-      <button class="setting-btn" onclick="saveGist()" style="margin-top:6px;">Kaydet</button>
+      <button class="setting-btn" onclick="saveGist()" style="margin-top:6px;" data-lk="settings_save">Kaydet</button>
       <div style="display:flex;gap:6px;margin-top:6px;">
-        <button class="setting-btn" onclick="gistPush()" style="flex:1;background:#0d9488;color:white;border-color:#0d9488;">☁️ Buluta Kaydet</button>
-        <button class="setting-btn" onclick="gistPull()" style="flex:1;">📥 Buluttan Al</button>
+        <button class="setting-btn" onclick="gistPush()" style="flex:1;background:#0d9488;color:white;border-color:#0d9488;" data-lk="settings_push">☁️ Buluta Kaydet</button>
+        <button class="setting-btn" onclick="gistPull()" style="flex:1;" data-lk="settings_pull">📥 Buluttan Al</button>
       </div>
       <div id="gist-status" style="font-size:11px;color:#888;margin-top:6px;"></div>
     </div>
-    <div class="setting-row"><div class="setting-label">Veri</div><button class="setting-btn" onclick="exportData()">💾 Yedekle</button></div>
+    <div class="setting-row"><div class="setting-label" data-lk="settings_data">Veri</div><button class="setting-btn" onclick="exportData()" data-lk="settings_backup">💾 Yedekle</button></div>
     <div class="setting-row">
-      <div class="setting-label">🔊 Thai Sesleri</div>
-      <div id="voice-list" style="margin-top:8px;">Sesler yukleniyor...</div>
+      <div class="setting-label" data-lk="settings_voices">🔊 Thai Sesleri</div>
+      <div id="voice-list" style="margin-top:8px;" data-lk="settings_voices_loading">Sesler yükleniyor...</div>
       <div id="test-voice-controls" style="margin-top:8px;display:none;">
         <input type="text" id="test-text" placeholder="Test metni" value="Selam" style="width:100%;padding:8px;border:1px solid #e0e0e0;border-radius:6px;margin-bottom:8px;">
-        <button class="setting-btn" onclick="testVoices()">Tümünü Dinle</button>
+        <button class="setting-btn" onclick="testVoices()" data-lk="settings_test_voice">Tümünü Dinle</button>
       </div>
     </div>
   </div>
@@ -762,25 +1013,25 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 // L1+L2 birleşti → Ders 1: "Temel İfadeler ve Tanışma"
 // Eski L3 → Ders 2, diğerleri kaydı
 const LESSONS_META = [
-  {num:1, emoji:'👋', title:'Temel İfadeler ve Tanışma', hasContent:true, hasTones:true},
-  {num:2, emoji:'🔢', title:'Sayılar ve Para', hasContent:true, hasTones:false},
-  {num:3, emoji:'🕐', title:'Tarih ve Saat', hasContent:true, hasTones:false},
-  {num:4, emoji:'🍜', title:'Restoran', hasContent:true, hasTones:false},
-  {num:5, emoji:'🛒', title:'Market ve Alışveriş', hasContent:true, hasTones:false},
-  {num:6, emoji:'🗺️', title:'Yol Tarifi', hasContent:true, hasTones:false},
-  {num:7, emoji:'🚗', title:'Grab ve Ulaşım', hasContent:true, hasTones:false},
-  {num:8, emoji:'🏨', title:'Otel ve Konaklama', hasContent:true, hasTones:false},
-  {num:9, emoji:'🏍️', title:'Motorsiklet ve Trafik', hasContent:true, hasTones:false},
-  {num:10,emoji:'🏖️', title:'Plaj ve Deniz', hasContent:true, hasTones:false},
-  {num:11,emoji:'🏥', title:'Hastane ve Eczane', hasContent:true, hasTones:false},
-  {num:12,emoji:'🆘', title:'Acil Durumlar', hasContent:true, hasTones:false},
-  {num:13,emoji:'🏠', title:'Ev Yaşamı ve İnternet', hasContent:true, hasTones:false},
-  {num:14,emoji:'🎉', title:'Sosyalleşme', hasContent:true, hasTones:false},
-  {num:15,emoji:'🏦', title:'Immigration ve Resmi İşler', hasContent:true, hasTones:false},
-  {num:16,emoji:'🙏', title:'Thai Kültürü', hasContent:true, hasTones:false},
-  {num:17,emoji:'🔤', title:'Tabela ve Menü Okuma', hasContent:true, hasTones:false},
-  {num:18,emoji:'📱', title:'LINE ve Telefon', hasContent:true, hasTones:false},
-  {num:19,emoji:'🌴', title:'Phuket Tam Gün Simülasyonu', hasContent:true, hasTones:false},
+  {num:1, emoji:'👋', title:'Temel İfadeler ve Tanışma', title_en:'Greetings & Basics', hasContent:true, hasTones:true},
+  {num:2, emoji:'🔢', title:'Sayılar ve Para', title_en:'Numbers & Money', hasContent:true, hasTones:false},
+  {num:3, emoji:'🕐', title:'Tarih ve Saat', title_en:'Date & Time', hasContent:true, hasTones:false},
+  {num:4, emoji:'🍜', title:'Restoran', title_en:'Restaurant', hasContent:true, hasTones:false},
+  {num:5, emoji:'🛒', title:'Market ve Alışveriş', title_en:'Market & Shopping', hasContent:true, hasTones:false},
+  {num:6, emoji:'🗺️', title:'Yol Tarifi', title_en:'Directions', hasContent:true, hasTones:false},
+  {num:7, emoji:'🚗', title:'Grab ve Ulaşım', title_en:'Grab & Transport', hasContent:true, hasTones:false},
+  {num:8, emoji:'🏨', title:'Otel ve Konaklama', title_en:'Hotel & Accommodation', hasContent:true, hasTones:false},
+  {num:9, emoji:'🏍️', title:'Motorsiklet ve Trafik', title_en:'Motorbike & Traffic', hasContent:true, hasTones:false},
+  {num:10,emoji:'🏖️', title:'Plaj ve Deniz', title_en:'Beach & Sea', hasContent:true, hasTones:false},
+  {num:11,emoji:'🏥', title:'Hastane ve Eczane', title_en:'Hospital & Pharmacy', hasContent:true, hasTones:false},
+  {num:12,emoji:'🆘', title:'Acil Durumlar', title_en:'Emergency Situations', hasContent:true, hasTones:false},
+  {num:13,emoji:'🏠', title:'Ev Yaşamı ve İnternet', title_en:'Home Life & Internet', hasContent:true, hasTones:false},
+  {num:14,emoji:'🎉', title:'Sosyalleşme', title_en:'Socializing', hasContent:true, hasTones:false},
+  {num:15,emoji:'🏦', title:'Immigration ve Resmi İşler', title_en:'Immigration & Official Matters', hasContent:true, hasTones:false},
+  {num:16,emoji:'🙏', title:'Thai Kültürü', title_en:'Thai Culture', hasContent:true, hasTones:false},
+  {num:17,emoji:'🔤', title:'Tabela ve Menü Okuma', title_en:'Reading Signs & Menus', hasContent:true, hasTones:false},
+  {num:18,emoji:'📱', title:'LINE ve Telefon', title_en:'LINE & Phone', hasContent:true, hasTones:false},
+  {num:19,emoji:'🌴', title:'Phuket Tam Gün Simülasyonu', title_en:'Phuket Full Day Simulation', hasContent:true, hasTones:false},
 ];
 
 // =================== DERS VERİLERİ (lazy load) ===================
@@ -1058,8 +1309,8 @@ function renderLessonList(){
       <div class="lesson-card empty">
         <div class="lnum">${L.num}</div>
         <div class="linfo">
-          <div class="ltitle">${L.emoji} ${L.title}</div>
-          <div class="lsub">○ Yakında</div>
+          <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
+          <div class="lsub">○ ${s('lesson_no_content')}</div>
         </div>
         <div class="larrow">·</div>
       </div>`;
@@ -1081,9 +1332,9 @@ function renderLessonList(){
     // Rozet bant
     const isDone = isCompleted(L.num);
     const badges = [];
-    if(isDone) badges.push('<span class="lbadge lbadge-done">🎉 Tamamlandı</span>');
-    else if(allVisited) badges.push('<span class="lbadge" style="background:#e3f2fd;color:#1565c0;">✓ Hazir — Quiz gir</span>');
-    else if(visitedCount>0) badges.push('<span class="lbadge lbadge-visit">'+visitedCount+'/'+tabs.length+' sekme</span>');
+    if(isDone) badges.push('<span class="lbadge lbadge-done">🎉 '+s('lesson_done_msg')+'</span>');
+    else if(allVisited) badges.push('<span class="lbadge" style="background:#e3f2fd;color:#1565c0;">'+s('lesson_all_done_q')+'</span>');
+    else if(visitedCount>0) badges.push('<span class="lbadge lbadge-visit">'+visitedCount+'/'+tabs.length+' '+(appLang==='en'?'tabs':'sekme')+'</span>');
     if(scorePct!==null) badges.push('<span class="lbadge lbadge-score" style="color:'+scoreColor+'">🎯 '+scorePct+'%</span>');
     if(timeStr) badges.push('<span class="lbadge lbadge-time">⏱ '+timeStr+'</span>');
 
@@ -1091,8 +1342,8 @@ function renderLessonList(){
       <div class="lesson-card ${isDone?'done':''}" onclick="openLesson(${L.num})">
         <div class="lnum">${L.num}</div>
         <div class="linfo">
-          <div class="ltitle">${L.emoji} ${L.title}</div>
-          ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓ Detaylı ders</div>'}
+          <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
+          ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
         </div>
         <div class="larrow">›</div>
       </div>`;
@@ -1107,7 +1358,13 @@ function getTabsForLesson(meta){
   if(meta.num===2) return ['numbers','calc','words','grammar','speaking','dialogue','listening','quiz'];
   return base;
 }
-const TAB_LABELS = {words:'📚 Sözcükler',tones:'🎵 Tonlar',grammar:'📖 Gramer',speaking:'🗣️ Konuşma',dialogue:'👥 Diyalog',listening:'🎧 Dinleme',quiz:'📝 Quiz',numbers:'🔢 Sayılar',calc:'🧮 Hesapla'};
+function getTabLabels(){
+  return {
+    words:'📚 '+s('tab_words'), tones:'🎵 '+s('tab_tones'), grammar:'📖 '+s('tab_grammar'),
+    speaking:'🗣️ '+s('tab_speaking'), dialogue:'👥 '+s('tab_dialogue'), listening:'🎧 '+s('tab_listening'),
+    quiz:'📝 '+s('tab_quiz'), numbers:'🔢 '+s('tab_numbers'), calc:'🧮 '+s('tab_calc')
+  };
+}
 
 async function openLesson(num){
   const meta = LESSONS_META.find(m=>m.num===num);
@@ -1169,7 +1426,7 @@ function buildLessonHTML(L, meta){
   const tabs = tabNames.map(t=>{
     const vkey = 'L'+meta.num+'_'+t;
     const isDone = visitedTabs[vkey];
-    return `<button class="ltab ${isDone?'visited':''}" data-tab="${t}">${TAB_LABELS[t]}</button>`;
+    return `<button class="ltab ${isDone?'visited':''}" data-tab="${t}">${getTabLabels()[t]}</button>`;
   }).join('');
 
   // SÖZCÜKLER
@@ -1184,7 +1441,7 @@ function buildLessonHTML(L, meta){
         <div class="ex-texts">
           <div class="ex-th">${e.th||''}</div>
           <div class="ex-ro">${e.ro}</div>
-          <div class="ex-tr">${e.tr}</div>
+          <div class="ex-tr">${Lf(e,'tr')}</div>
         </div>
         <div class="ex-actions">
           <button class="sm-abtn" data-speak="${esc(e.th||e.ro)}" data-slow="0">🔊</button>
@@ -1198,7 +1455,7 @@ function buildLessonHTML(L, meta){
         <div>
           <div class="word-thai">${w.th||''}</div>
           <div class="word-ro">${w.ro}</div>
-          <div class="word-tr">${w.tr}</div>
+          <div class="word-tr">${Lf(w,'tr')}</div>
         </div>
         <div class="word-btns">
           <button class="sbtn ${starred[sk]?'on':''}" data-star="${esc(sk)}" data-stype="word" data-th="${esc(w.th||'')}" data-ro="${esc(w.ro)}" data-tr="${esc(w.tr)}">⭐</button>
@@ -1206,7 +1463,7 @@ function buildLessonHTML(L, meta){
           <button class="abtn slow" data-speak="${esc(w.th||w.ro)}" data-slow="1">🐢</button>
         </div>
       </div>
-      <div class="word-note">${w.tip}<span class="ctx">${w.ctx}</span></div>
+      <div class="word-note">${Lf(w,'tip')}<span class="ctx">${Lf(w,'ctx')}</span></div>
       <div class="examples-wrap">${exs}</div>
     </div>`;
   }).join('');
@@ -1214,38 +1471,38 @@ function buildLessonHTML(L, meta){
   // L1 için Sözcükler başına özne tablosu
   const pronounTable = meta.num===1 ? `
     <div style="background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:12px;padding:12px 14px;margin-bottom:16px;">
-      <div style="font-size:12px;font-weight:700;color:#0d9488;margin-bottom:10px;">👤 Kişi Zamirleri — Hızlı Referans</div>
+      <div style="font-size:12px;font-weight:700;color:#0d9488;margin-bottom:10px;">${s('pron_title')}</div>
       <table style="width:100%;border-collapse:collapse;font-size:12px;">
         <tr style="border-bottom:1px solid #b2dfdb;">
-          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Kişi</th>
-          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Thai</th>
-          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Okunuş</th>
-          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">Not</th>
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">${s('pron_col_person')}</th>
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">${s('pron_col_thai')}</th>
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">${s('pron_col_roman')}</th>
+          <th style="text-align:left;padding:5px 6px;color:#555;font-weight:600;">${s('pron_col_note')}</th>
         </tr>
-        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Ben (E)</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">ผม</td><td style="padding:6px 6px;font-weight:700;">pom</td><td style="padding:6px 6px;color:#888;">Erkek</td></tr>
-        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Ben (K)</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">ฉัน</td><td style="padding:6px 6px;font-weight:700;">chan</td><td style="padding:6px 6px;color:#888;">Kadın</td></tr>
-        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Sen/Siz</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">คุณ</td><td style="padding:6px 6px;font-weight:700;">khun</td><td style="padding:6px 6px;color:#888;">Kibar, herkese</td></tr>
-        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">O</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">เขา</td><td style="padding:6px 6px;font-weight:700;">khao</td><td style="padding:6px 6px;color:#888;">E+K aynı kelime</td></tr>
-        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Biz</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">เรา</td><td style="padding:6px 6px;font-weight:700;">rao</td><td style="padding:6px 6px;color:#888;">+ samimi "ben"</td></tr>
-        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Siz(çoğul)</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">พวกคุณ</td><td style="padding:6px 6px;font-weight:700;">phuak-khun</td><td style="padding:6px 6px;color:#888;">Grup hitabı</td></tr>
-        <tr><td style="padding:6px 6px;font-weight:700;color:#0d9488;">Onlar</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">พวกเขา</td><td style="padding:6px 6px;font-weight:700;">phuak-khao</td><td style="padding:6px 6px;color:#888;">phuak=grup</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">${appLang==='en'?'I (M)':'Ben (E)'}</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">ผม</td><td style="padding:6px 6px;font-weight:700;">pom</td><td style="padding:6px 6px;color:#888;">${appLang==='en'?'Male':'Erkek'}</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">${appLang==='en'?'I (F)':'Ben (K)'}</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">ฉัน</td><td style="padding:6px 6px;font-weight:700;">chan</td><td style="padding:6px 6px;color:#888;">${appLang==='en'?'Female':'Kadın'}</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">${appLang==='en'?'You':'Sen/Siz'}</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">คุณ</td><td style="padding:6px 6px;font-weight:700;">khun</td><td style="padding:6px 6px;color:#888;">${appLang==='en'?'Polite, universal':'Kibar, herkese'}</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">${appLang==='en'?'He/She':'O'}</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">เขา</td><td style="padding:6px 6px;font-weight:700;">khao</td><td style="padding:6px 6px;color:#888;">${appLang==='en'?'Same for M+F':'E+K aynı kelime'}</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;background:white;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">${appLang==='en'?'We':'Biz'}</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">เรา</td><td style="padding:6px 6px;font-weight:700;">rao</td><td style="padding:6px 6px;color:#888;">${appLang==='en'?'+ casual "I"':'+ samimi "ben"'}</td></tr>
+        <tr style="border-bottom:1px solid #e0f2f1;"><td style="padding:6px 6px;font-weight:700;color:#0d9488;">${appLang==='en'?'You (pl.)':'Siz(çoğul)'}</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">พวกคุณ</td><td style="padding:6px 6px;font-weight:700;">phuak-khun</td><td style="padding:6px 6px;color:#888;">${appLang==='en'?'Group address':'Grup hitabı'}</td></tr>
+        <tr><td style="padding:6px 6px;font-weight:700;color:#0d9488;">${appLang==='en'?'They':'Onlar'}</td><td style="padding:6px 6px;font-family:'Noto Sans Thai',sans-serif;font-size:15px;">พวกเขา</td><td style="padding:6px 6px;font-weight:700;">phuak-khao</td><td style="padding:6px 6px;color:#888;">${appLang==='en'?'phuak=group':'phuak=grup'}</td></tr>
       </table>
-      <div style="font-size:10px;color:#888;margin-top:8px;">💡 Detaylı örnekler → Gramer sekmesi → Kural 9</div>
+      <div style="font-size:10px;color:#888;margin-top:8px;">${s('pron_hint')}</div>
     </div>` : '';
 
   // TONLAR (sadece hasTones varsa render edilir)
   const tones = (L.tones && L.tones.length>0) ? L.tones.map(t=>`
     <div class="tone-card" style="border-left-color:${t.color}">
       <div class="tone-name" style="color:${t.color}">${t.name}</div>
-      <div class="tone-symbol">İşaret: ${t.symbol}</div>
-      <div class="tone-desc">${t.desc}</div>
+      <div class="tone-symbol">${appLang==='en'?'Mark:':'İşaret:'} ${t.symbol}</div>
+      <div class="tone-desc">${Lf(t,'desc')||t.desc}</div>
       <div class="tone-words">
         ${t.words.map(w=>`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <div class="tone-word">
               <div class="tw-th">${w.th}</div>
               <div class="tw-ro">${w.ro}</div>
-              <div class="tw-tr">${w.tr}</div>
+              <div class="tw-tr">${Lf(w,'tr')||w.tr}</div>
             </div>
             <div style="display:flex;gap:4px;">
               <button class="sm-abtn" data-speak="${esc(w.th)}" data-slow="0" style="flex:1;padding:4px;font-size:11px;">🔊</button>
@@ -1253,7 +1510,7 @@ function buildLessonHTML(L, meta){
             </div>
           </div>`).join('')}
       </div>
-    </div>`).join('') : '<div style="text-align:center;padding:30px;color:#bbb;">Bu ders için ton bilgisi Ders 1\'de verilmiştir.</div>';
+    </div>`).join('') : `<div style="text-align:center;padding:30px;color:#bbb;">${s('tones_ref')}</div>`;
 
   // GRAMER
   const grammar = L.grammar.map((g,gi)=>{
@@ -1265,13 +1522,14 @@ function buildLessonHTML(L, meta){
         '<div class="ex-texts">'+
           '<div class="ex-th">'+e.th+(hasB?' <span style="font-size:10px;color:#7c3aed;background:#f5f3ff;padding:1px 5px;border-radius:4px;font-weight:700;">📖</span>':'')+'</div>'+
           '<div class="ex-ro">'+e.ro+'</div>'+
-          '<div class="ex-tr">'+e.tr+'</div>'+
+          '<div class="ex-tr">'+(Lf(e,'tr')||e.tr)+'</div>'+
         '</div>'+
         '<div class="ex-actions">'+
           '<button class="sm-abtn" data-speak="'+(e.th||e.ro)+'" data-slow="0">🔊</button>'+
         '</div></div>';
     }).join('');
-    return '<div class="gram-card"><div class="gram-title">📖 '+g.title+'</div><div class="gram-formula">'+g.formula+'</div><div class="gram-explain">'+g.explain+'</div>'+(g.tips?'<div style="background:#f9f9f9;padding:8px;border-radius:6px;margin-bottom:10px;font-size:12px;color:#555;"><strong>İpucu:</strong><ul style="margin:4px 0 0 14px;">'+g.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>':'')+'<div class="gram-examples">'+exHtml+'</div></div>';
+    const gTips = (appLang==='en' && g.tips_en) ? g.tips_en : g.tips;
+    return '<div class="gram-card"><div class="gram-title">📖 '+(Lf(g,'title')||g.title)+'</div><div class="gram-formula">'+(Lf(g,'formula')||g.formula)+'</div><div class="gram-explain">'+(Lf(g,'explain')||g.explain)+'</div>'+(gTips?'<div style="background:#f9f9f9;padding:8px;border-radius:6px;margin-bottom:10px;font-size:12px;color:#555;"><strong>'+s('gram_tip_label')+'</strong><ul style="margin:4px 0 0 14px;">'+gTips.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>':'')+'<div class="gram-examples">'+exHtml+'</div></div>';
   }).join('');
 
   // DİYALOG
@@ -1279,7 +1537,7 @@ function buildLessonHTML(L, meta){
     <div class="dialog-card">
       <div class="dialog-title">
         ${d.title}
-        <button id="dplay-${di}" class="play-all-btn" onclick="playDialogue(${di})">▶ Tümü</button>
+        <button id="dplay-${di}" class="play-all-btn" onclick="playDialogue(${di})">${s('dial_play')}</button>
       </div>
       ${d.lines.map((l,li)=>{
         const dsk = starKey('dia'+meta.num+di, (l.th||l.ro)+li);
@@ -1291,7 +1549,7 @@ function buildLessonHTML(L, meta){
           <div class="dbubble" ${dHasBd?'style="cursor:pointer" data-dline-idx="'+dlineGramIdx+'"':''}>
             <div class="dbubble-th">${l.th||''}</div>
             <div class="dbubble-ro">${l.ro}</div>
-            <div class="dbubble-tr">${l.tr}</div>
+            <div class="dbubble-tr">${Lf(l,'tr')||l.tr}</div>
           </div>
           <div class="dline-actions">
             <button class="sm-abtn" data-speak="${esc(l.th||l.ro)}" data-slow="0" data-gender="${l.s.toLowerCase()==='ali'?'m':'f'}">🔊</button>
@@ -1303,18 +1561,18 @@ function buildLessonHTML(L, meta){
     </div>`).join('');
 
   // KONUŞMA
-  const speaking = L.speaking.map((s,i)=>{
+  const speaking = L.speaking.map((sp,i)=>{
     const gramIdx = window._gramBD.length;
-    if(s.bd) window._gramBD.push({th:s.th||'', tr:s.tr, bd:s.bd});
-    const hasBd = s.bd && s.bd.length>0;
+    if(sp.bd) window._gramBD.push({th:sp.th||'', tr:sp.tr, bd:sp.bd});
+    const hasBd = sp.bd && sp.bd.length>0;
     return '<div class="speak-card">'+
-      '<div class="speak-task">'+(i+1)+'. '+s.task+'</div>'+
-      '<div class="speak-thai" '+(hasBd?'style="cursor:pointer" data-gram="'+gramIdx+'"':'')+'>'+( s.th||'')+'</div>'+
-      '<div class="speak-ro">'+s.ro+'</div>'+
-      '<div class="speak-tr">'+s.tr+'</div>'+
+      '<div class="speak-task">'+(i+1)+'. '+(Lf(sp,'task')||sp.task)+'</div>'+
+      '<div class="speak-thai" '+(hasBd?'style="cursor:pointer" data-gram="'+gramIdx+'"':'')+'>'+(sp.th||'')+'</div>'+
+      '<div class="speak-ro">'+sp.ro+'</div>'+
+      '<div class="speak-tr">'+(Lf(sp,'tr')||sp.tr)+'</div>'+
       '<div class="speak-btns">'+
-        '<button class="ref-btn" data-speak="'+(s.th||s.ro)+'" data-slow="0" data-gender="m">🔊 Dinle</button>'+
-        '<button class="ref-btn slow" data-speak="'+(s.th||s.ro)+'" data-slow="1" data-gender="m">🐢 Yavaş</button>'+
+        '<button class="ref-btn" data-speak="'+(sp.th||sp.ro)+'" data-slow="0" data-gender="m">'+s('speak_listen')+'</button>'+
+        '<button class="ref-btn slow" data-speak="'+(sp.th||sp.ro)+'" data-slow="1" data-gender="m">'+s('speak_slow')+'</button>'+
       '</div>'+
     '</div>';
   }).join('');
@@ -1322,9 +1580,9 @@ function buildLessonHTML(L, meta){
   // DİNLEME
   const listening = L.listening.map((l,i)=>`
     <div class="listen-card">
-      <div class="diff-badge ${l.diff}">${l.diff==='easy'?'⭐ Kolay':l.diff==='medium'?'⭐⭐ Orta':'⭐⭐⭐ Zor'}</div>
-      <button class="play-big" data-speak="${esc(l.th)}" data-slow="0">🔊 SESİ DİNLE</button>
-      <div class="listen-q">${l.q}</div>
+      <div class="diff-badge ${l.diff}">${l.diff==='easy'?s('listen_easy'):l.diff==='medium'?s('listen_medium'):s('listen_hard')}</div>
+      <button class="play-big" data-speak="${esc(l.th)}" data-slow="0">${s('listen_play_btn')}</button>
+      <div class="listen-q">${Lf(l,'q')||l.q}</div>
       <div id="lo-${i}">${l.opts.map((o,j)=>`<div class="opt" onclick="checkListen(${i},${j},${l.c})">${o}</div>`).join('')}</div>
       <div id="lf-${i}"></div>
     </div>`).join('');
@@ -1337,20 +1595,18 @@ function buildLessonHTML(L, meta){
       ${alreadyDone ? `
         <div style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:12px;padding:14px;display:inline-block;">
           <div style="font-size:22px;margin-bottom:4px;">🎉</div>
-          <div style="font-size:14px;font-weight:700;color:#2e7d32;">Bu dersi tamamladın!</div>
-          <div style="font-size:11px;color:#666;margin-top:4px;">İstersen tekrar işaretleyebilirsin</div>
-          <button onclick="unmarkLesson(${meta.num})" style="margin-top:10px;background:none;border:1px solid #a5d6a7;border-radius:8px;padding:5px 14px;font-size:11px;color:#666;cursor:pointer;">↺ Tamamlanmadı olarak işaretle</button>
+          <div style="font-size:14px;font-weight:700;color:#2e7d32;">${s('lesson_done_msg')}</div>
+          <div style="font-size:11px;color:#666;margin-top:4px;">${s('lesson_redo_hint')}</div>
+          <button onclick="unmarkLesson(${meta.num})" style="margin-top:10px;background:none;border:1px solid #a5d6a7;border-radius:8px;padding:5px 14px;font-size:11px;color:#666;cursor:pointer;">${s('lesson_unmark')}</button>
         </div>` : `
         <div style="background:#f8f9fa;border:1.5px dashed #ccc;border-radius:12px;padding:14px;">
           <div style="font-size:13px;color:#888;margin-bottom:10px;">
-            ${allTabsVisited
-              ? '✅ Tüm sekmeler ziyaret edildi — dersi tamamladın mı?'
-              : '⚠️ Tüm sekmeleri ziyaret etmeden dersi tamamlayamazsın.'}
+            ${allTabsVisited ? s('lesson_all_done_q') : s('lesson_visit_all')}
           </div>
           <button onclick="markLessonDone(${meta.num})"
             ${allTabsVisited ? '' : 'disabled'}
             style="background:${allTabsVisited?'#0d9488':'#ccc'};border:none;border-radius:10px;padding:12px 28px;color:white;font-size:14px;font-weight:700;cursor:${allTabsVisited?'pointer':'not-allowed'};transition:.2s;">
-            ✅ Dersi Tamamladım
+            ${s('lesson_mark_done')}
           </button>
         </div>`}
     </div>`;
@@ -1368,13 +1624,13 @@ function buildLessonHTML(L, meta){
   if(meta.num === 2 && L.numbers){
     // --- NUMBERS sekmesi: Flash kart benzeri grid ---
     const groups = [
-      {title:'🔢 Temel Rakamlar (0–9)', data: L.numbers.filter(x=>x.n<=9)},
-      {title:'🔟 Onlar (10–100)',       data: L.numbers.filter(x=>x.n>=10&&x.n<=100)},
-      {title:'💯 Büyük Birimler',       data: L.numbers.filter(x=>x.n>100)},
+      {title: appLang==='en'?'🔢 Basic Numbers (0–9)':'🔢 Temel Rakamlar (0–9)', data: L.numbers.filter(x=>x.n<=9)},
+      {title: appLang==='en'?'🔟 Tens (10–100)':'🔟 Onlar (10–100)',             data: L.numbers.filter(x=>x.n>=10&&x.n<=100)},
+      {title: appLang==='en'?'💯 Large Units':'💯 Büyük Birimler',               data: L.numbers.filter(x=>x.n>100)},
     ];
     numbersHtml = `
       <div style="background:#f0faf7;border:1px solid #b2dfdb;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#444;line-height:1.7">
-        <strong style="color:#0d9488">Sistem:</strong> Sıfır olan basamaklar atlanır. <strong>20 = yîi-sìp</strong> (özel!). 11 = sìp-èt (et: birler için özel form). Karta dokun → sesini duy 🔊
+        <strong style="color:#0d9488">${appLang==='en'?'System:':'Sistem:'}</strong> ${s('num_info')}
       </div>
       ${groups.map(g=>`
         <div style="font-weight:700;color:#0d9488;margin:14px 0 8px;font-size:13px;border-left:3px solid #0d9488;padding-left:8px">${g.title}</div>
@@ -1390,9 +1646,9 @@ function buildLessonHTML(L, meta){
             </div>`).join('')}
         </div>`).join('')}
       ${L.compounds ? `
-        <div style="font-weight:700;color:#0d9488;margin:18px 0 8px;font-size:13px;border-left:3px solid #0d9488;padding-left:8px">🔗 Bileşik Sayı Örnekleri</div>
+        <div style="font-weight:700;color:#0d9488;margin:18px 0 8px;font-size:13px;border-left:3px solid #0d9488;padding-left:8px">${s('num_compound_title')}</div>
         <div style="background:#f0faf7;border:1px solid #b2dfdb;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:12px;color:#555;line-height:1.7">
-          Büyük birimden küçüğe sıralanır. Sıfır olan basamaklar atlanır.
+          ${s('num_compound_info')}
         </div>
         ${L.compounds.map(c=>`
           <div onclick="if(window.speechSynthesis){const u=new SpeechSynthesisUtterance('${c.thai}');u.lang='th-TH';u.rate=0.82;speechSynthesis.cancel();speechSynthesis.speak(u)}"
@@ -1421,10 +1677,10 @@ function buildLessonHTML(L, meta){
     // --- CALC sekmesi: hesap makinesi ---
     calcHtml = `
       <div style="background:#f0faf7;border:1px solid #b2dfdb;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#444">
-        Herhangi bir sayıyı gir — Thai karşılığı ve okunuşu anında çıkar. 🔊 ile seslendir.
+        ${s('calc_info')}
       </div>
       <div style="background:white;border:1.5px solid #e0e0e0;border-radius:14px;padding:16px 14px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.06)">
-        <div style="font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Sayıyı gir (0 – 9.999.999)</div>
+        <div style="font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">${s('calc_input_label')}</div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <input type="number" id="l2calc-input" placeholder="örn. 350" min="0" max="9999999" inputmode="numeric"
             style="background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:8px;padding:10px 12px;color:#222;font-size:20px;width:180px;outline:none;font-family:'Sarabun',sans-serif;transition:border-color .2s"
@@ -1433,17 +1689,17 @@ function buildLessonHTML(L, meta){
             onblur="this.style.borderColor='#e0e0e0'">
           <button onclick="l2SpeakCalc()"
             style="background:#0d9488;border:none;border-radius:8px;padding:10px 14px;color:white;cursor:pointer;font-size:14px;font-weight:700;transition:transform .15s"
-            ontouchstart="this.style.transform='scale(.93)'" ontouchend="this.style.transform=''">🔊 Dinle</button>
+            ontouchstart="this.style.transform='scale(.93)'" ontouchend="this.style.transform=''">${s('calc_listen')}</button>
         </div>
         <div id="l2calc-result" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0">
           <div id="l2calc-thai" style="font-family:'Noto Sans Thai',sans-serif;font-size:26px;font-weight:700;color:#0d9488;margin-bottom:4px"></div>
           <div id="l2calc-roman" style="font-size:13px;color:#888;font-style:italic;margin-bottom:3px"></div>
           <div id="l2calc-tr" style="font-size:12px;color:#4caf80;font-weight:700;margin-bottom:12px"></div>
-          <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Basamak dökümü</div>
+          <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">${s('calc_breakdown')}</div>
           <div id="l2calc-breakdown" style="display:flex;flex-wrap:wrap;gap:5px;align-items:center"></div>
         </div>
       </div>
-      <div style="font-weight:700;color:#0d9488;font-size:13px;border-left:3px solid #0d9488;padding-left:8px;margin-bottom:10px">⚡ Hızlı Örnekler</div>
+      <div style="font-weight:700;color:#0d9488;font-size:13px;border-left:3px solid #0d9488;padding-left:8px;margin-bottom:10px">${s('calc_quick')}</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
         ${[21,100,350,1500,10000,183500].map(n=>`
           <button onclick="document.getElementById('l2calc-input').value=${n};l2CalcNumber(${n});this.style.borderColor='#0d9488';setTimeout(()=>this.style.borderColor='#e0e0e0',1200)"
@@ -1456,10 +1712,10 @@ function buildLessonHTML(L, meta){
 
   return `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
-      <button class="back-btn" onclick="closeLessonDetail()" style="margin-bottom:0">← Dersler</button>
+      <button class="back-btn" onclick="closeLessonDetail()" style="margin-bottom:0">${s('lesson_back')}</button>
       <span id="lesson-score-live" style="font-size:12px;font-weight:700;margin-left:auto;transition:color .3s;"></span>
     </div>
-    <h2>${meta.emoji} ${meta.title}</h2>
+    <h2>${meta.emoji} ${Lf(meta,'title')}</h2>
     <div class="ltabs" id="ltabs-wrap">${tabs}</div>
     ${tabNames.map(t=>`<div id="lc-${t}" class="lcontent">${
       t==='words'?(pronounTable+words):t==='tones'?tones:t==='grammar'?grammar:
@@ -1556,10 +1812,10 @@ function _refreshCompleteBtn(){
   if(allDone){
     wrap.innerHTML = `
       <div style="background:#f8f9fa;border:1.5px dashed #ccc;border-radius:12px;padding:14px;text-align:center;">
-        <div style="font-size:13px;color:#888;margin-bottom:10px;">✅ Tüm sekmeler tamamlandı!</div>
+        <div style="font-size:13px;color:#888;margin-bottom:10px;">${s('lesson_all_visited')}</div>
         <button onclick="markLessonDone(${meta.num})"
           style="background:#0d9488;border:none;border-radius:10px;padding:12px 28px;color:white;font-size:14px;font-weight:700;cursor:pointer;">
-          ✅ Dersi Tamamladım
+          ${s('lesson_mark_done')}
         </button>
       </div>`;
   }
@@ -1650,7 +1906,7 @@ function checkListen(idx, sel, correct){
     if(i===correct) o.classList.add('correct');
     else if(i===sel) o.classList.add('wrong');
   });
-  document.getElementById('lf-'+idx).innerHTML=`<div class="fb ${sel===correct?'ok':'nope'}">${sel===correct?'✅ Doğru!':'❌ Yanlış — doğru: '+lessonData.listening[idx].opts[correct]}</div>`;
+  document.getElementById('lf-'+idx).innerHTML=`<div class="fb ${sel===correct?'ok':'nope'}">${sel===correct?s('test_correct_fb'):s('test_wrong_prefix')+' '+lessonData.listening[idx].opts[correct]}</div>`;
   // Skor kaydet
   const st = getStats(currentLesson.num);
   st.listenTotal++;
@@ -1665,7 +1921,7 @@ function checkQuiz(idx, sel, correct){
     if(i===correct) o.classList.add('correct');
     else if(i===sel) o.classList.add('wrong');
   });
-  document.getElementById('qf-'+idx).innerHTML=`<div class="fb ${sel===correct?'ok':'nope'}">${sel===correct?'✅ Doğru!':'❌ Yanlış — doğru: '+lessonData.quiz[idx].opts[correct]}</div>`;
+  document.getElementById('qf-'+idx).innerHTML=`<div class="fb ${sel===correct?'ok':'nope'}">${sel===correct?s('test_correct_fb'):s('test_wrong_prefix')+' '+lessonData.quiz[idx].opts[correct]}</div>`;
   // Skor kaydet
   const st = getStats(currentLesson.num);
   st.quizTotal++;
@@ -1683,9 +1939,9 @@ function markLessonDone(num){
     wrap.innerHTML = `
       <div style="background:#e8f5e9;border:1.5px solid #a5d6a7;border-radius:12px;padding:20px;animation:popIn .4s ease">
         <div style="font-size:32px;margin-bottom:6px;">🎉</div>
-        <div style="font-size:15px;font-weight:700;color:#2e7d32;">Tebrikler! Ders tamamlandı!</div>
-        <div style="font-size:12px;color:#555;margin-top:4px;">Bu ders artık tamamlandı olarak işaretlendi.</div>
-        <button onclick="unmarkLesson(${num})" style="margin-top:12px;background:none;border:1px solid #a5d6a7;border-radius:8px;padding:5px 14px;font-size:11px;color:#666;cursor:pointer;">↺ Geri al</button>
+        <div style="font-size:15px;font-weight:700;color:#2e7d32;">${s('lesson_done_msg')}</div>
+        <div style="font-size:12px;color:#555;margin-top:4px;">${s('lesson_redo_hint')}</div>
+        <button onclick="unmarkLesson(${num})" style="margin-top:12px;background:none;border:1px solid #a5d6a7;border-radius:8px;padding:5px 14px;font-size:11px;color:#666;cursor:pointer;">${s('lesson_unmark')}</button>
       </div>`;
   }
   // Ders listesini güncelle (progress bar dahil)
@@ -1701,10 +1957,10 @@ function unmarkLesson(num){
   if(wrap){
     wrap.innerHTML = `
       <div style="background:#f8f9fa;border:1.5px dashed #ccc;border-radius:12px;padding:14px;text-align:center;">
-        <div style="font-size:13px;color:#888;margin-bottom:10px;">✅ Tüm sekmeler ziyaret edildi — dersi tamamladın mı?</div>
+        <div style="font-size:13px;color:#888;margin-bottom:10px;">${s('lesson_all_done_q')}</div>
         <button onclick="markLessonDone(${num})"
           style="background:#0d9488;border:none;border-radius:10px;padding:12px 28px;color:white;font-size:14px;font-weight:700;cursor:pointer;">
-          ✅ Dersi Tamamladım
+          ${s('lesson_mark_done')}
         </button>
       </div>`;
   }
@@ -1814,7 +2070,7 @@ function getWrongOptions(correctTr, count, lessonNum){
 
 async function initTestView(){
   const wrap = document.getElementById('test-content');
-  wrap.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#0d9488;font-size:14px;">⏳ Ders verileri yükleniyor...</div>';
+  wrap.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#0d9488;font-size:14px;">'+s('test_loading')+'</div>';
   const toLoad = LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).map(m=>loadDers(m.num));
   await Promise.all(toLoad);
   renderTestView();
@@ -1847,7 +2103,7 @@ function renderTestView(){
     <!-- BAŞLIK -->
     <div style="background:linear-gradient(135deg,#0d9488,#06b6d4);border-radius:14px;padding:16px 18px;margin-bottom:18px;color:white;">
       <div style="font-size:16px;font-weight:700;margin-bottom:3px;">📝 Test</div>
-      <div style="font-size:12px;opacity:.8;">${completedCount}/${totalLessons} ders tamamlandı · ${allTestCards.length} kart mevcut</div>
+      <div style="font-size:12px;opacity:.8;">${completedCount}/${totalLessons} ${s('test_lessons_done')} · ${allTestCards.length} ${s('test_cards_available')}</div>
     </div>
 
     <!-- 3 ANA SEÇENEK -->
@@ -1858,8 +2114,8 @@ function renderTestView(){
       onmouseleave="this.style.borderColor='#e0e0e0';this.style.background='white'">
       <div style="font-size:32px;flex-shrink:0;">📚</div>
       <div style="flex:1">
-        <div style="font-size:14px;font-weight:700;color:#222;margin-bottom:3px;">Tek Ders</div>
-        <div style="font-size:12px;color:#888;line-height:1.5;">Bir dersin kelimelerini, örneklerini ve gramer cümlelerini test et. Konu filtresi ve mod seçimi yapılabilir.</div>
+        <div style="font-size:14px;font-weight:700;color:#222;margin-bottom:3px;">${s('test_single')}</div>
+        <div style="font-size:12px;color:#888;line-height:1.5;">${s('test_single_desc')}</div>
       </div>
       <div style="font-size:20px;color:#ccc">›</div>
     </div>
@@ -1871,8 +2127,8 @@ function renderTestView(){
       onmouseleave="this.style.borderColor='#e0e0e0';this.style.background='white'">
       <div style="font-size:32px;flex-shrink:0;">🗂️</div>
       <div style="flex:1">
-        <div style="font-size:14px;font-weight:700;color:#222;margin-bottom:3px;">Tüm Dersler</div>
-        <div style="font-size:12px;color:#888;line-height:1.5;">Tamamlanan ${completedCount} dersin tüm kartları karışık gelir. ${allTestCards.length} kart havuzu.</div>
+        <div style="font-size:14px;font-weight:700;color:#222;margin-bottom:3px;">${s('test_all')}</div>
+        <div style="font-size:12px;color:#888;line-height:1.5;">${completedCount} ${s('test_lessons_done')} · ${allTestCards.length} ${s('test_all_desc_suffix')}</div>
       </div>
       <div style="font-size:20px;color:#ccc">›</div>
     </div>
@@ -1883,8 +2139,8 @@ function renderTestView(){
       ${starCount>0?'onmouseenter="this.style.borderColor=\'#f59e0b\';this.style.background=\'#fffbeb\'" onmouseleave="this.style.borderColor=\'#e0e0e0\';this.style.background=\'white\'"':''}>
       <div style="font-size:32px;flex-shrink:0;">⭐</div>
       <div style="flex:1">
-        <div style="font-size:14px;font-weight:700;color:${starCount>0?'#222':'#bbb'};margin-bottom:3px;">Yıldızlılar</div>
-        <div style="font-size:12px;color:#888;line-height:1.5;">${starCount>0 ? starCount+' yıldızlı kart — Kaydettiğin önemli cümle ve kelimeler.' : 'Henüz yıldızlı kart yok. Derslerde ⭐ ile işaretle.'}</div>
+        <div style="font-size:14px;font-weight:700;color:${starCount>0?'#222':'#bbb'};margin-bottom:3px;">${s('test_starred')}</div>
+        <div style="font-size:12px;color:#888;line-height:1.5;">${starCount>0 ? starCount+' '+s('test_starred_desc') : s('test_no_lessons')}</div>
       </div>
       <div style="font-size:20px;color:#ccc">${starCount>0?'›':'·'}</div>
     </div>
@@ -1903,15 +2159,15 @@ function openTestModeMenu(source){
     LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).forEach(m=>{
       cards = cards.concat(buildTestCards(m.num,'all'));
     });
-    title = '🗂️ Tüm Dersler';
-    subtitle = cards.length + ' kart';
+    title = '🗂️ '+s('test_all');
+    subtitle = cards.length + ' '+s('test_cards_available');
   } else if(source==='starred'){
     const starred = JSON.parse(localStorage.getItem('tv3_star')||'{}');
     cards = Object.entries(starred).map(([k,v])=>({
       type:v.type||'word', th:v.th||'', ro:v.ro||k, tr:v.tr||'', cat:'phrases', bd:v.bd||[], lessonNum:0
     })).filter(c=>c.ro);
-    title = '⭐ Yıldızlılar';
-    subtitle = cards.length + ' kart';
+    title = '⭐ '+s('test_starred');
+    subtitle = cards.length + ' '+s('test_cards_available');
   } else {
     // Ders seçimi göster
     renderLessonPicker();
@@ -1933,17 +2189,17 @@ function renderLessonPicker(){
       onmouseenter="this.style.background='#f0fdf9'" onmouseleave="this.style.background=''">
       <div style="font-size:20px;">${m.emoji}</div>
       <div style="flex:1;">
-        <div style="font-size:13px;font-weight:700;color:#222;">Ders ${m.num}: ${m.title}</div>
-        <div style="font-size:11px;color:#888;margin-top:1px;">${cnt} kart · <span style="color:#0d9488">✓ Tamamlandı</span></div>
+        <div style="font-size:13px;font-weight:700;color:#222;">${s('review_lesson_prefix')} ${m.num}: ${Lf(m,'title')}</div>
+        <div style="font-size:11px;color:#888;margin-top:1px;">${cnt} ${s('test_cards_available')} · <span style="color:#0d9488">✓</span></div>
       </div>
       <div style="color:#ccc;font-size:18px;">›</div>
     </div>`;
   }).join('');
 
   wrap.innerHTML = `
-    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Geri</button>
+    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">${s('test_back_menu')}</button>
     <div style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;overflow:hidden;">
-      <div style="padding:10px 14px;background:#f8f9fa;border-bottom:1px solid #e8e8e8;font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;">Ders Seç</div>
+      <div style="padding:10px 14px;background:#f8f9fa;border-bottom:1px solid #e8e8e8;font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;">${s('test_select_lesson')}</div>
       ${rows}
     </div>`;
 }
@@ -1955,30 +2211,30 @@ function selectTestLesson(num){
   const phraseCards = buildTestCards(num,'phrases');
   const gramCards = buildTestCards(num,'grammar');
 
-  testState._sourceLabel = meta.emoji+' Ders '+num;
+  testState._sourceLabel = meta.emoji+' '+s('review_lesson_prefix')+' '+num;
   testState._lessonNum = num;
   testState._sourceCards = allCards; // default all
 
   const wrap = document.getElementById('test-content');
   wrap.innerHTML = `
-    <button onclick="renderLessonPicker()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Dersler</button>
+    <button onclick="renderLessonPicker()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">${s('test_back_btn')}</button>
 
     <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;padding:14px;margin-bottom:14px;">
-      <div style="font-size:15px;font-weight:700;color:#222;margin-bottom:2px;">${meta.emoji} Ders ${num}: ${meta.title}</div>
-      <div style="font-size:11px;color:#888;">${allCards.length} kart</div>
+      <div style="font-size:15px;font-weight:700;color:#222;margin-bottom:2px;">${meta.emoji} ${s('review_lesson_prefix')} ${num}: ${Lf(meta,'title')}</div>
+      <div style="font-size:11px;color:#888;">${allCards.length} ${s('test_cards_available')}</div>
     </div>
 
-    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Konu Filtresi</div>
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">${s('test_cat_all')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
-      <button class="test-cat-btn active" onclick="selectTestCat(this,'all',${num})">🗂️ Tümü (${allCards.length})</button>
-      ${pronounCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'pronouns',${num})">👤 Zamirler (${pronounCards.length})</button>`:''}
-      ${phraseCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'phrases',${num})">💬 İfadeler (${phraseCards.length})</button>`:''}
-      ${gramCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'grammar',${num})">📖 Gramer (${gramCards.length})</button>`:''}
+      <button class="test-cat-btn active" onclick="selectTestCat(this,'all',${num})">🗂️ ${s('test_cat_all')} (${allCards.length})</button>
+      ${pronounCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'pronouns',${num})">👤 ${s('test_cat_pronouns')} (${pronounCards.length})</button>`:''}
+      ${phraseCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'phrases',${num})">💬 ${s('test_cat_phrases')} (${phraseCards.length})</button>`:''}
+      ${gramCards.length>0?`<button class="test-cat-btn" onclick="selectTestCat(this,'grammar',${num})">📖 ${s('test_cat_grammar')} (${gramCards.length})</button>`:''}
     </div>
 
     ${renderModeOptions()}
 
-    <button onclick="startFromState()" style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;">🚀 Testi Başlat</button>
+    <button onclick="startFromState()" style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;">🚀 ${s('test_start')}</button>
   `;
   testState.lessonNum = num;
   testState.category = 'all';
@@ -1996,36 +2252,36 @@ function selectTestCat(btn, cat, num){
 
 function renderModeOptions(){
   return `
-    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Kart Modu</div>
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">${s('test_mode_fc')+'/'+s('test_mode_mc')}</div>
     <div style="display:flex;gap:8px;margin-bottom:14px;">
       <button class="test-mode-btn active" onclick="selectTestMode(this,'fc')" style="flex:1;padding:10px 6px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:10px;cursor:pointer;text-align:center;">
-        <div style="font-size:16px;">🃏</div><div style="font-size:11px;font-weight:700;color:#0d9488;margin-top:2px;">Flashcard</div>
+        <div style="font-size:16px;">🃏</div><div style="font-size:11px;font-weight:700;color:#0d9488;margin-top:2px;">${s('test_mode_fc')}</div>
       </button>
       <button class="test-mode-btn" onclick="selectTestMode(this,'mc')" style="flex:1;padding:10px 6px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;text-align:center;">
-        <div style="font-size:16px;">☑️</div><div style="font-size:11px;font-weight:700;color:#888;margin-top:2px;">Çoktan Seçmeli</div>
+        <div style="font-size:16px;">☑️</div><div style="font-size:11px;font-weight:700;color:#888;margin-top:2px;">${s('test_mode_mc')}</div>
       </button>
       <button class="test-mode-btn" onclick="selectTestMode(this,'mix')" style="flex:1;padding:10px 6px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;cursor:pointer;text-align:center;">
-        <div style="font-size:16px;">🎲</div><div style="font-size:11px;font-weight:700;color:#888;margin-top:2px;">Karma</div>
+        <div style="font-size:16px;">🎲</div><div style="font-size:11px;font-weight:700;color:#888;margin-top:2px;">${s('test_mode_mix')}</div>
       </button>
     </div>
-    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Yön</div>
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">${s('test_dir_th2tr')+' / '+s('test_dir_tr2th')}</div>
     <div style="display:flex;gap:8px;margin-bottom:16px;">
-      <button class="test-dir-btn active" onclick="selectTestDir(this,'th2tr')" style="flex:1;padding:8px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#0d9488;">🇹🇭→TR</button>
-      <button class="test-dir-btn" onclick="selectTestDir(this,'tr2th')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">TR→🇹🇭</button>
-      <button class="test-dir-btn" onclick="selectTestDir(this,'mix')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">🎲 Karma</button>
+      <button class="test-dir-btn active" onclick="selectTestDir(this,'th2tr')" style="flex:1;padding:8px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#0d9488;">🇹🇭→</button>
+      <button class="test-dir-btn" onclick="selectTestDir(this,'tr2th')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">→🇹🇭</button>
+      <button class="test-dir-btn" onclick="selectTestDir(this,'mix')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">🎲 ${s('test_mode_mix')}</button>
     </div>`;
 }
 
 function renderModeMenu(title, subtitle){
   const wrap = document.getElementById('test-content');
   wrap.innerHTML = `
-    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Geri</button>
+    <button onclick="renderTestView()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">${s('test_back_menu')}</button>
     <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;padding:14px;margin-bottom:14px;">
       <div style="font-size:15px;font-weight:700;color:#222;margin-bottom:2px;">${title}</div>
       <div style="font-size:11px;color:#888;">${subtitle}</div>
     </div>
     ${renderModeOptions()}
-    <button onclick="startFromState()" style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;">🚀 Testi Başlat</button>
+    <button onclick="startFromState()" style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;">🚀 ${s('test_start')}</button>
   `;
   testState.mode = 'fc';
   testState.dir = 'th2tr';
@@ -2033,7 +2289,7 @@ function renderModeMenu(title, subtitle){
 
 function startFromState(){
   const cards = (testState._sourceCards||[]).sort(()=>Math.random()-0.5);
-  if(cards.length===0){ alert('Kart bulunamadı.'); return; }
+  if(cards.length===0){ alert(s('test_no_cards')); return; }
   testState.cards = cards;
   testState.idx = 0;
   testState.correct = 0;
@@ -2080,12 +2336,12 @@ function showTestCard(){
 
   if(actualMode==='fc'){
     wrap.innerHTML = `
-      <button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">← Ders</button>
+      <button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">${s('test_back_btn')}</button>
       ${progressBar}
       <div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:24px 20px;text-align:center;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">
-        <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':card.type==='dialogue'?'Diyalog'+(card.speaker?' · '+card.speaker:''):card.type==='speaking'?'Konuşma':'Gramer'}</div>
+        <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">${card.type==='word'?s('test_type_word'):card.type==='example'?s('test_type_example'):card.type==='dialogue'?s('test_type_dialogue')+(card.speaker?' · '+card.speaker:''):card.type==='speaking'?s('test_type_speaking'):s('test_type_grammar')}</div>
         ${questionText}
-        <button onclick="speakTestWord()" style="margin-top:12px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>
+        <button onclick="speakTestWord()" style="margin-top:12px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">${s('speak_listen')}</button>
       </div>
       <div id="fc-answer" style="display:none;background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:12px;padding:14px 16px;margin-bottom:14px;text-align:center;">
         ${actualDir==='th2tr'
@@ -2096,11 +2352,11 @@ function showTestCard(){
         <button onclick="document.getElementById('fc-answer').style.display='block';document.getElementById('fc-btn-show').style.display='none';document.getElementById('fc-verdict-btns').style.display='flex';"
           id="fc-btn-show"
           style="width:100%;padding:13px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;cursor:pointer;">
-          Cevabı Gör
+          ${s('test_show_answer')}
         </button>
         <div id="fc-verdict-btns" style="display:none;gap:8px;">
-          <button onclick="recordTestAnswer(false)" style="flex:1;padding:12px;background:#fef2f2;border:1.5px solid #fecaca;border-radius:10px;font-size:13px;font-weight:700;color:#ef4444;cursor:pointer;">❌ Bilmedim</button>
-          <button onclick="recordTestAnswer(true)"  style="flex:1;padding:12px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;font-size:13px;font-weight:700;color:#16a34a;cursor:pointer;">✅ Bildim</button>
+          <button onclick="recordTestAnswer(false)" style="flex:1;padding:12px;background:#fef2f2;border:1.5px solid #fecaca;border-radius:10px;font-size:13px;font-weight:700;color:#ef4444;cursor:pointer;">${s('test_didnt_know')}</button>
+          <button onclick="recordTestAnswer(true)"  style="flex:1;padding:12px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;font-size:13px;font-weight:700;color:#16a34a;cursor:pointer;">${s('test_knew')}</button>
         </div>
       </div>`;
   } else {
@@ -2120,16 +2376,16 @@ function showTestCard(){
     window._testMCFull = actualDir==='th2tr' ? card.tr : card.ro;
 
     wrap.innerHTML = [
-      '<button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">&larr; Geri</button>',
+      '<button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">'+s('test_back_btn')+'</button>',
       progressBar,
       '<div style="background:white;border:1.5px solid #e0e0e0;border-radius:16px;padding:20px;text-align:center;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);">',
-      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">'+(card.type==='word'?'Kelime':card.type==='example'?'Örnek Cümle':card.type==='dialogue'?'Diyalog'+(card.speaker?' · '+card.speaker:''):card.type==='speaking'?'Konuşma':'Gramer')+'</div>',
+      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">'+(card.type==='word'?s('test_type_word'):card.type==='example'?s('test_type_example'):card.type==='dialogue'?s('test_type_dialogue')+(card.speaker?' · '+card.speaker:''):card.type==='speaking'?s('test_type_speaking'):s('test_type_grammar'))+'</div>',
       questionText,
-      '<button onclick="speakTestWord()" style="margin-top:10px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">🔊 Dinle</button>',
+      '<button onclick="speakTestWord()" style="margin-top:10px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">'+s('speak_listen')+'</button>',
       '</div>',
       '<div id="mc-opts-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;"></div>',
       '<div id="mc-feedback" style="min-height:20px;text-align:center;font-size:13px;font-weight:700;margin-bottom:8px;"></div>',
-      '<button id="mc-next-btn" onclick="recordTestAnswer(testState._mcCorrect)" style="display:none;width:100%;padding:13px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;cursor:pointer;">Devam &rarr;</button>'
+      '<button id="mc-next-btn" onclick="recordTestAnswer(testState._mcCorrect)" style="display:none;width:100%;padding:13px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:14px;font-weight:700;cursor:pointer;">'+s('test_continue')+'</button>'
     ].join('');
 
     // Butonları DOM'a sonradan ekle
@@ -2167,11 +2423,11 @@ function checkMCAnswer(btn, selected, correct, correctFull){
   testState._mcCorrect = isCorrect;
   if(isCorrect){
     btn.style.background='#f0fdf4'; btn.style.borderColor='#16a34a'; btn.style.color='#16a34a';
-    document.getElementById('mc-feedback').innerHTML='<span style="color:#16a34a">✅ Doğru!</span>';
+    document.getElementById('mc-feedback').innerHTML='<span style="color:#16a34a">'+s('test_correct_fb')+'</span>';
   } else {
     btn.style.background='#fef2f2'; btn.style.borderColor='#ef4444'; btn.style.color='#ef4444';
     document.querySelectorAll('.mc-opt').forEach(b=>{ if(b.dataset.correct==='true'){ b.style.background='#f0fdf4'; b.style.borderColor='#16a34a'; b.style.color='#16a34a'; } });
-    document.getElementById('mc-feedback').innerHTML=`<span style="color:#ef4444">❌ Doğrusu: ${correctFull}</span>`;
+    document.getElementById('mc-feedback').innerHTML=`<span style="color:#ef4444">${s('test_wrong_prefix')} ${correctFull}</span>`;
   }
   document.getElementById('mc-next-btn').style.display='block';
 }
@@ -2203,31 +2459,31 @@ function showTestResult(){
   wrap.innerHTML = `
     <div style="text-align:center;padding:20px 0;">
       <div style="font-size:48px;margin-bottom:8px;">${pct>=80?'🏆':pct>=60?'🎯':pct>=40?'👍':'📚'}</div>
-      <div style="font-size:20px;font-weight:700;color:#222;margin-bottom:4px;">${pct>=80?'Harika!':pct>=60?'İyi!':pct>=40?'Fena değil!':'Çalışmaya devam!'}</div>
+      <div style="font-size:20px;font-weight:700;color:#222;margin-bottom:4px;">${pct>=80?s('test_result_great'):pct>=60?s('test_result_good'):pct>=40?s('test_result_ok'):s('test_result_keep')}</div>
       <div style="font-size:36px;font-weight:700;color:#0d9488;margin:8px 0;">${pct}%</div>
-      <div style="font-size:13px;color:#888;">${correct} doğru / ${total} soru</div>
+      <div style="font-size:13px;color:#888;">${correct} ${s('test_correct_count')} / ${total} ${s('test_soru')}</div>
     </div>
 
     <div style="display:flex;gap:8px;margin-bottom:16px;">
       <div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px;text-align:center;">
         <div style="font-size:22px;font-weight:700;color:#16a34a;">${correct}</div>
-        <div style="font-size:11px;color:#666;">Doğru</div>
+        <div style="font-size:11px;color:#666;">${s('test_knew')}</div>
       </div>
       <div style="flex:1;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px;text-align:center;">
         <div style="font-size:22px;font-weight:700;color:#ef4444;">${wrong}</div>
-        <div style="font-size:11px;color:#666;">Yanlış</div>
+        <div style="font-size:11px;color:#666;">${s('test_didnt_know')}</div>
       </div>
     </div>
 
     ${wrongItems ? `
       <div style="background:white;border:1px solid #e0e0e0;border-radius:10px;padding:12px;margin-bottom:16px;">
-        <div style="font-size:12px;font-weight:700;color:#ef4444;margin-bottom:8px;">🔁 Yanlışlar — Tekrar Bak</div>
+        <div style="font-size:12px;font-weight:700;color:#ef4444;margin-bottom:8px;">${s('test_wrong_items')}</div>
         ${wrongItems}
       </div>` : ''}
 
     <div style="display:flex;gap:8px;">
-      <button onclick="startFromState()" style="flex:1;padding:12px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:13px;font-weight:700;cursor:pointer;">🔄 Tekrar</button>
-      <button onclick="renderTestView()" style="flex:1;padding:12px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;color:#555;font-size:13px;font-weight:700;cursor:pointer;">← Ana Menü</button>
+      <button onclick="startFromState()" style="flex:1;padding:12px;background:#0d9488;border:none;border-radius:10px;color:white;font-size:13px;font-weight:700;cursor:pointer;">${s('test_retry')}</button>
+      <button onclick="renderTestView()" style="flex:1;padding:12px;background:white;border:1.5px solid #e0e0e0;border-radius:10px;color:#555;font-size:13px;font-weight:700;cursor:pointer;">${s('test_back_menu')}</button>
     </div>
   `;
 }
@@ -2337,17 +2593,17 @@ function renderReview(){
   if(due.length === 0){
     document.getElementById('review-content').innerHTML = `
       <div class="review-header">
-        <div style="font-size:15px;font-weight:700;color:#0d9488;">🔄 Aralıklı Tekrar</div>
+        <div style="font-size:15px;font-weight:700;color:#0d9488;">${s('review_title')}</div>
         <div class="review-stats">
-          <div class="stat-box"><div class="stat-num">${stats.total}</div><div class="stat-lbl">Toplam Kart</div></div>
-          <div class="stat-box"><div class="stat-num">${stats.learned}</div><div class="stat-lbl">Öğrenilen</div></div>
-          <div class="stat-box due"><div class="stat-num">${stats.due}</div><div class="stat-lbl">Bugün</div></div>
+          <div class="stat-box"><div class="stat-num">${stats.total}</div><div class="stat-lbl">${s('review_total')}</div></div>
+          <div class="stat-box"><div class="stat-num">${stats.learned}</div><div class="stat-lbl">${s('review_learned')}</div></div>
+          <div class="stat-box due"><div class="stat-num">${stats.due}</div><div class="stat-lbl">${s('review_due')}</div></div>
         </div>
       </div>
       <div class="review-empty">
         <div style="font-size:48px">🎉</div>
-        <div style="font-size:16px;font-weight:700;color:#0d9488;margin:12px 0 6px">Bugünlük bitti!</div>
-        <div style="font-size:13px;color:#888">Tüm kartlar tekrar edildi. Yarın devam!</div>
+        <div style="font-size:16px;font-weight:700;color:#0d9488;margin:12px 0 6px">${s('review_no_cards')}</div>
+        <div style="font-size:13px;color:#888"></div>
         ${buildSrsLessonRows()}
       </div>
     `;
@@ -2361,11 +2617,11 @@ function renderReview(){
 
   document.getElementById('review-content').innerHTML = `
     <div class="review-header">
-      <div style="font-size:15px;font-weight:700;color:#0d9488;">🔄 Aralıklı Tekrar</div>
+      <div style="font-size:15px;font-weight:700;color:#0d9488;">${s('review_title')}</div>
       <div class="review-stats">
-        <div class="stat-box"><div class="stat-num">${stats.total}</div><div class="stat-lbl">Toplam</div></div>
-        <div class="stat-box"><div class="stat-num">${stats.learned}</div><div class="stat-lbl">Öğrenilen</div></div>
-        <div class="stat-box due"><div class="stat-num">${due.length}</div><div class="stat-lbl">Bugün</div></div>
+        <div class="stat-box"><div class="stat-num">${stats.total}</div><div class="stat-lbl">${s('review_total')}</div></div>
+        <div class="stat-box"><div class="stat-num">${stats.learned}</div><div class="stat-lbl">${s('review_learned')}</div></div>
+        <div class="stat-box due"><div class="stat-num">${due.length}</div><div class="stat-lbl">${s('review_due')}</div></div>
       </div>
     </div>
     <div class="review-progress"><div class="review-progress-fill" id="rp-fill" style="width:0%"></div></div>
@@ -2377,14 +2633,14 @@ function renderReview(){
 
 function buildSrsLessonRows(){
   let html = '<div style="margin-top:16px;background:white;border-radius:10px;padding:12px;border:1px solid #e8e8e8;">';
-  html += '<div style="font-size:12px;font-weight:700;color:#0d9488;margin-bottom:8px;">📚 Derse Kart Ekle</div>';
+  html += '<div style="font-size:12px;font-weight:700;color:#0d9488;margin-bottom:8px;">'+s('review_add_section')+'</div>';
   LESSONS_META.filter(m=>m.hasContent).forEach(m=>{
     const db = SRS.load();
     const lessonCards = Object.values(db).filter(c=>c.lessonNum===m.num).length;
     html += `<div class="lesson-srs-row">
-      <div style="flex:1;font-size:12px;">${m.emoji} Ders ${m.num}: ${m.title}</div>
-      <div style="font-size:11px;color:#888;margin-right:6px;">${lessonCards} kart</div>
-      <button class="srs-add-btn" onclick="addLessonToSRS(${m.num})">+ Ekle</button>
+      <div style="flex:1;font-size:12px;">${m.emoji} ${s('review_lesson_prefix')} ${m.num}: ${Lf(m,'title')}</div>
+      <div style="font-size:11px;color:#888;margin-right:6px;">${lessonCards} ${s('review_cards')}</div>
+      <button class="srs-add-btn" onclick="addLessonToSRS(${m.num})">${s('review_add_btn')}</button>
     </div>`;
   });
   html += '</div>';
@@ -2395,7 +2651,7 @@ function addLessonToSRS(num){
   const lessonData = LESSONS[num];
   if(!lessonData) return;
   const added = SRS.addLessonCards(num, lessonData);
-  alert(added > 0 ? added + ' yeni kart eklendi!' : 'Bu dersin kartları zaten ekli.');
+  alert(added > 0 ? added + ' '+s('alert_added') : s('alert_already'));
   renderReview();
 }
 
@@ -2408,9 +2664,9 @@ function showReviewCard(){
     wrap.innerHTML = `
       <div class="review-done">
         <div class="review-done-emoji">🎊</div>
-        <div class="review-done-title">Oturum Tamamlandı!</div>
-        <div class="review-done-sub">${reviewSession.done} kart tekrar edildi.</div>
-        <button onclick="renderReview()" style="margin-top:16px;padding:10px 20px;background:#0d9488;color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;">Yeniden Başla</button>
+        <div class="review-done-title">${s('review_done_title')}</div>
+        <div class="review-done-sub">${reviewSession.done} ${s('review_done_sub')}</div>
+        <button onclick="renderReview()" style="margin-top:16px;padding:10px 20px;background:#0d9488;color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;">${s('review_restart')}</button>
       </div>`;
     const fill = document.getElementById('rp-fill');
     if(fill) fill.style.width = '100%';
@@ -2424,7 +2680,7 @@ function showReviewCard(){
   if(fill) fill.style.width = pct + '%';
 
   const lessonMeta = LESSONS_META.find(m=>m.num===card.lessonNum);
-  const typeLabel = {word:'📚 Kelime', example:'💬 Örnek', speaking:'🗣️ Konuşma'}[card.type] || '📝';
+  const typeLabel = {word:s('review_type_word'), example:s('review_type_example'), speaking:s('review_type_speaking')}[card.type] || '📝';
 
   // Ters yön (Türkçe→Thai) veya normal (Thai→Türkçe)
   const isReverse = Math.random() > 0.5 && card.reps > 1;
@@ -2433,26 +2689,26 @@ function showReviewCard(){
   const questionRo = isReverse ? card.tr : card.ro;
   const answerText = isReverse ? card.tr : (card.th || '');
   const answerRo = isReverse ? card.ro : card.tr;
-  const questionLabel = isReverse ? '🇹🇷 Türkçe → Thai' : '🇹🇭 Thai → Türkçe';
+  const questionLabel = isReverse ? s('review_q_tr2th') : s('review_q_th2tr');
 
   wrap.innerHTML = `
     <div class="review-card">
-      <div class="rc-lesson">${lessonMeta?lessonMeta.emoji+' Ders '+lessonMeta.num:''} · ${typeLabel}</div>
+      <div class="rc-lesson">${lessonMeta?lessonMeta.emoji+' '+s('review_lesson_prefix')+' '+lessonMeta.num:''} · ${typeLabel}</div>
       <div style="font-size:11px;color:#888;margin-bottom:12px;">${questionLabel}</div>
       ${questionThai ? '<div class="rc-question">'+questionThai+'</div>' : ''}
       <div class="rc-ro">${questionRo}</div>
-      <button class="rc-speak-btn" data-speak="${esc(card.th||card.ro)}" data-slow="0">🔊 Dinle</button>
+      <button class="rc-speak-btn" data-speak="${esc(card.th||card.ro)}" data-slow="0">${s('speak_listen')}</button>
       <div class="rc-answer" id="rc-ans">
         <div class="rc-answer-text">${answerText}</div>
         <div class="rc-answer-ro">${answerRo}</div>
       </div>
-      <button class="show-answer-btn" id="show-ans-btn" onclick="showAnswer()">Cevabı Gör</button>
+      <button class="show-answer-btn" id="show-ans-btn" onclick="showAnswer()">${s('review_show_answer')}</button>
     </div>
     <div class="review-btns" id="review-rating-btns">
-      <button class="rb bilmiyorum" onclick="rateCard(0)">❌ Bilmiyorum</button>
-      <button class="rb zor" onclick="rateCard(1)">😰 Zor</button>
-      <button class="rb normal" onclick="rateCard(2)">👍 Normal</button>
-      <button class="rb kolay" onclick="rateCard(3)">⚡ Kolay</button>
+      <button class="rb bilmiyorum" onclick="rateCard(0)">${s('review_btn_0')}</button>
+      <button class="rb zor" onclick="rateCard(1)">${s('review_btn_1')}</button>
+      <button class="rb normal" onclick="rateCard(2)">${s('review_btn_2')}</button>
+      <button class="rb kolay" onclick="rateCard(3)">${s('review_btn_3')}</button>
     </div>
     <div style="text-align:center;font-size:11px;color:#bbb;margin-top:6px;">${reviewIdx+1} / ${reviewQueue.length}</div>
   `;
@@ -2488,7 +2744,7 @@ function renderList(){
     return v.type===listFilter;
   });
   if(items.length===0){
-    document.getElementById('list-container').innerHTML='<div style="text-align:center;padding:40px;color:#bbb;">⭐<br><br>Henuz yildizlanan sozuk yok.</div>';
+    document.getElementById('list-container').innerHTML='<div style="text-align:center;padding:40px;color:#bbb;">'+s('list_empty')+'</div>';
     return;
   }
   document.getElementById('list-container').innerHTML = items.map(([k,v])=>{
@@ -2511,7 +2767,7 @@ function renderList(){
           <button class="abtn slow" data-speak="${esc(v.th||v.ro)}" data-slow="1">🐢</button>
         </div>
       </div>
-      ${hasBd ? `<button onclick='openGramModal(${JSON.stringify(v.th||"")},${JSON.stringify(v.tr||"")},${JSON.stringify(v.bd)})' style="margin-top:6px;background:none;border:1px solid #e0f2f1;border-radius:6px;padding:3px 10px;font-size:11px;color:#0d9488;cursor:pointer;">📖 Cümle Analizi</button>` : ''}
+      ${hasBd ? `<button onclick='openGramModal(${JSON.stringify(v.th||"")},${JSON.stringify(v.tr||"")},${JSON.stringify(v.bd)})' style="margin-top:6px;background:none;border:1px solid #e0f2f1;border-radius:6px;padding:3px 10px;font-size:11px;color:#0d9488;cursor:pointer;">${s('list_analysis')}</button>` : ''}
     </div>`;
   }).join('');
 }
@@ -2537,8 +2793,8 @@ function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.overlay').forEach(el=>{
   el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('open'); });
 });
-function saveGoogleTTSKey(){ localStorage.setItem('tayca_google_tts_key',document.getElementById('google-tts-key-input').value.trim()); GTTS.cache.clear(); loadVoiceList(); alert('Kaydedildi.'); }
-function saveKey(){ localStorage.setItem('tayca_api_key',document.getElementById('api-key-input').value); alert('Kaydedildi.'); }
+function saveGoogleTTSKey(){ localStorage.setItem('tayca_google_tts_key',document.getElementById('google-tts-key-input').value.trim()); GTTS.cache.clear(); loadVoiceList(); alert(appLang==='en'?'Saved.':'Kaydedildi.'); }
+function saveKey(){ localStorage.setItem('tayca_api_key',document.getElementById('api-key-input').value); alert(appLang==='en'?'Saved.':'Kaydedildi.'); }
 function saveGist(){
   localStorage.setItem('tayca_gist_token', document.getElementById('gist-token-input').value.trim());
   document.getElementById('gist-status').textContent = '✅ Token kaydedildi.';
@@ -2563,8 +2819,8 @@ function gistSetStatus(msg, color){
 
 async function gistPush(){
   const token = localStorage.getItem('tayca_gist_token');
-  if(!token){ alert('Önce Gist token kaydet.'); return; }
-  gistSetStatus('⏳ Yükleniyor...', '#888');
+  if(!token){ alert(appLang==='en'?'Save Gist token first.':'Önce Gist token kaydet.'); return; }
+  gistSetStatus('⏳ '+(appLang==='en'?'Uploading...':'Yükleniyor...'), '#888');
   try{
     const gistId = localStorage.getItem('tayca_gist_id');
     const url    = gistId ? `https://api.github.com/gists/${gistId}` : 'https://api.github.com/gists';
@@ -2573,23 +2829,23 @@ async function gistPush(){
       method,
       headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
       body: JSON.stringify({
-        description:'Tayca Ogren v3 - Kullanici Verisi',
+        description:'Tayca Ogren v3 - User Data',
         public: false,
         files:{ [GIST_FILENAME]:{ content: JSON.stringify(gistData(), null, 2) } }
       })
     });
     const data = await resp.json();
-    if(!data.id) throw new Error(data.message||'Bilinmeyen hata');
+    if(!data.id) throw new Error(data.message||(appLang==='en'?'Unknown error':'Bilinmeyen hata'));
     localStorage.setItem('tayca_gist_id', data.id);
-    const t = new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
-    gistSetStatus('✅ Buluta kaydedildi · '+t, '#059669');
-  } catch(e){ gistSetStatus('❌ Hata: '+e.message, '#dc2626'); }
+    const t = new Date().toLocaleTimeString(appLang==='en'?'en-US':'tr-TR',{hour:'2-digit',minute:'2-digit'});
+    gistSetStatus('✅ '+(appLang==='en'?'Saved to cloud · ':'Buluta kaydedildi · ')+t, '#059669');
+  } catch(e){ gistSetStatus('❌ '+(appLang==='en'?'Error: ':'Hata: ')+e.message, '#dc2626'); }
 }
 
 async function gistPull(){
   const token = localStorage.getItem('tayca_gist_token');
-  if(!token){ alert('Önce Gist token kaydet.'); return; }
-  gistSetStatus('⏳ Aranıyor...', '#888');
+  if(!token){ alert(appLang==='en'?'Save Gist token first.':'Önce Gist token kaydet.'); return; }
+  gistSetStatus('⏳ '+(appLang==='en'?'Searching...':'Aranıyor...'), '#888');
   try{
     // Gist ID varsa direkt al, yoksa listeden ara
     let gistId = localStorage.getItem('tayca_gist_id');
@@ -2598,7 +2854,7 @@ async function gistPull(){
         headers:{'Authorization':'Bearer '+token}
       }).then(r=>r.json());
       const found = list.find && list.find(g=>g.files&&g.files[GIST_FILENAME]);
-      if(!found) throw new Error('Bulutta veri bulunamadı. Önce bir cihazdan "Buluta Kaydet" yap.');
+      if(!found) throw new Error(appLang==='en'?'No cloud data found. First push from another device.':'Bulutta veri bulunamadı. Önce bir cihazdan "Buluta Kaydet" yap.');
       gistId = found.id;
       localStorage.setItem('tayca_gist_id', gistId);
     }
@@ -2607,15 +2863,14 @@ async function gistPull(){
     });
     const data = await resp.json();
     const raw = data.files?.[GIST_FILENAME]?.content;
-    if(!raw) throw new Error('Gist dosyası bulunamadı.');
+    if(!raw) throw new Error(appLang==='en'?'Gist file not found.':'Gist dosyası bulunamadı.');
     const payload = JSON.parse(raw);
     if(payload.tv3_star)     { localStorage.setItem('tv3_star',     payload.tv3_star);     starred = JSON.parse(payload.tv3_star); }
     if(payload.tv3_complete) { localStorage.setItem('tv3_complete', payload.tv3_complete); completedLessons = JSON.parse(payload.tv3_complete); }
     if(payload.tv3_srs)        localStorage.setItem('tv3_srs',      payload.tv3_srs);
     if(payload.tv3_stats)      localStorage.setItem('tv3_stats',    payload.tv3_stats);
-    const t = new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
-    const saved = payload.saved_at ? new Date(payload.saved_at).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '?';
-    gistSetStatus('✅ Alındı · Kaydedilme: '+saved, '#059669');
+    const saved = payload.saved_at ? new Date(payload.saved_at).toLocaleString(appLang==='en'?'en-US':'tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '?';
+    gistSetStatus('✅ '+(appLang==='en'?'Loaded · Saved: ':'Alındı · Kaydedilme: ')+saved, '#059669');
     renderLessonList();
     updateProgressBar();
     updateReviewBadge();
@@ -2647,12 +2902,12 @@ async function gistAutoSync(){
   } catch(e){ /* sessiz hata */ }
 }
 
-function exportData(){ navigator.clipboard.writeText(JSON.stringify({starred,visitedTabs})).then(()=>alert('Panoya kopyalandi.')); }
+function exportData(){ navigator.clipboard.writeText(JSON.stringify({starred,visitedTabs})).then(()=>alert(s('alert_backup'))); }
 
 // =================== ÇEVİRİ ===================
 async function initTranslateView(){
   const wrap = document.getElementById('translate-content');
-  wrap.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#0d9488;font-size:14px;">⏳ Yükleniyor...</div>';
+  wrap.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#0d9488;font-size:14px;">'+s('test_loading')+'</div>';
   const toLoad = LESSONS_META.filter(m=>m.hasContent && isCompleted(m.num)).map(m=>loadDers(m.num));
   await Promise.all(toLoad);
   renderTranslateView();
@@ -2663,20 +2918,20 @@ function renderTranslateView(){
   const hasApiKey = !!localStorage.getItem('tayca_api_key');
   wrap.innerHTML = `
     <div style="background:linear-gradient(135deg,#0d9488,#06b6d4);border-radius:14px;padding:16px 18px;margin-bottom:16px;color:white;">
-      <div style="font-size:16px;font-weight:700;">🌐 Çeviri</div>
-      <div style="font-size:12px;opacity:.8;margin-top:2px;">Türkçe veya Tayca yaz — önce derslerde arar, bulamazsa Claude çevirir</div>
+      <div style="font-size:16px;font-weight:700;">${s('nav_translate')}</div>
+      <div style="font-size:12px;opacity:.8;margin-top:2px;">${s('translate_tip')}</div>
     </div>
     <div style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:12px;margin-bottom:12px;">
-      <textarea id="translate-input" placeholder="Türkçe veya Tayca yaz..."
+      <textarea id="translate-input" placeholder="${s('translate_placeholder')}"
         style="width:100%;border:none;outline:none;font-size:15px;resize:none;min-height:72px;font-family:inherit;box-sizing:border-box;"
         oninput="translateDebounce()"
       ></textarea>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
         <span id="translate-lang-hint" style="font-size:11px;color:#aaa;"></span>
-        <button onclick="doTranslate()" style="background:#0d9488;color:white;border:none;border-radius:8px;padding:7px 18px;font-size:13px;font-weight:700;cursor:pointer;">🔍 Çevir</button>
+        <button onclick="doTranslate()" style="background:#0d9488;color:white;border:none;border-radius:8px;padding:7px 18px;font-size:13px;font-weight:700;cursor:pointer;">🔍 ${s('translate_btn')}</button>
       </div>
     </div>
-    ${!hasApiKey?'<div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:10px 12px;font-size:12px;color:#e65100;margin-bottom:12px;">⚠️ Claude çevirisi için ⚙️ Ayarlar\'dan Anthropic API Key ekle.</div>':''}
+    ${!hasApiKey?'<div style="background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:10px 12px;font-size:12px;color:#e65100;margin-bottom:12px;">⚠️ '+(appLang==="en"?"Add Anthropic API Key in ⚙️ Settings for Claude translation.":"Claude çevirisi için ⚙️ Ayarlar\'dan Anthropic API Key ekle.")+'</div>':''}
     <div id="translate-results"></div>
   `;
   document.getElementById('translate-input').focus();
@@ -2687,13 +2942,13 @@ function translateDebounce(){
   const q = document.getElementById('translate-input').value;
   const isThai = /[฀-๿]/.test(q);
   const hint = document.getElementById('translate-lang-hint');
-  if(hint) hint.textContent = q.trim() ? (isThai ? '🇹🇭 Tayca algılandı' : '🇹🇷 Türkçe algılandı') : '';
+  if(hint) hint.textContent = q.trim() ? (isThai ? '🇹🇭 '+(appLang==='en'?'Thai detected':'Tayca algılandı') : (appLang==='en'?'🌐 Text detected':'🌐 Metin algılandı')) : '';
   clearTimeout(_translateTimer);
   if(q.trim().length >= 2) _translateTimer = setTimeout(doTranslate, 800);
 }
 
 function searchLessons(q){
-  const norm = s => s.toLowerCase().replace(/\s+/g,' ').trim();
+  const norm = str => str.toLowerCase().replace(/\s+/g,' ').trim();
   const nq = norm(q);
   const isThai = /[฀-๿]/.test(q);
   const results = [];
@@ -2708,10 +2963,10 @@ function searchLessons(q){
         results.push({...item, _source: source, _score: nf===nq ? 2 : 1});
       }
     };
-    (L.words||[]).forEach(w=>{ check(w,'kelime'); (w.examples||[]).forEach(e=>check(e,'örnek')); });
-    (L.grammar||[]).forEach(g=>{ (g.examples||[]).forEach(e=>check(e,'gramer')); });
-    (L.speaking||[]).forEach(s=>check(s,'konuşma'));
-    (L.dialogues||[]).forEach(d=>{ (d.lines||[]).forEach(l=>check(l,'diyalog')); });
+    (L.words||[]).forEach(w=>{ check(w,'word'); (w.examples||[]).forEach(e=>check(e,'example')); });
+    (L.grammar||[]).forEach(g=>{ (g.examples||[]).forEach(e=>check(e,'grammar')); });
+    (L.speaking||[]).forEach(sp=>check(sp,'speaking'));
+    (L.dialogues||[]).forEach(d=>{ (d.lines||[]).forEach(l=>check(l,'dialogue')); });
   });
 
   return results.sort((a,b)=>b._score-a._score).slice(0,5);
@@ -2730,7 +2985,7 @@ async function doTranslate(){
   let html = '';
 
   if(hits.length > 0){
-    html += `<div style="font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">📚 Derslerde Bulundu</div>`;
+    html += `<div style="font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">📚 ${s('translate_lesson_matches')}</div>`;
     hits.forEach(h=>{
       const bdHtml = (h.bd||[]).map(p=>`<span style="display:inline-block;background:#f0fdf9;border:1px solid #b2dfdb;border-radius:4px;padding:2px 6px;font-size:10px;margin:2px;color:#0d9488;"><strong>${p.ro}</strong> = ${p.tr}</span>`).join('');
       html += `
@@ -2753,13 +3008,13 @@ async function doTranslate(){
   const apiKey = localStorage.getItem('tayca_api_key');
 
   // Google Translate — her zaman göster
-  html += `<div style="font-size:11px;font-weight:700;color:#4285f4;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">🌍 Google Translate</div>`;
-  html += `<div id="google-result" style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px;"><div style="color:#aaa;font-size:13px;">⏳ Çeviriliyor...</div></div>`;
+  html += `<div style="font-size:11px;font-weight:700;color:#4285f4;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">${s('translate_google')}</div>`;
+  html += `<div id="google-result" style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px;"><div style="color:#aaa;font-size:13px;">${s('translate_loading')}</div></div>`;
 
   // Claude — API key varsa ve tam eşleşme yoksa
   if(apiKey && !hasExact){
-    html += `<div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">🤖 Claude Çevirisi</div>`;
-    html += `<div id="claude-result" style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px;"><div style="color:#aaa;font-size:13px;">⏳ Çeviriliyor...</div></div>`;
+    html += `<div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">${s('translate_claude')}</div>`;
+    html += `<div id="claude-result" style="background:white;border:1.5px solid #e0e0e0;border-radius:12px;padding:14px;"><div style="color:#aaa;font-size:13px;">${s('translate_loading')}</div></div>`;
   }
 
   wrap.innerHTML = html;
@@ -2780,7 +3035,7 @@ async function googleTranslate(q, isThai){
     const roman = data[0]?.[0]?.[3] || '';
     const el = document.getElementById('google-result');
     if(!el) return;
-    if(!translated){ el.innerHTML = '<div style="color:#aaa;font-size:13px;">Çeviri alınamadı.</div>'; return; }
+    if(!translated){ el.innerHTML = '<div style="color:#aaa;font-size:13px;">'+s('translate_no_match')+'</div>'; return; }
     if(isThai){
       el.innerHTML = `<div style="font-size:15px;font-weight:600;color:#222;">${translated}</div>`;
     } else {
@@ -2799,9 +3054,13 @@ async function googleTranslate(q, isThai){
 
 async function claudeTranslate(q, isThai){
   const apiKey = localStorage.getItem('tayca_api_key');
-  const prompt = isThai
-    ? `Kullanıcı şu Tayca ifadeyi Türkçeye çevirmek istiyor: "${q}"\n\nŞu formatta cevap ver (başka hiçbir şey yazma):\nTürkçe: ...\nRomanizasyon: ...\nAçıklama: ...`
-    : `Kullanıcı şu Türkçe ifadeyi Taycaya çevirmek istiyor: "${q}"\n\nŞu formatta cevap ver (başka hiçbir şey yazma):\nTayca: ...\nRomanizasyon: ...\nTürkçe: ...\nAçıklama: ...`;
+  const prompt = appLang==='en'
+    ? (isThai
+      ? `Translate this Thai phrase to English: "${q}"\n\nRespond ONLY in this format:\nEnglish: ...\nRomanization: ...\nNote: ...`
+      : `Translate this English phrase to Thai: "${q}"\n\nRespond ONLY in this format:\nThai: ...\nRomanization: ...\nEnglish: ...\nNote: ...`)
+    : (isThai
+      ? `Kullanıcı şu Tayca ifadeyi Türkçeye çevirmek istiyor: "${q}"\n\nŞu formatta cevap ver (başka hiçbir şey yazma):\nTürkçe: ...\nRomanizasyon: ...\nAçıklama: ...`
+      : `Kullanıcı şu Türkçe ifadeyi Taycaya çevirmek istiyor: "${q}"\n\nŞu formatta cevap ver (başka hiçbir şey yazma):\nTayca: ...\nRomanizasyon: ...\nTürkçe: ...\nAçıklama: ...`);
   try{
     const resp = await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
@@ -2809,12 +3068,12 @@ async function claudeTranslate(q, isThai){
       body:JSON.stringify({
         model:'claude-haiku-4-5-20251001',
         max_tokens:300,
-        system:'Sen bir Tayca öğretmenisin. Kısa, net ve öğretici cevaplar ver. Türk kullanıcılar için Tayca öğretiyorsun.',
+        system: appLang==='en' ? 'You are a Thai language teacher. Give short, clear, instructive answers for English-speaking learners.' : 'Sen bir Tayca öğretmenisin. Kısa, net ve öğretici cevaplar ver. Türk kullanıcılar için Tayca öğretiyorsun.',
         messages:[{role:'user',content:prompt}]
       })
     });
     const data = await resp.json();
-    const text = data.content?.[0]?.text || 'Çeviri alınamadı.';
+    const text = data.content?.[0]?.text || s('translate_no_match');
     const el = document.getElementById('claude-result');
     if(!el) return;
     // Satırları parse et
@@ -2824,12 +3083,12 @@ async function claudeTranslate(q, isThai){
       const [label,...rest] = line.split(':');
       const val = rest.join(':').trim();
       if(!val) return;
-      if(label.includes('Tayca')){
+      if(label.includes('Tayca')||label.includes('Thai')){
         out += `<div style="font-family:'Noto Sans Thai',sans-serif;font-size:22px;font-weight:700;color:#0d9488;margin-bottom:4px;">${val}
           <button onclick="speak('${val.replace(/'/g,'&#39;')}',false,'m')" style="background:none;border:1px solid #e0e0e0;border-radius:20px;padding:3px 10px;font-size:11px;color:#888;cursor:pointer;margin-left:8px;">🔊</button></div>`;
-      } else if(label.includes('Romanizasyon')){
+      } else if(label.includes('Romaniz')||label.includes('Roman')){
         out += `<div style="font-size:13px;color:#888;font-style:italic;margin-bottom:4px;">${val}</div>`;
-      } else if(label.includes('Türkçe')){
+      } else if(label.includes('Türkçe')||label.includes('English')){
         out += `<div style="font-size:15px;font-weight:600;color:#222;margin-bottom:6px;">${val}</div>`;
       } else {
         out += `<div style="font-size:12px;color:#666;border-top:1px solid #f0f0f0;padding-top:8px;margin-top:4px;">${line}</div>`;
@@ -2838,7 +3097,7 @@ async function claudeTranslate(q, isThai){
     el.innerHTML = out || text;
   } catch(e){
     const el = document.getElementById('claude-result');
-    if(el) el.innerHTML = `<div style="color:#dc2626;font-size:13px;">❌ Hata: ${e.message}</div>`;
+    if(el) el.innerHTML = `<div style="color:#dc2626;font-size:13px;">❌ ${appLang==='en'?'Error:':'Hata:'} ${e.message}</div>`;
   }
 }
 
@@ -2849,12 +3108,12 @@ function loadVoiceList(){
   if(hasKey){
     html = '<div style="font-size:12px;color:#059669;margin-bottom:8px;">✅ Google Cloud TTS (Chirp3-HD)</div>';
     html += '<div style="color:#059669;padding:8px;background:#ecfdf5;border-radius:6px;font-size:12px;">';
-    html += '🔵 <strong>Orus</strong> — Erkek sesi (Ali)<br>';
-    html += '🔴 <strong>Aoede</strong> — Kadın sesi (Nada)';
+    html += '🔵 <strong>Orus</strong> — '+(appLang==='en'?'Male voice':'Erkek sesi')+' (Ali)<br>';
+    html += '🔴 <strong>Aoede</strong> — '+(appLang==='en'?'Female voice':'Kadın sesi')+' (Nada)';
     html += '</div>';
   } else {
-    html = '<div style="font-size:12px;color:#e65100;margin-bottom:8px;">⚠️ Google TTS key yok — Web Speech API kullanılıyor</div>';
-    html += '<div style="color:#666;padding:8px;background:#fff3e0;border-radius:6px;font-size:12px;">Kaliteli ses için yukarıya Google TTS API Key girin.</div>';
+    html = '<div style="font-size:12px;color:#e65100;margin-bottom:8px;">⚠️ '+(appLang==='en'?'No Google TTS key — using Web Speech API':'Google TTS key yok — Web Speech API kullanılıyor')+'</div>';
+    html += '<div style="color:#666;padding:8px;background:#fff3e0;border-radius:6px;font-size:12px;">'+(appLang==='en'?'Enter a Google TTS API Key above for high-quality audio.':'Kaliteli ses için yukarıya Google TTS API Key girin.')+'</div>';
   }
   document.getElementById('voice-list').innerHTML = html;
   document.getElementById('test-voice-controls').style.display = 'block';
@@ -2873,6 +3132,9 @@ function testVoices(){
 }
 
 // =================== INIT ===================
+// Apply saved language to all data-lk elements and lang-btn states
+document.querySelectorAll('[data-lk]').forEach(el=>{ el.textContent=s(el.dataset.lk); });
+document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===appLang));
 renderLessonList();
 updateReviewBadge();
 updateProgressBar();
