@@ -293,7 +293,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.34';
+const APP_VERSION = 'v3.35';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -563,7 +563,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.32</span>
+  <span class="vbadge" id="app-version">v3.35</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1044,7 +1044,7 @@ async function loadDers(num){
   if(_lessonLoading[num]) return _lessonLoading[num]; // yükleniyor
   _lessonLoading[num] = new Promise((resolve, reject)=>{
     const script = document.createElement('script');
-    script.src = `ders${num}.js?v=v3.32`;
+    script.src = `ders${num}.js?v=${APP_VERSION}`;
     script.onload = ()=>{ resolve(); delete _lessonLoading[num]; };
     script.onerror = ()=>{ reject(new Error('Ders '+num+' yüklenemedi')); };
     document.head.appendChild(script);
@@ -1369,10 +1369,15 @@ function getTabLabels(){
 async function openLesson(num){
   const meta = LESSONS_META.find(m=>m.num===num);
   if(!meta) return;
+  try {
   // Dersi yükle (yoksa)
   await loadDers(num);
   const lessonData = LESSONS[num];
-  if(!lessonData) return;
+  if(!lessonData){
+    switchView('detail', null);
+    document.getElementById('detail-content').innerHTML = '<div style="padding:20px;color:red;font-size:13px;">⚠️ Ders '+num+' verisi yüklenemedi (LESSONS['+num+'] tanımsız). Sayfayı yenileyip tekrar deneyin.</div>';
+    return;
+  }
   currentLesson = meta;
   // Skor sıfırla (yeni oturum)
   const st = getStats(num);
@@ -1407,6 +1412,10 @@ async function openLesson(num){
   const firstTab = getTabsForLesson(meta)[0];
   switchLessonTab(firstTab);
   startLessonTimer(num);
+  } catch(err) {
+    switchView('detail', null);
+    document.getElementById('detail-content').innerHTML = '<div style="padding:20px;color:red;font-size:13px;">⚠️ Ders '+num+' yüklenirken hata: '+err.message+'<br><small>'+err.stack+'</small></div>';
+  }
 }
 
 function closeLessonDetail(){
