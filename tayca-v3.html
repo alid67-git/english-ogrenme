@@ -293,7 +293,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.35';
+const APP_VERSION = 'v3.36';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -563,7 +563,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.35</span>
+  <span class="vbadge" id="app-version">v3.36</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1590,7 +1590,7 @@ function buildLessonHTML(L, meta){
       <div class="diff-badge ${l.diff}">${l.diff==='easy'?s('listen_easy'):l.diff==='medium'?s('listen_medium'):s('listen_hard')}</div>
       <button class="play-big" data-speak="${esc(l.th)}" data-slow="0">${s('listen_play_btn')}</button>
       <div class="listen-q">${Lf(l,'q')||l.q}</div>
-      <div id="lo-${i}">${l.opts.map((o,j)=>`<div class="opt" onclick="checkListen(${i},${j},${l.c})">${o}</div>`).join('')}</div>
+      <div id="lo-${i}">${(l.opts||[]).map((o,j)=>`<div class="opt" onclick="checkListen(${i},${j},${l.c})">${o}</div>`).join('')}</div>
       <div id="lf-${i}"></div>
     </div>`).join('');
 
@@ -1620,8 +1620,8 @@ function buildLessonHTML(L, meta){
 
   const quiz = L.quiz.map((q,i)=>`
     <div class="listen-card">
-      <div class="listen-q">${i+1}. ${q.q}</div>
-      <div id="qo-${i}">${q.opts.map((o,j)=>`<div class="opt" onclick="checkQuiz(${i},${j},${q.c})">${o}</div>`).join('')}</div>
+      <div class="listen-q">${i+1}. ${q.q||q.question||''}</div>
+      <div id="qo-${i}">${(q.opts||q.options||[]).map((o,j)=>`<div class="opt" onclick="checkQuiz(${i},${j},${q.c})">${o}</div>`).join('')}</div>
       <div id="qf-${i}"></div>
     </div>`).join('') + completeBtnHtml;
 
