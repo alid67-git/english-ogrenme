@@ -293,7 +293,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.37';
+const APP_VERSION = 'v3.39';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -563,7 +563,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.37</span>
+  <span class="vbadge" id="app-version">v3.39</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -893,7 +893,7 @@ function setLang(lang){
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.37</div>
+            <div class="changelog-ver">v3.39</div>
             <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
           </div>
           <div class="changelog-item">
@@ -1037,35 +1037,35 @@ const LESSONS_META = [
   {num:18,emoji:'📱', title:'LINE ve Telefon', title_en:'LINE & Phone', hasContent:true, hasTones:false},
   {num:19,emoji:'🌴', title:'Phuket Tam Gün Simülasyonu', title_en:'Phuket Full Day Simulation', hasContent:true, hasTones:false},
   // ── CORE 2000 Kelime Hazinesi (PDF) ──
-  {num:20,emoji:'📖', title:'CORE 2000 — #1-72 (Temel)', title_en:'CORE 2000 #1-72', hasContent:true, hasTones:false},
-  {num:21,emoji:'📖', title:'CORE 2000 — #73-145', title_en:'CORE 2000 #73-145', hasContent:true, hasTones:false},
-  {num:22,emoji:'📖', title:'CORE 2000 — #147-228', title_en:'CORE 2000 #147-228', hasContent:true, hasTones:false},
-  {num:23,emoji:'📖', title:'CORE 2000 — #229-300', title_en:'CORE 2000 #229-300', hasContent:true, hasTones:false},
-  {num:24,emoji:'📖', title:'CORE 2000 — #301-367', title_en:'CORE 2000 #301-367', hasContent:true, hasTones:false},
-  {num:25,emoji:'📖', title:'CORE 2000 — #368-434', title_en:'CORE 2000 #368-434', hasContent:true, hasTones:false},
-  {num:26,emoji:'📖', title:'CORE 2000 — #435-512', title_en:'CORE 2000 #435-512', hasContent:true, hasTones:false},
-  {num:27,emoji:'📖', title:'CORE 2000 — #513-577', title_en:'CORE 2000 #513-577', hasContent:true, hasTones:false},
-  {num:28,emoji:'📖', title:'CORE 2000 — #578-643', title_en:'CORE 2000 #578-643', hasContent:true, hasTones:false},
-  {num:29,emoji:'📖', title:'CORE 2000 — #644-710', title_en:'CORE 2000 #644-710', hasContent:true, hasTones:false},
-  {num:30,emoji:'📖', title:'CORE 2000 — #712-772', title_en:'CORE 2000 #712-772', hasContent:true, hasTones:false},
-  {num:31,emoji:'📖', title:'CORE 2000 — #773-837', title_en:'CORE 2000 #773-837', hasContent:true, hasTones:false},
-  {num:32,emoji:'📖', title:'CORE 2000 — #838-895', title_en:'CORE 2000 #838-895', hasContent:true, hasTones:false},
-  {num:33,emoji:'📖', title:'CORE 2000 — #896-954', title_en:'CORE 2000 #896-954', hasContent:true, hasTones:false},
-  {num:34,emoji:'📖', title:'CORE 2000 — #958-1035', title_en:'CORE 2000 #958-1035', hasContent:true, hasTones:false},
-  {num:35,emoji:'📖', title:'CORE 2000 — #1036-1105', title_en:'CORE 2000 #1036-1105', hasContent:true, hasTones:false},
-  {num:36,emoji:'📖', title:'CORE 2000 — #1108-1167', title_en:'CORE 2000 #1108-1167', hasContent:true, hasTones:false},
-  {num:37,emoji:'📖', title:'CORE 2000 — #1168-1244', title_en:'CORE 2000 #1168-1244', hasContent:true, hasTones:false},
-  {num:38,emoji:'📖', title:'CORE 2000 — #1246-1325', title_en:'CORE 2000 #1246-1325', hasContent:true, hasTones:false},
-  {num:39,emoji:'📖', title:'CORE 2000 — #1327-1389', title_en:'CORE 2000 #1327-1389', hasContent:true, hasTones:false},
-  {num:40,emoji:'📖', title:'CORE 2000 — #1390-1451', title_en:'CORE 2000 #1390-1451', hasContent:true, hasTones:false},
-  {num:41,emoji:'📖', title:'CORE 2000 — #1452-1536', title_en:'CORE 2000 #1452-1536', hasContent:true, hasTones:false},
-  {num:42,emoji:'📖', title:'CORE 2000 — #1537-1597', title_en:'CORE 2000 #1537-1597', hasContent:true, hasTones:false},
-  {num:43,emoji:'📖', title:'CORE 2000 — #1598-1663', title_en:'CORE 2000 #1598-1663', hasContent:true, hasTones:false},
-  {num:44,emoji:'📖', title:'CORE 2000 — #1665-1742', title_en:'CORE 2000 #1665-1742', hasContent:true, hasTones:false},
-  {num:45,emoji:'📖', title:'CORE 2000 — #1743-1819', title_en:'CORE 2000 #1743-1819', hasContent:true, hasTones:false},
-  {num:46,emoji:'📖', title:'CORE 2000 — #1822-1888', title_en:'CORE 2000 #1822-1888', hasContent:true, hasTones:false},
-  {num:47,emoji:'📖', title:'CORE 2000 — #1889-1951', title_en:'CORE 2000 #1889-1951', hasContent:true, hasTones:false},
-  {num:48,emoji:'📖', title:'CORE 2000 — #1952-2000', title_en:'CORE 2000 #1952-2000', hasContent:true, hasTones:false},
+  {num:20,emoji:'🙏', title:'Temel İfadeler & Selamlaşma', title_en:'Basic Phrases & Greetings', hasContent:true, hasTones:false},
+  {num:21,emoji:'👷', title:'Meslekler & Vücut Bölümleri', title_en:'Professions & Body Parts', hasContent:true, hasTones:false},
+  {num:22,emoji:'😊', title:'Duygular, Giyim & Eylemler', title_en:'Emotions, Clothing & Actions', hasContent:true, hasTones:false},
+  {num:23,emoji:'📱', title:'Günlük Araçlar & Sayılar', title_en:'Daily Objects & Numbers', hasContent:true, hasTones:false},
+  {num:24,emoji:'💼', title:'İş & Teknoloji', title_en:'Business & Technology', hasContent:true, hasTones:false},
+  {num:25,emoji:'🎓', title:'Eğitim & Sanat', title_en:'Education & Arts', hasContent:true, hasTones:false},
+  {num:26,emoji:'🔢', title:'Sıra Sayıları & Duygular', title_en:'Ordinals & Emotions', hasContent:true, hasTones:false},
+  {num:27,emoji:'⛅', title:'Hava Durumu & Spor', title_en:'Weather & Sports', hasContent:true, hasTones:false},
+  {num:28,emoji:'🍽️', title:'Para & Restoran', title_en:'Money & Restaurant', hasContent:true, hasTones:false},
+  {num:29,emoji:'🌍', title:'Ülkeler & Şehirler', title_en:'Countries & Cities', hasContent:true, hasTones:false},
+  {num:30,emoji:'🏨', title:'Otel & Renkler', title_en:'Hotel & Colors', hasContent:true, hasTones:false},
+  {num:31,emoji:'🍉', title:'Meyve, Sebze & Sıfatlar', title_en:'Fruits, Vegetables & Adjectives', hasContent:true, hasTones:false},
+  {num:32,emoji:'🎹', title:'Meslekler & Müzik Aletleri', title_en:'Professions & Musical Instruments', hasContent:true, hasTones:false},
+  {num:33,emoji:'🚴', title:'Spor & Seyahat', title_en:'Sports & Travel', hasContent:true, hasTones:false},
+  {num:34,emoji:'🤝', title:'İş Toplantısı & Müzakere', title_en:'Business Meetings & Negotiation', hasContent:true, hasTones:false},
+  {num:35,emoji:'👗', title:'Giyim & Kozmetik', title_en:'Clothing & Cosmetics', hasContent:true, hasTones:false},
+  {num:36,emoji:'❓', title:'Soru Kelimeleri & Özellikler', title_en:'Question Words & Properties', hasContent:true, hasTones:false},
+  {num:37,emoji:'🌩️', title:'Hava Olayları & Doğa', title_en:'Weather Phenomena & Nature', hasContent:true, hasTones:false},
+  {num:38,emoji:'🥩', title:'Yemek & Mutfak', title_en:'Food & Kitchen', hasContent:true, hasTones:false},
+  {num:39,emoji:'🪞', title:'Görünüm & Beden', title_en:'Appearance & Body', hasContent:true, hasTones:false},
+  {num:40,emoji:'💊', title:'Sağlık & Ev Eşyaları', title_en:'Health & Home Furniture', hasContent:true, hasTones:false},
+  {num:41,emoji:'🏙️', title:'Şehir & Yapılar', title_en:'City & Buildings', hasContent:true, hasTones:false},
+  {num:42,emoji:'⚡', title:'Ekonomi & Teknoloji', title_en:'Economy & Technology', hasContent:true, hasTones:false},
+  {num:43,emoji:'🏠', title:'Ev & Okul Hayatı', title_en:'Home & School Life', hasContent:true, hasTones:false},
+  {num:44,emoji:'✈️', title:'Seyahat & İletişim', title_en:'Travel & Communication', hasContent:true, hasTones:false},
+  {num:45,emoji:'🏊', title:'Eylemler & Aktiviteler', title_en:'Actions & Activities', hasContent:true, hasTones:false},
+  {num:46,emoji:'🕷️', title:'Trafik, Hayvanlar & Doğa', title_en:'Traffic, Animals & Nature', hasContent:true, hasTones:false},
+  {num:47,emoji:'🎬', title:'Seyahat & Medya', title_en:'Travel & Media', hasContent:true, hasTones:false},
+  {num:48,emoji:'🌐', title:'Diller & Çeşitli Kelimeler', title_en:'Languages & Miscellaneous', hasContent:true, hasTones:false},
 ];
 
 // =================== DERS VERİLERİ (lazy load) ===================
@@ -1661,7 +1661,17 @@ function buildLessonHTML(L, meta){
         </div>`}
     </div>`;
 
-  const quiz = (L.quiz||[]).map((q,i)=>`
+  let quizSrc = L.quiz||[];
+  if(quizSrc.length===0 && meta.num>=20){
+    const wds = (L.words||[]).filter(w=>w.ro&&w.tr);
+    const pick = wds.length>15 ? wds.filter((_,i)=>i%Math.floor(wds.length/15)===0).slice(0,15) : wds;
+    quizSrc = pick.map(w=>{
+      const wrong = wds.filter(x=>x.id!==w.id).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.tr);
+      const opts = [w.tr,...wrong].sort(()=>Math.random()-0.5);
+      return {q:`"${w.ro}" — ne anlama gelir?`, opts, c:opts.indexOf(w.tr)};
+    });
+  }
+  const quiz = quizSrc.map((q,i)=>`
     <div class="listen-card">
       <div class="listen-q">${i+1}. ${q.q||q.question||''}</div>
       <div id="qo-${i}">${(q.opts||q.options||[]).map((o,j)=>`<div class="opt" onclick="checkQuiz(${i},${j},${q.c})">${o}</div>`).join('')}</div>
@@ -2606,9 +2616,9 @@ const SRS = {
     let added = 0;
     const today = this.today();
     const mk = (id, th, ro, tr, type, bd) => {
-      if(!th||!ro||!tr) return;
+      if((!th&&!ro)||!tr) return;
       if(db[id]) return;
-      db[id] = {id, lessonNum:num, th, ro, tr, type, bd:bd||[], reps:0, interval:1, easeFactor:2.5, dueDate:today, lapses:0};
+      db[id] = {id, lessonNum:num, th:th||ro, ro, tr, type, bd:bd||[], reps:0, interval:1, easeFactor:2.5, dueDate:today, lapses:0};
       added++;
     };
     (L.words||[]).forEach(w=>{
