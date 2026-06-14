@@ -112,6 +112,7 @@ main{padding:14px;}
 .ltab .done-dot{display:none;}
 .lcontent{display:none;}
 .lcontent.active{display:block;}
+.lang-btn{background:#e0e0e0!important;color:#555!important;border:2px solid #ccc!important;}
 .lang-btn.active{background:#0d9488!important;color:white!important;border-color:#0d9488!important;}
 .tab-timer-wrap{background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:10px;padding:8px 12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
 .tab-timer-track{flex:1;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden;}
@@ -425,6 +426,9 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
   .htab{color:#555;}
   .htab.active{color:#0d9488;}
 
+  .lang-btn{background:#333!important;color:#aaa!important;border-color:#444!important;}
+  .lang-btn.active{background:#0d9488!important;color:white!important;border-color:#0d9488!important;}
+
   /* Bonus header */
   .bonus-header{background:linear-gradient(135deg,#0e2420,#0a1e1a);border-color:#0d9488;}
   .bonus-sub{color:#666;}
@@ -457,7 +461,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.45';
+const APP_VERSION = 'v3.46';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -727,7 +731,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.45</span>
+  <span class="vbadge" id="app-version">v3.46</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1057,7 +1061,7 @@ function setLang(lang){
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.45</div>
+            <div class="changelog-ver">v3.46</div>
             <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
           </div>
           <div class="changelog-item">
