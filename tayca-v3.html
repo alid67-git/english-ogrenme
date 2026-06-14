@@ -293,7 +293,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.39';
+const APP_VERSION = 'v3.40';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -563,7 +563,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.39</span>
+  <span class="vbadge" id="app-version">v3.40</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -893,7 +893,7 @@ function setLang(lang){
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.39</div>
+            <div class="changelog-ver">v3.40</div>
             <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
           </div>
           <div class="changelog-item">
@@ -1037,35 +1037,35 @@ const LESSONS_META = [
   {num:18,emoji:'📱', title:'LINE ve Telefon', title_en:'LINE & Phone', hasContent:true, hasTones:false},
   {num:19,emoji:'🌴', title:'Phuket Tam Gün Simülasyonu', title_en:'Phuket Full Day Simulation', hasContent:true, hasTones:false},
   // ── CORE 2000 Kelime Hazinesi (PDF) ──
-  {num:20,emoji:'🙏', title:'Temel İfadeler & Selamlaşma', title_en:'Basic Phrases & Greetings', hasContent:true, hasTones:false},
-  {num:21,emoji:'👷', title:'Meslekler & Vücut Bölümleri', title_en:'Professions & Body Parts', hasContent:true, hasTones:false},
-  {num:22,emoji:'😊', title:'Duygular, Giyim & Eylemler', title_en:'Emotions, Clothing & Actions', hasContent:true, hasTones:false},
-  {num:23,emoji:'📱', title:'Günlük Araçlar & Sayılar', title_en:'Daily Objects & Numbers', hasContent:true, hasTones:false},
-  {num:24,emoji:'💼', title:'İş & Teknoloji', title_en:'Business & Technology', hasContent:true, hasTones:false},
-  {num:25,emoji:'🎓', title:'Eğitim & Sanat', title_en:'Education & Arts', hasContent:true, hasTones:false},
-  {num:26,emoji:'🔢', title:'Sıra Sayıları & Duygular', title_en:'Ordinals & Emotions', hasContent:true, hasTones:false},
-  {num:27,emoji:'⛅', title:'Hava Durumu & Spor', title_en:'Weather & Sports', hasContent:true, hasTones:false},
-  {num:28,emoji:'🍽️', title:'Para & Restoran', title_en:'Money & Restaurant', hasContent:true, hasTones:false},
-  {num:29,emoji:'🌍', title:'Ülkeler & Şehirler', title_en:'Countries & Cities', hasContent:true, hasTones:false},
-  {num:30,emoji:'🏨', title:'Otel & Renkler', title_en:'Hotel & Colors', hasContent:true, hasTones:false},
-  {num:31,emoji:'🍉', title:'Meyve, Sebze & Sıfatlar', title_en:'Fruits, Vegetables & Adjectives', hasContent:true, hasTones:false},
-  {num:32,emoji:'🎹', title:'Meslekler & Müzik Aletleri', title_en:'Professions & Musical Instruments', hasContent:true, hasTones:false},
-  {num:33,emoji:'🚴', title:'Spor & Seyahat', title_en:'Sports & Travel', hasContent:true, hasTones:false},
-  {num:34,emoji:'🤝', title:'İş Toplantısı & Müzakere', title_en:'Business Meetings & Negotiation', hasContent:true, hasTones:false},
-  {num:35,emoji:'👗', title:'Giyim & Kozmetik', title_en:'Clothing & Cosmetics', hasContent:true, hasTones:false},
-  {num:36,emoji:'❓', title:'Soru Kelimeleri & Özellikler', title_en:'Question Words & Properties', hasContent:true, hasTones:false},
-  {num:37,emoji:'🌩️', title:'Hava Olayları & Doğa', title_en:'Weather Phenomena & Nature', hasContent:true, hasTones:false},
-  {num:38,emoji:'🥩', title:'Yemek & Mutfak', title_en:'Food & Kitchen', hasContent:true, hasTones:false},
-  {num:39,emoji:'🪞', title:'Görünüm & Beden', title_en:'Appearance & Body', hasContent:true, hasTones:false},
-  {num:40,emoji:'💊', title:'Sağlık & Ev Eşyaları', title_en:'Health & Home Furniture', hasContent:true, hasTones:false},
-  {num:41,emoji:'🏙️', title:'Şehir & Yapılar', title_en:'City & Buildings', hasContent:true, hasTones:false},
-  {num:42,emoji:'⚡', title:'Ekonomi & Teknoloji', title_en:'Economy & Technology', hasContent:true, hasTones:false},
-  {num:43,emoji:'🏠', title:'Ev & Okul Hayatı', title_en:'Home & School Life', hasContent:true, hasTones:false},
-  {num:44,emoji:'✈️', title:'Seyahat & İletişim', title_en:'Travel & Communication', hasContent:true, hasTones:false},
-  {num:45,emoji:'🏊', title:'Eylemler & Aktiviteler', title_en:'Actions & Activities', hasContent:true, hasTones:false},
-  {num:46,emoji:'🕷️', title:'Trafik, Hayvanlar & Doğa', title_en:'Traffic, Animals & Nature', hasContent:true, hasTones:false},
-  {num:47,emoji:'🎬', title:'Seyahat & Medya', title_en:'Travel & Media', hasContent:true, hasTones:false},
-  {num:48,emoji:'🌐', title:'Diller & Çeşitli Kelimeler', title_en:'Languages & Miscellaneous', hasContent:true, hasTones:false},
+  {num:20,emoji:'🙏', title:'Kelimeler 1 — Temel İfadeler & Selamlaşma', title_en:'Vocab 1 — Basic Phrases & Greetings', hasContent:true, hasTones:false},
+  {num:21,emoji:'👷', title:'Kelimeler 2 — Meslekler & Vücut Bölümleri', title_en:'Vocab 2 — Professions & Body Parts', hasContent:true, hasTones:false},
+  {num:22,emoji:'😊', title:'Kelimeler 3 — Duygular, Giyim & Eylemler', title_en:'Vocab 3 — Emotions, Clothing & Actions', hasContent:true, hasTones:false},
+  {num:23,emoji:'📱', title:'Kelimeler 4 — Günlük Araçlar & Sayılar', title_en:'Vocab 4 — Daily Objects & Numbers', hasContent:true, hasTones:false},
+  {num:24,emoji:'💼', title:'Kelimeler 5 — İş & Teknoloji', title_en:'Vocab 5 — Business & Technology', hasContent:true, hasTones:false},
+  {num:25,emoji:'🎓', title:'Kelimeler 6 — Eğitim & Sanat', title_en:'Vocab 6 — Education & Arts', hasContent:true, hasTones:false},
+  {num:26,emoji:'🔢', title:'Kelimeler 7 — Sıra Sayıları & Duygular', title_en:'Vocab 7 — Ordinals & Emotions', hasContent:true, hasTones:false},
+  {num:27,emoji:'⛅', title:'Kelimeler 8 — Hava Durumu & Spor', title_en:'Vocab 8 — Weather & Sports', hasContent:true, hasTones:false},
+  {num:28,emoji:'🍽️', title:'Kelimeler 9 — Para & Restoran', title_en:'Vocab 9 — Money & Restaurant', hasContent:true, hasTones:false},
+  {num:29,emoji:'🌍', title:'Kelimeler 10 — Ülkeler & Şehirler', title_en:'Vocab 10 — Countries & Cities', hasContent:true, hasTones:false},
+  {num:30,emoji:'🏨', title:'Kelimeler 11 — Otel & Renkler', title_en:'Vocab 11 — Hotel & Colors', hasContent:true, hasTones:false},
+  {num:31,emoji:'🍉', title:'Kelimeler 12 — Meyve, Sebze & Sıfatlar', title_en:'Vocab 12 — Fruits, Vegetables & Adjectives', hasContent:true, hasTones:false},
+  {num:32,emoji:'🎹', title:'Kelimeler 13 — Meslekler & Müzik Aletleri', title_en:'Vocab 13 — Professions & Musical Instruments', hasContent:true, hasTones:false},
+  {num:33,emoji:'🚴', title:'Kelimeler 14 — Spor & Seyahat', title_en:'Vocab 14 — Sports & Travel', hasContent:true, hasTones:false},
+  {num:34,emoji:'🤝', title:'Kelimeler 15 — İş Toplantısı & Müzakere', title_en:'Vocab 15 — Business Meetings & Negotiation', hasContent:true, hasTones:false},
+  {num:35,emoji:'👗', title:'Kelimeler 16 — Giyim & Kozmetik', title_en:'Vocab 16 — Clothing & Cosmetics', hasContent:true, hasTones:false},
+  {num:36,emoji:'❓', title:'Kelimeler 17 — Soru Kelimeleri & Özellikler', title_en:'Vocab 17 — Question Words & Properties', hasContent:true, hasTones:false},
+  {num:37,emoji:'🌩️', title:'Kelimeler 18 — Hava Olayları & Doğa', title_en:'Vocab 18 — Weather Phenomena & Nature', hasContent:true, hasTones:false},
+  {num:38,emoji:'🥩', title:'Kelimeler 19 — Yemek & Mutfak', title_en:'Vocab 19 — Food & Kitchen', hasContent:true, hasTones:false},
+  {num:39,emoji:'🪞', title:'Kelimeler 20 — Görünüm & Beden', title_en:'Vocab 20 — Appearance & Body', hasContent:true, hasTones:false},
+  {num:40,emoji:'💊', title:'Kelimeler 21 — Sağlık & Ev Eşyaları', title_en:'Vocab 21 — Health & Home Furniture', hasContent:true, hasTones:false},
+  {num:41,emoji:'🏙️', title:'Kelimeler 22 — Şehir & Yapılar', title_en:'Vocab 22 — City & Buildings', hasContent:true, hasTones:false},
+  {num:42,emoji:'⚡', title:'Kelimeler 23 — Ekonomi & Teknoloji', title_en:'Vocab 23 — Economy & Technology', hasContent:true, hasTones:false},
+  {num:43,emoji:'🏠', title:'Kelimeler 24 — Ev & Okul Hayatı', title_en:'Vocab 24 — Home & School Life', hasContent:true, hasTones:false},
+  {num:44,emoji:'✈️', title:'Kelimeler 25 — Seyahat & İletişim', title_en:'Vocab 25 — Travel & Communication', hasContent:true, hasTones:false},
+  {num:45,emoji:'🏊', title:'Kelimeler 26 — Eylemler & Aktiviteler', title_en:'Vocab 26 — Actions & Activities', hasContent:true, hasTones:false},
+  {num:46,emoji:'🕷️', title:'Kelimeler 27 — Trafik, Hayvanlar & Doğa', title_en:'Vocab 27 — Traffic, Animals & Nature', hasContent:true, hasTones:false},
+  {num:47,emoji:'🎬', title:'Kelimeler 28 — Seyahat & Medya', title_en:'Vocab 28 — Travel & Media', hasContent:true, hasTones:false},
+  {num:48,emoji:'🌐', title:'Kelimeler 29 — Diller & Çeşitli Kelimeler', title_en:'Vocab 29 — Languages & Miscellaneous', hasContent:true, hasTones:false},
 ];
 
 // =================== DERS VERİLERİ (lazy load) ===================
