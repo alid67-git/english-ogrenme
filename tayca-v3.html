@@ -285,6 +285,17 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .lesson-srs-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid #f5f5f5;margin-top:8px;}
 .srs-add-btn{padding:5px 10px;background:#0d9488;color:white;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
 
+/* BONUS ACCORDION */
+.bonus-header{background:linear-gradient(135deg,#f0fdf9,#e0f2f1);border:2px solid #0d9488;border-radius:12px;padding:14px 16px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:.15s;}
+.bonus-header:hover{box-shadow:0 3px 10px rgba(13,148,136,.2);}
+.bonus-star{font-size:26px;}
+.bonus-info{flex:1;}
+.bonus-title{font-weight:800;font-size:14px;color:#0d9488;}
+.bonus-sub{font-size:11px;color:#888;margin-top:2px;}
+.bonus-toggle{font-size:18px;color:#0d9488;font-weight:700;}
+.bonus-lesson{margin-left:14px;border-left:3px solid #b2dfdb;}
+.ex-gram-btn{display:inline-block;margin-top:6px;padding:4px 10px;background:#f0fdf9;border:1px solid #b2dfdb;border-radius:6px;font-size:11px;font-weight:700;color:#0d9488;cursor:pointer;}
+
 /* ===== DARK MODE ===== */
 @media (prefers-color-scheme: dark) {
   body{background:#111;color:#e0e0e0;}
@@ -410,6 +421,12 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
   .htab{color:#555;}
   .htab.active{color:#0d9488;}
 
+  /* Bonus header */
+  .bonus-header{background:linear-gradient(135deg,#0e2420,#0a1e1a);border-color:#0d9488;}
+  .bonus-sub{color:#666;}
+  .bonus-lesson{border-left-color:#1a5040;}
+  .ex-gram-btn{background:#0f2420;border-color:#1a5040;color:#4db6ac;}
+
   /* SRS / Review */
   .review-header{background:#1e1e1e;border-color:#2a2a2a;}
   .stat-box{background:#252525;}
@@ -436,7 +453,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.41';
+const APP_VERSION = 'v3.42';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -706,7 +723,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.41</span>
+  <span class="vbadge" id="app-version">v3.42</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1036,7 +1053,7 @@ function setLang(lang){
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.41</div>
+            <div class="changelog-ver">v3.42</div>
             <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
           </div>
           <div class="changelog-item">
@@ -1240,6 +1257,9 @@ let lessonStats = JSON.parse(localStorage.getItem('tv3_stats')||'{}');
 let completedLessons = JSON.parse(localStorage.getItem('tv3_complete')||'[]'); // [1,3,5...]
 function saveCompleted(){ localStorage.setItem('tv3_complete', JSON.stringify(completedLessons)); }
 function isCompleted(num){ return completedLessons.includes(num); }
+
+let bonusOpen = localStorage.getItem('tv3_bonusOpen')==='true';
+function toggleBonus(){ bonusOpen=!bonusOpen; localStorage.setItem('tv3_bonusOpen',bonusOpen); renderLessonList(); }
 function saveLessonStats(){ localStorage.setItem('tv3_stats', JSON.stringify(lessonStats)); }
 function getStats(num){
   if(!lessonStats[num]) lessonStats[num]={totalSec:0,quizCorrect:0,quizTotal:0,listenCorrect:0,listenTotal:0};
@@ -1391,7 +1411,11 @@ function openGramModal(th, tr, bd){
 }
 function showGramModal(th, tr, bdJson){
   const bd = JSON.parse(bdJson);
-  document.getElementById('gm-sentence').textContent = th;
+  const gmSent = document.getElementById('gm-sentence');
+  gmSent.textContent = th;
+  // Thai yazısı yoksa (CORE 2000 romanize) → okunaklı renk
+  gmSent.style.color = /[฀-๿]/.test(th) ? '#bbb' : '#1a1a1a';
+  gmSent.style.fontFamily = /[฀-๿]/.test(th) ? "'Sarabun',sans-serif" : 'inherit';
   document.getElementById('gm-tr').textContent = tr;
   const roleClass = {
     'S':'S','S - Ozne':'S','S - Soru':'S',
@@ -1480,51 +1504,69 @@ function switchView(v, btn){
 }
 
 // =================== DERS LİSTESİ ===================
+function renderLessonCard(L){
+  if(!L.hasContent) return `
+    <div class="lesson-card empty">
+      <div class="lnum">${L.num}</div>
+      <div class="linfo">
+        <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
+        <div class="lsub">○ ${s('lesson_no_content')}</div>
+      </div>
+      <div class="larrow">·</div>
+    </div>`;
+
+  const tabs = getTabsForLesson(L);
+  const visitedCount = tabs.filter(t=>visitedTabs['L'+L.num+'_'+t]).length;
+  const allVisited = visitedCount === tabs.length;
+  const st = lessonStats[L.num] || {};
+  const totalQ = (st.quizTotal||0)+(st.listenTotal||0);
+  const correctQ = (st.quizCorrect||0)+(st.listenCorrect||0);
+  const scorePct = totalQ>0 ? Math.round((correctQ/totalQ)*100) : null;
+  const scoreColor = scorePct===null?'#999': scorePct>=70?'#1565c0': scorePct>=40?'#e65100':'#c62828';
+  const timeStr = st.totalSec>0 ? fmtTime(st.totalSec) : null;
+  const isDone = isCompleted(L.num);
+  const badges = [];
+  if(isDone) badges.push('<span class="lbadge lbadge-done">🎉 '+s('lesson_done_msg')+'</span>');
+  else if(allVisited) badges.push('<span class="lbadge" style="background:#e3f2fd;color:#1565c0;">'+s('lesson_all_done_q')+'</span>');
+  else if(visitedCount>0) badges.push('<span class="lbadge lbadge-visit">'+visitedCount+'/'+tabs.length+' '+(appLang==='en'?'tabs':'sekme')+'</span>');
+  if(scorePct!==null) badges.push('<span class="lbadge lbadge-score" style="color:'+scoreColor+'">🎯 '+scorePct+'%</span>');
+  if(timeStr) badges.push('<span class="lbadge lbadge-time">⏱ '+timeStr+'</span>');
+
+  return `
+    <div class="lesson-card ${isDone?'done':''}" data-num="${L.num}" onclick="openLesson(${L.num})">
+      <div class="lnum">${L.num}</div>
+      <div class="linfo">
+        <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
+        ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
+      </div>
+      <div class="larrow">›</div>
+    </div>`;
+}
+
 function renderLessonList(){
-  document.getElementById('lesson-list-wrap').innerHTML = LESSONS_META.map(L=>{
-    if(!L.hasContent) return `
-      <div class="lesson-card empty">
-        <div class="lnum">${L.num}</div>
-        <div class="linfo">
-          <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
-          <div class="lsub">○ ${s('lesson_no_content')}</div>
-        </div>
-        <div class="larrow">·</div>
-      </div>`;
+  const regular = LESSONS_META.filter(L=>L.num<20);
+  const bonus   = LESSONS_META.filter(L=>L.num>=20);
+  const bonusDone = bonus.filter(L=>isCompleted(L.num)).length;
+  const bonusSets = bonus.length;
 
-    const tabs = getTabsForLesson(L);
-    const visitedCount = tabs.filter(t=>visitedTabs['L'+L.num+'_'+t]).length;
-    const allVisited = visitedCount === tabs.length;
-    const st = lessonStats[L.num] || {};
+  // Toplam bonus kelime sayısı (her set ~50 kelime)
+  const totalWords = 1437;
 
-    // Başarı puanı
-    const totalQ = (st.quizTotal||0)+(st.listenTotal||0);
-    const correctQ = (st.quizCorrect||0)+(st.listenCorrect||0);
-    const scorePct = totalQ>0 ? Math.round((correctQ/totalQ)*100) : null;
-    const scoreColor = scorePct===null?'#999': scorePct>=70?'#1565c0': scorePct>=40?'#e65100':'#c62828';
+  const bonusHeader = `
+    <div class="bonus-header" onclick="toggleBonus()">
+      <div class="bonus-star">⭐</div>
+      <div class="bonus-info">
+        <div class="bonus-title">BONUS — Çok Kullanılan Kelimeler</div>
+        <div class="bonus-sub">${totalWords} kelime · ${bonusSets} set · ${bonusDone}/${bonusSets} tamamlandı</div>
+      </div>
+      <div class="bonus-toggle">${bonusOpen?'▲':'▼'}</div>
+    </div>`;
 
-    // Süre
-    const timeStr = st.totalSec>0 ? fmtTime(st.totalSec) : null;
+  const bonusItems = bonusOpen ? bonus.map(L=>`
+    <div class="bonus-lesson">${renderLessonCard(L)}</div>`).join('') : '';
 
-    // Rozet bant
-    const isDone = isCompleted(L.num);
-    const badges = [];
-    if(isDone) badges.push('<span class="lbadge lbadge-done">🎉 '+s('lesson_done_msg')+'</span>');
-    else if(allVisited) badges.push('<span class="lbadge" style="background:#e3f2fd;color:#1565c0;">'+s('lesson_all_done_q')+'</span>');
-    else if(visitedCount>0) badges.push('<span class="lbadge lbadge-visit">'+visitedCount+'/'+tabs.length+' '+(appLang==='en'?'tabs':'sekme')+'</span>');
-    if(scorePct!==null) badges.push('<span class="lbadge lbadge-score" style="color:'+scoreColor+'">🎯 '+scorePct+'%</span>');
-    if(timeStr) badges.push('<span class="lbadge lbadge-time">⏱ '+timeStr+'</span>');
-
-    return `
-      <div class="lesson-card ${isDone?'done':''}" data-num="${L.num}" onclick="openLesson(${L.num})">
-        <div class="lnum">${L.num}</div>
-        <div class="linfo">
-          <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
-          ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
-        </div>
-        <div class="larrow">›</div>
-      </div>`;
-  }).join('');
+  document.getElementById('lesson-list-wrap').innerHTML =
+    regular.map(renderLessonCard).join('') + bonusHeader + bonusItems;
 }
 
 // =================== DERS DETAY ===================
@@ -1601,6 +1643,7 @@ function closeLessonDetail(){
   stopTabTimer();
   stopLessonTimer();
   const returnNum = currentLesson ? currentLesson.num : null;
+  if(returnNum && returnNum>=20) bonusOpen = true;
   renderLessonList();
   switchView('lessons', document.querySelector('.nbtn'));
   document.querySelector('.nbtn').classList.add('active');
@@ -1627,19 +1670,22 @@ function buildLessonHTML(L, meta){
     const sk = starKey('w'+meta.num,w.th||w.ro);
     const exs = w.examples.map((e,ei)=>{
       const esk = starKey('ex'+meta.num+w.id,e.th||e.ro);
+      // pieces hem e.pieces hem e.bd olabilir
+      const exPieces = e.pieces || e.bd || [];
       const exBdIdx = window._wordBD.length;
-      window._wordBD.push({th:e.th, tr:e.tr, bd:e.bd||[]});
-      const exHasBd = e.bd && e.bd.length>0;
-      return `<div class="ex-item" ${exHasBd ? 'style="cursor:pointer" data-word-idx="'+exBdIdx+'"' : ''}>
+      window._wordBD.push({th:e.th||e.ro, tr:e.tr, bd:exPieces});
+      const exHasBd = exPieces.length>0;
+      return `<div class="ex-item">
         <div class="ex-texts">
           <div class="ex-th">${e.th||''}</div>
           <div class="ex-ro">${e.ro}</div>
           <div class="ex-tr">${Lf(e,'tr')}</div>
+          ${exHasBd ? `<span class="ex-gram-btn" data-word-idx="${exBdIdx}">📖 Gramer analizi</span>` : ''}
         </div>
         <div class="ex-actions">
           <button class="sm-abtn" data-speak="${esc(e.th||e.ro)}" data-slow="0">🔊</button>
           <button class="sm-abtn" data-speak="${esc(e.th||e.ro)}" data-slow="1">🐢</button>
-          <button class="sbtn ${starred[esk]?'on':''}" data-star="${esc(esk)}" data-stype="example" data-th="${esc(e.th||'')}" data-ro="${esc(e.ro)}" data-tr="${esc(e.tr)}" data-bd="${esc(JSON.stringify(e.bd||[]))}">⭐</button>
+          <button class="sbtn ${starred[esk]?'on':''}" data-star="${esc(esk)}" data-stype="example" data-th="${esc(e.th||'')}" data-ro="${esc(e.ro)}" data-tr="${esc(e.tr)}" data-bd="${esc(JSON.stringify(exPieces))}">⭐</button>
         </div>
       </div>`;
     }).join('');
