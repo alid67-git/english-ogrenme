@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -284,6 +285,148 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .lesson-srs-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid #f5f5f5;margin-top:8px;}
 .srs-add-btn{padding:5px 10px;background:#0d9488;color:white;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
 
+/* ===== DARK MODE ===== */
+@media (prefers-color-scheme: dark) {
+  body{background:#111;color:#e0e0e0;}
+  nav{background:#1a1a1a;border-bottom-color:#2a2a2a;}
+  .nbtn{background:#2a2a2a;color:#ccc;}
+  .nbtn.active{background:#0d9488;color:white;}
+
+  /* Lesson list */
+  .lesson-card{background:#1e1e1e;}
+  .lesson-card.done{background:#0e2420;}
+  .lesson-card.empty{background:#181818;}
+  .ltitle{color:#e0e0e0;}
+  .lsub{color:#777;}
+  .larrow{color:#444;}
+  .lbadge-visit{background:#0e2a18;color:#4caf50;}
+  .lbadge-score{background:#0e1e35;color:#64b5f6;}
+  .lbadge-time{background:#2a1a08;color:#ffb74d;}
+
+  /* Tabs */
+  .ltab{background:#2a2a2a;border-color:#333;color:#888;}
+  .ltab.visited{background:#0f2420;border-color:#1a5040;color:#4db6ac;}
+  .ltab.active{background:#0d9488;border-color:#0d9488;color:white;}
+  .tab-timer-wrap{background:#0f2420;border-color:#1a5040;}
+  .tab-timer-track{background:#333;}
+
+  /* Word cards */
+  .word-card{background:#1e1e1e;border-color:#2a2a2a;}
+  .word-thai{color:#444;}
+  .word-ro{color:#e0e0e0;}
+  .word-tr{color:#aaa;}
+  .word-note{background:#252525;color:#aaa;}
+  .word-note .ctx{color:#555;}
+  .ex-th{color:#444;}
+  .ex-ro{color:#e0e0e0;}
+  .ex-tr{color:#aaa;}
+  .ex-item{border-bottom-color:#252525;}
+  .sm-abtn{background:#252525;border-color:#333;color:#0d9488;}
+
+  /* Speaking */
+  .speak-card{background:#1e1e1e;border-color:#2a2a2a;}
+  .speak-thai{color:#444;}
+  .speak-ro{color:#e0e0e0;}
+  .speak-tr{color:#aaa;}
+
+  /* Dialogue */
+  .dialog-card{background:#1e1e1e;border-color:#2a2a2a;}
+  .dbubble-th{color:#444;}
+  .dbubble-ro{color:#e0e0e0;}
+  .dbubble-tr{color:#aaa;}
+  .dline.ali .dbubble{background:#0d1a35;}
+  .dline.nada .dbubble{background:#2a1020;}
+  .dline.active-line{background:#25200a;border-left-color:#f59e0b;}
+
+  /* Tones */
+  .tone-card{background:#1e1e1e;}
+  .tone-symbol{color:#555;}
+  .tone-desc{color:#aaa;}
+  .tone-word{background:#252525;border-color:#333;}
+  .tw-th{color:#444;}
+  .tw-ro{color:#e0e0e0;}
+  .tw-tr{color:#aaa;}
+
+  /* Grammar */
+  .gram-card{background:#1e1e1e;}
+  .gram-formula{background:#1c1528;border-color:#3b2d6a;color:#e0e0e0;}
+  .gram-explain{color:#aaa;}
+  .gram-examples .ex-item{border-bottom-color:#252525;}
+  .gram-piece{background:#252525;border-color:#444;}
+  .gram-piece-ro{color:#b39ddb;}
+  .gram-piece-tr{color:#aaa;}
+  .gram-piece-role{color:#666;}
+  .gram-piece.S{background:#0a1828;border-color:#3b82f6;}
+  .gram-piece.S .gram-piece-role{color:#3b82f6;}
+  .gram-piece.V{background:#0a2018;border-color:#10b981;}
+  .gram-piece.V .gram-piece-role{color:#10b981;}
+  .gram-piece.O{background:#251a05;border-color:#f59e0b;}
+  .gram-piece.O .gram-piece-role{color:#f59e0b;}
+  .gram-piece.K{background:#08201e;border-color:#0d9488;}
+  .gram-piece.K .gram-piece-role{color:#0d9488;}
+  .gram-piece.Q,.gram-piece.N{background:#250a0a;border-color:#ef4444;}
+  .gram-piece.Q .gram-piece-role,.gram-piece.N .gram-piece-role{color:#ef4444;}
+  .gram-modal{background:#1e1e1e;}
+  .gram-modal-sentence{color:#444;}
+  .gram-modal-tr{color:#aaa;}
+
+  /* Quiz / Listen */
+  .listen-card{background:#1e1e1e;}
+  .listen-q{color:#e0e0e0;}
+  .opt{background:#252525;border-color:#333;color:#ddd;}
+  .opt:hover{background:#2e2e2e;}
+  .opt.correct{background:#0a2a18;border-color:#10b981;color:#6ee7b7;}
+  .opt.wrong{background:#2a0a0a;border-color:#ef4444;color:#fca5a5;}
+  .fb.ok{background:#0a2a18;color:#6ee7b7;}
+  .fb.nope{background:#2a0a0a;color:#fca5a5;}
+  .diff-badge{background:#2a200a;color:#fbbf24;}
+  .diff-badge.medium{background:#0a1828;color:#93c5fd;}
+  .diff-badge.hard{background:#2a0a18;color:#f9a8d4;}
+
+  /* Filters & buttons */
+  .filter-btn{background:#252525;border-color:#333;color:#aaa;}
+  .filter-btn.active{background:#0d9488;color:white;border-color:#0d9488;}
+  .test-cat-btn{background:#252525;border-color:#333;color:#aaa;}
+  .test-cat-btn.active{background:#0f2420;border-color:#0d9488;color:#0d9488;}
+  .test-mode-btn{background:#252525;border-color:#333;}
+  .test-mode-btn.active{background:#0f2420;border-color:#0d9488;}
+
+  /* Modal */
+  .modal{background:#1e1e1e;}
+  .modal-title{color:#e0e0e0;}
+  .modal-close{color:#666;}
+  .setting-row{border-bottom-color:#252525;}
+  .setting-row input{background:#252525;border-color:#333;color:#e0e0e0;}
+  .help-card{background:#222;border-color:#333;}
+  .help-card-title{color:#ddd;}
+  .help-card-body{color:#999;}
+  .help-row-title{color:#ddd;}
+  .help-row-sub{color:#999;}
+  .help-text{color:#999;}
+  .help-info-row{border-bottom-color:#252525;color:#999;}
+  .help-info-row strong{color:#ddd;}
+  .changelog-item{background:#1e1e1e;}
+  .changelog-desc{color:#999;}
+  .htab{color:#555;}
+  .htab.active{color:#0d9488;}
+
+  /* SRS / Review */
+  .review-header{background:#1e1e1e;border-color:#2a2a2a;}
+  .stat-box{background:#252525;}
+  .stat-lbl{color:#666;}
+  .review-card{background:#1e1e1e;border-color:#2a2a2a;}
+  .rc-question{color:#444;}
+  .rc-ro{color:#e0e0e0;}
+  .rc-type{background:#252525;color:#aaa;}
+  .rc-answer{background:#0a2018;}
+  .rc-answer-text{color:#6ee7b7;}
+  .rc-answer-ro{color:#666;}
+  .review-progress{background:#2a2a2a;}
+  .rc-speak-btn{background:#252525;border-color:#333;color:#0d9488;}
+  .review-empty{color:#444;}
+  .review-done-sub{color:#666;}
+  .lesson-srs-row{border-top-color:#252525;}
+}
 </style>
 <script>
 // Cache temizleme — GitHub Pages kısayolu güncelleme sorunu için
@@ -293,7 +436,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.40';
+const APP_VERSION = 'v3.41';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -563,7 +706,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.40</span>
+  <span class="vbadge" id="app-version">v3.41</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -893,7 +1036,7 @@ function setLang(lang){
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.40</div>
+            <div class="changelog-ver">v3.41</div>
             <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
           </div>
           <div class="changelog-item">
