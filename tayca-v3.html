@@ -1373,7 +1373,7 @@ function renderLessonList(){
     if(timeStr) badges.push('<span class="lbadge lbadge-time">⏱ '+timeStr+'</span>');
 
     return `
-      <div class="lesson-card ${isDone?'done':''}" onclick="openLesson(${L.num})">
+      <div class="lesson-card ${isDone?'done':''}" data-num="${L.num}" onclick="openLesson(${L.num})">
         <div class="lnum">${L.num}</div>
         <div class="linfo">
           <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
@@ -1387,6 +1387,8 @@ function renderLessonList(){
 // =================== DERS DETAY ===================
 // hasTones'a göre dinamik sekme listesi
 function getTabsForLesson(meta){
+  // CORE 2000 dersleri (20+): sadece kelimeler ve quiz
+  if(meta.num>=20) return ['words','quiz'];
   const base = ['words','grammar','speaking','dialogue','listening','quiz'];
   if(meta.hasTones) return ['words','tones','grammar','speaking','dialogue','listening','quiz'];
   if(meta.num===2) return ['numbers','calc','words','grammar','speaking','dialogue','listening','quiz'];
@@ -1455,9 +1457,16 @@ async function openLesson(num){
 function closeLessonDetail(){
   stopTabTimer();
   stopLessonTimer();
+  const returnNum = currentLesson ? currentLesson.num : null;
   renderLessonList();
   switchView('lessons', document.querySelector('.nbtn'));
   document.querySelector('.nbtn').classList.add('active');
+  if(returnNum){
+    requestAnimationFrame(()=>{
+      const card = document.querySelector(`.lesson-card[data-num="${returnNum}"]`);
+      if(card) card.scrollIntoView({block:'center', behavior:'smooth'});
+    });
+  }
 }
 
 function buildLessonHTML(L, meta){
@@ -1554,7 +1563,7 @@ function buildLessonHTML(L, meta){
     </div>`).join('') : `<div style="text-align:center;padding:30px;color:#bbb;">${s('tones_ref')}</div>`;
 
   // GRAMER
-  const grammar = L.grammar.map((g,gi)=>{
+  const grammar = (L.grammar||[]).map((g,gi)=>{
     const exHtml = g.examples.map((e,ei)=>{
       const bdIdx = window._gramBD.length;
       window._gramBD.push({th:e.th, tr:e.tr, bd:e.bd||[]});
@@ -1574,7 +1583,7 @@ function buildLessonHTML(L, meta){
   }).join('');
 
   // DİYALOG
-  const dialogues = L.dialogues.map((d,di)=>`
+  const dialogues = (L.dialogues||[]).map((d,di)=>`
     <div class="dialog-card">
       <div class="dialog-title">
         ${d.title}
@@ -1602,7 +1611,7 @@ function buildLessonHTML(L, meta){
     </div>`).join('');
 
   // KONUŞMA
-  const speaking = L.speaking.map((sp,i)=>{
+  const speaking = (L.speaking||[]).map((sp,i)=>{
     const gramIdx = window._gramBD.length;
     if(sp.bd) window._gramBD.push({th:sp.th||'', tr:sp.tr, bd:sp.bd});
     const hasBd = sp.bd && sp.bd.length>0;
@@ -1619,7 +1628,7 @@ function buildLessonHTML(L, meta){
   }).join('');
 
   // DİNLEME
-  const listening = L.listening.map((l,i)=>`
+  const listening = (L.listening||[]).map((l,i)=>`
     <div class="listen-card">
       <div class="diff-badge ${l.diff}">${l.diff==='easy'?s('listen_easy'):l.diff==='medium'?s('listen_medium'):s('listen_hard')}</div>
       <button class="play-big" data-speak="${esc(l.th)}" data-slow="0">${s('listen_play_btn')}</button>
@@ -1652,7 +1661,7 @@ function buildLessonHTML(L, meta){
         </div>`}
     </div>`;
 
-  const quiz = L.quiz.map((q,i)=>`
+  const quiz = (L.quiz||[]).map((q,i)=>`
     <div class="listen-card">
       <div class="listen-q">${i+1}. ${q.q||q.question||''}</div>
       <div id="qo-${i}">${(q.opts||q.options||[]).map((o,j)=>`<div class="opt" onclick="checkQuiz(${i},${j},${q.c})">${o}</div>`).join('')}</div>
