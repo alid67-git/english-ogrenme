@@ -286,6 +286,10 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .srs-add-btn{padding:5px 10px;background:#0d9488;color:white;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;}
 
 /* BONUS ACCORDION */
+/* SCROLL TO TOP */
+#scroll-top-btn{position:fixed;bottom:22px;right:16px;width:42px;height:42px;border-radius:50%;background:#0d9488;color:white;border:none;font-size:20px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.25);display:none;align-items:center;justify-content:center;z-index:99;transition:opacity .2s;}
+#scroll-top-btn.show{display:flex;}
+
 .bonus-header{background:linear-gradient(135deg,#f0fdf9,#e0f2f1);border:2px solid #0d9488;border-radius:12px;padding:14px 16px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:.15s;}
 .bonus-header:hover{box-shadow:0 3px 10px rgba(13,148,136,.2);}
 .bonus-star{font-size:26px;}
@@ -453,7 +457,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.44';
+const APP_VERSION = 'v3.45';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -723,7 +727,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.44</span>
+  <span class="vbadge" id="app-version">v3.45</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1053,7 +1057,7 @@ function setLang(lang){
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.44</div>
+            <div class="changelog-ver">v3.45</div>
             <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
           </div>
           <div class="changelog-item">
@@ -1432,6 +1436,9 @@ function showGramModal(th, tr, bdJson){
 }
 function closeGramModal(e){ if(e.target===document.getElementById('gram-modal-overlay')) document.getElementById('gram-modal-overlay').classList.remove('open'); }
 window.speechSynthesis.onvoiceschanged = ()=>window.speechSynthesis.getVoices();
+window.addEventListener('scroll',()=>{
+  document.getElementById('scroll-top-btn').classList.toggle('show', window.scrollY>300);
+});
 
 document.addEventListener('click', function(e){
   const speakEl = e.target.closest('[data-speak]');
@@ -3396,6 +3403,8 @@ document.getElementById('google-tts-key-input').value = localStorage.getItem('ta
 </script>
 
 <!-- GRAMMAR DETAIL MODAL -->
+<button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Yukarı çık">↑</button>
+
 <div id="gram-modal-overlay" class="gram-modal-overlay" onclick="closeGramModal(event)">
   <div class="gram-modal">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
