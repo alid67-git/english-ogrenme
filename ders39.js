@@ -49,3 +49,4 @@ const L39 = {
     {id:'c1389',ro:'wak-siin',tr:'aşı',en:'vaccine',tip:'',ctx:'',examples:[{ro:'Nii khu wak-siin',tr:'Bu, aşı',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'wak-siin',tr:'aşı',role:'O'}]}]},
   ]
 };
+LESSONS[39] = L39;

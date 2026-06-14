@@ -53,3 +53,4 @@ const L34 = {
     {id:'c1035',ro:'thfi-bpat-gaaem',tr:'kızarmak',en:'blush',tip:'',ctx:'',examples:[{ro:'Phom thfi-bpat-gaaem thuk wan',tr:'Ben her gün kızarmak',bd:[{ro:'Phom',tr:'Ben',role:'S'},{ro:'thfi-bpat-gaaem',tr:'kızarmak',role:'V'},{ro:'thuk wan',tr:'her gün',role:'K'}]}]},
   ]
 };
+LESSONS[34] = L34;

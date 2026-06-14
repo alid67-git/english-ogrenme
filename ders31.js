@@ -53,3 +53,4 @@ const L31 = {
     {id:'c837',ro:'khaa-raaeng',tr:'maaş',en:'wage',tip:'',ctx:'',examples:[{ro:'Nii khu khaa-raaeng',tr:'Bu, maaş',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'khaa-raaeng',tr:'maaş',role:'O'}]}]},
   ]
 };
+LESSONS[31] = L31;

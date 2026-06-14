@@ -53,3 +53,4 @@ const L29 = {
     {id:'c710',ro:'gun-jaae',tr:'oda anahtarı',en:'room key',tip:'',ctx:'',examples:[{ro:'Nii khu gun-jaae',tr:'Bu, oda anahtarı',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'gun-jaae',tr:'oda anahtarı',role:'O'}]}]},
   ]
 };
+LESSONS[29] = L29;

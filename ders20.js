@@ -50,3 +50,4 @@ const L20 = {
     {id:'c72',ro:'sip',tr:'on',en:'ten',tip:'',ctx:'',examples:[{ro:'Nii khu sip',tr:'Bu, on',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'sip',tr:'on',role:'O'}]}]},
   ]
 };
+LESSONS[20] = L20;

@@ -53,3 +53,4 @@ const L33 = {
     {id:'c954',ro:'wf-jaan',tr:'eleştirmek',en:'criticize',tip:'',ctx:'',examples:[{ro:'Phom wf-jaan thuk wan',tr:'Ben her gün eleştirmek',bd:[{ro:'Phom',tr:'Ben',role:'S'},{ro:'wf-jaan',tr:'eleştirmek',role:'V'},{ro:'thuk wan',tr:'her gün',role:'K'}]}]},
   ]
 };
+LESSONS[33] = L33;

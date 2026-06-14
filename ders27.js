@@ -53,3 +53,4 @@ const L27 = {
     {id:'c577',ro:'bpaaet-raauy',tr:'sekiz yüz',en:'eight hundred',tip:'',ctx:'',examples:[{ro:'Nii khu bpaaet-raauy',tr:'Bu, sekiz yüz',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'bpaaet-raauy',tr:'sekiz yüz',role:'O'}]}]},
   ]
 };
+LESSONS[27] = L27;

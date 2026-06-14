@@ -53,3 +53,4 @@ const L21 = {
     {id:'c145',ro:'raawng-thaa',tr:'ayakkabı',en:'shoe',tip:'',ctx:'',examples:[{ro:'Nii khu raawng-thaa',tr:'Bu, ayakkabı',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'raawng-thaa',tr:'ayakkabı',role:'O'}]}]},
   ]
 };
+LESSONS[21] = L21;

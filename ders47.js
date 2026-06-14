@@ -47,3 +47,4 @@ const L47 = {
     {id:'c1951',ro:'thai',tr:'Tay dili',en:'Thai',tip:'',ctx:'',examples:[{ro:'Nii khu thai',tr:'Bu, Tay dili',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'thai',tr:'Tay dili',role:'O'}]}]},
   ]
 };
+LESSONS[47] = L47;

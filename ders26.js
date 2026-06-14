@@ -53,3 +53,4 @@ const L26 = {
     {id:'c512',ro:'faa-ren-hai',tr:'Fahrenhayt',en:'Fahrenheit',tip:'',ctx:'',examples:[{ro:'Nii khu faa-ren-hai',tr:'Bu, Fahrenhayt',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'faa-ren-hai',tr:'Fahrenhayt',role:'O'}]}]},
   ]
 };
+LESSONS[26] = L26;

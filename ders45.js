@@ -53,3 +53,4 @@ const L45 = {
     {id:'c1819',ro:'daa-raa',tr:'yıldız',en:'star',tip:'',ctx:'',examples:[{ro:'Nii khu daa-raa',tr:'Bu, yıldız',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'daa-raa',tr:'yıldız',role:'O'}]}]},
   ]
 };
+LESSONS[45] = L45;

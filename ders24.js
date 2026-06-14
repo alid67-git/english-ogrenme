@@ -53,3 +53,4 @@ const L24 = {
     {id:'c367',ro:'wan-na-gam',tr:'edebiyat',en:'literature',tip:'',ctx:'',examples:[{ro:'Nii khu wan-na-gam',tr:'Bu, edebiyat',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'wan-na-gam',tr:'edebiyat',role:'O'}]}]},
   ]
 };
+LESSONS[24] = L24;

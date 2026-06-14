@@ -52,3 +52,4 @@ const L41 = {
     {id:'c1536',ro:'faa',tr:'elektrikli pirinç pişirici',en:'electric rice cooker',tip:'',ctx:'',examples:[{ro:'Nii khu faa',tr:'Bu, elektrikli pirinç pişirici',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'faa',tr:'elektrikli pirinç pişirici',role:'O'}]}]},
   ]
 };
+LESSONS[41] = L41;

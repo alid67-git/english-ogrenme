@@ -52,3 +52,4 @@ const L40 = {
     {id:'c1451',ro:'ma-laaeng',tr:'böcek',en:'bug',tip:'',ctx:'',examples:[{ro:'Nii khu ma-laaeng',tr:'Bu, böcek',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'ma-laaeng',tr:'böcek',role:'O'}]}]},
   ]
 };
+LESSONS[40] = L40;

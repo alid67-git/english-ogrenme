@@ -39,3 +39,4 @@ const L48 = {
     {id:'c2000',ro:'en-droo-fin',tr:'Endorfin',en:'Endorphine',tip:'',ctx:'',examples:[{ro:'Nii khu en-droo-fin',tr:'Bu, Endorfin',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'en-droo-fin',tr:'Endorfin',role:'O'}]}]},
   ]
 };
+LESSONS[48] = L48;

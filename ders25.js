@@ -53,3 +53,4 @@ const L25 = {
     {id:'c434',ro:'phaaen-gaan',tr:'planı',en:'plan',tip:'',ctx:'',examples:[{ro:'Nii khu phaaen-gaan',tr:'Bu, planı',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'phaaen-gaan',tr:'planı',role:'O'}]}]},
   ]
 };
+LESSONS[25] = L25;

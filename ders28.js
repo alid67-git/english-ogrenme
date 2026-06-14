@@ -53,3 +53,4 @@ const L28 = {
     {id:'c643',ro:'muueang',tr:'şehir',en:'town',tip:'',ctx:'',examples:[{ro:'Nii khu muueang',tr:'Bu, şehir',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'muueang',tr:'şehir',role:'O'}]}]},
   ]
 };
+LESSONS[28] = L28;

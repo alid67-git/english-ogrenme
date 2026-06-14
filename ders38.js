@@ -52,3 +52,4 @@ const L38 = {
     {id:'c1325',ro:'phaawm',tr:'ince',en:'thin',tip:'',ctx:'',examples:[{ro:'Nii khu phaawm',tr:'Bu, ince',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'phaawm',tr:'ince',role:'O'}]}]},
   ]
 };
+LESSONS[38] = L38;

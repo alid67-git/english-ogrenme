@@ -53,3 +53,4 @@ const L30 = {
     {id:'c772',ro:'mee-lawn',tr:'kavun',en:'melon',tip:'',ctx:'',examples:[{ro:'Nii khu mee-lawn',tr:'Bu, kavun',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'mee-lawn',tr:'kavun',role:'O'}]}]},
   ]
 };
+LESSONS[30] = L30;

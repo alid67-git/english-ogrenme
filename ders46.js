@@ -51,3 +51,4 @@ const L46 = {
     {id:'c1888',ro:'yfiam-yaat',tr:'akrabaları ziyaret etmek',en:'visit relatives',tip:'',ctx:'',examples:[{ro:'Phom yfiam-yaat thuk wan',tr:'Ben her gün akrabaları ziyaret etmek',bd:[{ro:'Phom',tr:'Ben',role:'S'},{ro:'yfiam-yaat',tr:'akrabaları ziyaret etmek',role:'V'},{ro:'thuk wan',tr:'her gün',role:'K'}]}]},
   ]
 };
+LESSONS[46] = L46;

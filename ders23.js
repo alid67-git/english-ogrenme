@@ -52,3 +52,4 @@ const L23 = {
     {id:'c300',ro:'nuueai',tr:'yorgun',en:'tired',tip:'',ctx:'',examples:[{ro:'Nii khu nuueai',tr:'Bu, yorgun',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'nuueai',tr:'yorgun',role:'O'}]}]},
   ]
 };
+LESSONS[23] = L23;

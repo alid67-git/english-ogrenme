@@ -53,3 +53,4 @@ const L44 = {
     {id:'c1742',ro:'nak',tr:'profesyonel atlet',en:'professional athlete',tip:'',ctx:'',examples:[{ro:'Nii khu nak',tr:'Bu, profesyonel atlet',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'nak',tr:'profesyonel atlet',role:'O'}]}]},
   ]
 };
+LESSONS[44] = L44;

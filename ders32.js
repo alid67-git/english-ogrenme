@@ -53,3 +53,4 @@ const L32 = {
     {id:'c895',ro:'khaeng',tr:'otomobil yarışı',en:'auto racing',tip:'',ctx:'',examples:[{ro:'Nii khu khaeng',tr:'Bu, otomobil yarışı',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'khaeng',tr:'otomobil yarışı',role:'O'}]}]},
   ]
 };
+LESSONS[32] = L32;

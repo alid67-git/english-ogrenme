@@ -49,3 +49,4 @@ const L35 = {
     {id:'c1105',ro:'yaang-rai',tr:'Nasıl',en:'how',tip:'',ctx:'',examples:[{ro:'Khun tham yaang-rai mâi?',tr:'Nasıl?',bd:[{ro:'Khun',tr:'Sen/Siz',role:'S'},{ro:'tham',tr:'yapıyorsun',role:'V'},{ro:'yaang-rai',tr:'Nasıl',role:'O'},{ro:'mâi?',tr:'(soru eki)',role:'Soru (SONDA)'}]}]},
   ]
 };
+LESSONS[35] = L35;

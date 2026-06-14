@@ -49,3 +49,4 @@ const L43 = {
     {id:'c1663',ro:'bprai-sa-nii',tr:'posta',en:'mail',tip:'',ctx:'',examples:[{ro:'Nii khu bprai-sa-nii',tr:'Bu, posta',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'bprai-sa-nii',tr:'posta',role:'O'}]}]},
   ]
 };
+LESSONS[43] = L43;

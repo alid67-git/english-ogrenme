@@ -53,3 +53,4 @@ const L22 = {
     {id:'c228',ro:'sip-haa',tr:'on beş',en:'fteen',tip:'',ctx:'',examples:[{ro:'Nii khu sip-haa',tr:'Bu, on beş',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'sip-haa',tr:'on beş',role:'O'}]}]},
   ]
 };
+LESSONS[22] = L22;

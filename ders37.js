@@ -53,3 +53,4 @@ const L37 = {
     {id:'c1244',ro:'waan',tr:'tatlı',en:'sweet',tip:'',ctx:'',examples:[{ro:'Nii khu waan',tr:'Bu, tatlı',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'waan',tr:'tatlı',role:'O'}]}]},
   ]
 };
+LESSONS[37] = L37;

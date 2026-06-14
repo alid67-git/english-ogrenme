@@ -53,3 +53,4 @@ const L42 = {
     {id:'c1597',ro:'nooen-khao',tr:'tepe',en:'hill',tip:'',ctx:'',examples:[{ro:'Nii khu nooen-khao',tr:'Bu, tepe',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'nooen-khao',tr:'tepe',role:'O'}]}]},
   ]
 };
+LESSONS[42] = L42;

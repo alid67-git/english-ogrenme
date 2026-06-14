@@ -52,3 +52,4 @@ const L36 = {
     {id:'c1167',ro:'taa-taep',tr:'yıldırım',en:'lightning',tip:'',ctx:'',examples:[{ro:'Nii khu taa-taep',tr:'Bu, yıldırım',bd:[{ro:'Nii',tr:'Bu',role:'S'},{ro:'khu',tr:'demektir',role:'V'},{ro:'taa-taep',tr:'yıldırım',role:'O'}]}]},
   ]
 };
+LESSONS[36] = L36;
