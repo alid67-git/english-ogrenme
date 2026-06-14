@@ -453,7 +453,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.43';
+const APP_VERSION = 'v3.44';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -723,7 +723,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.43</span>
+  <span class="vbadge" id="app-version">v3.44</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1053,7 +1053,7 @@ function setLang(lang){
         <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
         <div class="help-changelog">
           <div class="changelog-item">
-            <div class="changelog-ver">v3.43</div>
+            <div class="changelog-ver">v3.44</div>
             <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
           </div>
           <div class="changelog-item">
@@ -1680,7 +1680,7 @@ function buildLessonHTML(L, meta){
           <div class="ex-th">${e.th||''}</div>
           <div class="ex-ro">${e.ro}</div>
           <div class="ex-tr">${Lf(e,'tr')}</div>
-          ${exHasBd ? `<span class="ex-gram-btn" data-word-idx="${exBdIdx}">📖 Gramer analizi</span>` : ''}
+          ${exHasBd ? `<span class="ex-gram-btn" data-word-idx="${exBdIdx}" title="Gramer analizi">📖</span>` : ''}
         </div>
         <div class="ex-actions">
           <button class="sm-abtn" data-speak="${esc(e.th||e.ro)}" data-slow="0">🔊</button>
