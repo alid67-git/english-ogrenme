@@ -461,7 +461,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.46';
+const APP_VERSION = 'v3.47';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -582,6 +582,20 @@ const UI = {
     calc_input_label:'Sayıyı gir (0 – 9.999.999)',
     calc_listen:'🔊 Dinle', calc_quick:'⚡ Hızlı Örnekler',
     calc_breakdown:'Basamak dökümü',
+    // Gramer modal
+    gram_modal_title:'📖 Cümle Analizi',
+    gram_legend_s:'S = Özne', gram_legend_v:'V = Yüklem', gram_legend_o:'O = Nesne',
+    gram_legend_q:'Soru / Olumsuz', gram_legend_k:'K = Belirteç',
+    gram_btn_tip:'Gramer analizi',
+    // BONUS
+    bonus_title:'BONUS — Çok Kullanılan Kelimeler',
+    bonus_words:'kelime', bonus_sets:'set', bonus_done:'tamamlandı',
+    // Quiz otomatik
+    quiz_q_suffix:'— ne anlama gelir?',
+    // Diğer
+    scroll_top:'Yukarı çık',
+    add_coming:'Kelime ekleme modülü yakında',
+    gist_saved:'✅ Token kaydedildi.',
   },
   en:{
     // Nav
@@ -687,6 +701,20 @@ const UI = {
     calc_input_label:'Enter number (0 – 9,999,999)',
     calc_listen:'🔊 Listen', calc_quick:'⚡ Quick Examples',
     calc_breakdown:'Digit breakdown',
+    // Grammar modal
+    gram_modal_title:'📖 Sentence Analysis',
+    gram_legend_s:'S = Subject', gram_legend_v:'V = Verb', gram_legend_o:'O = Object',
+    gram_legend_q:'Question / Negative', gram_legend_k:'K = Modifier',
+    gram_btn_tip:'Grammar analysis',
+    // BONUS
+    bonus_title:'BONUS — Most Common Words',
+    bonus_words:'words', bonus_sets:'sets', bonus_done:'completed',
+    // Auto quiz
+    quiz_q_suffix:'— what does this mean?',
+    // Other
+    scroll_top:'Scroll to top',
+    add_coming:'Word addition module coming soon',
+    gist_saved:'✅ Token saved.',
   }
 };
 
@@ -714,6 +742,7 @@ function setLang(lang){
     const LD = LESSONS[currentLesson.num];
     if(LD) document.getElementById('detail-content').innerHTML = buildLessonHTML(LD, currentLesson);
   }
+  buildHelpContent();
 }
 // =================== DİL SİSTEMİ END ===================
 </script>
@@ -731,7 +760,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.46</span>
+  <span class="vbadge" id="app-version">v3.47</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -769,7 +798,7 @@ function setLang(lang){
   <div id="review-view" class="view">
     <div id="review-content"></div>
   </div>
-  <div id="add-view" class="view"><div style="text-align:center;padding:60px 20px;color:#bbb;"><div style="font-size:48px;margin-bottom:12px">➕</div>Kelime ekleme modülü yakında</div></div>
+  <div id="add-view" class="view"><div style="text-align:center;padding:60px 20px;color:#bbb;"><div style="font-size:48px;margin-bottom:12px">➕</div><span data-lk="add_coming">Kelime ekleme modülü yakında</span></div></div>
 </main>
 
 <!-- SETTINGS -->
@@ -814,366 +843,24 @@ function setLang(lang){
     <!-- BAŞLIK -->
     <div style="background:linear-gradient(135deg,#0d9488,#06b6d4);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
       <div>
-        <div style="color:white;font-size:17px;font-weight:700;">📖 Nasıl Kullanılır?</div>
-        <div style="color:rgba(255,255,255,.7);font-size:11px;margin-top:2px;">Kolay Tayca Öğrenme · Rehber</div>
+        <div style="color:white;font-size:17px;font-weight:700;" id="help-modal-title">📖 Nasıl Kullanılır?</div>
+        <div style="color:rgba(255,255,255,.7);font-size:11px;margin-top:2px;" id="help-modal-sub">Kolay Tayca Öğrenme · Rehber</div>
       </div>
       <button class="modal-close" onclick="closeModal('help-overlay')" style="background:rgba(255,255,255,.2);border:none;color:white;width:30px;height:30px;border-radius:50%;font-size:16px;cursor:pointer;">✕</button>
     </div>
 
     <!-- SEKMELİ NAV -->
-    <div style="display:flex;border-bottom:2px solid #f0f0f0;background:#fafafa;flex-shrink:0;overflow-x:auto;">
-      <button class="htab active" onclick="switchHelpTab('genel',this)">🏠 Genel</button>
-      <button class="htab" onclick="switchHelpTab('dersler',this)">📚 Dersler</button>
-      <button class="htab" onclick="switchHelpTab('tekrar',this)">🔄 Tekrar</button>
-      <button class="htab" onclick="switchHelpTab('ipuclari',this)">💡 İpuçları</button>
-      <button class="htab" onclick="switchHelpTab('hakkinda',this)">ℹ️ Hakkında</button>
+    <div style="display:flex;border-bottom:2px solid #f0f0f0;background:#fafafa;flex-shrink:0;overflow-x:auto;" id="help-tabs-nav">
+      <button class="htab active" onclick="switchHelpTab('genel',this)" id="htab-btn-genel">🏠 Genel</button>
+      <button class="htab" onclick="switchHelpTab('dersler',this)" id="htab-btn-dersler">📚 Dersler</button>
+      <button class="htab" onclick="switchHelpTab('tekrar',this)" id="htab-btn-tekrar">🔄 Tekrar</button>
+      <button class="htab" onclick="switchHelpTab('ipuclari',this)" id="htab-btn-ipuclari">💡 İpuçları</button>
+      <button class="htab" onclick="switchHelpTab('hakkinda',this)" id="htab-btn-hakkinda">ℹ️ Hakkında</button>
     </div>
 
     <!-- İÇERİK -->
-    <div style="overflow-y:auto;flex:1;padding:16px 18px;">
-
-      <!-- GENEL -->
-      <div id="htab-genel" class="htab-content active">
-        <div class="help-card">
-          <div class="help-card-icon">🇹🇭</div>
-          <div>
-            <div class="help-card-title">Bu uygulama ne için?</div>
-            <div class="help-card-body">Phuket'te günlük hayatta kullanılan Tayca'yı hızlıca öğrenmek için tasarlandı. Turistik değil, gerçek konuşma diline odaklanır.</div>
-          </div>
-        </div>
-
-        <div class="help-section-header">📱 Ana Sekmeler</div>
-
-        <div class="help-row">
-          <div class="help-row-icon" style="background:#e8f5e9;">📚</div>
-          <div>
-            <div class="help-row-title">Dersler</div>
-            <div class="help-row-sub">19 ders — selamlaşmadan acil durumlara. Her ders 6–8 sekme içerir. Yeşil nokta = tamamlandı.</div>
-          </div>
-        </div>
-        <div class="help-row">
-          <div class="help-row-icon" style="background:#fff3e0;">📝</div>
-          <div>
-            <div class="help-row-title">Test</div>
-            <div class="help-row-sub">Aralıklı tekrar (SRS) sistemi. Bugün tekrar edilecek kartlar + ders bazlı pratik.</div>
-          </div>
-        </div>
-        <div class="help-row">
-          <div class="help-row-icon" style="background:#e3f2fd;">🌐</div>
-          <div>
-            <div class="help-row-title">Çeviri</div>
-            <div class="help-row-sub">Türkçe → Tayca veya Tayca → Türkçe anında çeviri.</div>
-          </div>
-        </div>
-        <div class="help-row">
-          <div class="help-row-icon" style="background:#fce4ec;">📋</div>
-          <div>
-            <div class="help-row-title">Liste</div>
-            <div class="help-row-sub">Yıldızladığın tüm kelimeler, örnekler ve diyaloglar burada. Cümle analizi butonu ile breakdown görebilirsin.</div>
-          </div>
-        </div>
-        <div class="help-row">
-          <div class="help-row-icon" style="background:#f3e5f5;">🔄</div>
-          <div>
-            <div class="help-row-title">Tekrar</div>
-            <div class="help-row-sub">SRS algoritması ile en çok zorlandığın kartları öne çıkarır. Her gün birkaç dakika yeterli.</div>
-          </div>
-        </div>
-
-        <div class="help-section-header" style="margin-top:16px;">🔊 Ses Butonları</div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#0d9488;color:white;">🔊</div>
-          <div class="help-row-sub" style="padding-top:2px;">Normal hızda Thai sesi — cihazın TTS motorunu kullanır.</div>
-        </div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#666;color:white;">🐢</div>
-          <div class="help-row-sub" style="padding-top:2px;">Yavaş mod — telaffuzu öğrenirken kullan.</div>
-        </div>
-      </div>
-
-      <!-- DERSLER -->
-      <div id="htab-dersler" class="htab-content">
-        <div class="help-card">
-          <div class="help-card-icon">📖</div>
-          <div>
-            <div class="help-card-title">Ders yapısı nasıl?</div>
-            <div class="help-card-body">Her derste 6-8 sekme var. Hepsini ziyaret ettiğinde progress bar ilerler.</div>
-          </div>
-        </div>
-
-        <div class="help-section-header">📑 Sekme Açıklamaları</div>
-
-        <div class="help-tab-row">
-          <span class="htag" style="background:#e8f5e9;color:#2e7d32;">📚 Sözcükler</span>
-          <span>Dersin temel kelimeleri. Her kelimede ipuçları, bağlam notu ve 7–12 örnek cümle var. ⭐ ile yıldızlayabilirsin.</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#e3f2fd;color:#1565c0;">🎵 Tonlar</span>
-          <span>Sadece Ders 1'de. Thai'nin 5 tonu — her tonun ses farkı ve pratik ipuçları.</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#fff3e0;color:#e65100;">📖 Gramer</span>
-          <span>Cümle yapısı kuralları. Formül + açıklama + seslenebilir örnekler. 📖 ikonuna bas → renk kodlu cümle analizi (S/V/O).</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#fce4ec;color:#880e4f;">🗣️ Konuşma</span>
-          <span>Gerçek hayat görevleri. "Fiyat sor", "Yön tarif et" gibi. 🔊 ile pratik yap.</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#f3e5f5;color:#4a148c;">👥 Diyalog</span>
-          <span>Ali ve Nada (kadın) arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#e8eaf6;color:#283593;">🎧 Dinleme</span>
-          <span>🔊'ya bas, Thai'yi dinle, doğru şıkkı seç. Kolay / Orta / Zor seviyeleri var.</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#e0f2f1;color:#004d40;">📝 Quiz</span>
-          <span>Dersin tüm içeriğini test eden çoktan seçmeli sorular.</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🔢 Sayılar</span>
-          <span>Sadece Ders 2'de. Tüm rakamlar + bileşik sayı örnekleri. Her karta dokun → sesini duy.</span>
-        </div>
-        <div class="help-tab-row">
-          <span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🧮 Hesapla</span>
-          <span>Sadece Ders 2'de. 0–9.999.999 arası herhangi bir sayıyı gir → Thai karşılığı + basamak dökümü.</span>
-        </div>
-
-        <div class="help-section-header" style="margin-top:16px;">🎨 Cümle Analizi Renk Kodu</div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
-          <span class="help-color-chip" style="background:#eff6ff;color:#3b82f6;">S = Özne</span>
-          <span class="help-color-chip" style="background:#f0fdf4;color:#10b981;">V = Yüklem</span>
-          <span class="help-color-chip" style="background:#fffbeb;color:#f59e0b;">O = Nesne</span>
-          <span class="help-color-chip" style="background:#fef2f2;color:#ef4444;">Soru / Olumsuz</span>
-          <span class="help-color-chip" style="background:#f0fdfa;color:#0d9488;">Kibar eki</span>
-          <span class="help-color-chip" style="background:#f5f3ff;color:#7c3aed;">Edat</span>
-          <span class="help-color-chip" style="background:#fff7ed;color:#c2410c;">Aspect</span>
-        </div>
-      </div>
-
-      <!-- TEKRAR (SRS) -->
-      <div id="htab-tekrar" class="htab-content">
-        <div class="help-card">
-          <div class="help-card-icon">🧠</div>
-          <div>
-            <div class="help-card-title">SRS nedir?</div>
-            <div class="help-card-body">Spaced Repetition System — aralıklı tekrar algoritması. Zorlandığın kartları daha sık, bildiğin kartları daha seyrek gösterir. Anki ile aynı mantık.</div>
-          </div>
-        </div>
-
-        <div class="help-section-header">⚙️ Nasıl Çalışır?</div>
-        <div class="help-step"><div class="help-step-num">1</div><div>Test sekmesine gir → <strong>Ders Bazlı Pratik</strong>'ten bir ders için <strong>+ Ekle</strong>'ye bas. Kelimeleri SRS'e ekler.</div></div>
-        <div class="help-step"><div class="help-step-num">2</div><div>Kart gösterilir. Önce flashcard (Thai'yi gör, Türkçeyi tahmin et). Cevabı gör'e bas.</div></div>
-        <div class="help-step"><div class="help-step-num">3</div><div>Kendini değerlendir: ❌ Bilmiyorum → 😰 Zor → 👍 Normal → ⚡ Kolay</div></div>
-        <div class="help-step"><div class="help-step-num">4</div><div>Algoritma bir sonraki gösterim tarihini hesaplar. Kolay = uzun aralık, Zor = kısa aralık.</div></div>
-        <div class="help-step"><div class="help-step-num">5</div><div>Her gün <strong>Bugünün Tekrarı</strong>'nı bitir. 5–10 dakika yeterli.</div></div>
-
-        <div class="help-section-header" style="margin-top:16px;">🃏 Kart Türleri</div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#e8f5e9;color:#2e7d32;">Yeni</div>
-          <div class="help-row-sub">İlk gösterimde her zaman flashcard. Thai → Türkçe yönünde.</div>
-        </div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#fff3e0;color:#e65100;">Tekrar</div>
-          <div class="help-row-sub">%50 flashcard, %50 çoktan seçmeli. Yön rastgele değişir.</div>
-        </div>
-
-        <div class="help-card" style="margin-top:14px;background:#fff8e1;border-color:#ffe082;">
-          <div class="help-card-icon">⚡</div>
-          <div>
-            <div class="help-card-title" style="color:#f57f17;">İpucu</div>
-            <div class="help-card-body">Bugünün tekrarını her sabah bitirirsen 3 hafta içinde 9 dersin kelimelerini kalıcı ezberlersin.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- İPUÇLARI -->
-      <div id="htab-ipuclari" class="htab-content">
-        <div class="help-section-header">🎯 Verimli Öğrenme</div>
-
-        <div class="help-tip">
-          <div class="help-tip-icon">🔊</div>
-          <div><strong>Her zaman sesli çalış.</strong> Thai tonal bir dil — yazıyı okumak yetmez, sesi duymak zorunlu. Karta her dokunuşta sesi dinle.</div>
-        </div>
-        <div class="help-tip">
-          <div class="help-tip-icon">🐢</div>
-          <div><strong>Yavaş modu kullan.</strong> Yeni bir kelimeyi öğrenirken önce 🐢 ile yavaş dinle, sonra 🔊 ile normal hızda.</div>
-        </div>
-        <div class="help-tip">
-          <div class="help-tip-icon">⭐</div>
-          <div><strong>Yıldızla seçici ol.</strong> Phuket'te en çok işine yarayacak cümleleri yıldızla. Liste sekmesinden hızlı tekrar yap.</div>
-        </div>
-        <div class="help-tip">
-          <div class="help-tip-icon">👥</div>
-          <div><strong>Diyalogları dinle.</strong> ▶ Tümü butonuyla diyaloğu baştan sona dinle — gerçek konuşma ritmi için.</div>
-        </div>
-        <div class="help-tip">
-          <div class="help-tip-icon">📖</div>
-          <div><strong>Cümle analizini kullan.</strong> Her örnek cümlede 📖 ikonuna bas — S/V/O yapısını görünce Thai grameri içselleşir.</div>
-        </div>
-        <div class="help-tip">
-          <div class="help-tip-icon">🔄</div>
-          <div><strong>SRS'i ihmal etme.</strong> Bugünün tekrarı 0 karta düşene kadar her gün birkaç dakika ayır.</div>
-        </div>
-        <div class="help-tip">
-          <div class="help-tip-icon">🇹🇭</div>
-          <div><strong>Kibar ekleri önemli.</strong> ครับ (khrap) veya ค่ะ (kha) olmadan cümle kaba kaçar. Her cümleye ekle.</div>
-        </div>
-
-        <div class="help-section-header" style="margin-top:16px;">⚡ Kısayollar</div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">Tap</div>
-          <div class="help-row-sub">Kart / kelimeye dokun → ses çalar</div>
-        </div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">⭐</div>
-          <div class="help-row-sub">Yıldız butonu → Liste'ye ekle / çıkar</div>
-        </div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">📖</div>
-          <div class="help-row-sub">Analiz ikonu → S/V/O breakdown</div>
-        </div>
-        <div class="help-row">
-          <div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">▶</div>
-          <div class="help-row-sub">Diyalog oynat → tüm satırları sırayla dinle</div>
-        </div>
-      </div>
-
-      <!-- HAKKINDA -->
-      <div id="htab-hakkinda" class="htab-content">
-        <div class="help-card" style="background:linear-gradient(135deg,#e0f2f1,#f0fdfa);border-color:#b2dfdb;">
-          <div style="font-size:32px">🇹🇭</div>
-          <div>
-            <div class="help-card-title" style="font-size:16px;">Kolay Tayca Öğrenme</div>
-            <div class="help-card-body">Phuket'te yaşayanlar için gerçek konuşma diline odaklı Tayca öğrenme uygulaması.</div>
-          </div>
-        </div>
-
-        <div class="help-section-header">📋 Uygulama Bilgisi</div>
-        <div class="help-info-row"><span>Versiyon</span><strong id="hakkinda-version">v3.02</strong></div>
-        <div class="help-info-row"><span>Toplam Ders</span><strong>19 (9 aktif)</strong></div>
-        <div class="help-info-row"><span>Ders Başına</span><strong>~10 kelime, 8 gramer, 4 diyalog</strong></div>
-        <div class="help-info-row"><span>Ses Motoru</span><strong>Web Speech API (cihaz TTS)</strong></div>
-        <div class="help-info-row"><span>Veri</span><strong>localStorage (internet gerekmez)</strong></div>
-        <div class="help-info-row"><span>Geliştirici</span><strong>Ali Dinçer, Phuket 🇹🇭</strong></div>
-
-        <div class="help-section-header" style="margin-top:16px;">📦 Versiyon Geçmişi</div>
-        <div class="help-changelog">
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.46</div>
-            <div class="changelog-desc">CORE 2000 Tayca kelime hazinesi eklendi — PDF'den parse edilen 1437 kelime, 29 yeni ders (ders 20-48), Google Translate ile Türkçe çeviriler</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.32</div>
-            <div class="changelog-desc">Her sekme için 60 saniyelik zorunlu bekleme — süre dolmadan ders tamamlanamıyor; progress bar ile geri sayım gösteriliyor</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.30</div>
-            <div class="changelog-desc">Ders 10-19 eklendi (tüm 19 ders tamamlandı); listening format düzeltmesi; ders 17-19 diyalog speaker alanı düzeltmesi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.29</div>
-            <div class="changelog-desc">Ders 10-14 eklendi: Plaj, Hastane, Acil Durumlar, Ev/İnternet, Sosyalleşme</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.28</div>
-            <div class="changelog-desc">Test modülü: diyalog kartları havuza eklendi; speakTestWord Google TTS kullanıyor; kart tipi etiketi (Diyalog · Tom/Lucy) gösteriliyor</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.21</div>
-            <div class="changelog-desc">Ali→Tom, Nada→Lucy isim değişikliği; Web Speech API erkek/kadın ses pitch düzeltmesi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.20</div>
-            <div class="changelog-desc">ders1.js metin/ses uyumsuzluğu düzeltildi — tüm Thai metinler (w1-w6 kelimeler, speaking görevleri) artık doğrudan veri dosyasında, index kayması hatası giderildi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.19</div>
-            <div class="changelog-desc">Google Cloud TTS (Chirp3-HD) entegrasyonu — Orus (erkek) ve Aoede (kadın) sesleri, Web Speech API fallback</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.18</div>
-            <div class="changelog-desc">Dosya bölme: ders1-9.js ayrı dosyalar, HTML ana gövde ~100KB oldu — lazy load ile ilk açılış hızlandı</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.17</div>
-            <div class="changelog-desc">Cache-busting: meta tagları + SW temizleme + versiyon kontrolü — GitHub Pages kısayolu güncellenme sorunu çözüldü</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.16</div>
-            <div class="changelog-desc">Tüm Dersler testi sadece tamamlanmış dersleri getiriyor</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.15</div>
-            <div class="changelog-desc">Flashcard ses butonu inline JS kaldırıldı · testGoBack() ile akıllı geri navigasyon</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.14</div>
-            <div class="changelog-desc">Test Script error düzeltildi: lessonNum null koruması, getWrongOptions tüm ders havuzu, sonuç butonları güncellendi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.13</div>
-            <div class="changelog-desc">Test ana menüsü 3 seçeneğe dönüştürüldü: Tek Ders / Tüm Dersler / Yıldızlılar</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.12</div>
-            <div class="changelog-desc">Test modülü: ders bazlı test, konu filtresi (Zamirler/İfadeler/Gramer), kart modu (Flashcard/MC/Karma), yön seçimi, sonuç ekranı</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.11</div>
-            <div class="changelog-desc">Gramer 9 ozne ornekleri 12 ye cikarildi (her zamirden 2er) · Quiz 20 soruya yukseltildi: 6 soru ozne odakli</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.10</div>
-            <div class="changelog-desc">Ders 1 Sözcükler sekmesine kişi zamirleri tablosu · Gramer 9. kural: Zamirler + örnekler · khrap/kha tekrarları temizlendi · chan/rao/khao kelimeleri eklendi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.09</div>
-            <div class="changelog-desc">khrap/kha tekrarları kaldırıldı · chan (w15), rao (w16), khao (w17) kelimeleri eklendi · (erkek)/(kadın) etiketleri temizlendi · w2 yapısal hata düzeltildi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.08</div>
-            <div class="changelog-desc">Sekme ziyaret silme: uzun bas yerine çift tıklama sistemi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.07</div>
-            <div class="changelog-desc">Sekme yıldızına uzun bas → ziyaret kaydını sil</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.06</div>
-            <div class="changelog-desc">Sekme butonları yenilendi: ○ girilmedi / ★ girildi (yeşil) / aktif (koyu) görsel sistemi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.05</div>
-            <div class="changelog-desc">Manuel ders tamamlama sistemi · Quiz sekmesinde "✅ Dersi Tamamladım" butonu · Tüm sekmeler ziyaret şartı · Ders kartında 🎉 rozet · Progress bar tamamlamayı baz alıyor</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.04</div>
-            <div class="changelog-desc">Canlı ders timer'ı (header'da ⏱) · Ders bazlı süre takibi · Quiz + Dinleme başarı skoru · Ders kartlarında tamamlama + skor + süre rozetleri</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.03</div>
-            <div class="changelog-desc">openGramModal düzeltmesi · Liste cümle analizi butonu çalışıyor</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.02</div>
-            <div class="changelog-desc">Cümle analizi (S/V/O breakdown) iyileştirmeleri · yin-dee-tii-dai-ruu-jak romanizasyon düzeltmesi · Ders 2'ye Sayılar + Hesapla sekmeleri · İşlevsel progress bar · Yardım rehberi</div>
-          </div>
-          <div class="changelog-item">
-            <div class="changelog-ver">v3.00</div>
-            <div class="changelog-desc">SRS sistemi (Anki benzeri aralıklı tekrar) · Test modülü (flashcard + çoktan seçmeli karma) · Yıldızlama + Liste sekmesi · Diyalog oynatma · Renk kodlu cümle analizi modalı · 9 tam ders</div>
-          </div>
-        </div>
-
-        <div class="help-card" style="margin-top:14px;background:#fff8e1;border-color:#ffe082;text-align:center;">
-          <div style="width:100%;text-align:center;">
-            <div style="font-size:24px;margin-bottom:6px;">🙏</div>
-            <div style="font-size:13px;color:#555;line-height:1.6;">Phuket'teki Thai komşularınla konuşmaya başlamana<br>yardımcı olmak için yapıldı.<br><strong style="color:#0d9488;">ขอบคุณครับ</strong></div>
-          </div>
-        </div>
-      </div>
-
+    <div style="overflow-y:auto;flex:1;padding:16px 18px;" id="help-content-area">
+    <div id="help-tabs-content"></div>
     </div><!-- /scroll area -->
   </div>
 </div>
@@ -1567,8 +1254,8 @@ function renderLessonList(){
     <div class="bonus-header" onclick="toggleBonus()">
       <div class="bonus-star">⭐</div>
       <div class="bonus-info">
-        <div class="bonus-title">BONUS — Çok Kullanılan Kelimeler</div>
-        <div class="bonus-sub">${totalWords} kelime · ${bonusSets} set · ${bonusDone}/${bonusSets} tamamlandı</div>
+        <div class="bonus-title">${s('bonus_title')}</div>
+        <div class="bonus-sub">${totalWords} ${s('bonus_words')} · ${bonusSets} ${s('bonus_sets')} · ${bonusDone}/${bonusSets} ${s('bonus_done')}</div>
       </div>
       <div class="bonus-toggle">${bonusOpen?'▲':'▼'}</div>
     </div>`;
@@ -1868,7 +1555,7 @@ function buildLessonHTML(L, meta){
     quizSrc = pick.map(w=>{
       const wrong = wds.filter(x=>x.id!==w.id).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.tr);
       const opts = [w.tr,...wrong].sort(()=>Math.random()-0.5);
-      return {q:`"${w.ro}" — ne anlama gelir?`, opts, c:opts.indexOf(w.tr)};
+      return {q:`"${w.ro}" ${s('quiz_q_suffix')}`, opts, c:opts.indexOf(w.tr)};
     });
   }
   const quiz = quizSrc.map((q,i)=>`
@@ -3049,6 +2736,190 @@ function switchHelpTab(tab, btn){
   if(el) el.classList.add('active');
   if(btn) btn.classList.add('active');
 }
+
+function buildHelpContent(){
+  const en = appLang==='en';
+  // Tab button labels
+  document.getElementById('htab-btn-genel').textContent   = en?'🏠 General':'🏠 Genel';
+  document.getElementById('htab-btn-dersler').textContent = en?'📚 Lessons':'📚 Dersler';
+  document.getElementById('htab-btn-tekrar').textContent  = en?'🔄 Review':'🔄 Tekrar';
+  document.getElementById('htab-btn-ipuclari').textContent= en?'💡 Tips':'💡 İpuçları';
+  document.getElementById('htab-btn-hakkinda').textContent= en?'ℹ️ About':'ℹ️ Hakkında';
+  document.getElementById('help-modal-title').textContent = en?'📖 How to Use?':'📖 Nasıl Kullanılır?';
+  document.getElementById('help-modal-sub').textContent   = en?'Easy Thai Learning · Guide':'Kolay Tayca Öğrenme · Rehber';
+
+  const chip = (bg,col,txt)=>`<span class="help-color-chip" style="background:${bg};color:${col};">${txt}</span>`;
+
+  document.getElementById('help-tabs-content').innerHTML = `
+    <!-- GENEL -->
+    <div id="htab-genel" class="htab-content active">
+      <div class="help-card">
+        <div class="help-card-icon">🇹🇭</div>
+        <div>
+          <div class="help-card-title">${en?'What is this app?':'Bu uygulama ne için?'}</div>
+          <div class="help-card-body">${en?'Designed to quickly learn everyday Thai used in Phuket. Focuses on real conversation, not tourist phrases.':'Phuket\'te günlük hayatta kullanılan Tayca\'yı hızlıca öğrenmek için tasarlandı. Turistik değil, gerçek konuşma diline odaklanır.'}</div>
+        </div>
+      </div>
+      <div class="help-section-header">📱 ${en?'Main Tabs':'Ana Sekmeler'}</div>
+      <div class="help-row"><div class="help-row-icon" style="background:#e8f5e9;">📚</div><div>
+        <div class="help-row-title">${en?'Lessons':'Dersler'}</div>
+        <div class="help-row-sub">${en?'19 lessons + BONUS vocabulary sets. Each lesson has 6–8 tabs. Green = completed.':'19 ders + BONUS kelime setleri. Her ders 6–8 sekme içerir. Yeşil = tamamlandı.'}</div>
+      </div></div>
+      <div class="help-row"><div class="help-row-icon" style="background:#fff3e0;">📝</div><div>
+        <div class="help-row-title">${en?'Test':'Test'}</div>
+        <div class="help-row-sub">${en?'Spaced repetition (SRS) system. Due cards today + lesson-based practice.':'Aralıklı tekrar (SRS) sistemi. Bugün tekrar edilecek kartlar + ders bazlı pratik.'}</div>
+      </div></div>
+      <div class="help-row"><div class="help-row-icon" style="background:#e3f2fd;">🌐</div><div>
+        <div class="help-row-title">${en?'Translate':'Çeviri'}</div>
+        <div class="help-row-sub">${en?'Instant Thai ↔ Turkish/English translation.':'Türkçe → Tayca veya Tayca → Türkçe anında çeviri.'}</div>
+      </div></div>
+      <div class="help-row"><div class="help-row-icon" style="background:#fce4ec;">📋</div><div>
+        <div class="help-row-title">${en?'Starred':'Liste'}</div>
+        <div class="help-row-sub">${en?'All your starred words, examples and dialogues. Tap 📖 for sentence breakdown.':'Yıldızladığın tüm kelimeler, örnekler ve diyaloglar. 📖 ile breakdown görebilirsin.'}</div>
+      </div></div>
+      <div class="help-row"><div class="help-row-icon" style="background:#f3e5f5;">🔄</div><div>
+        <div class="help-row-title">${en?'Review':'Tekrar'}</div>
+        <div class="help-row-sub">${en?'SRS algorithm surfaces the cards you struggle with most. A few minutes a day is enough.':'SRS algoritması en çok zorlandığın kartları öne çıkarır. Her gün birkaç dakika yeterli.'}</div>
+      </div></div>
+      <div class="help-section-header" style="margin-top:16px;">🔊 ${en?'Audio Buttons':'Ses Butonları'}</div>
+      <div class="help-row"><div class="help-badge" style="background:#0d9488;color:white;">🔊</div>
+        <div class="help-row-sub" style="padding-top:2px;">${en?'Normal-speed Thai audio — uses device TTS engine.':'Normal hızda Thai sesi — cihazın TTS motorunu kullanır.'}</div></div>
+      <div class="help-row"><div class="help-badge" style="background:#666;color:white;">🐢</div>
+        <div class="help-row-sub" style="padding-top:2px;">${en?'Slow mode — use while learning pronunciation.':'Yavaş mod — telaffuzu öğrenirken kullan.'}</div></div>
+    </div>
+
+    <!-- DERSLER -->
+    <div id="htab-dersler" class="htab-content">
+      <div class="help-card"><div class="help-card-icon">📖</div><div>
+        <div class="help-card-title">${en?'How are lessons structured?':'Ders yapısı nasıl?'}</div>
+        <div class="help-card-body">${en?'Each lesson has 6–8 tabs. Progress bar advances as you visit all of them.':'Her derste 6-8 sekme var. Hepsini ziyaret ettiğinde progress bar ilerler.'}</div>
+      </div></div>
+      <div class="help-section-header">📑 ${en?'Tab Descriptions':'Sekme Açıklamaları'}</div>
+      <div class="help-tab-row"><span class="htag" style="background:#e8f5e9;color:#2e7d32;">📚 ${en?'Words':'Sözcükler'}</span>
+        <span>${en?'Core vocabulary. Each word has usage tips, context notes, and 7–12 examples. Star with ⭐.':'Dersin temel kelimeleri. Her kelimede ipuçları, bağlam notu ve 7–12 örnek cümle var. ⭐ ile yıldızlayabilirsin.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#e3f2fd;color:#1565c0;">🎵 ${en?'Tones':'Tonlar'}</span>
+        <span>${en?'Lesson 1 only. Thai\'s 5 tones — pitch differences and practical tips.':'Sadece Ders 1\'de. Thai\'nin 5 tonu — her tonun ses farkı ve pratik ipuçları.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#fff3e0;color:#e65100;">📖 ${en?'Grammar':'Gramer'}</span>
+        <span>${en?'Sentence structure rules. Formula + explanation + speakable examples. Tap 📖 for color-coded S/V/O analysis.':'Cümle yapısı kuralları. Formül + açıklama + seslenebilir örnekler. 📖 ikonuna bas → renk kodlu S/V/O analizi.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#fce4ec;color:#880e4f;">🗣️ ${en?'Speaking':'Konuşma'}</span>
+        <span>${en?'Real-life tasks: "Ask the price", "Give directions". Practice with 🔊.':'Gerçek hayat görevleri. "Fiyat sor", "Yön tarif et". 🔊 ile pratik yap.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#f3e5f5;color:#4a148c;">👥 ${en?'Dialogue':'Diyalog'}</span>
+        <span>${en?'Realistic dialogues between Ali and Nada. Tap ▶ Play All to listen in sequence.':'Ali ve Nada arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#e8eaf6;color:#283593;">🎧 ${en?'Listening':'Dinleme'}</span>
+        <span>${en?'Tap 🔊, listen to Thai, choose the correct option. Easy / Medium / Hard levels.':'🔊\'ya bas, Thai\'yi dinle, doğru şıkkı seç. Kolay / Orta / Zor seviyeleri var.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#e0f2f1;color:#004d40;">📝 Quiz</span>
+        <span>${en?'Multiple-choice questions testing the full lesson content.':'Dersin tüm içeriğini test eden çoktan seçmeli sorular.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🔢 ${en?'Numbers':'Sayılar'}</span>
+        <span>${en?'Lesson 2 only. All digits + compound number examples. Tap a card to hear it.':'Sadece Ders 2\'de. Tüm rakamlar + bileşik sayı örnekleri. Her karta dokun → sesini duy.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🧮 ${en?'Calculator':'Hesapla'}</span>
+        <span>${en?'Lesson 2 only. Enter 0–9,999,999 → Thai spelling + digit breakdown.':'Sadece Ders 2\'de. 0–9.999.999 arası herhangi bir sayıyı gir → Thai karşılığı + basamak dökümü.'}</span></div>
+      <div class="help-section-header" style="margin-top:16px;">🎨 ${en?'Sentence Analysis Color Code':'Cümle Analizi Renk Kodu'}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+        ${chip('#eff6ff','#3b82f6',en?'S = Subject':'S = Özne')}
+        ${chip('#f0fdf4','#10b981',en?'V = Verb':'V = Yüklem')}
+        ${chip('#fffbeb','#f59e0b',en?'O = Object':'O = Nesne')}
+        ${chip('#fef2f2','#ef4444',en?'Question / Neg.':'Soru / Olumsuz')}
+        ${chip('#f0fdfa','#0d9488',en?'Polite particle':'Kibar eki')}
+        ${chip('#f5f3ff','#7c3aed',en?'Preposition':'Edat')}
+      </div>
+    </div>
+
+    <!-- TEKRAR -->
+    <div id="htab-tekrar" class="htab-content">
+      <div class="help-card"><div class="help-card-icon">🧠</div><div>
+        <div class="help-card-title">${en?'What is SRS?':'SRS nedir?'}</div>
+        <div class="help-card-body">${en?'Spaced Repetition System — shows difficult cards more often, easy cards less often. Same logic as Anki.':'Aralıklı tekrar algoritması. Zorlandığın kartları daha sık, bildiğin kartları daha seyrek gösterir. Anki ile aynı mantık.'}</div>
+      </div></div>
+      <div class="help-section-header">⚙️ ${en?'How It Works':'Nasıl Çalışır?'}</div>
+      <div class="help-step"><div class="help-step-num">1</div><div>${en?'Go to Test → Lesson Practice → tap <strong>+ Add</strong> for a lesson. Adds words to SRS.':'Test sekmesine gir → Ders Bazlı Pratik\'ten → <strong>+ Ekle</strong>\'ye bas. Kelimeleri SRS\'e ekler.'}</div></div>
+      <div class="help-step"><div class="help-step-num">2</div><div>${en?'A card appears. Flashcard first (see Thai, guess meaning). Tap Show Answer.':'Kart gösterilir. Önce flashcard (Thai\'yi gör, anlamı tahmin et). Cevabı gör\'e bas.'}</div></div>
+      <div class="help-step"><div class="help-step-num">3</div><div>${en?'Rate yourself: ❌ Don\'t know → 😰 Hard → 👍 OK → ⚡ Easy':'Kendini değerlendir: ❌ Bilmiyorum → 😰 Zor → 👍 Normal → ⚡ Kolay'}</div></div>
+      <div class="help-step"><div class="help-step-num">4</div><div>${en?'Algorithm calculates the next review date. Easy = long gap, Hard = short gap.':'Algoritma bir sonraki gösterim tarihini hesaplar. Kolay = uzun aralık, Zor = kısa aralık.'}</div></div>
+      <div class="help-step"><div class="help-step-num">5</div><div>${en?'Complete <strong>Today\'s Review</strong> daily. 5–10 minutes is enough.':'Her gün <strong>Bugünün Tekrarı</strong>\'nı bitir. 5–10 dakika yeterli.'}</div></div>
+      <div class="help-section-header" style="margin-top:16px;">🃏 ${en?'Card Types':'Kart Türleri'}</div>
+      <div class="help-row"><div class="help-badge" style="background:#e8f5e9;color:#2e7d32;">${en?'New':'Yeni'}</div>
+        <div class="help-row-sub">${en?'Always flashcard on first show. Thai → Meaning direction.':'İlk gösterimde her zaman flashcard. Thai → Anlam yönünde.'}</div></div>
+      <div class="help-row"><div class="help-badge" style="background:#fff3e0;color:#e65100;">${en?'Review':'Tekrar'}</div>
+        <div class="help-row-sub">${en?'50% flashcard, 50% multiple choice. Direction changes randomly.':'%50 flashcard, %50 çoktan seçmeli. Yön rastgele değişir.'}</div></div>
+      <div class="help-card" style="margin-top:14px;background:#fff8e1;border-color:#ffe082;">
+        <div class="help-card-icon">⚡</div>
+        <div>
+          <div class="help-card-title" style="color:#f57f17;">${en?'Tip':'İpucu'}</div>
+          <div class="help-card-body">${en?'If you finish today\'s review every morning, you\'ll permanently memorize 9 lessons\' worth of vocabulary within 3 weeks.':'Bugünün tekrarını her sabah bitirirsen 3 hafta içinde 9 dersin kelimelerini kalıcı ezberlersin.'}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- İPUÇLARI -->
+    <div id="htab-ipuclari" class="htab-content">
+      <div class="help-section-header">🎯 ${en?'Effective Learning':'Verimli Öğrenme'}</div>
+      <div class="help-tip"><div class="help-tip-icon">🔊</div>
+        <div><strong>${en?'Always study with audio.':'Her zaman sesli çalış.'}</strong> ${en?'Thai is tonal — reading alone isn\'t enough. Tap every card to hear it.':'Thai tonal bir dil — yazıyı okumak yetmez, sesi duymak zorunlu. Karta her dokunuşta sesi dinle.'}</div></div>
+      <div class="help-tip"><div class="help-tip-icon">🐢</div>
+        <div><strong>${en?'Use slow mode.':'Yavaş modu kullan.'}</strong> ${en?'When learning a new word, listen at 🐢 first, then at normal 🔊 speed.':'Yeni bir kelimeyi öğrenirken önce 🐢 ile yavaş dinle, sonra 🔊 ile normal hızda.'}</div></div>
+      <div class="help-tip"><div class="help-tip-icon">⭐</div>
+        <div><strong>${en?'Star selectively.':'Yıldızla seçici ol.'}</strong> ${en?'Star the sentences most useful in Phuket. Quickly review them from the List tab.':'Phuket\'te en çok işine yarayacak cümleleri yıldızla. Liste sekmesinden hızlı tekrar yap.'}</div></div>
+      <div class="help-tip"><div class="help-tip-icon">👥</div>
+        <div><strong>${en?'Listen to dialogues.':'Diyalogları dinle.'}</strong> ${en?'Use ▶ Play All to listen from start to finish — for real conversation rhythm.':'▶ Tümü butonuyla diyaloğu baştan sona dinle — gerçek konuşma ritmi için.'}</div></div>
+      <div class="help-tip"><div class="help-tip-icon">📖</div>
+        <div><strong>${en?'Use sentence analysis.':'Cümle analizini kullan.'}</strong> ${en?'Tap 📖 on any example — seeing S/V/O structure internalizes Thai grammar.':'Her örnek cümlede 📖 ikonuna bas — S/V/O yapısını görünce Thai grameri içselleşir.'}</div></div>
+      <div class="help-tip"><div class="help-tip-icon">🔄</div>
+        <div><strong>${en?'Don\'t skip SRS.':'SRS\'i ihmal etme.'}</strong> ${en?'Spend a few minutes every day until today\'s review hits 0.':'Bugünün tekrarı 0 karta düşene kadar her gün birkaç dakika ayır.'}</div></div>
+      <div class="help-tip"><div class="help-tip-icon">🇹🇭</div>
+        <div><strong>${en?'Polite particles matter.':'Kibar ekleri önemli.'}</strong> ${en?'ครับ (khrap) or ค่ะ (kha) without them sentences sound rude. Add them every time.':'ครับ (khrap) veya ค่ะ (kha) olmadan cümle kaba kaçar. Her cümleye ekle.'}</div></div>
+      <div class="help-section-header" style="margin-top:16px;">⚡ ${en?'Shortcuts':'Kısayollar'}</div>
+      <div class="help-row"><div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">Tap</div>
+        <div class="help-row-sub">${en?'Tap a card/word → plays audio':'Kart / kelimeye dokun → ses çalar'}</div></div>
+      <div class="help-row"><div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">⭐</div>
+        <div class="help-row-sub">${en?'Star button → add to / remove from List':'Yıldız butonu → Liste\'ye ekle / çıkar'}</div></div>
+      <div class="help-row"><div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">📖</div>
+        <div class="help-row-sub">${en?'Analysis icon → S/V/O breakdown':'Analiz ikonu → S/V/O breakdown'}</div></div>
+      <div class="help-row"><div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">▶</div>
+        <div class="help-row-sub">${en?'Play dialogue → listen to all lines in order':'Diyalog oynat → tüm satırları sırayla dinle'}</div></div>
+    </div>
+
+    <!-- HAKKINDA -->
+    <div id="htab-hakkinda" class="htab-content">
+      <div class="help-card" style="background:linear-gradient(135deg,#e0f2f1,#f0fdfa);border-color:#b2dfdb;">
+        <div style="font-size:32px">🇹🇭</div>
+        <div>
+          <div class="help-card-title" style="font-size:16px;">${en?'Easy Thai Learning':'Kolay Tayca Öğrenme'}</div>
+          <div class="help-card-body">${en?'A Thai learning app focused on real conversation for people living in Phuket.':'Phuket\'te yaşayanlar için gerçek konuşma diline odaklı Tayca öğrenme uygulaması.'}</div>
+        </div>
+      </div>
+      <div class="help-section-header">📋 ${en?'App Info':'Uygulama Bilgisi'}</div>
+      <div class="help-info-row"><span>${en?'Version':'Versiyon'}</span><strong id="hakkinda-version">v3.46</strong></div>
+      <div class="help-info-row"><span>${en?'Total Lessons':'Toplam Ders'}</span><strong>19 + 29 ${en?'BONUS sets':'BONUS set'}</strong></div>
+      <div class="help-info-row"><span>${en?'Per Lesson':'Ders Başına'}</span><strong>~10 ${en?'words, 8 grammar, 4 dialogues':'kelime, 8 gramer, 4 diyalog'}</strong></div>
+      <div class="help-info-row"><span>${en?'Audio':'Ses Motoru'}</span><strong>Web Speech API + Google TTS</strong></div>
+      <div class="help-info-row"><span>${en?'Data':'Veri'}</span><strong>localStorage (${en?'works offline':'internet gerekmez'})</strong></div>
+      <div class="help-info-row"><span>${en?'Developer':'Geliştirici'}</span><strong>Ali Dinçer, Phuket 🇹🇭</strong></div>
+      <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
+      <div class="help-changelog">
+        <div class="changelog-item"><div class="changelog-ver">v3.46+</div>
+          <div class="changelog-desc">${en?'Full English/Turkish bilingual UI; dark mode; BONUS accordion; 1437-word CORE 2000 vocabulary with example sentences and grammar analysis; scroll-to-top button':'Tam İngilizce/Türkçe arayüz; dark mode; BONUS accordion; 1437 kelime CORE 2000 hazinesi, örnek cümleler ve gramer analizi; yukarı çık butonu'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v3.32</div>
+          <div class="changelog-desc">${en?'60-second mandatory wait per tab — lesson can\'t be completed until time is up; progress bar countdown':'Her sekme için 60 saniyelik zorunlu bekleme — süre dolmadan ders tamamlanamıyor'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v3.30</div>
+          <div class="changelog-desc">${en?'Lessons 10–19 added (all 19 lessons complete); listening format fix; lesson 17–19 dialogue speaker fix':'Ders 10-19 eklendi (tüm 19 ders tamamlandı); listening format düzeltmesi'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v3.19</div>
+          <div class="changelog-desc">${en?'Google Cloud TTS (Chirp3-HD) integration — Orus (male) and Aoede (female) voices, Web Speech API fallback':'Google Cloud TTS (Chirp3-HD) entegrasyonu — Orus (erkek) ve Aoede (kadın) sesleri'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v3.00</div>
+          <div class="changelog-desc">${en?'SRS system (Anki-style spaced repetition) · Test module (flashcard + multiple choice) · Starring + List tab · Dialogue playback · Color-coded sentence analysis · 9 full lessons':'SRS sistemi · Test modülü (flashcard + çoktan seçmeli) · Yıldızlama + Liste · Diyalog oynatma · Renk kodlu cümle analizi · 9 tam ders'}</div></div>
+      </div>
+      <div class="help-card" style="margin-top:14px;background:#fff8e1;border-color:#ffe082;text-align:center;">
+        <div style="width:100%;text-align:center;">
+          <div style="font-size:24px;margin-bottom:6px;">🙏</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">${en?'Built to help you start talking to your Thai neighbours in Phuket.<br><strong style="color:#0d9488;">ขอบคุณครับ</strong>':'Phuket\'teki Thai komşularınla konuşmaya başlamana yardımcı olmak için yapıldı.<br><strong style="color:#0d9488;">ขอบคุณครับ</strong>'}</div>
+        </div>
+      </div>
+    </div>
+  `;
+  // Active tab state
+  const active = document.querySelector('#help-tabs-nav .htab.active');
+  if(active){ const tab = active.id.replace('htab-btn-',''); switchHelpTab(tab, active); }
+  else switchHelpTab('genel', document.getElementById('htab-btn-genel'));
+}
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.overlay').forEach(el=>{
   el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('open'); });
@@ -3057,7 +2928,7 @@ function saveGoogleTTSKey(){ localStorage.setItem('tayca_google_tts_key',documen
 function saveKey(){ localStorage.setItem('tayca_api_key',document.getElementById('api-key-input').value); alert(appLang==='en'?'Saved.':'Kaydedildi.'); }
 function saveGist(){
   localStorage.setItem('tayca_gist_token', document.getElementById('gist-token-input').value.trim());
-  document.getElementById('gist-status').textContent = '✅ Token kaydedildi.';
+  document.getElementById('gist-status').textContent = s('gist_saved');
 }
 
 const GIST_FILENAME = 'tayca-v3-sync.json';
@@ -3395,6 +3266,7 @@ function testVoices(){
 // Apply saved language to all data-lk elements and lang-btn states
 document.querySelectorAll('[data-lk]').forEach(el=>{ el.textContent=s(el.dataset.lk); });
 document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===appLang));
+buildHelpContent();
 renderLessonList();
 updateReviewBadge();
 updateProgressBar();
@@ -3407,23 +3279,23 @@ document.getElementById('google-tts-key-input').value = localStorage.getItem('ta
 </script>
 
 <!-- GRAMMAR DETAIL MODAL -->
-<button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Yukarı çık">↑</button>
+<button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <div id="gram-modal-overlay" class="gram-modal-overlay" onclick="closeGramModal(event)">
   <div class="gram-modal">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <div class="gram-modal-title">📖 Cümle Analizi</div>
+      <div class="gram-modal-title" data-lk="gram_modal_title">📖 Cümle Analizi</div>
       <button onclick="document.getElementById('gram-modal-overlay').classList.remove('open')" style="background:none;border:none;font-size:22px;cursor:pointer;color:#999;">✕</button>
     </div>
     <div id="gm-sentence" class="gram-modal-sentence"></div>
     <div id="gm-tr" class="gram-modal-tr"></div>
     <div id="gm-pieces" class="gram-pieces"></div>
     <div class="gram-legend">
-      <span class="legend-item" style="background:#eff6ff;color:#3b82f6;">S = Özne</span>
-      <span class="legend-item" style="background:#f0fdf4;color:#10b981;">V = Yüklem</span>
-      <span class="legend-item" style="background:#fffbeb;color:#f59e0b;">O = Nesne</span>
-      <span class="legend-item" style="background:#fef2f2;color:#ef4444;">Soru / Olumsuz</span>
-      <span class="legend-item" style="background:#f0fdfa;color:#0d9488;">Kibar</span>
+      <span class="legend-item" style="background:#eff6ff;color:#3b82f6;" data-lk="gram_legend_s">S = Özne</span>
+      <span class="legend-item" style="background:#f0fdf4;color:#10b981;" data-lk="gram_legend_v">V = Yüklem</span>
+      <span class="legend-item" style="background:#fffbeb;color:#f59e0b;" data-lk="gram_legend_o">O = Nesne</span>
+      <span class="legend-item" style="background:#fef2f2;color:#ef4444;" data-lk="gram_legend_q">Soru / Olumsuz</span>
+      <span class="legend-item" style="background:#f0fdfa;color:#0d9488;" data-lk="gram_legend_k">K = Belirteç</span>
     </div>
   </div>
 </div>
