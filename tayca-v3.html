@@ -1335,7 +1335,7 @@ function renderLessonCard(L){
       <div class="linfo">
         <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
         ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
-        <button class="ex-start-btn" onclick="startExercise(${L.num},event)" title="${appLang==='en'?'Start exercise':'Egzersiz başlat'}">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>
+        ${L.num<20?`<button class="ex-start-btn" onclick="startExercise(${L.num},event)">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>`:''}
       </div>
       <div class="larrow">›</div>
     </div>`;
@@ -3453,20 +3453,39 @@ async function startExercise(lessonNum, event){
   if(event){ event.stopPropagation(); }
   const meta = LESSONS_META.find(m=>m.num===lessonNum);
   if(!meta) return;
+  let LD = LESSONS[lessonNum];
+  if(!LD){
+    try{
+      await loadDers(lessonNum);
+      LD = LESSONS[lessonNum];
+    } catch(err){
+      // Try loading without version param as fallback
+      try {
+        await new Promise((res,rej)=>{
+          const s=document.createElement('script');
+          s.src=`ders${lessonNum}.js`;
+          s.onload=()=>res(); s.onerror=()=>rej(new Error('404'));
+          document.head.appendChild(s);
+        });
+        LD = LESSONS[lessonNum];
+      } catch(e2){ /* ignore */ }
+    }
+  }
+  if(!LD){
+    alert((appLang==='en'?'Could not load lesson data. Please open the lesson first.':'Ders verisi yüklenemedi. Lütfen önce derse girin.'));
+    return;
+  }
   try{
-    await loadDers(lessonNum);
-    const LD = LESSONS[lessonNum];
-    if(!LD){ alert('Ders verisi yüklenemedi.'); return; }
     exLessonNum = lessonNum;
     exExercises = buildExercises(LD);
-    if(exExercises.length===0){ alert(appLang==='en'?'Not enough data for exercises.':'Bu ders için yeterli egzersiz verisi yok.'); return; }
+    if(exExercises.length===0){ alert(appLang==='en'?'Not enough exercise data for this lesson.':'Bu ders için yeterli egzersiz verisi yok.'); return; }
     exIdx = 0; exLives = 3; exSelected = null; exAnswerWords = []; exAnswered = false; exCorrectCount = 0;
     document.getElementById('exercise-overlay').classList.add('open');
     document.getElementById('ex-footer').style.display='';
     document.body.style.overflow = 'hidden';
     renderExercise();
   } catch(err){
-    alert('Ders yüklenemedi: '+err.message);
+    alert((appLang==='en'?'Exercise error: ':'Egzersiz hatası: ')+err.message);
   }
 }
 
