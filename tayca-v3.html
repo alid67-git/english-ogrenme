@@ -1440,25 +1440,43 @@ async function openLessonAt(num, tab, event){
 
 function showLessonStars(num, event){
   if(event) event.stopPropagation();
-  // Filter starred items that belong to this lesson
   const prefixes = ['w'+num+'__', 'ex'+num+'w', 'dia'+num];
-  const lessonKeys = Object.keys(starred).filter(k=>prefixes.some(p=>k.startsWith(p)));
-  if(lessonKeys.length===0){
-    alert(appLang==='en'?'No starred items for this lesson yet. Star words or sentences inside the lesson.':'Bu derse ait yıldızlı öğe yok. Dersin içinde kelime veya cümleleri yıldızlayın.');
+  const items = Object.entries(starred).filter(([k,v])=>v&&typeof v==='object'&&prefixes.some(p=>k.startsWith(p)));
+  const en = appLang==='en';
+  if(items.length===0){
+    alert(en?'No starred items for this lesson yet. Star words or sentences inside the lesson.':'Bu derse ait yıldızlı öğe yok. Dersin içinde kelime veya cümleleri yıldızlayın.');
     return;
   }
-  // Temporarily filter list view to this lesson's stars
-  _lessonStarFilter = num;
-  switchView('list', document.querySelector('.nbtn[onclick*="list"]'));
-  renderList();
-  // Show a small banner
-  const banner = document.createElement('div');
-  banner.id = 'star-filter-banner';
-  banner.style.cssText = 'background:#fce4ec;border:1.5px solid #f48fb1;border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:12px;color:#880e4f;font-weight:700;display:flex;justify-content:space-between;align-items:center;';
   const meta = LESSONS_META.find(m=>m.num===num);
-  banner.innerHTML = `<span>${meta?meta.emoji+' '+Lf(meta,'title'):''} — ${lessonKeys.length} ${appLang==='en'?'starred':'yıldızlı'}</span><button onclick="_lessonStarFilter=null;this.parentNode.remove();renderList();" style="background:none;border:none;font-size:16px;cursor:pointer;color:#880e4f;">✕</button>`;
-  const container = document.getElementById('list-container');
-  if(container) container.parentNode.insertBefore(banner, container);
+  document.getElementById('lstar-title').textContent = (meta?meta.emoji+' '+Lf(meta,'title'):'Ders ')+' — '+(en?'Starred':'Yıldızlılar');
+  document.getElementById('lstar-count').textContent = items.length+' '+(en?'item':'öğe');
+  document.getElementById('lstar-list').innerHTML = items.map(([k,v])=>{
+    const hasBd = v.bd && Array.isArray(v.bd) && v.bd.length>0;
+    const thEsc = esc(v.th||'');
+    const trEsc = esc(v.tr||'');
+    return `<div class="word-card">
+      <div class="word-top">
+        <div>
+          <div class="word-thai">${v.th||''}</div>
+          <div class="word-ro">${v.ro||''}</div>
+          <div class="word-tr">${v.tr||''}</div>
+        </div>
+        <div class="word-btns">
+          <button class="sbtn on" data-star="${esc(k)}" data-stype="${v.type}" data-th="${thEsc}" data-ro="${esc(v.ro||'')}" data-tr="${trEsc}">⭐</button>
+          <button class="abtn" data-speak="${esc(v.th||v.ro||'')}" data-slow="0">🔊</button>
+          <button class="abtn slow" data-speak="${esc(v.th||v.ro||'')}" data-slow="1">🐢</button>
+        </div>
+      </div>
+      ${hasBd?`<button onclick='openGramModal(${JSON.stringify(v.th||"")},${JSON.stringify(v.tr||"")},${JSON.stringify(v.bd)})' style="margin-top:6px;background:none;border:1px solid #e0f2f1;border-radius:6px;padding:3px 10px;font-size:11px;color:#0d9488;cursor:pointer;">${s('list_analysis')}</button>`:''}
+    </div>`;
+  }).join('');
+  const ov = document.getElementById('lstar-overlay');
+  ov.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeLessonStars(){
+  document.getElementById('lstar-overlay').style.display='none';
+  document.body.style.overflow='';
 }
 let _lessonStarFilter = null;
 
@@ -3865,6 +3883,16 @@ document.getElementById('google-tts-key-input').value = localStorage.getItem('ta
     <div class="ex-feedback-bar" id="ex-feedback"></div>
     <button id="ex-check-btn" class="ex-check-btn" disabled onclick="exBtnClick()">Kontrol et</button>
   </div>
+</div>
+
+<!-- LESSON STARS OVERLAY -->
+<div id="lstar-overlay" style="display:none;position:fixed;inset:0;background:white;z-index:500;flex-direction:column;overflow:hidden;">
+  <div style="display:flex;align-items:center;gap:10px;padding:14px 16px 10px;border-bottom:1.5px solid #f0f0f0;flex-shrink:0;">
+    <button onclick="closeLessonStars()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#777;line-height:1;padding:0 4px;">←</button>
+    <div id="lstar-title" style="font-size:15px;font-weight:700;color:#333;flex:1;"></div>
+    <div id="lstar-count" style="font-size:12px;color:#888;"></div>
+  </div>
+  <div id="lstar-list" style="flex:1;overflow-y:auto;padding:12px 14px;"></div>
 </div>
 
 <!-- GRAMMAR DETAIL MODAL -->
