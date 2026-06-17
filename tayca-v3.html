@@ -577,7 +577,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.50';
+const APP_VERSION = 'v3.51';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -876,7 +876,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.50</span>
+  <span class="vbadge" id="app-version">v3.51</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -3606,12 +3606,7 @@ function showExFeedback(correct, correctAnswer){
 
 function speakExThai(th){
   if(!th) return;
-  const u = new SpeechSynthesisUtterance(th);
-  u.lang = 'th-TH'; u.rate = 0.9;
-  const voices = speechSynthesis.getVoices().filter(v=>v.lang.startsWith('th'));
-  if(voices.length) u.voice = voices[0];
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
+  try{ speak(th); } catch(e){ console.warn('speakExThai error:',e); }
 }
 
 function renderExercise(){
@@ -3656,7 +3651,7 @@ function renderExercise(){
       </div>
       <div class="ex-skip-listen" onclick="speakExThai('${e.audioTh.replace(/'/g,"\\'")}')">🐢 ${en?'Play slowly':'Yavaş dinle'}</div>`;
     // Auto-play audio
-    setTimeout(()=>speakExThai(e.audioTh), 400);
+    setTimeout(()=>{ try{ speakExThai(e.audioTh); }catch(err){} }, 400);
   }
   else if(e.type==='translate-choice'){
     content.innerHTML = `
@@ -3722,9 +3717,9 @@ function exBankClick(btn, word, idx){
   chip.dataset.bankIdx = idx;
   chip.onclick = ()=>{
     if(exAnswered) return;
-    // remove from answer
-    exAnswerWords = exAnswerWords.filter((_,i)=>chip.dataset.bankIdx!=idx || exAnswerWords.findIndex(x=>x.idx==idx)!==i);
-    exAnswerWords = exAnswerWords.filter(x=>x.idx!=idx);
+    // remove first occurrence of this idx from answer
+    const pos = exAnswerWords.findIndex(x=>x.idx===idx);
+    if(pos!==-1) exAnswerWords.splice(pos,1);
     chip.remove();
     const b = document.querySelector(`.ex-bank-btn[data-idx="${idx}"]`);
     if(b) b.classList.remove('used');
@@ -3823,6 +3818,7 @@ function showExFinish(){
 }
 
 function showExFailed(){
+  saveExStats();
   const en = appLang==='en';
   const content = document.getElementById('ex-content');
   content.innerHTML = `
