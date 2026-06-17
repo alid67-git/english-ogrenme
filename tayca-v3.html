@@ -529,18 +529,24 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .ex-finish-stat-lbl{font-size:12px;color:#afafaf;}
 .ex-finish-btn{background:#58cc02;color:white;border:none;border-radius:14px;padding:16px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #46a302;}
 /* Quick action buttons on lesson cards */
-.lcard-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
-.lca-btn{border-radius:10px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:.15s;border:2px solid;}
+.lcard-actions{display:flex;flex-wrap:nowrap;gap:5px;margin-top:7px;}
+.lca-btn{border-radius:8px;padding:4px 7px;font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:2px;transition:.15s;border:1.5px solid;white-space:nowrap;flex:1;justify-content:center;}
 .lca-btn.ex {background:#fff9db;border-color:#ffcc00;color:#b45309;}
 .lca-btn.sp {background:#e8f5e9;border-color:#66bb6a;color:#2e7d32;}
 .lca-btn.qz {background:#e3f2fd;border-color:#42a5f5;color:#1565c0;}
 .lca-btn.st {background:#fce4ec;border-color:#f48fb1;color:#880e4f;}
 .lca-btn:active{opacity:.7;transform:scale(.96);}
+/* Lesson star rating */
+.lcard-stars{display:flex;gap:2px;margin-top:5px;font-size:13px;line-height:1;}
+.lcard-stars .s{color:#e0e0e0;}
+.lcard-stars .s.on{color:#fbbf24;}
 @media(prefers-color-scheme:dark){
   .lca-btn.ex{background:#2a2200;border-color:#b8860b;color:#ffd54f;}
   .lca-btn.sp{background:#0a2010;border-color:#388e3c;color:#a5d6a7;}
   .lca-btn.qz{background:#0a1828;border-color:#1565c0;color:#90caf9;}
   .lca-btn.st{background:#2a0a18;border-color:#880e4f;color:#f48fb1;}
+  .lcard-stars .s{color:#333;}
+  .lcard-stars .s.on{color:#fbbf24;}
 }
 /* Dark mode overrides */
 @media(prefers-color-scheme:dark){
@@ -571,7 +577,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.49';
+const APP_VERSION = 'v3.50';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -870,7 +876,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.49</span>
+  <span class="vbadge" id="app-version">v3.50</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1347,6 +1353,7 @@ function renderLessonCard(L){
       <div class="linfo">
         <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
         ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
+        ${renderLessonStars(L.num)}
         <div class="lcard-actions" onclick="event.stopPropagation()">
           ${L.num<20?`<button class="lca-btn ex" onclick="startExercise(${L.num},event)">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>`:''}
           <button class="lca-btn sp" onclick="openLessonAt(${L.num},'speaking',event)">🗣️ ${appLang==='en'?'Speaking':'Konuşma'}</button>
@@ -1400,6 +1407,27 @@ function getTabLabels(){
     speaking:'🗣️ '+s('tab_speaking'), dialogue:'👥 '+s('tab_dialogue'), listening:'🎧 '+s('tab_listening'),
     quiz:'📝 '+s('tab_quiz'), numbers:'🔢 '+s('tab_numbers'), calc:'🧮 '+s('tab_calc')
   };
+}
+
+function getLessonStarCount(num){
+  const st = lessonStats[num];
+  if(!st) return 0;
+  const correct = (st.quizCorrect||0)+(st.listenCorrect||0)+(st.exCorrect||0);
+  const total   = (st.quizTotal||0)+(st.listenTotal||0)+(st.exTotal||0);
+  if(total===0) return 0;
+  const pct = correct/total;
+  if(pct>=0.95) return 5;
+  if(pct>=0.75) return 4;
+  if(pct>=0.55) return 3;
+  if(pct>=0.35) return 2;
+  return 1;
+}
+
+function renderLessonStars(num){
+  const n = getLessonStarCount(num);
+  if(n===0) return '';
+  const stars = Array.from({length:5},(_,i)=>`<span class="s${i<n?' on':''}">★</span>`).join('');
+  return `<div class="lcard-stars">${stars}</div>`;
 }
 
 async function openLessonAt(num, tab, event){
@@ -3765,7 +3793,16 @@ function exBtnClick(){
   }
 }
 
+function saveExStats(){
+  const st = getStats(exLessonNum);
+  st.exCorrect = (st.exCorrect||0) + exCorrectCount;
+  st.exTotal   = (st.exTotal||0)   + exExercises.length;
+  saveLessonStats();
+  renderLessonList(); // refresh stars
+}
+
 function showExFinish(){
+  saveExStats();
   const en = appLang==='en';
   const content = document.getElementById('ex-content');
   const accuracy = exExercises.length>0 ? Math.round(exCorrectCount/exExercises.length*100) : 0;
