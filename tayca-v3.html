@@ -577,7 +577,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.51';
+const APP_VERSION = 'v3.53';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -876,7 +876,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.51</span>
+  <span class="vbadge" id="app-version">v3.53</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1355,7 +1355,7 @@ function renderLessonCard(L){
         ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
         ${renderLessonStars(L.num)}
         <div class="lcard-actions" onclick="event.stopPropagation()">
-          ${L.num<20?`<button class="lca-btn ex" onclick="startExercise(${L.num},event)">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>`:''}
+          <button class="lca-btn ex" onclick="startExercise(${L.num},event)">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>
           <button class="lca-btn sp" onclick="openLessonAt(${L.num},'speaking',event)">🗣️ ${appLang==='en'?'Speaking':'Konuşma'}</button>
           <button class="lca-btn qz" onclick="openLessonAt(${L.num},'quiz',event)">📝 ${appLang==='en'?'Quiz':'Sınav'}</button>
           <button class="lca-btn st" onclick="showLessonStars(${L.num},event)">⭐ ${appLang==='en'?'Starred':'Yıldızlılar'}</button>
@@ -3479,8 +3479,10 @@ function exShuffle(arr){
 }
 
 function buildExercises(LD){
-  const words = (LD.words||[]).filter(w=>w.th && w.tr && w.ro);
+  // BONUS lessons have no th (Thai script); use ro as display fallback
+  const words = (LD.words||[]).filter(w=>w.tr && w.ro);
   if(words.length<2) return [];
+  const hasTh = words.some(w=>w.th);
   const ex = [];
 
   // Helper: pick N distractors from words pool
@@ -3488,56 +3490,59 @@ function buildExercises(LD){
     return exShuffle(words.filter(w=>w.id!==exclude_id)).slice(0,n);
   }
 
-  // 1. word-choice: see Turkish prompt → pick correct Thai card (4 options)
+  // 1. word-choice: see Turkish prompt → pick correct Thai/Romanization card
   const wc_words = exShuffle([...words]).slice(0, Math.min(6, words.length));
   wc_words.forEach(w=>{
     const dist = distractors(w.id, 3);
     if(dist.length<1) return;
+    const display = w.th||w.ro;
     const opts = exShuffle([
-      {th:w.th, ro:w.ro, correct:true},
-      ...dist.map(d=>({th:d.th, ro:d.ro, correct:false}))
+      {th:display, ro:w.ro, correct:true},
+      ...dist.map(d=>({th:d.th||d.ro, ro:d.ro, correct:false}))
     ]);
-    ex.push({type:'word-choice', prompt:w.tr, correctTh:w.th, options:opts});
+    ex.push({type:'word-choice', prompt:w.tr, correctTh:display, options:opts});
   });
 
-  // 2. listen-choice: hear audio of Thai sentence → pick which sentence it was
+  // 2. listen-choice: hear audio → pick sentence (only if Thai script available for TTS)
   const allExamples = words.flatMap(w=>(w.examples||[]).map(e=>({...e, wordTr:w.tr})));
-  const lc_exs = exShuffle([...allExamples]).slice(0, 4);
-  lc_exs.forEach(e=>{
-    if(!e.th || !e.ro) return;
-    const dist = exShuffle(allExamples.filter(x=>x.th!==e.th)).slice(0,3);
-    if(dist.length<1) return;
-    const opts = exShuffle([
-      {th:e.th, ro:e.ro, correct:true},
-      ...dist.map(d=>({th:d.th||'', ro:d.ro||'', correct:false}))
-    ]);
-    ex.push({type:'listen-choice', audioTh:e.th, options:opts});
-  });
+  if(hasTh){
+    const lc_exs = exShuffle([...allExamples]).slice(0, 4);
+    lc_exs.forEach(e=>{
+      if(!e.th || !e.ro) return;
+      const dist = exShuffle(allExamples.filter(x=>x.th!==e.th)).slice(0,3);
+      if(dist.length<1) return;
+      const opts = exShuffle([
+        {th:e.th, ro:e.ro, correct:true},
+        ...dist.map(d=>({th:d.th||'', ro:d.ro||'', correct:false}))
+      ]);
+      ex.push({type:'listen-choice', audioTh:e.th, options:opts});
+    });
+  }
 
-  // 3. translate-choice: see Thai sentence → pick correct Turkish (4 options)
+  // 3. translate-choice: see Thai/Romanization sentence → pick correct Turkish
   const tc_exs = exShuffle([...allExamples]).slice(0, 5);
   tc_exs.forEach(e=>{
-    if(!e.th || !e.tr) return;
+    if((!e.th && !e.ro) || !e.tr) return;
     const dist = exShuffle(allExamples.filter(x=>x.tr!==e.tr)).slice(0,3);
     if(dist.length<1) return;
     const opts = exShuffle([
       {tr:e.tr, correct:true},
       ...dist.map(d=>({tr:d.tr, correct:false}))
     ]);
-    ex.push({type:'translate-choice', th:e.th, ro:e.ro, options:opts});
+    ex.push({type:'translate-choice', th:e.th||e.ro, ro:e.ro, options:opts});
   });
 
-  // 4. translate-wordbank: see Thai sentence → build Turkish from word tiles
+  // 4. translate-wordbank: see Thai/Romanization sentence → build Turkish from tiles
   const wb_exs = exShuffle([...allExamples]).slice(0, 4);
   wb_exs.forEach(e=>{
-    if(!e.th || !e.tr) return;
+    if((!e.th && !e.ro) || !e.tr) return;
     const correctWords = e.tr.split(/\s+/).filter(Boolean);
     if(correctWords.length<2) return;
     // add 2-3 distractor words
     const distWords = ['değil','ama','çok','var','yok','bir','ve','de','da','ile','bu','sen','ben','o'];
     const extra = exShuffle(distWords.filter(w=>!correctWords.includes(w))).slice(0,3);
     const bank = exShuffle([...correctWords, ...extra]);
-    ex.push({type:'translate-wordbank', th:e.th, ro:e.ro, answer:e.tr, correctWords, bank});
+    ex.push({type:'translate-wordbank', th:e.th||e.ro, ro:e.ro, answer:e.tr, correctWords, bank});
   });
 
   // Interleave: word-choice first, then mix others
