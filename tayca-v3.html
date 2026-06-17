@@ -528,9 +528,20 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .ex-finish-stat-val{font-size:28px;font-weight:700;color:#1cb0f6;}
 .ex-finish-stat-lbl{font-size:12px;color:#afafaf;}
 .ex-finish-btn{background:#58cc02;color:white;border:none;border-radius:14px;padding:16px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #46a302;}
-/* Exercise button on lesson cards */
-.ex-start-btn{background:#fff9db;border:2px solid #ffcc00;border-radius:10px;padding:5px 10px;font-size:12px;font-weight:700;color:#b45309;cursor:pointer;margin-top:8px;display:inline-flex;align-items:center;gap:4px;transition:.15s;}
-.ex-start-btn:hover{background:#fef3c7;}
+/* Quick action buttons on lesson cards */
+.lcard-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.lca-btn{border-radius:10px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:.15s;border:2px solid;}
+.lca-btn.ex {background:#fff9db;border-color:#ffcc00;color:#b45309;}
+.lca-btn.sp {background:#e8f5e9;border-color:#66bb6a;color:#2e7d32;}
+.lca-btn.qz {background:#e3f2fd;border-color:#42a5f5;color:#1565c0;}
+.lca-btn.st {background:#fce4ec;border-color:#f48fb1;color:#880e4f;}
+.lca-btn:active{opacity:.7;transform:scale(.96);}
+@media(prefers-color-scheme:dark){
+  .lca-btn.ex{background:#2a2200;border-color:#b8860b;color:#ffd54f;}
+  .lca-btn.sp{background:#0a2010;border-color:#388e3c;color:#a5d6a7;}
+  .lca-btn.qz{background:#0a1828;border-color:#1565c0;color:#90caf9;}
+  .lca-btn.st{background:#2a0a18;border-color:#880e4f;color:#f48fb1;}
+}
 /* Dark mode overrides */
 @media(prefers-color-scheme:dark){
   #exercise-overlay{background:#1e1e1e;}
@@ -560,7 +571,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.48';
+const APP_VERSION = 'v3.49';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -859,7 +870,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.48</span>
+  <span class="vbadge" id="app-version">v3.49</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1290,6 +1301,7 @@ function starKey(prefix, th){ return prefix+'__'+th.slice(0,20); }
 
 // =================== NAV ===================
 function switchView(v, btn){
+  if(v!=='list'){ _lessonStarFilter=null; const b=document.getElementById('star-filter-banner'); if(b) b.remove(); }
   document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
   document.getElementById(v+'-view').classList.add('active');
   document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
@@ -1335,7 +1347,12 @@ function renderLessonCard(L){
       <div class="linfo">
         <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
         ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
-        ${L.num<20?`<button class="ex-start-btn" onclick="startExercise(${L.num},event)">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>`:''}
+        <div class="lcard-actions" onclick="event.stopPropagation()">
+          ${L.num<20?`<button class="lca-btn ex" onclick="startExercise(${L.num},event)">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>`:''}
+          <button class="lca-btn sp" onclick="openLessonAt(${L.num},'speaking',event)">🗣️ ${appLang==='en'?'Speaking':'Konuşma'}</button>
+          <button class="lca-btn qz" onclick="openLessonAt(${L.num},'quiz',event)">📝 ${appLang==='en'?'Quiz':'Sınav'}</button>
+          <button class="lca-btn st" onclick="showLessonStars(${L.num},event)">⭐ ${appLang==='en'?'Starred':'Yıldızlılar'}</button>
+        </div>
       </div>
       <div class="larrow">›</div>
     </div>`;
@@ -1384,6 +1401,38 @@ function getTabLabels(){
     quiz:'📝 '+s('tab_quiz'), numbers:'🔢 '+s('tab_numbers'), calc:'🧮 '+s('tab_calc')
   };
 }
+
+async function openLessonAt(num, tab, event){
+  if(event) event.stopPropagation();
+  await openLesson(num);
+  // After openLesson renders, switch to the requested tab
+  const btn = document.querySelector(`.ltab[data-tab="${tab}"]`);
+  switchLessonTab(tab, btn||undefined);
+}
+
+function showLessonStars(num, event){
+  if(event) event.stopPropagation();
+  // Filter starred items that belong to this lesson
+  const prefixes = ['w'+num+'__', 'ex'+num+'w', 'dia'+num];
+  const lessonKeys = Object.keys(starred).filter(k=>prefixes.some(p=>k.startsWith(p)));
+  if(lessonKeys.length===0){
+    alert(appLang==='en'?'No starred items for this lesson yet. Star words or sentences inside the lesson.':'Bu derse ait yıldızlı öğe yok. Dersin içinde kelime veya cümleleri yıldızlayın.');
+    return;
+  }
+  // Temporarily filter list view to this lesson's stars
+  _lessonStarFilter = num;
+  switchView('list', document.querySelector('.nbtn[onclick*="list"]'));
+  renderList();
+  // Show a small banner
+  const banner = document.createElement('div');
+  banner.id = 'star-filter-banner';
+  banner.style.cssText = 'background:#fce4ec;border:1.5px solid #f48fb1;border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:12px;color:#880e4f;font-weight:700;display:flex;justify-content:space-between;align-items:center;';
+  const meta = LESSONS_META.find(m=>m.num===num);
+  banner.innerHTML = `<span>${meta?meta.emoji+' '+Lf(meta,'title'):''} — ${lessonKeys.length} ${appLang==='en'?'starred':'yıldızlı'}</span><button onclick="_lessonStarFilter=null;this.parentNode.remove();renderList();" style="background:none;border:none;font-size:16px;cursor:pointer;color:#880e4f;">✕</button>`;
+  const container = document.getElementById('list-container');
+  if(container) container.parentNode.insertBefore(banner, container);
+}
+let _lessonStarFilter = null;
 
 async function openLesson(num){
   const meta = LESSONS_META.find(m=>m.num===num);
@@ -2785,8 +2834,14 @@ function filterList(f, btn){
   renderList();
 }
 function renderList(){
+  // Remove stale banner when re-rendering without filter
+  if(!_lessonStarFilter){ const b=document.getElementById('star-filter-banner'); if(b) b.remove(); }
+  const lessonPrefixes = _lessonStarFilter!=null
+    ? ['w'+_lessonStarFilter+'__','ex'+_lessonStarFilter+'w','dia'+_lessonStarFilter]
+    : null;
   const items = Object.entries(starred).filter(([k,v])=>{
     if(!v||typeof v!=='object') return false;
+    if(lessonPrefixes && !lessonPrefixes.some(p=>k.startsWith(p))) return false;
     if(listFilter==='all') return true;
     return v.type===listFilter;
   });
