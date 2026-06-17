@@ -452,6 +452,105 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
   .review-done-sub{color:#666;}
   .lesson-srs-row{border-top-color:#252525;}
 }
+
+/* =================== EXERCISE OVERLAY (Duolingo-style) =================== */
+#exercise-overlay{display:none;position:fixed;inset:0;background:white;z-index:500;flex-direction:column;overflow:hidden;}
+#exercise-overlay.open{display:flex;}
+.ex-topbar{display:flex;align-items:center;gap:12px;padding:14px 16px 10px;flex-shrink:0;}
+.ex-close-btn{background:none;border:none;font-size:22px;color:#afafaf;cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1;}
+.ex-pb-wrap{flex:1;height:16px;background:#e5e5e5;border-radius:8px;overflow:hidden;}
+.ex-pb-fill{height:100%;background:#58cc02;border-radius:8px;transition:width .4s ease;}
+.ex-hearts{display:flex;gap:4px;font-size:18px;}
+.ex-content{flex:1;overflow-y:auto;padding:16px 20px 0;display:flex;flex-direction:column;}
+.ex-q-label{font-size:17px;font-weight:700;color:#3c3c3c;margin-bottom:20px;}
+/* Word choice */
+.ex-prompt-box{display:flex;align-items:center;gap:12px;background:#f7f7f7;border:2px solid #e5e5e5;border-radius:14px;padding:14px 16px;margin-bottom:24px;}
+.ex-prompt-th{font-size:15px;font-weight:700;color:#3c3c3c;flex:1;}
+.ex-speak-sm{background:none;border:2px solid #e5e5e5;border-radius:8px;padding:6px 8px;cursor:pointer;font-size:16px;color:#1cb0f6;}
+.ex-word-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.ex-word-card{border:2px solid #e5e5e5;border-radius:14px;padding:20px 12px;text-align:center;cursor:pointer;transition:.15s;background:white;box-shadow:0 3px 0 #e5e5e5;user-select:none;}
+.ex-word-card:active{transform:translateY(2px);box-shadow:none;}
+.ex-word-card.selected{border-color:#1cb0f6;background:#eaf6ff;box-shadow:0 3px 0 #1ba5e5;}
+.ex-word-card.correct{border-color:#58cc02;background:#d7ffb8;box-shadow:0 3px 0 #4caf00;}
+.ex-word-card.wrong{border-color:#ff4b4b;background:#ffe0e0;box-shadow:0 3px 0 #d93a3a;}
+.ex-word-th{font-size:18px;font-weight:700;color:#3c3c3c;font-family:'Sarabun',sans-serif;margin-bottom:4px;}
+.ex-word-ro{font-size:12px;color:#777;}
+/* Listen choice */
+.ex-listen-big-btn{width:90px;height:90px;border-radius:50%;background:#ddf4ff;border:none;font-size:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:8px auto 28px;box-shadow:0 4px 0 #b3e5fc;transition:.1s;}
+.ex-listen-big-btn:active{transform:translateY(2px);box-shadow:none;}
+.ex-skip-listen{text-align:center;margin-bottom:16px;font-size:13px;color:#afafaf;cursor:pointer;text-decoration:underline;}
+/* Shared options list */
+.ex-options{display:flex;flex-direction:column;gap:10px;}
+.ex-option{border:2px solid #e5e5e5;border-radius:14px;padding:14px 16px;cursor:pointer;font-size:14px;color:#3c3c3c;background:white;box-shadow:0 3px 0 #e5e5e5;transition:.15s;user-select:none;}
+.ex-option:active{transform:translateY(2px);box-shadow:none;}
+.ex-option.selected{border-color:#1cb0f6;background:#eaf6ff;box-shadow:0 3px 0 #1ba5e5;}
+.ex-option.correct{border-color:#58cc02;background:#d7ffb8;box-shadow:0 3px 0 #4caf00;}
+.ex-option.wrong{border-color:#ff4b4b;background:#ffe0e0;box-shadow:0 3px 0 #d93a3a;}
+.ex-option-th{font-size:16px;font-weight:700;font-family:'Sarabun',sans-serif;color:#3c3c3c;margin-bottom:2px;}
+.ex-option-ro{font-size:12px;color:#777;}
+/* Sentence box (for translate exercises) */
+.ex-sentence-box{background:#f7f7f7;border:2px solid #e5e5e5;border-radius:14px;padding:16px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px;}
+.ex-sent-info{flex:1;}
+.ex-sent-th{font-size:19px;font-weight:700;font-family:'Sarabun',sans-serif;color:#3c3c3c;margin-bottom:4px;}
+.ex-sent-ro{font-size:13px;color:#777;}
+/* Word bank */
+.ex-answer-area{min-height:52px;border-bottom:3px solid #e5e5e5;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-bottom:10px;}
+.ex-answer-placeholder{color:#afafaf;font-size:13px;font-style:italic;}
+.ex-answer-chip{background:#ddf4ff;border:2px solid #1cb0f6;border-radius:10px;padding:7px 12px;font-size:13px;font-weight:600;cursor:pointer;color:#1a3c5e;}
+.ex-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+.ex-bank-btn{background:white;border:2px solid #e5e5e5;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;color:#3c3c3c;box-shadow:0 3px 0 #e5e5e5;transition:.1s;}
+.ex-bank-btn:active{transform:translateY(2px);box-shadow:none;}
+.ex-bank-btn.used{opacity:.35;pointer-events:none;}
+/* Footer */
+.ex-footer{flex-shrink:0;padding:12px 16px 20px;background:white;border-top:2px solid #f0f0f0;}
+.ex-feedback-bar{border-radius:14px;padding:12px 16px;margin-bottom:12px;display:none;}
+.ex-feedback-bar.correct{display:flex;align-items:flex-start;gap:10px;background:#d7ffb8;border:2px solid #58cc02;}
+.ex-feedback-bar.wrong{display:flex;align-items:flex-start;gap:10px;background:#ffdfe0;border:2px solid #ff4b4b;}
+.ex-fb-icon{font-size:22px;}
+.ex-fb-text{flex:1;}
+.ex-fb-title{font-size:14px;font-weight:700;margin-bottom:2px;}
+.ex-fb-answer{font-size:13px;color:#555;}
+.ex-feedback-bar.correct .ex-fb-title{color:#58a700;}
+.ex-feedback-bar.wrong .ex-fb-title{color:#ea2b2b;}
+.ex-check-btn{width:100%;padding:16px;font-size:16px;font-weight:700;border:none;border-radius:14px;cursor:pointer;transition:.15s;letter-spacing:.03em;}
+.ex-check-btn:disabled{background:#e5e5e5;color:#afafaf;cursor:not-allowed;}
+.ex-check-btn.ready{background:#58cc02;color:white;box-shadow:0 4px 0 #46a302;}
+.ex-check-btn.ready:active{transform:translateY(2px);box-shadow:none;}
+.ex-check-btn.next{background:#1cb0f6;color:white;box-shadow:0 4px 0 #0e87c3;}
+.ex-check-btn.next:active{transform:translateY(2px);box-shadow:none;}
+/* Finish screen */
+.ex-finish{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:30px 20px;text-align:center;}
+.ex-finish-trophy{font-size:80px;margin-bottom:16px;animation:popIn .4s ease;}
+.ex-finish-title{font-size:24px;font-weight:700;color:#3c3c3c;margin-bottom:8px;}
+.ex-finish-sub{font-size:15px;color:#777;margin-bottom:32px;line-height:1.5;}
+.ex-finish-stats{display:flex;gap:20px;margin-bottom:32px;}
+.ex-finish-stat{text-align:center;}
+.ex-finish-stat-val{font-size:28px;font-weight:700;color:#1cb0f6;}
+.ex-finish-stat-lbl{font-size:12px;color:#afafaf;}
+.ex-finish-btn{background:#58cc02;color:white;border:none;border-radius:14px;padding:16px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #46a302;}
+/* Exercise button on lesson cards */
+.ex-start-btn{background:#fff9db;border:2px solid #ffcc00;border-radius:10px;padding:5px 10px;font-size:12px;font-weight:700;color:#b45309;cursor:pointer;margin-top:8px;display:inline-flex;align-items:center;gap:4px;transition:.15s;}
+.ex-start-btn:hover{background:#fef3c7;}
+/* Dark mode overrides */
+@media(prefers-color-scheme:dark){
+  #exercise-overlay{background:#1e1e1e;}
+  .ex-topbar,.ex-footer{background:#1e1e1e;}
+  .ex-pb-wrap{background:#333;}
+  .ex-q-label{color:#e0e0e0;}
+  .ex-prompt-box,.ex-sentence-box{background:#252525;border-color:#333;}
+  .ex-prompt-th,.ex-sent-th{color:#e0e0e0;}
+  .ex-word-card{background:#252525;border-color:#333;box-shadow:0 3px 0 #333;color:#e0e0e0;}
+  .ex-word-card.selected{background:#0d2233;border-color:#1cb0f6;box-shadow:0 3px 0 #1a3c5e;}
+  .ex-word-th,.ex-option-th{color:#e0e0e0;}
+  .ex-option{background:#252525;border-color:#333;box-shadow:0 3px 0 #333;color:#e0e0e0;}
+  .ex-option.selected{background:#0d2233;border-color:#1cb0f6;}
+  .ex-bank-btn{background:#252525;border-color:#333;color:#e0e0e0;box-shadow:0 3px 0 #333;}
+  .ex-footer{border-top-color:#2a2a2a;}
+  .ex-answer-area{border-bottom-color:#333;}
+  .ex-close-btn{color:#555;}
+  .ex-listen-big-btn{background:#0d2233;box-shadow:0 4px 0 #0a1a2a;}
+}
+@keyframes popIn{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 </style>
 <script>
 // Cache temizleme — GitHub Pages kısayolu güncelleme sorunu için
@@ -461,7 +560,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v3.47';
+const APP_VERSION = 'v3.48';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -760,7 +859,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v3.47</span>
+  <span class="vbadge" id="app-version">v3.48</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1236,6 +1335,7 @@ function renderLessonCard(L){
       <div class="linfo">
         <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
         ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
+        <button class="ex-start-btn" onclick="startExercise(${L.num},event)" title="${appLang==='en'?'Start exercise':'Egzersiz başlat'}">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>
       </div>
       <div class="larrow">›</div>
     </div>`;
@@ -3262,6 +3362,374 @@ function testVoices(){
   playNext();
 }
 
+// =================== EXERCISE ENGINE (Duolingo-style) ===================
+let exLessonNum = null;
+let exExercises = [];
+let exIdx = 0;
+let exLives = 3;
+let exSelected = null;   // index of selected option (choice exercises)
+let exAnswerWords = [];  // built answer (wordbank exercise)
+let exAnswered = false;
+let exCorrectCount = 0;
+
+function exShuffle(arr){
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
+function buildExercises(LD){
+  const words = (LD.words||[]).filter(w=>w.th && w.tr && w.ro);
+  if(words.length<2) return [];
+  const ex = [];
+
+  // Helper: pick N distractors from words pool
+  function distractors(exclude_id, n){
+    return exShuffle(words.filter(w=>w.id!==exclude_id)).slice(0,n);
+  }
+
+  // 1. word-choice: see Turkish prompt → pick correct Thai card (4 options)
+  const wc_words = exShuffle([...words]).slice(0, Math.min(6, words.length));
+  wc_words.forEach(w=>{
+    const dist = distractors(w.id, 3);
+    if(dist.length<1) return;
+    const opts = exShuffle([
+      {th:w.th, ro:w.ro, correct:true},
+      ...dist.map(d=>({th:d.th, ro:d.ro, correct:false}))
+    ]);
+    ex.push({type:'word-choice', prompt:w.tr, correctTh:w.th, options:opts});
+  });
+
+  // 2. listen-choice: hear audio of Thai sentence → pick which sentence it was
+  const allExamples = words.flatMap(w=>(w.examples||[]).map(e=>({...e, wordTr:w.tr})));
+  const lc_exs = exShuffle([...allExamples]).slice(0, 4);
+  lc_exs.forEach(e=>{
+    if(!e.th || !e.ro) return;
+    const dist = exShuffle(allExamples.filter(x=>x.th!==e.th)).slice(0,3);
+    if(dist.length<1) return;
+    const opts = exShuffle([
+      {th:e.th, ro:e.ro, correct:true},
+      ...dist.map(d=>({th:d.th||'', ro:d.ro||'', correct:false}))
+    ]);
+    ex.push({type:'listen-choice', audioTh:e.th, options:opts});
+  });
+
+  // 3. translate-choice: see Thai sentence → pick correct Turkish (4 options)
+  const tc_exs = exShuffle([...allExamples]).slice(0, 5);
+  tc_exs.forEach(e=>{
+    if(!e.th || !e.tr) return;
+    const dist = exShuffle(allExamples.filter(x=>x.tr!==e.tr)).slice(0,3);
+    if(dist.length<1) return;
+    const opts = exShuffle([
+      {tr:e.tr, correct:true},
+      ...dist.map(d=>({tr:d.tr, correct:false}))
+    ]);
+    ex.push({type:'translate-choice', th:e.th, ro:e.ro, options:opts});
+  });
+
+  // 4. translate-wordbank: see Thai sentence → build Turkish from word tiles
+  const wb_exs = exShuffle([...allExamples]).slice(0, 4);
+  wb_exs.forEach(e=>{
+    if(!e.th || !e.tr) return;
+    const correctWords = e.tr.split(/\s+/).filter(Boolean);
+    if(correctWords.length<2) return;
+    // add 2-3 distractor words
+    const distWords = ['değil','ama','çok','var','yok','bir','ve','de','da','ile','bu','sen','ben','o'];
+    const extra = exShuffle(distWords.filter(w=>!correctWords.includes(w))).slice(0,3);
+    const bank = exShuffle([...correctWords, ...extra]);
+    ex.push({type:'translate-wordbank', th:e.th, ro:e.ro, answer:e.tr, correctWords, bank});
+  });
+
+  // Interleave: word-choice first, then mix others
+  const wc = ex.filter(e=>e.type==='word-choice');
+  const others = exShuffle(ex.filter(e=>e.type!=='word-choice'));
+  const result = [];
+  // Put word-choice first 3, then interleave
+  const first3 = wc.slice(0,3);
+  const rest = exShuffle([...wc.slice(3), ...others]);
+  return [...first3, ...rest];
+}
+
+async function startExercise(lessonNum, event){
+  if(event){ event.stopPropagation(); }
+  const meta = LESSONS_META.find(m=>m.num===lessonNum);
+  if(!meta) return;
+  try{
+    await loadDers(lessonNum);
+    const LD = LESSONS[lessonNum];
+    if(!LD){ alert('Ders verisi yüklenemedi.'); return; }
+    exLessonNum = lessonNum;
+    exExercises = buildExercises(LD);
+    if(exExercises.length===0){ alert(appLang==='en'?'Not enough data for exercises.':'Bu ders için yeterli egzersiz verisi yok.'); return; }
+    exIdx = 0; exLives = 3; exSelected = null; exAnswerWords = []; exAnswered = false; exCorrectCount = 0;
+    document.getElementById('exercise-overlay').classList.add('open');
+    document.getElementById('ex-footer').style.display='';
+    document.body.style.overflow = 'hidden';
+    renderExercise();
+  } catch(err){
+    alert('Ders yüklenemedi: '+err.message);
+  }
+}
+
+function closeExercise(){
+  document.getElementById('exercise-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateExProgress(){
+  const pct = exIdx / exExercises.length * 100;
+  document.getElementById('ex-pb-fill').style.width = pct+'%';
+  const h = document.getElementById('ex-hearts');
+  h.innerHTML = '❤️'.repeat(exLives) + (exLives<3?'🖤'.repeat(3-exLives):'');
+}
+
+function setExBtn(state){
+  const btn = document.getElementById('ex-check-btn');
+  btn.disabled = (state==='disabled');
+  btn.className = 'ex-check-btn ' + (state==='disabled'?'':state);
+  btn.textContent = state==='next'
+    ? (appLang==='en'?'Continue':'Devam et')
+    : (appLang==='en'?'Check':'Kontrol et');
+}
+
+function showExFeedback(correct, correctAnswer){
+  const fb = document.getElementById('ex-feedback');
+  if(correct){
+    fb.className='ex-feedback-bar correct';
+    fb.innerHTML=`<div class="ex-fb-icon">🎉</div><div class="ex-fb-text"><div class="ex-fb-title">${appLang==='en'?'Correct!':'Doğru!'}</div></div>`;
+  } else {
+    fb.className='ex-feedback-bar wrong';
+    fb.innerHTML=`<div class="ex-fb-icon">❌</div><div class="ex-fb-text"><div class="ex-fb-title">${appLang==='en'?'Incorrect':'Yanlış'}</div><div class="ex-fb-answer">${appLang==='en'?'Correct answer:':'Doğru cevap:'} <strong>${correctAnswer||''}</strong></div></div>`;
+  }
+}
+
+function speakExThai(th){
+  if(!th) return;
+  const u = new SpeechSynthesisUtterance(th);
+  u.lang = 'th-TH'; u.rate = 0.9;
+  const voices = speechSynthesis.getVoices().filter(v=>v.lang.startsWith('th'));
+  if(voices.length) u.voice = voices[0];
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+function renderExercise(){
+  updateExProgress();
+  const fb = document.getElementById('ex-feedback');
+  fb.className='ex-feedback-bar';
+  exAnswered = false; exSelected = null; exAnswerWords = [];
+  setExBtn('disabled');
+
+  if(exIdx >= exExercises.length){
+    showExFinish(); return;
+  }
+  const e = exExercises[exIdx];
+  const content = document.getElementById('ex-content');
+  const en = appLang==='en';
+
+  if(e.type==='word-choice'){
+    content.innerHTML = `
+      <div class="ex-q-label">${en?'Select the correct answer':'Doğru cevabı seçin'}</div>
+      <div class="ex-prompt-box">
+        <div class="ex-prompt-th">${esc(e.prompt)}</div>
+        <button class="ex-speak-sm" onclick="speakExThai('${e.correctTh.replace(/'/g,"\\'")}')">🔊</button>
+      </div>
+      <div class="ex-word-grid" id="ex-grid">
+        ${e.options.map((o,i)=>`
+          <div class="ex-word-card" data-idx="${i}" data-correct="${o.correct}" onclick="exSelectCard(this,${i})">
+            <div class="ex-word-th">${esc(o.th)}</div>
+            <div class="ex-word-ro">${esc(o.ro)}</div>
+          </div>`).join('')}
+      </div>`;
+  }
+  else if(e.type==='listen-choice'){
+    content.innerHTML = `
+      <div class="ex-q-label">${en?'What do you hear?':'Ne duyuyorsun?'}</div>
+      <button class="ex-listen-big-btn" onclick="speakExThai('${e.audioTh.replace(/'/g,"\\'")}')">🔊</button>
+      <div class="ex-options" id="ex-opts">
+        ${e.options.map((o,i)=>`
+          <div class="ex-option" data-idx="${i}" data-correct="${o.correct}" onclick="exSelectOpt(this,${i})">
+            <div class="ex-option-th">${esc(o.th)}</div>
+            <div class="ex-option-ro">${esc(o.ro)}</div>
+          </div>`).join('')}
+      </div>
+      <div class="ex-skip-listen" onclick="speakExThai('${e.audioTh.replace(/'/g,"\\'")}')">🐢 ${en?'Play slowly':'Yavaş dinle'}</div>`;
+    // Auto-play audio
+    setTimeout(()=>speakExThai(e.audioTh), 400);
+  }
+  else if(e.type==='translate-choice'){
+    content.innerHTML = `
+      <div class="ex-q-label">${en?'Translate this sentence':'Bu cümleyi tercüme edin'}</div>
+      <div class="ex-sentence-box">
+        <div class="ex-sent-info">
+          <div class="ex-sent-th">${esc(e.th)}</div>
+          <div class="ex-sent-ro">${esc(e.ro||'')}</div>
+        </div>
+        <button class="ex-speak-sm" onclick="speakExThai('${e.th.replace(/'/g,"\\'")}')">🔊</button>
+      </div>
+      <div class="ex-options" id="ex-opts">
+        ${e.options.map((o,i)=>`
+          <div class="ex-option" data-idx="${i}" data-correct="${o.correct}" onclick="exSelectOpt(this,${i})">${esc(o.tr)}</div>
+        `).join('')}
+      </div>`;
+  }
+  else if(e.type==='translate-wordbank'){
+    content.innerHTML = `
+      <div class="ex-q-label">${en?'Translate this sentence':'Bu cümleyi tercüme edin'}</div>
+      <div class="ex-sentence-box">
+        <div class="ex-sent-info">
+          <div class="ex-sent-th">${esc(e.th)}</div>
+          <div class="ex-sent-ro">${esc(e.ro||'')}</div>
+        </div>
+        <button class="ex-speak-sm" onclick="speakExThai('${e.th.replace(/'/g,"\\'")}')">🔊</button>
+      </div>
+      <div class="ex-answer-area" id="ex-ans-area">
+        <span class="ex-answer-placeholder">${en?'Tap words below to build answer':'Aşağıdaki kelimelerle cevabı oluşturun'}</span>
+      </div>
+      <div class="ex-bank" id="ex-bank">
+        ${e.bank.map((w,i)=>`<button class="ex-bank-btn" data-idx="${i}" data-word="${esc(w)}" onclick="exBankClick(this,'${w.replace(/'/g,"\\'")}',${i})">${esc(w)}</button>`).join('')}
+      </div>`;
+  }
+}
+
+function exSelectCard(el, idx){
+  if(exAnswered) return;
+  exSelected = idx;
+  document.querySelectorAll('.ex-word-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  setExBtn('ready');
+}
+
+function exSelectOpt(el, idx){
+  if(exAnswered) return;
+  exSelected = idx;
+  document.querySelectorAll('.ex-option').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  setExBtn('ready');
+}
+
+function exBankClick(btn, word, idx){
+  if(exAnswered) return;
+  exAnswerWords.push({word, idx});
+  btn.classList.add('used');
+  const area = document.getElementById('ex-ans-area');
+  const ph = area.querySelector('.ex-answer-placeholder');
+  if(ph) ph.remove();
+  const chip = document.createElement('button');
+  chip.className='ex-answer-chip';
+  chip.textContent = word;
+  chip.dataset.bankIdx = idx;
+  chip.onclick = ()=>{
+    if(exAnswered) return;
+    // remove from answer
+    exAnswerWords = exAnswerWords.filter((_,i)=>chip.dataset.bankIdx!=idx || exAnswerWords.findIndex(x=>x.idx==idx)!==i);
+    exAnswerWords = exAnswerWords.filter(x=>x.idx!=idx);
+    chip.remove();
+    const b = document.querySelector(`.ex-bank-btn[data-idx="${idx}"]`);
+    if(b) b.classList.remove('used');
+    if(!document.getElementById('ex-ans-area').querySelector('.ex-answer-chip')){
+      document.getElementById('ex-ans-area').innerHTML='<span class="ex-answer-placeholder">'+(appLang==='en'?'Tap words below to build answer':'Aşağıdaki kelimelerle cevabı oluşturun')+'</span>';
+      setExBtn('disabled');
+    }
+  };
+  area.appendChild(chip);
+  setExBtn('ready');
+}
+
+function exBtnClick(){
+  if(!exAnswered){
+    // Check answer
+    const e = exExercises[exIdx];
+    let correct = false;
+    let correctAnswer = '';
+
+    if(e.type==='word-choice'){
+      const card = document.querySelectorAll('.ex-word-card')[exSelected];
+      correct = card && card.dataset.correct==='true';
+      correctAnswer = e.options.find(o=>o.correct)?.th || '';
+      document.querySelectorAll('.ex-word-card').forEach(c=>{
+        if(c.dataset.correct==='true') c.classList.add('correct');
+        else if(c===card && !correct) c.classList.add('wrong');
+      });
+    }
+    else if(e.type==='listen-choice'||e.type==='translate-choice'){
+      const opts = document.querySelectorAll('.ex-option');
+      const selected = opts[exSelected];
+      correct = selected && selected.dataset.correct==='true';
+      correctAnswer = e.type==='listen-choice'
+        ? (e.options.find(o=>o.correct)?.th||'')
+        : (e.options.find(o=>o.correct)?.tr||'');
+      opts.forEach(o=>{
+        if(o.dataset.correct==='true') o.classList.add('correct');
+        else if(o===selected && !correct) o.classList.add('wrong');
+      });
+    }
+    else if(e.type==='translate-wordbank'){
+      const built = exAnswerWords.map(x=>x.word).join(' ').trim().toLowerCase();
+      const expected = e.answer.trim().toLowerCase();
+      correct = built===expected;
+      correctAnswer = e.answer;
+    }
+
+    exAnswered = true;
+    if(correct){ exCorrectCount++; }
+    else {
+      exLives--;
+      updateExProgress();
+      if(exLives<=0){
+        setTimeout(()=>showExFailed(), 800);
+        showExFeedback(false, correctAnswer);
+        setExBtn('next');
+        return;
+      }
+    }
+    showExFeedback(correct, correctAnswer);
+    setExBtn('next');
+  } else {
+    // Next
+    exIdx++;
+    renderExercise();
+  }
+}
+
+function showExFinish(){
+  const en = appLang==='en';
+  const content = document.getElementById('ex-content');
+  const accuracy = exExercises.length>0 ? Math.round(exCorrectCount/exExercises.length*100) : 0;
+  const meta = LESSONS_META.find(m=>m.num===exLessonNum);
+  content.innerHTML = `
+    <div class="ex-finish">
+      <div class="ex-finish-trophy">🏆</div>
+      <div class="ex-finish-title">${en?'Lesson Complete!':'Ders Tamamlandı!'}</div>
+      <div class="ex-finish-sub">${meta?`${meta.emoji} ${Lf(meta,'title')}`:''}${exLives>0?'<br>'+('❤️'.repeat(exLives)+' '+(en?'lives remaining':'can kaldı')):'<br>'+(en?'Completed with errors':'Hatalarla tamamlandı')}</div>
+      <div class="ex-finish-stats">
+        <div class="ex-finish-stat"><div class="ex-finish-stat-val">${exCorrectCount}</div><div class="ex-finish-stat-lbl">${en?'Correct':'Doğru'}</div></div>
+        <div class="ex-finish-stat"><div class="ex-finish-stat-val">${exExercises.length-exCorrectCount}</div><div class="ex-finish-stat-lbl">${en?'Incorrect':'Yanlış'}</div></div>
+        <div class="ex-finish-stat"><div class="ex-finish-stat-val">${accuracy}%</div><div class="ex-finish-stat-lbl">${en?'Accuracy':'Doğruluk'}</div></div>
+      </div>
+      <button class="ex-finish-btn" onclick="closeExercise()">${en?'Finish':'Bitir'}</button>
+    </div>`;
+  document.getElementById('ex-footer').style.display='none';
+}
+
+function showExFailed(){
+  const en = appLang==='en';
+  const content = document.getElementById('ex-content');
+  content.innerHTML = `
+    <div class="ex-finish">
+      <div class="ex-finish-trophy">💔</div>
+      <div class="ex-finish-title">${en?'Out of lives!':'Canların bitti!'}</div>
+      <div class="ex-finish-sub">${en?'Don\'t worry, try again!':'Üzülme, tekrar dene!'}</div>
+      <div class="ex-finish-stats">
+        <div class="ex-finish-stat"><div class="ex-finish-stat-val">${exCorrectCount}</div><div class="ex-finish-stat-lbl">${en?'Correct':'Doğru'}</div></div>
+        <div class="ex-finish-stat"><div class="ex-finish-stat-val">${exIdx+1}</div><div class="ex-finish-stat-lbl">${en?'Reached':'Ulaşılan'}</div></div>
+      </div>
+      <button class="ex-finish-btn" style="background:#1cb0f6;box-shadow:0 4px 0 #0e87c3;margin-bottom:12px;" onclick="startExercise(${exLessonNum})">${en?'Try Again':'Tekrar Dene'}</button>
+      <button style="background:none;border:none;color:#afafaf;font-size:14px;cursor:pointer;margin-top:8px;" onclick="closeExercise()">${en?'Exit':'Çık'}</button>
+    </div>`;
+  document.getElementById('ex-footer').style.display='none';
+}
+// =================== EXERCISE ENGINE END ===================
+
 // =================== INIT ===================
 // Apply saved language to all data-lk elements and lang-btn states
 document.querySelectorAll('[data-lk]').forEach(el=>{ el.textContent=s(el.dataset.lk); });
@@ -3277,6 +3745,20 @@ document.getElementById('gist-token-input').value = localStorage.getItem('tayca_
 gistAutoSync();
 document.getElementById('google-tts-key-input').value = localStorage.getItem('tayca_google_tts_key')||'';
 </script>
+
+<!-- EXERCISE OVERLAY -->
+<div id="exercise-overlay">
+  <div class="ex-topbar">
+    <button class="ex-close-btn" onclick="closeExercise()">✕</button>
+    <div class="ex-pb-wrap"><div class="ex-pb-fill" id="ex-pb-fill" style="width:0%"></div></div>
+    <div class="ex-hearts" id="ex-hearts">❤️❤️❤️</div>
+  </div>
+  <div id="ex-content" class="ex-content"></div>
+  <div class="ex-footer">
+    <div class="ex-feedback-bar" id="ex-feedback"></div>
+    <button id="ex-check-btn" class="ex-check-btn" disabled onclick="exBtnClick()">Kontrol et</button>
+  </div>
+</div>
 
 <!-- GRAMMAR DETAIL MODAL -->
 <button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
