@@ -12,7 +12,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f5f5f5;max-width:600px;margin:0 auto;color:#333;}
-.thai{}
+.english{}
 
 /* HEADER */
 header{background:linear-gradient(135deg,#0d9488,#06b6d4);color:white;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:3px solid #0f766e;}
@@ -119,10 +119,10 @@ main{padding:14px;}
 .tab-timer-text{font-size:11px;color:#0d9488;font-weight:700;min-width:28px;text-align:right;}
 .ltab.timing::before{content:'⏳';font-size:9px;}
 
-/* WORD CARD — Thai soluk, Romanizasyon net */
+/* WORD CARD — Ingilizce metin, Romanizasyon net */
 .word-card{background:white;padding:14px;margin-bottom:10px;border-radius:10px;border:1px solid #e8e8e8;}
 .word-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
-.word-thai{font-size:22px;font-weight:700;margin-bottom:2px;line-height:1.3;color:#1a1a1a;display:block;}
+.word-en{font-size:22px;font-weight:700;margin-bottom:2px;line-height:1.3;color:#1a1a1a;display:block;}
 .word-ro{font-size:15px;color:#1a1a1a;font-weight:700;margin-top:1px;}
 .word-tr{font-size:13px;font-weight:500;color:#555;margin-top:2px;}
 .word-note{font-size:12px;color:#555;background:#f9f9f9;padding:8px;border-radius:6px;margin:8px 0;line-height:1.6;}
@@ -134,7 +134,7 @@ main{padding:14px;}
 .abtn.slow{background:#0891b2;}
 .abtn:active{opacity:.7;}
 
-/* EXAMPLES — Thai soluk, ro net */
+/* EXAMPLES — Ingilizce metin, ro net */
 .examples-wrap{margin-top:8px;}
 .ex-item{padding:8px 0;border-bottom:1px solid #f5f5f5;display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
 .ex-item:last-child{border:none;}
@@ -145,17 +145,17 @@ main{padding:14px;}
 .ex-actions{display:flex;gap:4px;flex-shrink:0;align-items:center;}
 .sm-abtn{background:none;border:1px solid #e0e0e0;border-radius:4px;padding:3px 6px;font-size:11px;cursor:pointer;color:#0d9488;}
 
-/* SPEAKING — Thai soluk, ro net */
+/* SPEAKING — Ingilizce metin, ro net */
 .speak-card{background:white;padding:14px;margin-bottom:10px;border-radius:10px;border:1px solid #e8e8e8;}
 .speak-task{font-size:11px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
-.speak-thai{font-size:18px;font-weight:700;margin-bottom:2px;color:#1a1a1a;}
+.speak-en{font-size:18px;font-weight:700;margin-bottom:2px;color:#1a1a1a;}
 .speak-ro{font-size:14px;color:#1a1a1a;font-weight:700;margin-bottom:3px;}
 .speak-tr{font-size:13px;color:#555;margin-bottom:10px;}
 .speak-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .ref-btn{padding:10px;background:#0d9488;color:white;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;}
 .ref-btn.slow{background:#0891b2;}
 
-/* DIALOGUE — Thai soluk, ro net */
+/* DIALOGUE — Ingilizce metin, ro net */
 .dialog-card{background:white;padding:14px;margin-bottom:10px;border-radius:10px;border:1px solid #e8e8e8;}
 .dialog-title{font-size:13px;font-weight:700;color:#0d9488;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
 .play-all-btn{padding:5px 12px;background:#0d9488;color:white;border:none;border-radius:6px;cursor:pointer;font-size:11px;font-weight:700;flex-shrink:0;}
@@ -327,7 +327,7 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 
   /* Word cards */
   .word-card{background:#1e1e1e;border-color:#2a2a2a;}
-  .word-thai{color:#e0e0e0;}
+  .word-en{color:#e0e0e0;}
   .word-ro{color:#e0e0e0;}
   .word-tr{color:#aaa;}
   .word-note{background:#252525;color:#aaa;}
@@ -340,7 +340,7 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 
   /* Speaking */
   .speak-card{background:#1e1e1e;border-color:#2a2a2a;}
-  .speak-thai{color:#444;}
+  .speak-en{color:#444;}
   .speak-ro{color:#e0e0e0;}
   .speak-tr{color:#aaa;}
 
@@ -642,7 +642,7 @@ const UI = {
     test_correct_count:'doğru',
     test_wrong_items:'🔁 Yanlışlar — Tekrar Bak',
     test_mode_fc:'Flashcard', test_mode_mc:'Çoktan Seçmeli', test_mode_mix:'Karışık',
-    test_dir_th2tr:'İngilizce → Anlam', test_dir_tr2th:'Anlam → İngilizce', test_dir_mix:'Karışık Yön',
+    test_dir_en2tr:'İngilizce → Anlam', test_dir_tr2en:'Anlam → İngilizce', test_dir_mix:'Karışık Yön',
     test_cat_all:'Tümü', test_cat_phrases:'Cümleler', test_cat_grammar:'Gramer', test_cat_pronouns:'Zamirler',
     test_start:'Başla', test_no_cards:'Kart bulunamadı',
     test_type_word:'Kelime', test_type_example:'Örnek Cümle',
@@ -658,7 +658,7 @@ const UI = {
     review_lesson_prefix:'Ders',
     review_done_title:'Oturum Tamamlandı!', review_done_sub:'kart tekrar edildi.',
     review_restart:'Yeniden Başla', review_show_answer:'Cevabı Gör',
-    review_q_th2tr:'🇬🇧 İngilizce → Türkçe', review_q_tr2th:'🇹🇷 Türkçe → İngilizce',
+    review_q_en2tr:'🇬🇧 İngilizce → Türkçe', review_q_tr2en:'🇹🇷 Türkçe → İngilizce',
     review_btn_0:'❌ Bilmiyorum', review_btn_1:'😰 Zor',
     review_btn_2:'👍 Normal', review_btn_3:'⚡ Kolay',
     review_type_word:'📚 Kelime', review_type_example:'💬 Örnek', review_type_speaking:'🗣️ Konuşma',
@@ -685,7 +685,7 @@ const UI = {
     alert_backup:'✅ Veri kopyalandı!',
     // Zamir tablosu (Ders 1)
     pron_title:'👤 Kişi Zamirleri — Hızlı Referans',
-    pron_col_person:'Kişi', pron_col_thai:'İngilizce', pron_col_roman:'Telaffuz', pron_col_note:'Not',
+    pron_col_person:'Kişi', pron_col_english:'İngilizce', pron_col_roman:'Telaffuz', pron_col_note:'Not',
     pron_hint:'💡 Detaylı örnekler → Gramer sekmesi → Kural 9',
     // Ders listesi
     lesson_no_content:'Yakında',
@@ -761,7 +761,7 @@ const UI = {
     test_correct_count:'correct',
     test_wrong_items:'🔁 Missed — Review These',
     test_mode_fc:'Flashcard', test_mode_mc:'Multiple Choice', test_mode_mix:'Mixed',
-    test_dir_th2tr:'English → Meaning', test_dir_tr2th:'Meaning → English', test_dir_mix:'Mixed Direction',
+    test_dir_en2tr:'English → Meaning', test_dir_tr2en:'Meaning → English', test_dir_mix:'Mixed Direction',
     test_cat_all:'All', test_cat_phrases:'Phrases', test_cat_grammar:'Grammar', test_cat_pronouns:'Pronouns',
     test_start:'Start', test_no_cards:'No cards found',
     test_type_word:'Word', test_type_example:'Example Sentence',
@@ -777,7 +777,7 @@ const UI = {
     review_lesson_prefix:'Lesson',
     review_done_title:'Session Complete!', review_done_sub:'cards reviewed.',
     review_restart:'Restart', review_show_answer:'Show Answer',
-    review_q_th2tr:'🇬🇧 English → Turkish', review_q_tr2th:'🇹🇷 Turkish → English',
+    review_q_en2tr:'🇬🇧 English → Turkish', review_q_tr2en:'🇹🇷 Turkish → English',
     review_btn_0:"❌ Don't know", review_btn_1:'😰 Hard',
     review_btn_2:'👍 OK', review_btn_3:'⚡ Easy',
     review_type_word:'📚 Word', review_type_example:'💬 Example', review_type_speaking:'🗣️ Speaking',
@@ -804,7 +804,7 @@ const UI = {
     alert_backup:'✅ Data copied!',
     // Pronoun table (Lesson 1)
     pron_title:'👤 Personal Pronouns — Quick Reference',
-    pron_col_person:'Person', pron_col_thai:'English', pron_col_roman:'Pronunciation', pron_col_note:'Note',
+    pron_col_person:'Person', pron_col_english:'English', pron_col_roman:'Pronunciation', pron_col_note:'Note',
     pron_hint:'💡 More examples → Grammar tab → Rule 9',
     // Lesson list
     lesson_no_content:'Coming soon',
@@ -1455,7 +1455,7 @@ function showLessonStars(num, event){
     return `<div class="word-card">
       <div class="word-top">
         <div>
-          <div class="word-thai">${v.th||''}</div>
+          <div class="word-en">${v.th||''}</div>
           <div class="word-ro">${v.ro||''}</div>
           <div class="word-tr">${v.tr||''}</div>
         </div>
@@ -1583,7 +1583,7 @@ function buildLessonHTML(L, meta){
     return `<div class="word-card">
       <div class="word-top">
         <div>
-          <div class="word-thai">${w.en||''}</div>
+          <div class="word-en">${w.en||''}</div>
           <div class="word-ro">${w.ro||''}</div>
           <div class="word-tr">${Lf(w,'tr')}</div>
         </div>
@@ -1695,7 +1695,7 @@ function buildLessonHTML(L, meta){
     const hasBd = sp.bd && sp.bd.length>0;
     return '<div class="speak-card">'+
       '<div class="speak-task">'+(i+1)+'. '+(Lf(sp,'task')||sp.task)+'</div>'+
-      '<div class="speak-thai" '+(hasBd?'style="cursor:pointer" data-gram="'+gramIdx+'"':'')+'>'+(sp.en||'')+'</div>'+
+      '<div class="speak-en" '+(hasBd?'style="cursor:pointer" data-gram="'+gramIdx+'"':'')+'>'+(sp.en||'')+'</div>'+
       '<div class="speak-ro">'+(sp.ro||'')+'</div>'+
       '<div class="speak-tr">'+(Lf(sp,'tr')||sp.tr)+'</div>'+
       '<div class="speak-btns">'+
@@ -1818,7 +1818,7 @@ function buildLessonHTML(L, meta){
             ontouchstart="this.style.transform='scale(.93)'" ontouchend="this.style.transform=''">${s('calc_listen')}</button>
         </div>
         <div id="l2calc-result" style="display:none;margin-top:14px;padding-top:12px;border-top:1px solid #f0f0f0">
-          <div id="l2calc-thai" style="font-size:26px;font-weight:700;color:#0d9488;margin-bottom:4px"></div>
+          <div id="l2calc-english" style="font-size:26px;font-weight:700;color:#0d9488;margin-bottom:4px"></div>
           <div id="l2calc-roman" style="font-size:13px;color:#888;font-style:italic;margin-bottom:3px"></div>
           <div id="l2calc-tr" style="font-size:12px;color:#4caf80;font-weight:700;margin-bottom:12px"></div>
           <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">${s('calc_breakdown')}</div>
@@ -1992,7 +1992,7 @@ function l2CalcNumber(val){
   const res = l2BuildEnglish(n);
   l2CalcWord = res.word;
   document.getElementById('l2calc-result').style.display='block';
-  document.getElementById('l2calc-thai').textContent  = res.word;
+  document.getElementById('l2calc-english').textContent  = res.word;
   document.getElementById('l2calc-roman').textContent = '';
   document.getElementById('l2calc-tr').textContent    = res.tr;
   const bd = document.getElementById('l2calc-breakdown');
@@ -2102,7 +2102,7 @@ let testState = {
   correct: 0,
   wrong: 0,
   mode: 'fc',       // 'fc' flashcard | 'mc' çoktan seçmeli
-  dir: 'th2tr',     // 'th2tr' | 'tr2th'
+  dir: 'en2tr',     // 'en2tr' | 'tr2en'
   category: 'all',  // 'all' | 'pronouns' | 'phrases' | 'grammar'
   history: [],      // {card, result}
 };
@@ -2353,7 +2353,7 @@ function selectTestLesson(num){
   testState.lessonNum = num;
   testState.category = 'all';
   testState.mode = 'fc';
-  testState.dir = 'th2tr';
+  testState.dir = 'en2tr';
 }
 
 function selectTestCat(btn, cat, num){
@@ -2378,10 +2378,10 @@ function renderModeOptions(){
         <div style="font-size:16px;">🎲</div><div style="font-size:11px;font-weight:700;color:#888;margin-top:2px;">${s('test_mode_mix')}</div>
       </button>
     </div>
-    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">${s('test_dir_th2tr')+' / '+s('test_dir_tr2th')}</div>
+    <div style="font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">${s('test_dir_en2tr')+' / '+s('test_dir_tr2en')}</div>
     <div style="display:flex;gap:8px;margin-bottom:16px;">
-      <button class="test-dir-btn active" onclick="selectTestDir(this,'th2tr')" style="flex:1;padding:8px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#0d9488;">🇹🇭→</button>
-      <button class="test-dir-btn" onclick="selectTestDir(this,'tr2th')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">→🇹🇭</button>
+      <button class="test-dir-btn active" onclick="selectTestDir(this,'en2tr')" style="flex:1;padding:8px;background:#f0fdf9;border:1.5px solid #0d9488;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#0d9488;">EN-></button>
+      <button class="test-dir-btn" onclick="selectTestDir(this,'tr2en')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">->EN</button>
       <button class="test-dir-btn" onclick="selectTestDir(this,'mix')" style="flex:1;padding:8px;background:white;border:1.5px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;color:#888;">🎲 ${s('test_mode_mix')}</button>
     </div>`;
 }
@@ -2398,7 +2398,7 @@ function renderModeMenu(title, subtitle){
     <button onclick="startFromState()" style="width:100%;padding:14px;background:linear-gradient(135deg,#0d9488,#06b6d4);border:none;border-radius:12px;color:white;font-size:15px;font-weight:700;cursor:pointer;">🚀 ${s('test_start')}</button>
   `;
   testState.mode = 'fc';
-  testState.dir = 'th2tr';
+  testState.dir = 'en2tr';
 }
 
 function startFromState(){
@@ -2425,7 +2425,7 @@ function showTestCard(){
 
   // Yön belirle
   let actualDir = dir;
-  if(dir==='mix') actualDir = Math.random()<0.6 ? 'th2tr' : 'tr2th';
+  if(dir==='mix') actualDir = Math.random()<0.6 ? 'en2tr' : 'tr2en';
 
   // Mod belirle
   let actualMode = mode;
@@ -2434,7 +2434,7 @@ function showTestCard(){
   testState._curDir = actualDir;
   testState._curMode = actualMode;
 
-  const questionText = actualDir==='th2tr'
+  const questionText = actualDir==='en2tr'
     ? `<div style="font-size:28px;font-weight:700;color:#0d9488;margin-bottom:6px;">${card.th||card.ro}</div>
        <div style="font-size:13px;color:#888;font-style:italic;">${card.ro}</div>`
     : `<div style="font-size:20px;font-weight:700;color:#222;margin-bottom:6px;">${card.tr}</div>`;
@@ -2458,7 +2458,7 @@ function showTestCard(){
         <button onclick="speakTestWord()" style="margin-top:12px;background:none;border:1px solid #e0e0e0;border-radius:20px;padding:4px 12px;font-size:11px;color:#888;cursor:pointer;">${s('speak_listen')}</button>
       </div>
       <div id="fc-answer" style="display:none;background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:12px;padding:14px 16px;margin-bottom:14px;text-align:center;">
-        ${actualDir==='th2tr'
+        ${actualDir==='en2tr'
           ? `<div style="font-size:16px;font-weight:700;color:#0d9488;">${card.tr}</div>`
           : `<div style="font-size:22px;font-weight:700;color:#0d9488;">${card.th||''}</div><div style="font-size:12px;color:#888;margin-top:3px;">${card.ro}</div>`}
       </div>
@@ -2475,19 +2475,19 @@ function showTestCard(){
       </div>`;
   } else {
     // MC
-    const correctAnswer = actualDir==='th2tr' ? card.tr : (card.th||card.ro);
+    const correctAnswer = actualDir==='en2tr' ? card.tr : (card.th||card.ro);
     const wrongPool = getWrongOptions(card.tr, 5, lessonNum||0);
-    // tr2th yönü için: tüm kartlardan veya ders kartlarından yanlış seçenekler
+    // tr2en yönü için: tüm kartlardan veya ders kartlarından yanlış seçenekler
     const wrongThPool = lessonNum
       ? buildTestCards(lessonNum,'all').filter(c=>c.tr!==card.tr)
       : testState.cards.filter(c=>c.tr!==card.tr);
-    const wrongs = actualDir==='th2tr' ? wrongPool.slice(0,3) : wrongThPool.slice(0,3).map(c=>c.th||c.ro);
+    const wrongs = actualDir==='en2tr' ? wrongPool.slice(0,3) : wrongThPool.slice(0,3).map(c=>c.th||c.ro);
     const opts = [correctAnswer, ...wrongs.slice(0,3)].sort(()=>Math.random()-0.5);
 
     // MC butonlarını ayrı fonksiyonla oluştur — apostrof sorununu önlemek için
     window._testMCOpts = opts;
     window._testMCCorrect = correctAnswer;
-    window._testMCFull = actualDir==='th2tr' ? card.tr : card.ro;
+    window._testMCFull = actualDir==='en2tr' ? card.tr : card.ro;
 
     wrap.innerHTML = [
       '<button onclick="testGoBack()" style="background:none;border:none;color:#0d9488;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-bottom:14px;">'+s('test_back_btn')+'</button>',
@@ -2796,20 +2796,20 @@ function showReviewCard(){
   const lessonMeta = LESSONS_META.find(m=>m.num===card.lessonNum);
   const typeLabel = {word:s('review_type_word'), example:s('review_type_example'), speaking:s('review_type_speaking')}[card.type] || '📝';
 
-  // Ters yön (Türkçe→Thai) veya normal (Thai→Türkçe)
+  // Reverse direction (Turkish->English) or normal (English->Turkish)
   const isReverse = Math.random() > 0.5 && card.reps > 1;
 
-  const questionThai = isReverse ? '' : (card.th || '');
+  const questionEnglish = isReverse ? '' : (card.th || '');
   const questionRo = isReverse ? card.tr : card.ro;
   const answerText = isReverse ? card.tr : (card.th || '');
   const answerRo = isReverse ? card.ro : card.tr;
-  const questionLabel = isReverse ? s('review_q_tr2th') : s('review_q_th2tr');
+  const questionLabel = isReverse ? s('review_q_tr2en') : s('review_q_en2tr');
 
   wrap.innerHTML = `
     <div class="review-card">
       <div class="rc-lesson">${lessonMeta?lessonMeta.emoji+' '+s('review_lesson_prefix')+' '+lessonMeta.num:''} · ${typeLabel}</div>
       <div style="font-size:11px;color:#888;margin-bottom:12px;">${questionLabel}</div>
-      ${questionThai ? '<div class="rc-question">'+questionThai+'</div>' : ''}
+      ${questionEnglish ? '<div class="rc-question">'+questionEnglish+'</div>' : ''}
       <div class="rc-ro">${questionRo}</div>
       <button class="rc-speak-btn" data-speak="${esc(card.th||card.ro)}" data-slow="0">${s('speak_listen')}</button>
       <div class="rc-answer" id="rc-ans">
@@ -2877,7 +2877,7 @@ function renderList(){
     <div class="word-card">
       <div class="word-top">
         <div>
-          <div class="word-thai">${v.th||''}</div>
+          <div class="word-en">${v.th||''}</div>
           <div class="word-ro">${v.ro}</div>
           <div class="word-tr">${v.tr}</div>
         </div>
@@ -2956,7 +2956,7 @@ function buildHelpContent(){
       </div></div>
       <div class="help-section-header" style="margin-top:16px;">🔊 ${en?'Audio Buttons':'Ses Butonları'}</div>
       <div class="help-row"><div class="help-badge" style="background:#0d9488;color:white;">🔊</div>
-        <div class="help-row-sub" style="padding-top:2px;">${en?'Normal-speed Thai audio — uses device TTS engine.':'Normal hızda Thai sesi — cihazın TTS motorunu kullanır.'}</div></div>
+        <div class="help-row-sub" style="padding-top:2px;">${en?'Normal-speed English audio - uses device TTS engine.':'Normal hizda Ingilizce sesi - cihazin TTS motorunu kullanir.'}</div></div>
       <div class="help-row"><div class="help-badge" style="background:#666;color:white;">🐢</div>
         <div class="help-row-sub" style="padding-top:2px;">${en?'Slow mode — use while learning pronunciation.':'Yavaş mod — telaffuzu öğrenirken kullan.'}</div></div>
     </div>
@@ -2971,7 +2971,7 @@ function buildHelpContent(){
       <div class="help-tab-row"><span class="htag" style="background:#e8f5e9;color:#2e7d32;">📚 ${en?'Words':'Sözcükler'}</span>
         <span>${en?'Core vocabulary. Each word has usage tips, context notes, and 7–12 examples. Star with ⭐.':'Dersin temel kelimeleri. Her kelimede ipuçları, bağlam notu ve 7–12 örnek cümle var. ⭐ ile yıldızlayabilirsin.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#e3f2fd;color:#1565c0;">🎵 ${en?'Tones':'Tonlar'}</span>
-        <span>${en?'Lesson 1 only. Thai\'s 5 tones — pitch differences and practical tips.':'Sadece Ders 1\'de. Thai\'nin 5 tonu — her tonun ses farkı ve pratik ipuçları.'}</span></div>
+        <span>${en?'Lesson 1 only. English pronunciation essentials - stress, rhythm and difficult sounds.':'Sadece Ders 1 de. Ingilizce telaffuz temelleri - vurgu, ritim ve zor sesler.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fff3e0;color:#e65100;">📖 ${en?'Grammar':'Gramer'}</span>
         <span>${en?'Sentence structure rules. Formula + explanation + speakable examples. Tap 📖 for color-coded S/V/O analysis.':'Cümle yapısı kuralları. Formül + açıklama + seslenebilir örnekler. 📖 ikonuna bas → renk kodlu S/V/O analizi.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fce4ec;color:#880e4f;">🗣️ ${en?'Speaking':'Konuşma'}</span>
@@ -2979,13 +2979,13 @@ function buildHelpContent(){
       <div class="help-tab-row"><span class="htag" style="background:#f3e5f5;color:#4a148c;">👥 ${en?'Dialogue':'Diyalog'}</span>
         <span>${en?'Realistic dialogues between Ali and Nada. Tap ▶ Play All to listen in sequence.':'Ali ve Nada arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#e8eaf6;color:#283593;">🎧 ${en?'Listening':'Dinleme'}</span>
-        <span>${en?'Tap 🔊, listen to Thai, choose the correct option. Easy / Medium / Hard levels.':'🔊\'ya bas, Thai\'yi dinle, doğru şıkkı seç. Kolay / Orta / Zor seviyeleri var.'}</span></div>
+        <span>${en?'Tap listen, hear English, choose the correct option. Easy / Medium / Hard levels.':'Dinle butonuna bas, Ingilizceyi dinle, dogru sikki sec. Kolay / Orta / Zor seviyeleri var.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#e0f2f1;color:#004d40;">📝 Quiz</span>
         <span>${en?'Multiple-choice questions testing the full lesson content.':'Dersin tüm içeriğini test eden çoktan seçmeli sorular.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🔢 ${en?'Numbers':'Sayılar'}</span>
         <span>${en?'Lesson 2 only. All digits + compound number examples. Tap a card to hear it.':'Sadece Ders 2\'de. Tüm rakamlar + bileşik sayı örnekleri. Her karta dokun → sesini duy.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🧮 ${en?'Calculator':'Hesapla'}</span>
-        <span>${en?'Lesson 2 only. Enter 0–9,999,999 → Thai spelling + digit breakdown.':'Sadece Ders 2\'de. 0–9.999.999 arası herhangi bir sayıyı gir → Thai karşılığı + basamak dökümü.'}</span></div>
+        <span>${en?'Lesson 2 only. Enter 0-9,999,999 to see English spelling + digit breakdown.':'Sadece Ders 2 de. 0-9.999.999 arasi herhangi bir sayiyi gir, Ingilizce karsiligi + basamak dokumu gelsin.'}</span></div>
       <div class="help-section-header" style="margin-top:16px;">🎨 ${en?'Sentence Analysis Color Code':'Cümle Analizi Renk Kodu'}</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
         ${chip('#eff6ff','#3b82f6',en?'S = Subject':'S = Özne')}
@@ -3005,13 +3005,13 @@ function buildHelpContent(){
       </div></div>
       <div class="help-section-header">⚙️ ${en?'How It Works':'Nasıl Çalışır?'}</div>
       <div class="help-step"><div class="help-step-num">1</div><div>${en?'Go to Test → Lesson Practice → tap <strong>+ Add</strong> for a lesson. Adds words to SRS.':'Test sekmesine gir → Ders Bazlı Pratik\'ten → <strong>+ Ekle</strong>\'ye bas. Kelimeleri SRS\'e ekler.'}</div></div>
-      <div class="help-step"><div class="help-step-num">2</div><div>${en?'A card appears. Flashcard first (see Thai, guess meaning). Tap Show Answer.':'Kart gösterilir. Önce flashcard (Thai\'yi gör, anlamı tahmin et). Cevabı gör\'e bas.'}</div></div>
+      <div class="help-step"><div class="help-step-num">2</div><div>${en?'A card appears. Flashcard first (see English, guess meaning). Tap Show Answer.':'Kart gosterilir. Once flashcard ile Ingilizceyi gor, anlamini tahmin et. Cevabi gor e bas.'}</div></div>
       <div class="help-step"><div class="help-step-num">3</div><div>${en?'Rate yourself: ❌ Don\'t know → 😰 Hard → 👍 OK → ⚡ Easy':'Kendini değerlendir: ❌ Bilmiyorum → 😰 Zor → 👍 Normal → ⚡ Kolay'}</div></div>
       <div class="help-step"><div class="help-step-num">4</div><div>${en?'Algorithm calculates the next review date. Easy = long gap, Hard = short gap.':'Algoritma bir sonraki gösterim tarihini hesaplar. Kolay = uzun aralık, Zor = kısa aralık.'}</div></div>
       <div class="help-step"><div class="help-step-num">5</div><div>${en?'Complete <strong>Today\'s Review</strong> daily. 5–10 minutes is enough.':'Her gün <strong>Bugünün Tekrarı</strong>\'nı bitir. 5–10 dakika yeterli.'}</div></div>
       <div class="help-section-header" style="margin-top:16px;">🃏 ${en?'Card Types':'Kart Türleri'}</div>
       <div class="help-row"><div class="help-badge" style="background:#e8f5e9;color:#2e7d32;">${en?'New':'Yeni'}</div>
-        <div class="help-row-sub">${en?'Always flashcard on first show. Thai → Meaning direction.':'İlk gösterimde her zaman flashcard. Thai → Anlam yönünde.'}</div></div>
+        <div class="help-row-sub">${en?'Always flashcard on first show. English to meaning direction.':'Ilk gosterimde her zaman flashcard. Ingilizce -> anlam yonunde.'}</div></div>
       <div class="help-row"><div class="help-badge" style="background:#fff3e0;color:#e65100;">${en?'Review':'Tekrar'}</div>
         <div class="help-row-sub">${en?'50% flashcard, 50% multiple choice. Direction changes randomly.':'%50 flashcard, %50 çoktan seçmeli. Yön rastgele değişir.'}</div></div>
       <div class="help-card" style="margin-top:14px;background:#fff8e1;border-color:#ffe082;">
@@ -3027,19 +3027,19 @@ function buildHelpContent(){
     <div id="htab-ipuclari" class="htab-content">
       <div class="help-section-header">🎯 ${en?'Effective Learning':'Verimli Öğrenme'}</div>
       <div class="help-tip"><div class="help-tip-icon">🔊</div>
-        <div><strong>${en?'Always study with audio.':'Her zaman sesli çalış.'}</strong> ${en?'Thai is tonal — reading alone isn\'t enough. Tap every card to hear it.':'Thai tonal bir dil — yazıyı okumak yetmez, sesi duymak zorunlu. Karta her dokunuşta sesi dinle.'}</div></div>
+        <div><strong>${en?'Always study with audio.':'Her zaman sesli çalış.'}</strong> ${en?'English pronunciation is stress-based; reading alone is not enough. Tap every card to hear it.':'Ingilizcede vurgu ve ritim onemlidir; sadece okumak yetmez. Her kartta sesi dinle.'}</div></div>
       <div class="help-tip"><div class="help-tip-icon">🐢</div>
         <div><strong>${en?'Use slow mode.':'Yavaş modu kullan.'}</strong> ${en?'When learning a new word, listen at 🐢 first, then at normal 🔊 speed.':'Yeni bir kelimeyi öğrenirken önce 🐢 ile yavaş dinle, sonra 🔊 ile normal hızda.'}</div></div>
       <div class="help-tip"><div class="help-tip-icon">⭐</div>
-        <div><strong>${en?'Star selectively.':'Yıldızla seçici ol.'}</strong> ${en?'Star the sentences most useful in Phuket. Quickly review them from the List tab.':'Phuket\'te en çok işine yarayacak cümleleri yıldızla. Liste sekmesinden hızlı tekrar yap.'}</div></div>
+        <div><strong>${en?'Star selectively.':'Yıldızla seçici ol.'}</strong> ${en?'Star the sentences you will actually use. Quickly review them from the List tab.':'Gercekten kullanacagin cumleleri yildizla. Liste sekmesinden hizli tekrar yap.'}</div></div>
       <div class="help-tip"><div class="help-tip-icon">👥</div>
         <div><strong>${en?'Listen to dialogues.':'Diyalogları dinle.'}</strong> ${en?'Use ▶ Play All to listen from start to finish — for real conversation rhythm.':'▶ Tümü butonuyla diyaloğu baştan sona dinle — gerçek konuşma ritmi için.'}</div></div>
       <div class="help-tip"><div class="help-tip-icon">📖</div>
-        <div><strong>${en?'Use sentence analysis.':'Cümle analizini kullan.'}</strong> ${en?'Tap 📖 on any example — seeing S/V/O structure internalizes Thai grammar.':'Her örnek cümlede 📖 ikonuna bas — S/V/O yapısını görünce Thai grameri içselleşir.'}</div></div>
+        <div><strong>${en?'Use sentence analysis.':'Cümle analizini kullan.'}</strong> ${en?'Tap the analysis button on any example; seeing S/V/O structure internalizes English grammar.':'Her ornek cumlede analiz butonuna bas; S/V/O yapisini gorunce Ingilizce grameri oturur.'}</div></div>
       <div class="help-tip"><div class="help-tip-icon">🔄</div>
         <div><strong>${en?'Don\'t skip SRS.':'SRS\'i ihmal etme.'}</strong> ${en?'Spend a few minutes every day until today\'s review hits 0.':'Bugünün tekrarı 0 karta düşene kadar her gün birkaç dakika ayır.'}</div></div>
-      <div class="help-tip"><div class="help-tip-icon">🇹🇭</div>
-        <div><strong>${en?'Polite particles matter.':'Kibar ekleri önemli.'}</strong> ${en?'ครับ (khrap) or ค่ะ (kha) without them sentences sound rude. Add them every time.':'ครับ (khrap) veya ค่ะ (kha) olmadan cümle kaba kaçar. Her cümleye ekle.'}</div></div>
+      <div class="help-tip"><div class="help-tip-icon">EN</div>
+        <div><strong>${en?'Polite phrases matter.':'Kibar ifadeler onemli.'}</strong> ${en?'Please, thank you and excuse me make everyday English sound natural. Use them often.':'Please, thank you ve excuse me gibi ifadeler Ingilizceyi dogal ve nazik yapar. Sik kullan.'}</div></div>
       <div class="help-section-header" style="margin-top:16px;">⚡ ${en?'Shortcuts':'Kısayollar'}</div>
       <div class="help-row"><div class="help-badge" style="background:#f5f5f5;color:#333;border:1px solid #ddd;">Tap</div>
         <div class="help-row-sub">${en?'Tap a card/word → plays audio':'Kart / kelimeye dokun → ses çalar'}</div></div>
@@ -3054,7 +3054,7 @@ function buildHelpContent(){
     <!-- HAKKINDA -->
     <div id="htab-hakkinda" class="htab-content">
       <div class="help-card" style="background:linear-gradient(135deg,#e0f2f1,#f0fdfa);border-color:#b2dfdb;">
-        <div style="font-size:32px">🇹🇭</div>
+        <div style="font-size:32px">EN</div>
         <div>
           <div class="help-card-title" style="font-size:16px;">${en?'Easy English Learning':'Kolay İngilizce Öğrenme'}</div>
           <div class="help-card-body">${en?'An English learning app focused on real conversation for Turkish speakers.':'Türkçe konuşanlar için gerçek konuşma diline odaklı İngilizce öğrenme uygulaması.'}</div>
@@ -3066,7 +3066,7 @@ function buildHelpContent(){
       <div class="help-info-row"><span>${en?'Per Lesson':'Ders Başına'}</span><strong>~10 ${en?'words, 8 grammar, 4 dialogues':'kelime, 8 gramer, 4 diyalog'}</strong></div>
       <div class="help-info-row"><span>${en?'Audio':'Ses Motoru'}</span><strong>Web Speech API + Google TTS</strong></div>
       <div class="help-info-row"><span>${en?'Data':'Veri'}</span><strong>localStorage (${en?'works offline':'internet gerekmez'})</strong></div>
-      <div class="help-info-row"><span>${en?'Developer':'Geliştirici'}</span><strong>Ali Dinçer, Phuket 🇹🇭</strong></div>
+      <div class="help-info-row"><span>${en?'Developer':'Geliştirici'}</span><strong>Ali Dincer</strong></div>
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">v3.46+</div>
@@ -3083,7 +3083,7 @@ function buildHelpContent(){
       <div class="help-card" style="margin-top:14px;background:#fff8e1;border-color:#ffe082;text-align:center;">
         <div style="width:100%;text-align:center;">
           <div style="font-size:24px;margin-bottom:6px;">🙏</div>
-          <div style="font-size:13px;color:#555;line-height:1.6;">${en?'Built to help you start talking to your Thai neighbours in Phuket.<br><strong style="color:#0d9488;">ขอบคุณครับ</strong>':'Phuket\'teki Thai komşularınla konuşmaya başlamana yardımcı olmak için yapıldı.<br><strong style="color:#0d9488;">ขอบคุณครับ</strong>'}</div>
+          <div style="font-size:13px;color:#555;line-height:1.6;">${en?'Built to help Turkish speakers practise practical English every day.<br><strong style="color:#0d9488;">Keep speaking.</strong>':'Turkce konusanlarin her gun pratik Ingilizce calismasi icin yapildi.<br><strong style="color:#0d9488;">Konusmaya devam.</strong>'}</div>
         </div>
       </div>
     </div>
@@ -3447,7 +3447,7 @@ function exShuffle(arr){
 }
 
 function buildExercises(LD){
-  // BONUS lessons have no th (Thai script); use ro as display fallback
+  // BONUS lessons may use pronunciation as display fallback
   const words = (LD.words||[]).filter(w=>w.tr && w.ro);
   if(words.length<2) return [];
   const hasTh = words.some(w=>w.th);
@@ -3458,7 +3458,7 @@ function buildExercises(LD){
     return exShuffle(words.filter(w=>w.id!==exclude_id)).slice(0,n);
   }
 
-  // 1. word-choice: see Turkish prompt → pick correct Thai/Romanization card
+  // 1. word-choice: see Turkish prompt → pick correct English/Pronunciation card
   const wc_words = exShuffle([...words]).slice(0, Math.min(6, words.length));
   wc_words.forEach(w=>{
     const dist = distractors(w.id, 3);
@@ -3468,10 +3468,10 @@ function buildExercises(LD){
       {th:display, ro:w.ro, correct:true},
       ...dist.map(d=>({th:d.th||d.ro, ro:d.ro, correct:false}))
     ]);
-    ex.push({type:'word-choice', prompt:w.tr, correctTh:display, options:opts});
+    ex.push({type:'word-choice', prompt:w.tr, correctEn:display, options:opts});
   });
 
-  // 2. listen-choice: hear audio → pick sentence (only if Thai script available for TTS)
+  // 2. listen-choice: hear audio → pick sentence (only if English text available for TTS)
   const allExamples = words.flatMap(w=>(w.examples||[]).map(e=>({...e, wordTr:w.tr})));
   if(hasTh){
     const lc_exs = exShuffle([...allExamples]).slice(0, 4);
@@ -3483,11 +3483,11 @@ function buildExercises(LD){
         {th:e.th, ro:e.ro, correct:true},
         ...dist.map(d=>({th:d.th||'', ro:d.ro||'', correct:false}))
       ]);
-      ex.push({type:'listen-choice', audioTh:e.th, options:opts});
+      ex.push({type:'listen-choice', audioEn:e.th, options:opts});
     });
   }
 
-  // 3. translate-choice: see Thai/Romanization sentence → pick correct Turkish
+  // 3. translate-choice: see English/Pronunciation sentence → pick correct Turkish
   const tc_exs = exShuffle([...allExamples]).slice(0, 5);
   tc_exs.forEach(e=>{
     if((!e.th && !e.ro) || !e.tr) return;
@@ -3500,7 +3500,7 @@ function buildExercises(LD){
     ex.push({type:'translate-choice', th:e.th||e.ro, ro:e.ro, options:opts});
   });
 
-  // 4. translate-wordbank: see Thai/Romanization sentence → build Turkish from tiles
+  // 4. translate-wordbank: see English/Pronunciation sentence → build Turkish from tiles
   const wb_exs = exShuffle([...allExamples]).slice(0, 4);
   wb_exs.forEach(e=>{
     if((!e.th && !e.ro) || !e.tr) return;
@@ -3595,9 +3595,9 @@ function showExFeedback(correct, correctAnswer){
   }
 }
 
-function speakExThai(th){
+function speakExEnglish(th){
   if(!th) return;
-  try{ speak(th); } catch(e){ console.warn('speakExThai error:',e); }
+  try{ speak(th); } catch(e){ console.warn('speakExEnglish error:',e); }
 }
 
 function renderExercise(){
@@ -3619,7 +3619,7 @@ function renderExercise(){
       <div class="ex-q-label">${en?'Select the correct answer':'Doğru cevabı seçin'}</div>
       <div class="ex-prompt-box">
         <div class="ex-prompt-th">${esc(e.prompt)}</div>
-        <button class="ex-speak-sm" onclick="speakExThai('${e.correctTh.replace(/'/g,"\\'")}')">🔊</button>
+        <button class="ex-speak-sm" onclick="speakExEnglish('${e.correctEn.replace(/'/g,"\\'")}')">🔊</button>
       </div>
       <div class="ex-word-grid" id="ex-grid">
         ${e.options.map((o,i)=>`
@@ -3632,7 +3632,7 @@ function renderExercise(){
   else if(e.type==='listen-choice'){
     content.innerHTML = `
       <div class="ex-q-label">${en?'What do you hear?':'Ne duyuyorsun?'}</div>
-      <button class="ex-listen-big-btn" onclick="speakExThai('${e.audioTh.replace(/'/g,"\\'")}')">🔊</button>
+      <button class="ex-listen-big-btn" onclick="speakExEnglish('${e.audioEn.replace(/'/g,"\\'")}')">🔊</button>
       <div class="ex-options" id="ex-opts">
         ${e.options.map((o,i)=>`
           <div class="ex-option" data-idx="${i}" data-correct="${o.correct}" onclick="exSelectOpt(this,${i})">
@@ -3640,9 +3640,9 @@ function renderExercise(){
             <div class="ex-option-ro">${esc(o.ro)}</div>
           </div>`).join('')}
       </div>
-      <div class="ex-skip-listen" onclick="speakExThai('${e.audioTh.replace(/'/g,"\\'")}')">🐢 ${en?'Play slowly':'Yavaş dinle'}</div>`;
+      <div class="ex-skip-listen" onclick="speakExEnglish('${e.audioEn.replace(/'/g,"\\'")}')">🐢 ${en?'Play slowly':'Yavaş dinle'}</div>`;
     // Auto-play audio
-    setTimeout(()=>{ try{ speakExThai(e.audioTh); }catch(err){} }, 400);
+    setTimeout(()=>{ try{ speakExEnglish(e.audioEn); }catch(err){} }, 400);
   }
   else if(e.type==='translate-choice'){
     content.innerHTML = `
@@ -3652,7 +3652,7 @@ function renderExercise(){
           <div class="ex-sent-th">${esc(e.th)}</div>
           <div class="ex-sent-ro">${esc(e.ro||'')}</div>
         </div>
-        <button class="ex-speak-sm" onclick="speakExThai('${e.th.replace(/'/g,"\\'")}')">🔊</button>
+        <button class="ex-speak-sm" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}')">🔊</button>
       </div>
       <div class="ex-options" id="ex-opts">
         ${e.options.map((o,i)=>`
@@ -3668,7 +3668,7 @@ function renderExercise(){
           <div class="ex-sent-th">${esc(e.th)}</div>
           <div class="ex-sent-ro">${esc(e.ro||'')}</div>
         </div>
-        <button class="ex-speak-sm" onclick="speakExThai('${e.th.replace(/'/g,"\\'")}')">🔊</button>
+        <button class="ex-speak-sm" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}')">🔊</button>
       </div>
       <div class="ex-answer-area" id="ex-ans-area">
         <span class="ex-answer-placeholder">${en?'Tap words below to build answer':'Aşağıdaki kelimelerle cevabı oluşturun'}</span>
