@@ -529,23 +529,28 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .ex-finish-stat-val{font-size:28px;font-weight:700;color:#1cb0f6;}
 .ex-finish-stat-lbl{font-size:12px;color:#afafaf;}
 .ex-finish-btn{background:#58cc02;color:white;border:none;border-radius:14px;padding:16px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #46a302;}
-/* Quick action buttons inside lesson detail */
-.lesson-quick-actions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
-.lca-btn{border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:.15s;border:1.5px solid;white-space:nowrap;}
-.lca-btn.ex {background:#fff9db;border-color:#ffcc00;color:#b45309;}
-.lca-btn.sp {background:#e8f5e9;border-color:#66bb6a;color:#2e7d32;}
-.lca-btn.qz {background:#e3f2fd;border-color:#42a5f5;color:#1565c0;}
-.lca-btn.st {background:#fce4ec;border-color:#f48fb1;color:#880e4f;}
-.lca-btn:active{opacity:.7;transform:scale(.96);}
+/* Lesson detail header */
+.lesson-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:10px;}
+.lesson-topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.lesson-header-star{background:#fff;border:1.5px solid #f48fb1;border-radius:8px;padding:5px 10px;font-size:13px;cursor:pointer;color:#880e4f;font-weight:700;line-height:1;}
+.lesson-header-star:active{opacity:.75;transform:scale(.96);}
+.lesson-title{font-size:18px;margin:0 0 12px;font-weight:800;line-height:1.3;}
+.practice-intro-card{background:white;border:1.5px solid #ffe082;border-radius:12px;padding:24px 20px;text-align:center;max-width:360px;margin:20px auto;}
+.practice-intro-icon{font-size:40px;margin-bottom:10px;}
+.practice-intro-title{font-size:16px;font-weight:800;color:#b45309;margin-bottom:8px;}
+.practice-intro-body{font-size:13px;color:#666;line-height:1.6;margin-bottom:18px;}
+.practice-start-btn{background:#ffcc00;border:none;border-radius:10px;padding:12px 28px;color:#7c4a00;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 3px 0 #e6b800;}
+.practice-start-btn:active{transform:translateY(2px);box-shadow:0 1px 0 #e6b800;}
 /* Lesson star rating */
 .lcard-stars{display:flex;gap:2px;margin-top:5px;font-size:13px;line-height:1;}
 .lcard-stars .s{color:#e0e0e0;}
 .lcard-stars .s.on{color:#fbbf24;}
 @media(prefers-color-scheme:dark){
-  .lca-btn.ex{background:#2a2200;border-color:#b8860b;color:#ffd54f;}
-  .lca-btn.sp{background:#0a2010;border-color:#388e3c;color:#a5d6a7;}
-  .lca-btn.qz{background:#0a1828;border-color:#1565c0;color:#90caf9;}
-  .lca-btn.st{background:#2a0a18;border-color:#880e4f;color:#f48fb1;}
+  .lesson-header-star{background:#2a0a18;border-color:#880e4f;color:#f48fb1;}
+  .practice-intro-card{background:#1e1e1e;border-color:#b8860b;}
+  .practice-intro-title{color:#ffd54f;}
+  .practice-intro-body{color:#aaa;}
+  .practice-start-btn{background:#b8860b;color:#fff;box-shadow:0 3px 0 #8b6914;}
   .lcard-stars .s{color:#333;}
   .lcard-stars .s.on{color:#fbbf24;}
 }
@@ -578,7 +583,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.4.1';
+const APP_VERSION = 'v1.4.2';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -639,7 +644,9 @@ const UI = {
     // Sekmeler
     tab_words:'Sözcükler', tab_tones:'Telaffuz', tab_grammar:'Gramer',
     tab_speaking:'Konuşma', tab_dialogue:'Diyalog', tab_listening:'Dinleme',
-    tab_quiz:'Quiz', tab_numbers:'Sayılar', tab_calc:'Hesapla',
+    tab_quiz:'Quiz', tab_practice:'Alıştırma', tab_numbers:'Sayılar', tab_calc:'Hesapla',
+    practice_intro:'Kelime ve cümle alıştırmaları. Kısa egzersiz modu.',
+    practice_start:'Alıştırmaya Başla',
     // Ders içi
     lesson_back:'← Dersler', lesson_open:'Derse gir', lesson_done_msg:'Bu dersi tamamladın!',
     lesson_redo_hint:'İstersen tekrar işaretleyebilirsin',
@@ -758,7 +765,9 @@ const UI = {
     // Tabs
     tab_words:'Words', tab_tones:'Pronunciation', tab_grammar:'Grammar',
     tab_speaking:'Speaking', tab_dialogue:'Dialogue', tab_listening:'Listening',
-    tab_quiz:'Quiz', tab_numbers:'Numbers', tab_calc:'Calculator',
+    tab_quiz:'Quiz', tab_practice:'Practice', tab_numbers:'Numbers', tab_calc:'Calculator',
+    practice_intro:'Word and sentence drills in a quick exercise mode.',
+    practice_start:'Start Practice',
     // Lesson
     lesson_back:'← Lessons', lesson_open:'Open lesson', lesson_done_msg:'You completed this lesson!',
     lesson_redo_hint:'You can reset this if needed',
@@ -914,7 +923,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v1.4.1</span>
+  <span class="vbadge" id="app-version">v1.4.2</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1421,17 +1430,6 @@ function renderLessonCard(L){
     </div>`;
 }
 
-function renderLessonQuickActions(meta){
-  const tabs = getTabsForLesson(meta);
-  const n = meta.num;
-  const en = appLang==='en';
-  const btns = [`<button type="button" class="lca-btn ex" onclick="startExercise(${n},event)">🎯 ${en?'Practice':'Alıştırma'}</button>`];
-  if(tabs.includes('speaking')) btns.push(`<button type="button" class="lca-btn sp" onclick="jumpLessonTab('speaking')">🗣️ ${en?'Speaking':'Konuşma'}</button>`);
-  if(tabs.includes('quiz')) btns.push(`<button type="button" class="lca-btn qz" onclick="jumpLessonTab('quiz')">📝 ${en?'Quiz':'Sınav'}</button>`);
-  btns.push(`<button type="button" class="lca-btn st" onclick="showLessonStars(${n},event)">⭐ ${en?'Starred':'Yıldızlılar'}</button>`);
-  return `<div class="lesson-quick-actions">${btns.join('')}</div>`;
-}
-
 function renderLessonList(){
   const regular = LESSONS_META.filter(L=>L.num<21);
   const bonus   = LESSONS_META.filter(L=>L.num>=21);
@@ -1458,21 +1456,26 @@ function renderLessonList(){
     regular.map(renderLessonCard).join('') + bonusHeader + bonusItems;
 }
 
+function insertPracticeTab(tabs){
+  if(tabs.includes('practice')) return tabs;
+  const qi = tabs.indexOf('quiz');
+  return qi === -1 ? [...tabs, 'practice'] : [...tabs.slice(0, qi), 'practice', ...tabs.slice(qi)];
+}
+
 // =================== DERS DETAY ===================
 // hasTones → Ders 1 telaffuz sekmesi
 function getTabsForLesson(meta){
-  // Bonus kelime setleri (21+): sadece kelimeler ve quiz
-  if(meta.num>=21) return ['words','quiz'];
+  if(meta.num>=21) return insertPracticeTab(['words','quiz']);
   const base = ['words','grammar','speaking','dialogue','listening','quiz'];
-  if(meta.hasTones) return ['words','tones','grammar','speaking','dialogue','listening','quiz'];
-  if(meta.num===3) return ['numbers','calc','words','grammar','speaking','dialogue','listening','quiz'];
-  return base;
+  if(meta.hasTones) return insertPracticeTab(['words','tones','grammar','speaking','dialogue','listening','quiz']);
+  if(meta.num===3) return insertPracticeTab(['numbers','calc','words','grammar','speaking','dialogue','listening','quiz']);
+  return insertPracticeTab(base);
 }
 function getTabLabels(){
   return {
-    words:'📚 '+s('tab_words'), tones:'🎵 '+s('tab_tones'), grammar:'📖 '+s('tab_grammar'),
-    speaking:'🗣️ '+s('tab_speaking'), dialogue:'👥 '+s('tab_dialogue'), listening:'🎧 '+s('tab_listening'),
-    quiz:'📝 '+s('tab_quiz'), numbers:'🔢 '+s('tab_numbers'), calc:'🧮 '+s('tab_calc')
+    words:s('tab_words'), tones:s('tab_tones'), grammar:s('tab_grammar'),
+    speaking:s('tab_speaking'), dialogue:s('tab_dialogue'), listening:s('tab_listening'),
+    quiz:s('tab_quiz'), practice:s('tab_practice'), numbers:s('tab_numbers'), calc:s('tab_calc')
   };
 }
 
@@ -1887,10 +1890,18 @@ function buildLessonHTML(L, meta){
     </div>`).join('') + completeBtnHtml;
   window._lessonQuiz = quizSrc;
 
-  // NUMBERS (sadece L2)
+  const practiceHtml = `
+    <div class="practice-intro-card">
+      <div class="practice-intro-icon">🎯</div>
+      <div class="practice-intro-title">${s('tab_practice')}</div>
+      <div class="practice-intro-body">${s('practice_intro')}</div>
+      <button type="button" class="practice-start-btn" onclick="startExercise(${meta.num},event)">${s('practice_start')}</button>
+    </div>`;
+
+  // NUMBERS (sadece L3)
   let numbersHtml = '';
   let calcHtml = '';
-  if(meta.num === 2 && L.numbers){
+  if(meta.num === 3 && L.numbers){
     // --- NUMBERS sekmesi: Flash kart benzeri grid ---
     const groups = [
       {title: appLang==='en'?'🔢 Basic Numbers (0–9)':'🔢 Temel Rakamlar (0–9)', data: L.numbers.filter(x=>x.n<=9)},
@@ -1968,17 +1979,20 @@ function buildLessonHTML(L, meta){
   }
 
   return `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+    <div class="lesson-topbar">
       <button class="back-btn" onclick="closeLessonDetail()" style="margin-bottom:0">${s('lesson_back')}</button>
-      <span id="lesson-score-live" style="font-size:12px;font-weight:700;margin-left:auto;transition:color .3s;"></span>
+      <div class="lesson-topbar-right">
+        <button type="button" class="lesson-header-star" onclick="showLessonStars(${meta.num},event)" title="${appLang==='en'?'Starred items':'Yıldızlılar'}">⭐</button>
+        <span id="lesson-score-live" style="font-size:12px;font-weight:700;transition:color .3s;"></span>
+      </div>
     </div>
-    <h2>${meta.emoji} ${Lf(meta,'title')}</h2>
-    ${renderLessonQuickActions(meta)}
+    <h2 class="lesson-title">${meta.emoji} ${Lf(meta,'title')}</h2>
     <div class="ltabs" id="ltabs-wrap">${tabs}</div>
     ${tabNames.map(t=>`<div id="lc-${t}" class="lcontent">${
       t==='words'?(pronounTable+words):t==='tones'?tones:t==='grammar'?grammar:
       t==='speaking'?speaking:t==='dialogue'?dialogues:
-      t==='listening'?listening:t==='numbers'?numbersHtml:
+      t==='listening'?listening:t==='practice'?practiceHtml:
+      t==='numbers'?numbersHtml:
       t==='calc'?calcHtml:quiz
     }</div>`).join('')}
   `;
@@ -2079,11 +2093,6 @@ function _refreshCompleteBtn(){
   }
 }
 // =================== TAB TİMER END ===================
-
-function jumpLessonTab(tab){
-  const btn = document.querySelector(`.ltab[data-tab="${tab}"]`);
-  switchLessonTab(tab, btn||undefined);
-}
 
 function switchLessonTab(tab, btn){
   document.querySelectorAll('.lcontent').forEach(c=>c.classList.remove('active'));
@@ -3217,7 +3226,9 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
-          <div class="changelog-desc">${en?'Lesson list simplified: tap card to open. Quick actions (practice, quiz, stars) moved inside each lesson':'Ders listesi sadeleştirildi: karta tıklayarak girin. Hızlı menüler (alıştırma, sınav, yıldızlılar) ders içine taşındı'}</div></div>
+          <div class="changelog-desc">${en?'Unified lesson navigation: one tab row; practice merged as a tab; starred button in header':'Ders navigasyonu birleştirildi: tek sekme satırı; alıştırma sekme oldu; yıldızlılar başlıkta'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.4.1</div>
+          <div class="changelog-desc">${en?'Lesson list simplified: tap card to open. Quick actions moved inside each lesson':'Ders listesi sadeleştirildi: karta tıklayarak girin. Hızlı menüler ders içine taşındı'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.4</div>
           <div class="changelog-desc">${en?'New Lesson 2: Verb Tenses (all 6 main tenses). Numbers moved to Lesson 3; lesson numbers 2+ shifted; progress migrated automatically':'Yeni Ders 2: Fiil Zamanları (6 ana zaman). Sayılar Ders 3\'e taşındı; ders numaraları kaydırıldı; ilerleme otomatik taşındı'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.3</div>
