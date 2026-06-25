@@ -78,6 +78,7 @@ main{padding:14px;}
 .linfo{flex:1;}
 .ltitle{font-weight:700;font-size:13px;}
 .lsub{font-size:11px;color:#999;margin-top:2px;}
+.lopen-hint{font-size:11px;color:#0d9488;font-weight:600;margin-top:5px;opacity:.85;}
 .lmeta{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;}
 .lbadge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;}
 .lbadge-visit{background:#e8f5e9;color:#2e7d32;}
@@ -89,7 +90,8 @@ main{padding:14px;}
 .ltimer-wrap{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.75);margin-left:auto;}
 .ltimer-icon{font-size:13px;}
 #lesson-live-timer{font-family:'Courier New',monospace;font-weight:700;font-size:12px;color:white;}
-.larrow{color:#ccc;font-size:18px;}
+.larrow{color:#0d9488;font-size:22px;font-weight:700;opacity:.45;flex-shrink:0;}
+.lesson-card:hover .larrow{opacity:1;}
 
 /* LESSON DETAIL */
 .back-btn{display:flex;align-items:center;gap:6px;margin-bottom:14px;cursor:pointer;color:#0d9488;font-weight:700;font-size:13px;border:none;background:none;padding:0;}
@@ -527,9 +529,9 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .ex-finish-stat-val{font-size:28px;font-weight:700;color:#1cb0f6;}
 .ex-finish-stat-lbl{font-size:12px;color:#afafaf;}
 .ex-finish-btn{background:#58cc02;color:white;border:none;border-radius:14px;padding:16px 32px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #46a302;}
-/* Quick action buttons on lesson cards */
-.lcard-actions{display:flex;flex-wrap:nowrap;gap:5px;margin-top:7px;}
-.lca-btn{border-radius:8px;padding:4px 7px;font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:2px;transition:.15s;border:1.5px solid;white-space:nowrap;flex:1;justify-content:center;}
+/* Quick action buttons inside lesson detail */
+.lesson-quick-actions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.lca-btn{border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:.15s;border:1.5px solid;white-space:nowrap;}
 .lca-btn.ex {background:#fff9db;border-color:#ffcc00;color:#b45309;}
 .lca-btn.sp {background:#e8f5e9;border-color:#66bb6a;color:#2e7d32;}
 .lca-btn.qz {background:#e3f2fd;border-color:#42a5f5;color:#1565c0;}
@@ -576,7 +578,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.4';
+const APP_VERSION = 'v1.4.1';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -639,7 +641,7 @@ const UI = {
     tab_speaking:'Konuşma', tab_dialogue:'Diyalog', tab_listening:'Dinleme',
     tab_quiz:'Quiz', tab_numbers:'Sayılar', tab_calc:'Hesapla',
     // Ders içi
-    lesson_back:'← Dersler', lesson_done_msg:'Bu dersi tamamladın!',
+    lesson_back:'← Dersler', lesson_open:'Derse gir', lesson_done_msg:'Bu dersi tamamladın!',
     lesson_redo_hint:'İstersen tekrar işaretleyebilirsin',
     lesson_unmark:'↺ Tamamlanmadı olarak işaretle',
     lesson_mark_done:'✅ Dersi Tamamladım',
@@ -758,7 +760,7 @@ const UI = {
     tab_speaking:'Speaking', tab_dialogue:'Dialogue', tab_listening:'Listening',
     tab_quiz:'Quiz', tab_numbers:'Numbers', tab_calc:'Calculator',
     // Lesson
-    lesson_back:'← Lessons', lesson_done_msg:'You completed this lesson!',
+    lesson_back:'← Lessons', lesson_open:'Open lesson', lesson_done_msg:'You completed this lesson!',
     lesson_redo_hint:'You can reset this if needed',
     lesson_unmark:'↺ Mark as Incomplete',
     lesson_mark_done:'✅ Mark as Complete',
@@ -912,7 +914,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v1.4</span>
+  <span class="vbadge" id="app-version">v1.4.1</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1411,17 +1413,23 @@ function renderLessonCard(L){
       <div class="lnum">${L.num}</div>
       <div class="linfo">
         <div class="ltitle">${L.emoji} ${Lf(L,'title')}</div>
-        ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : '<div class="lsub">✓</div>'}
+        ${badges.length ? '<div class="lmeta">'+badges.join('')+'</div>' : ''}
         ${renderLessonStars(L.num)}
-        <div class="lcard-actions" onclick="event.stopPropagation()">
-          <button class="lca-btn ex" onclick="startExercise(${L.num},event)">🎯 ${appLang==='en'?'Practice':'Alıştırma'}</button>
-          <button class="lca-btn sp" onclick="openLessonAt(${L.num},'speaking',event)">🗣️ ${appLang==='en'?'Speaking':'Konuşma'}</button>
-          <button class="lca-btn qz" onclick="openLessonAt(${L.num},'quiz',event)">📝 ${appLang==='en'?'Quiz':'Sınav'}</button>
-          <button class="lca-btn st" onclick="showLessonStars(${L.num},event)">⭐ ${appLang==='en'?'Starred':'Yıldızlılar'}</button>
-        </div>
+        <div class="lopen-hint">${s('lesson_open')} ›</div>
       </div>
-      <div class="larrow">›</div>
+      <div class="larrow" aria-hidden="true">›</div>
     </div>`;
+}
+
+function renderLessonQuickActions(meta){
+  const tabs = getTabsForLesson(meta);
+  const n = meta.num;
+  const en = appLang==='en';
+  const btns = [`<button type="button" class="lca-btn ex" onclick="startExercise(${n},event)">🎯 ${en?'Practice':'Alıştırma'}</button>`];
+  if(tabs.includes('speaking')) btns.push(`<button type="button" class="lca-btn sp" onclick="jumpLessonTab('speaking')">🗣️ ${en?'Speaking':'Konuşma'}</button>`);
+  if(tabs.includes('quiz')) btns.push(`<button type="button" class="lca-btn qz" onclick="jumpLessonTab('quiz')">📝 ${en?'Quiz':'Sınav'}</button>`);
+  btns.push(`<button type="button" class="lca-btn st" onclick="showLessonStars(${n},event)">⭐ ${en?'Starred':'Yıldızlılar'}</button>`);
+  return `<div class="lesson-quick-actions">${btns.join('')}</div>`;
 }
 
 function renderLessonList(){
@@ -1965,6 +1973,7 @@ function buildLessonHTML(L, meta){
       <span id="lesson-score-live" style="font-size:12px;font-weight:700;margin-left:auto;transition:color .3s;"></span>
     </div>
     <h2>${meta.emoji} ${Lf(meta,'title')}</h2>
+    ${renderLessonQuickActions(meta)}
     <div class="ltabs" id="ltabs-wrap">${tabs}</div>
     ${tabNames.map(t=>`<div id="lc-${t}" class="lcontent">${
       t==='words'?(pronounTable+words):t==='tones'?tones:t==='grammar'?grammar:
@@ -2070,6 +2079,11 @@ function _refreshCompleteBtn(){
   }
 }
 // =================== TAB TİMER END ===================
+
+function jumpLessonTab(tab){
+  const btn = document.querySelector(`.ltab[data-tab="${tab}"]`);
+  switchLessonTab(tab, btn||undefined);
+}
 
 function switchLessonTab(tab, btn){
   document.querySelectorAll('.lcontent').forEach(c=>c.classList.remove('active'));
@@ -3203,6 +3217,8 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
+          <div class="changelog-desc">${en?'Lesson list simplified: tap card to open. Quick actions (practice, quiz, stars) moved inside each lesson':'Ders listesi sadeleştirildi: karta tıklayarak girin. Hızlı menüler (alıştırma, sınav, yıldızlılar) ders içine taşındı'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.4</div>
           <div class="changelog-desc">${en?'New Lesson 2: Verb Tenses (all 6 main tenses). Numbers moved to Lesson 3; lesson numbers 2+ shifted; progress migrated automatically':'Yeni Ders 2: Fiil Zamanları (6 ana zaman). Sayılar Ders 3\'e taşındı; ders numaraları kaydırıldı; ilerleme otomatik taşındı'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.3</div>
           <div class="changelog-desc">${en?'Removed legacy v3 version labels; storage keys renamed to en1_*; help changelog cleaned up':'Eski v3 sürüm etiketleri kaldırıldı; depolama anahtarları en1_* olarak güncellendi; yardım geçmişi temizlendi'}</div></div>
