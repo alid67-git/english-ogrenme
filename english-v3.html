@@ -174,7 +174,7 @@ main{padding:14px;}
 
 /* TONES */
 .tone-card{background:white;padding:14px;margin-bottom:10px;border-radius:10px;border-left:4px solid #ccc;}
-.tone-name{font-size:15px;font-weight:700;margin-bottom:4px;font-family:'Sarabun',sans-serif;}
+.tone-name{font-size:15px;font-weight:700;margin-bottom:4px;}
 .tone-symbol{font-size:11px;color:#888;margin-bottom:6px;}
 .tone-desc{font-size:13px;color:#555;line-height:1.6;margin-bottom:10px;}
 .tone-words{display:flex;flex-wrap:wrap;gap:8px;}
@@ -576,7 +576,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.0';
+const APP_VERSION = 'v1.1';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -875,7 +875,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v1.0</span>
+  <span class="vbadge" id="app-version">v1.1</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -982,6 +982,30 @@ function setLang(lang){
 <script>
 // =================== YARDIMCI ===================
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+function wordEn(item){ return (item&&(item.en||item.th||item.ro))||''; }
+function dialogueSpeaker(l){ return l.s||l.speaker||'?'; }
+function dialogueGender(l){
+  if(l.gender==='f') return 'f';
+  if(l.gender==='m') return 'm';
+  const sp = dialogueSpeaker(l).toLowerCase();
+  if(['nada','sara','emma','ayse','ayşe','lucy','f'].includes(sp)) return 'f';
+  return 'm';
+}
+function listenResolve(lessonNum, idx){
+  const L = LESSONS[lessonNum];
+  if(!L||!L.listening) return null;
+  const s = String(idx);
+  if(s.includes('-')){
+    const [li,qi] = s.split('-').map(Number);
+    const item = L.listening[li];
+    const q = item&&item.questions&&item.questions[qi];
+    if(!q) return null;
+    return {opts:q.opts, correct:q.answer!=null?q.answer:q.c};
+  }
+  const item = L.listening[idx];
+  if(!item) return null;
+  return {opts:item.opts, correct:item.c!=null?item.c:item.answer};
+}
 
 // =================== VERİ: DERSLER ===================
 // L1+L2 birleşti → Ders 1: "Temel İfadeler ve Tanışma"
@@ -1272,7 +1296,7 @@ function playDialogue(di){
     clearDialogHighlight(di);
     const lineEl = document.getElementById('dline-'+di+'-'+i);
     if(lineEl) lineEl.classList.add('active-line');
-    const gender = lines[i].s.toLowerCase()==='ali' ? 'm' : 'f';
+    const gender = dialogueGender(lines[i]);
     const u = new SpeechSynthesisUtterance(lines[i].en||lines[i].ro||'');
     u.lang = 'en-US';
     u.pitch = gender==='m' ? 0.90 : 1.10;
@@ -1390,9 +1414,9 @@ function renderLessonList(){
 }
 
 // =================== DERS DETAY ===================
-// hasTones'a göre dinamik sekme listesi
+// hasTones → Ders 1 telaffuz sekmesi
 function getTabsForLesson(meta){
-  // CORE 2000 dersleri (20+): sadece kelimeler ve quiz
+  // Bonus kelime setleri (20+): sadece kelimeler ve quiz
   if(meta.num>=20) return ['words','quiz'];
   const base = ['words','grammar','speaking','dialogue','listening','quiz'];
   if(meta.hasTones) return ['words','tones','grammar','speaking','dialogue','listening','quiz'];
@@ -1618,31 +1642,61 @@ function buildLessonHTML(L, meta){
       <div style="font-size:10px;color:#888;margin-top:8px;">💡 ${appLang==='en'?'More examples → Grammar tab → Rule 1':'Detaylı örnekler → Gramer sekmesi → Kural 1'}</div>
     </div>` : '';
 
-  // TONLAR (sadece hasTones varsa render edilir)
-  const tones = (L.tones && L.tones.length>0) ? L.tones.map(t=>`
-    <div class="tone-card" style="border-left-color:${t.color}">
-      <div class="tone-name" style="color:${t.color}">${t.name}</div>
-      <div class="tone-symbol">${appLang==='en'?'Mark:':'İşaret:'} ${t.symbol}</div>
-      <div class="tone-desc">${Lf(t,'desc')||t.desc}</div>
+  // TELAFFUZ (Ders 1 — IPA ses rehberi)
+  const toneColors = ['#0d9488','#7c3aed','#2563eb','#d97706','#dc2626'];
+  const tones = (L.tones && L.tones.length>0) ? L.tones.map((t,ti)=>{
+    const color = t.color || toneColors[ti % toneColors.length];
+    if(t.sounds && t.sounds.length){
+      return `<div class="tone-card" style="border-left-color:${color}">
+        <div class="tone-name" style="color:${color}">${Lf(t,'en')||t.en||Lf(t,'title')||t.title||''}</div>
+        ${t.tip?`<div class="tone-desc">${Lf(t,'tip')||t.tip}</div>`:''}
+        <div class="tone-words">
+          ${t.sounds.map(s=>`
+            <div class="tone-word" style="text-align:left;min-width:100%;cursor:default;">
+              <div class="tw-th" style="font-size:18px;color:#0d9488">${s.symbol||''}</div>
+              <div class="tw-ro">${s.example||''}</div>
+              <div class="tw-tr">${Lf(s,'tr')||s.tr||''}</div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+    }
+    const words = t.words || [];
+    return `<div class="tone-card" style="border-left-color:${color}">
+      <div class="tone-name" style="color:${color}">${t.name||Lf(t,'en')||t.en||''}</div>
+      ${t.symbol?`<div class="tone-symbol">${appLang==='en'?'Mark:':'İşaret:'} ${t.symbol}</div>`:''}
+      <div class="tone-desc">${Lf(t,'desc')||t.desc||Lf(t,'tip')||t.tip||''}</div>
       <div class="tone-words">
-        ${t.words.map(w=>`
+        ${words.map(w=>`
           <div style="display:flex;flex-direction:column;gap:4px;">
             <div class="tone-word">
-              <div class="tw-th">${w.en||w.th||''}</div>
-              <div class="tw-ro">${w.ro}</div>
-              <div class="tw-tr">${Lf(w,'tr')||w.tr}</div>
+              <div class="tw-th">${wordEn(w)}</div>
+              <div class="tw-ro">${w.ro||''}</div>
+              <div class="tw-tr">${Lf(w,'tr')||w.tr||''}</div>
             </div>
             <div style="display:flex;gap:4px;">
-              <button class="sm-abtn" data-speak="${esc(w.en||w.th||'')}" data-slow="0" style="flex:1;padding:4px;font-size:11px;">🔊</button>
-              <button class="sm-abtn" data-speak="${esc(w.en||w.th||'')}" data-slow="1" style="flex:1;padding:4px;font-size:11px;">🐢</button>
+              <button class="sm-abtn" data-speak="${esc(wordEn(w))}" data-slow="0" style="flex:1;padding:4px;font-size:11px;">🔊</button>
+              <button class="sm-abtn" data-speak="${esc(wordEn(w))}" data-slow="1" style="flex:1;padding:4px;font-size:11px;">🐢</button>
             </div>
           </div>`).join('')}
       </div>
-    </div>`).join('') : `<div style="text-align:center;padding:30px;color:#bbb;">${s('tones_ref')}</div>`;
+    </div>`;
+  }).join('') : `<div style="text-align:center;padding:30px;color:#bbb;">${s('tones_ref')}</div>`;
 
   // GRAMER
   const grammar = (L.grammar||[]).map((g,gi)=>{
-    const exHtml = g.examples.map((e,ei)=>{
+    let exHtml = '';
+    if(g.table && g.table.length){
+      exHtml = `<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px;">
+        <tr style="background:#f5f3ff;"><th style="padding:6px;text-align:left;color:#7c3aed;">${appLang==='en'?'Form':'Biçim'}</th><th style="padding:6px;text-align:left;color:#7c3aed;">${appLang==='en'?'Rule':'Kural'}</th><th style="padding:6px;text-align:left;color:#7c3aed;">${appLang==='en'?'Example':'Örnek'}</th><th style="padding:6px;text-align:left;color:#7c3aed;">TR</th></tr>
+        ${g.table.map(row=>`<tr style="border-bottom:1px solid #f0f0f0;">
+          <td style="padding:6px;font-weight:700;color:#333;">${row.pronoun||''}</td>
+          <td style="padding:6px;color:#888;">${row.form||''}</td>
+          <td style="padding:6px;font-weight:600;">${row.example||''}</td>
+          <td style="padding:6px;color:#555;">${row.tr||''}</td>
+        </tr>`).join('')}
+      </table>${g.note?`<div style="font-size:12px;color:#666;margin-top:8px;line-height:1.6;">💡 ${g.note}</div>`:''}`;
+    } else {
+    exHtml = (g.examples||[]).map((e,ei)=>{
       const bdIdx = window._gramBD.length;
       window._gramBD.push({th:e.en||e.ro, tr:e.tr, bd:e.bd||[]});
       const hasB = e.bd && e.bd.length>0;
@@ -1656,15 +1710,18 @@ function buildLessonHTML(L, meta){
           '<button class="sm-abtn" data-speak="'+(e.en||e.ro||'')+'" data-slow="0">🔊</button>'+
         '</div></div>';
     }).join('');
+    }
     const gTips = (appLang==='en' && g.tips_en) ? g.tips_en : g.tips;
-    return '<div class="gram-card"><div class="gram-title">📖 '+(Lf(g,'title')||g.title)+'</div><div class="gram-formula">'+(Lf(g,'formula')||g.formula)+'</div><div class="gram-explain">'+(Lf(g,'explain')||g.explain)+'</div>'+(gTips?'<div style="background:#f9f9f9;padding:8px;border-radius:6px;margin-bottom:10px;font-size:12px;color:#555;"><strong>'+s('gram_tip_label')+'</strong><ul style="margin:4px 0 0 14px;">'+gTips.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>':'')+'<div class="gram-examples">'+exHtml+'</div></div>';
+    const gExplain = Lf(g,'explain')||g.explain||g.explanation||'';
+    const gFormula = Lf(g,'formula')||g.formula||'';
+    return '<div class="gram-card"><div class="gram-title">📖 '+(Lf(g,'title')||g.title)+'</div>'+(gFormula?'<div class="gram-formula">'+gFormula+'</div>':'')+(gExplain?'<div class="gram-explain">'+gExplain+'</div>':'')+(gTips?'<div style="background:#f9f9f9;padding:8px;border-radius:6px;margin-bottom:10px;font-size:12px;color:#555;"><strong>'+s('gram_tip_label')+'</strong><ul style="margin:4px 0 0 14px;">'+gTips.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>':'')+'<div class="gram-examples">'+exHtml+'</div></div>';
   }).join('');
 
   // DİYALOG
   const dialogues = (L.dialogues||[]).map((d,di)=>`
     <div class="dialog-card">
       <div class="dialog-title">
-        ${d.title}
+        ${Lf(d,'title')||d.title}
         <button id="dplay-${di}" class="play-all-btn" onclick="playDialogue(${di})">${s('dial_play')}</button>
       </div>
       ${d.lines.map((l,li)=>{
@@ -1672,16 +1729,18 @@ function buildLessonHTML(L, meta){
         const dlineGramIdx = window._gramBD.length;
         if(l.bd) window._gramBD.push({th:l.en||'', tr:l.tr, bd:l.bd});
         const dHasBd = l.bd && l.bd.length>0;
-        return `<div class="dline ${l.s.toLowerCase()==='ali'?'ali':'nada'}" id="dline-${di}-${li}">
-          <div class="dspeaker">${l.s}</div>
+        const sp = dialogueSpeaker(l);
+        const dg = dialogueGender(l);
+        return `<div class="dline ${dg==='m'?'ali':'nada'}" id="dline-${di}-${li}">
+          <div class="dspeaker">${sp}</div>
           <div class="dbubble" ${dHasBd?'style="cursor:pointer" data-dline-idx="'+dlineGramIdx+'"':''}>
             <div class="dbubble-th">${l.en||''}</div>
             <div class="dbubble-ro">${l.ro||''}</div>
             <div class="dbubble-tr">${Lf(l,'tr')||l.tr}</div>
           </div>
           <div class="dline-actions">
-            <button class="sm-abtn" data-speak="${esc(l.en||l.ro)}" data-slow="0" data-gender="${l.s.toLowerCase()==='ali'?'m':'f'}">🔊</button>
-            <button class="sm-abtn" data-speak="${esc(l.en||l.ro)}" data-slow="1" data-gender="${l.s.toLowerCase()==='ali'?'m':'f'}">🐢</button>
+            <button class="sm-abtn" data-speak="${esc(l.en||l.ro)}" data-slow="0" data-gender="${dg}">🔊</button>
+            <button class="sm-abtn" data-speak="${esc(l.en||l.ro)}" data-slow="1" data-gender="${dg}">🐢</button>
             <button class="sbtn ${starred[dsk]?'on':''}" data-star="${esc(dsk)}" data-stype="dialogue" data-th="${esc(l.en||'')}" data-ro="${esc(l.ro||'')}" data-tr="${esc(l.tr)}" data-bd="${esc(JSON.stringify(l.bd||[]))}">⭐</button>
           </div>
         </div>`;
@@ -1694,7 +1753,7 @@ function buildLessonHTML(L, meta){
     if(sp.bd) window._gramBD.push({th:sp.en||'', tr:sp.tr, bd:sp.bd});
     const hasBd = sp.bd && sp.bd.length>0;
     return '<div class="speak-card">'+
-      '<div class="speak-task">'+(i+1)+'. '+(Lf(sp,'task')||sp.task)+'</div>'+
+      '<div class="speak-task">'+(i+1)+'. '+(Lf(sp,'task')||sp.task||sp.prompt||'')+'</div>'+
       '<div class="speak-en" '+(hasBd?'style="cursor:pointer" data-gram="'+gramIdx+'"':'')+'>'+(sp.en||'')+'</div>'+
       '<div class="speak-ro">'+(sp.ro||'')+'</div>'+
       '<div class="speak-tr">'+(Lf(sp,'tr')||sp.tr)+'</div>'+
@@ -1706,14 +1765,33 @@ function buildLessonHTML(L, meta){
   }).join('');
 
   // DİNLEME
-  const listening = (L.listening||[]).map((l,i)=>`
-    <div class="listen-card">
-      <div class="diff-badge ${l.diff}">${l.diff==='easy'?s('listen_easy'):l.diff==='medium'?s('listen_medium'):s('listen_hard')}</div>
-      <button class="play-big" data-speak="${esc(l.en||l.ro||'')}" data-slow="0">${s('listen_play_btn')}</button>
-      <div class="listen-q">${Lf(l,'q')||l.q}</div>
-      <div id="lo-${i}">${(l.opts||[]).map((o,j)=>`<div class="opt" onclick="checkListen(${i},${j},${l.c})">${o}</div>`).join('')}</div>
+  const listening = (L.listening||[]).map((item,i)=>{
+    if(item.questions && item.questions.length){
+      const playText = item.transcript || item.en || '';
+      return item.questions.map((q,qi)=>{
+        const idx = i+'-'+qi;
+        const diff = q.diff || item.diff || 'easy';
+        const correct = q.answer!=null ? q.answer : q.c;
+        return `<div class="listen-card">
+          ${qi===0 && playText ? `<button class="play-big" data-speak="${esc(playText)}" data-slow="0">${s('listen_play_btn')}</button>` : ''}
+          ${qi===0 && item.tr ? `<div style="font-size:12px;color:#888;margin-bottom:10px;line-height:1.5;">${item.tr}</div>` : ''}
+          <div class="diff-badge ${diff}">${diff==='easy'?s('listen_easy'):diff==='medium'?s('listen_medium'):s('listen_hard')}</div>
+          <div class="listen-q">${Lf(q,'q')||q.q}</div>
+          <div id="lo-${idx}">${(q.opts||[]).map((o,j)=>`<div class="opt" onclick="checkListen('${idx}',${j},${correct})">${o}</div>`).join('')}</div>
+          <div id="lf-${idx}"></div>
+        </div>`;
+      }).join('');
+    }
+    const diff = item.diff || 'easy';
+    const correct = item.c!=null ? item.c : item.answer;
+    return `<div class="listen-card">
+      <div class="diff-badge ${diff}">${diff==='easy'?s('listen_easy'):diff==='medium'?s('listen_medium'):s('listen_hard')}</div>
+      <button class="play-big" data-speak="${esc(item.en||item.transcript||item.ro||'')}" data-slow="0">${s('listen_play_btn')}</button>
+      <div class="listen-q">${Lf(item,'q')||item.q||''}</div>
+      <div id="lo-${i}">${(item.opts||[]).map((o,j)=>`<div class="opt" onclick="checkListen(${i},${j},${correct})">${o}</div>`).join('')}</div>
       <div id="lf-${i}"></div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 
   // QUIZ
   const allTabsVisited = getTabsForLesson(meta).every(t=>visitedTabs['L'+meta.num+'_'+t]);
@@ -1740,6 +1818,13 @@ function buildLessonHTML(L, meta){
     </div>`;
 
   let quizSrc = L.quiz||[];
+  if(quizSrc.length===0 && meta.num<20){
+    (L.listening||[]).forEach(item=>{
+      (item.questions||[]).forEach(q=>{
+        if(q.q && q.opts) quizSrc.push({q:q.q, opts:q.opts, c:q.answer!=null?q.answer:q.c});
+      });
+    });
+  }
   if(quizSrc.length===0 && meta.num>=20){
     const wds = (L.words||[]).filter(w=>w.ro&&w.tr);
     const pick = wds.length>15 ? wds.filter((_,i)=>i%Math.floor(wds.length/15)===0).slice(0,15) : wds;
@@ -1829,7 +1914,7 @@ function buildLessonHTML(L, meta){
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px">
         ${[21,100,350,1500,10000,183500].map(n=>`
           <button onclick="document.getElementById('l2calc-input').value=${n};l2CalcNumber(${n});this.style.borderColor='#0d9488';setTimeout(()=>this.style.borderColor='#e0e0e0',1200)"
-            style="background:white;border:1.5px solid #e0e0e0;border-radius:20px;padding:5px 12px;color:#555;cursor:pointer;font-family:'Sarabun',sans-serif;font-size:12px;font-weight:700;transition:border-color .2s">
+            style="background:white;border:1.5px solid #e0e0e0;border-radius:20px;padding:5px 12px;color:#555;cursor:pointer;font-size:12px;font-weight:700;transition:border-color .2s">
             ${n.toLocaleString('tr')}
           </button>`).join('')}
       </div>
@@ -2011,17 +2096,20 @@ function l2SpeakCalc(){
 
 // =================== KONTROL ===================
 function checkListen(idx, sel, correct){
+  const resolved = listenResolve(currentLesson.num, idx);
   const lessonData = LESSONS[currentLesson.num];
+  const opts = resolved ? resolved.opts : (lessonData.listening[idx]&&lessonData.listening[idx].opts)||[];
+  const ans = resolved ? resolved.correct : correct;
   document.getElementById('lo-'+idx).querySelectorAll('.opt').forEach((o,i)=>{
     o.onclick=null;
-    if(i===correct) o.classList.add('correct');
+    if(i===ans) o.classList.add('correct');
     else if(i===sel) o.classList.add('wrong');
   });
-  document.getElementById('lf-'+idx).innerHTML=`<div class="fb ${sel===correct?'ok':'nope'}">${sel===correct?s('test_correct_fb'):s('test_wrong_prefix')+' '+lessonData.listening[idx].opts[correct]}</div>`;
+  document.getElementById('lf-'+idx).innerHTML=`<div class="fb ${sel===ans?'ok':'nope'}">${sel===ans?s('test_correct_fb'):s('test_wrong_prefix')+' '+(opts[ans]||'')}</div>`;
   // Skor kaydet
   const st = getStats(currentLesson.num);
   st.listenTotal++;
-  if(sel===correct) st.listenCorrect++;
+  if(sel===ans) st.listenCorrect++;
   saveLessonStats();
   updateLessonScoreDisplay();
 }
@@ -2135,6 +2223,9 @@ function buildTestCards(lessonNum, category){
       if(!een||!e.tr) return;
       cards.push({type:'grammar', th:een, ro:e.ro||'', tr:e.tr, cat:'grammar', bd:e.bd||[]});
     });
+    (g.table||[]).forEach(row=>{
+      if(row.example && row.tr) cards.push({type:'grammar', th:row.example, ro:'', tr:row.tr, cat:'grammar'});
+    });
   });
 
   // Konuşma
@@ -2149,8 +2240,8 @@ function buildTestCards(lessonNum, category){
     (d.lines||[]).forEach(line=>{
       const len = line.en||line.th||'';
       if(!len||!line.tr) return;
-      const gender = line.s==='Lucy' ? 'f' : 'm';
-      cards.push({type:'dialogue', th:len, ro:line.ro||'', tr:line.tr, cat:'phrases', gender, speaker:line.s});
+      const gender = line.gender || (dialogueGender(line)==='f'?'f':'m');
+      cards.push({type:'dialogue', th:len, ro:line.ro||'', tr:line.tr, cat:'phrases', gender, speaker:dialogueSpeaker(line)});
     });
   });
 
@@ -2160,10 +2251,11 @@ function buildTestCards(lessonNum, category){
 }
 
 function getPronounCategory(ro){
-  return ['pom','chan','khun','khao','rao','phuak-khao','phuak-khun'].some(p=>ro===p);
+  const r = (ro||'').toLowerCase().replace(/[^a-z]/g,'');
+  return ['i','you','he','she','it','we','they','me','him','her','us','them'].some(p=>r===p||r.startsWith(p));
 }
-function hasPronouns(ro){
-  return ['pom','chan','khun ','khao ','rao ','phuak'].some(p=>ro.includes(p));
+function hasPronouns(text){
+  return /\b(i|you|he|she|it|we|they)\b/i.test(text||'');
 }
 
 // Tüm kartlardan yanlış seçenekleri al
@@ -2279,7 +2371,7 @@ function openTestModeMenu(source){
     const starred = JSON.parse(localStorage.getItem('tv3_star')||'{}');
     cards = Object.entries(starred).map(([k,v])=>({
       type:v.type||'word', th:v.th||'', ro:v.ro||k, tr:v.tr||'', cat:'phrases', bd:v.bd||[], lessonNum:0
-    })).filter(c=>c.ro);
+    })).filter(c=>c.th||c.ro);
     title = '⭐ '+s('test_starred');
     subtitle = cards.length + ' '+s('test_cards_available');
   } else {
@@ -2970,14 +3062,14 @@ function buildHelpContent(){
       <div class="help-section-header">📑 ${en?'Tab Descriptions':'Sekme Açıklamaları'}</div>
       <div class="help-tab-row"><span class="htag" style="background:#e8f5e9;color:#2e7d32;">📚 ${en?'Words':'Sözcükler'}</span>
         <span>${en?'Core vocabulary. Each word has usage tips, context notes, and 7–12 examples. Star with ⭐.':'Dersin temel kelimeleri. Her kelimede ipuçları, bağlam notu ve 7–12 örnek cümle var. ⭐ ile yıldızlayabilirsin.'}</span></div>
-      <div class="help-tab-row"><span class="htag" style="background:#e3f2fd;color:#1565c0;">🎵 ${en?'Tones':'Tonlar'}</span>
-        <span>${en?'Lesson 1 only. English pronunciation essentials - stress, rhythm and difficult sounds.':'Sadece Ders 1 de. Ingilizce telaffuz temelleri - vurgu, ritim ve zor sesler.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#e3f2fd;color:#1565c0;">🎵 ${en?'Pronunciation':'Telaffuz'}</span>
+        <span>${en?'Lesson 1 only. English pronunciation essentials — vowels, consonants and difficult sounds (/θ/, /w/, /v/).':'Sadece Ders 1\'de. İngilizce telaffuz temelleri — ünlüler, ünsüzler ve zor sesler (/θ/, /w/, /v/).'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fff3e0;color:#e65100;">📖 ${en?'Grammar':'Gramer'}</span>
         <span>${en?'Sentence structure rules. Formula + explanation + speakable examples. Tap 📖 for color-coded S/V/O analysis.':'Cümle yapısı kuralları. Formül + açıklama + seslenebilir örnekler. 📖 ikonuna bas → renk kodlu S/V/O analizi.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fce4ec;color:#880e4f;">🗣️ ${en?'Speaking':'Konuşma'}</span>
         <span>${en?'Real-life tasks: "Ask the price", "Give directions". Practice with 🔊.':'Gerçek hayat görevleri. "Fiyat sor", "Yön tarif et". 🔊 ile pratik yap.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#f3e5f5;color:#4a148c;">👥 ${en?'Dialogue':'Diyalog'}</span>
-        <span>${en?'Realistic dialogues between Ali and Nada. Tap ▶ Play All to listen in sequence.':'Ali ve Nada arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.'}</span></div>
+        <span>${en?'Realistic dialogues between two speakers (A and B). Tap ▶ Play All to listen in sequence.':'İki konuşmacı (A ve B) arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#e8eaf6;color:#283593;">🎧 ${en?'Listening':'Dinleme'}</span>
         <span>${en?'Tap listen, hear English, choose the correct option. Easy / Medium / Hard levels.':'Dinle butonuna bas, Ingilizceyi dinle, dogru sikki sec. Kolay / Orta / Zor seviyeleri var.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#e0f2f1;color:#004d40;">📝 Quiz</span>
@@ -2992,7 +3084,7 @@ function buildHelpContent(){
         ${chip('#f0fdf4','#10b981',en?'V = Verb':'V = Yüklem')}
         ${chip('#fffbeb','#f59e0b',en?'O = Object':'O = Nesne')}
         ${chip('#fef2f2','#ef4444',en?'Question / Neg.':'Soru / Olumsuz')}
-        ${chip('#f0fdfa','#0d9488',en?'Polite particle':'Kibar eki')}
+        ${chip('#f0fdfa','#0d9488',en?'Modifier':'Belirteç')}
         ${chip('#f5f3ff','#7c3aed',en?'Preposition':'Edat')}
       </div>
     </div>
@@ -3061,7 +3153,7 @@ function buildHelpContent(){
         </div>
       </div>
       <div class="help-section-header">📋 ${en?'App Info':'Uygulama Bilgisi'}</div>
-      <div class="help-info-row"><span>${en?'Version':'Versiyon'}</span><strong id="hakkinda-version">v3.46</strong></div>
+      <div class="help-info-row"><span>${en?'Version':'Versiyon'}</span><strong id="hakkinda-version">${APP_VERSION}</strong></div>
       <div class="help-info-row"><span>${en?'Total Lessons':'Toplam Ders'}</span><strong>19 + 29 ${en?'BONUS sets':'BONUS set'}</strong></div>
       <div class="help-info-row"><span>${en?'Per Lesson':'Ders Başına'}</span><strong>~10 ${en?'words, 8 grammar, 4 dialogues':'kelime, 8 gramer, 4 diyalog'}</strong></div>
       <div class="help-info-row"><span>${en?'Audio':'Ses Motoru'}</span><strong>Web Speech API + Google TTS</strong></div>
@@ -3069,8 +3161,12 @@ function buildHelpContent(){
       <div class="help-info-row"><span>${en?'Developer':'Geliştirici'}</span><strong>Ali Dincer</strong></div>
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
-        <div class="changelog-item"><div class="changelog-ver">v3.46+</div>
-          <div class="changelog-desc">${en?'Full English/Turkish bilingual UI; dark mode; BONUS accordion; 1437-word CORE 2000 vocabulary with example sentences and grammar analysis; scroll-to-top button':'Tam İngilizce/Türkçe arayüz; dark mode; BONUS accordion; 1437 kelime CORE 2000 hazinesi, örnek cümleler ve gramer analizi; yukarı çık butonu'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
+          <div class="changelog-desc">${en?'English conversion cleanup: lesson engine fixed (pronunciation, grammar tables, dialogues, listening); Thai remnants removed from help and exercises':'İngilizce dönüşüm temizliği: ders motoru düzeltildi (telaffuz, gramer tabloları, diyalog, dinleme); yardım ve alıştırmalardan Tayca kalıntıları kaldırıldı'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.0</div>
+          <div class="changelog-desc">${en?'Converted from Thai app to English learning; 19 scenario lessons + 29 vocabulary sets':'Tayca uygulamadan İngilizce öğrenmeye dönüştürüldü; 19 senaryo dersi + 29 kelime seti'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v3.46</div>
+          <div class="changelog-desc">${en?'Bilingual UI; dark mode; BONUS vocabulary accordion; SRS and test modules':'Çift dil arayüz; karanlık mod; BONUS kelime setleri; SRS ve test modülleri'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v3.32</div>
           <div class="changelog-desc">${en?'60-second mandatory wait per tab — lesson can\'t be completed until time is up; progress bar countdown':'Her sekme için 60 saniyelik zorunlu bekleme — süre dolmadan ders tamamlanamıyor'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v3.30</div>
@@ -3421,7 +3517,7 @@ function loadVoiceList(){
 function testVoices(){
   const genders = ['m', 'f'];
   let idx = 0;
-  const text = document.getElementById('test-text').value || 'สวัสดีครับ';
+  const text = document.getElementById('test-text').value || 'Hello, how are you?';
   function playNext(){
     if(idx>=genders.length) return;
     speak(text, false, genders[idx]);
@@ -3447,70 +3543,66 @@ function exShuffle(arr){
 }
 
 function buildExercises(LD){
-  // BONUS lessons may use pronunciation as display fallback
-  const words = (LD.words||[]).filter(w=>w.tr && w.ro);
+  const words = (LD.words||[]).filter(w=>w.tr && (w.en||w.ro));
   if(words.length<2) return [];
-  const hasTh = words.some(w=>w.th);
+  const hasEnText = words.some(w=>w.en||w.th);
   const ex = [];
 
-  // Helper: pick N distractors from words pool
   function distractors(exclude_id, n){
     return exShuffle(words.filter(w=>w.id!==exclude_id)).slice(0,n);
   }
 
-  // 1. word-choice: see Turkish prompt → pick correct English/Pronunciation card
   const wc_words = exShuffle([...words]).slice(0, Math.min(6, words.length));
   wc_words.forEach(w=>{
     const dist = distractors(w.id, 3);
     if(dist.length<1) return;
-    const display = w.th||w.ro;
+    const display = w.en||w.th||w.ro;
     const opts = exShuffle([
       {th:display, ro:w.ro, correct:true},
-      ...dist.map(d=>({th:d.th||d.ro, ro:d.ro, correct:false}))
+      ...dist.map(d=>({th:d.en||d.th||d.ro, ro:d.ro, correct:false}))
     ]);
     ex.push({type:'word-choice', prompt:w.tr, correctEn:display, options:opts});
   });
 
-  // 2. listen-choice: hear audio → pick sentence (only if English text available for TTS)
   const allExamples = words.flatMap(w=>(w.examples||[]).map(e=>({...e, wordTr:w.tr})));
-  if(hasTh){
+  if(hasEnText){
     const lc_exs = exShuffle([...allExamples]).slice(0, 4);
     lc_exs.forEach(e=>{
-      if(!e.th || !e.ro) return;
-      const dist = exShuffle(allExamples.filter(x=>x.th!==e.th)).slice(0,3);
+      const audio = e.en||e.th;
+      if(!audio || !e.tr) return;
+      const dist = exShuffle(allExamples.filter(x=>(x.en||x.th)!==audio)).slice(0,3);
       if(dist.length<1) return;
       const opts = exShuffle([
-        {th:e.th, ro:e.ro, correct:true},
-        ...dist.map(d=>({th:d.th||'', ro:d.ro||'', correct:false}))
+        {th:audio, ro:e.ro||'', correct:true},
+        ...dist.map(d=>({th:d.en||d.th||'', ro:d.ro||'', correct:false}))
       ]);
-      ex.push({type:'listen-choice', audioEn:e.th, options:opts});
+      ex.push({type:'listen-choice', audioEn:audio, options:opts});
     });
   }
 
-  // 3. translate-choice: see English/Pronunciation sentence → pick correct Turkish
   const tc_exs = exShuffle([...allExamples]).slice(0, 5);
   tc_exs.forEach(e=>{
-    if((!e.th && !e.ro) || !e.tr) return;
+    const src = e.en||e.th||e.ro;
+    if(!src || !e.tr) return;
     const dist = exShuffle(allExamples.filter(x=>x.tr!==e.tr)).slice(0,3);
     if(dist.length<1) return;
     const opts = exShuffle([
       {tr:e.tr, correct:true},
       ...dist.map(d=>({tr:d.tr, correct:false}))
     ]);
-    ex.push({type:'translate-choice', th:e.th||e.ro, ro:e.ro, options:opts});
+    ex.push({type:'translate-choice', th:src, ro:e.ro, options:opts});
   });
 
-  // 4. translate-wordbank: see English/Pronunciation sentence → build Turkish from tiles
   const wb_exs = exShuffle([...allExamples]).slice(0, 4);
   wb_exs.forEach(e=>{
-    if((!e.th && !e.ro) || !e.tr) return;
+    const src = e.en||e.th||e.ro;
+    if(!src || !e.tr) return;
     const correctWords = e.tr.split(/\s+/).filter(Boolean);
     if(correctWords.length<2) return;
-    // add 2-3 distractor words
     const distWords = ['değil','ama','çok','var','yok','bir','ve','de','da','ile','bu','sen','ben','o'];
     const extra = exShuffle(distWords.filter(w=>!correctWords.includes(w))).slice(0,3);
     const bank = exShuffle([...correctWords, ...extra]);
-    ex.push({type:'translate-wordbank', th:e.th||e.ro, ro:e.ro, answer:e.tr, correctWords, bank});
+    ex.push({type:'translate-wordbank', th:src, ro:e.ro, answer:e.tr, correctWords, bank});
   });
 
   // Interleave: word-choice first, then mix others
