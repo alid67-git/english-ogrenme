@@ -48,11 +48,11 @@ const L4 = {
 
   grammar: [
     {id:'g1', title:'Sipariş Verme Kalıpları', title_en:'Ordering Phrases',
-     explanation:'Restoranda sopariş verirken kullanılan nazik kalıplar.',
+     explanation:'Restoranda sipariş verirken kullanılan nazik kalıplar.',
      table:[
        {pronoun:'Nazik istek', form:"I'd like / I'll have", example:"I'd like the soup.", tr:'Çorba istiyorum.'},
        {pronoun:'Soru', form:'Can I have...?', example:'Can I have the menu?', tr:'Menüyü alabilir miyim?'},
-       {pronoun:'Seçim', form:'I'll take...', example:"I'll take the fish.", tr:'Balığı alıyorum.'},
+       {pronoun:'Seçim', form:"I'll take...", example:"I'll take the fish.", tr:'Balığı alıyorum.'},
        {pronoun:'Tavsiye', form:'What do you recommend?', example:'What do you recommend?', tr:'Ne tavsiye edersiniz?'}
      ],
      note:'"Would you like..." = Arz etmek; "I would like..." = İstemek'}
@@ -74,7 +74,7 @@ const L4 = {
      lines:[
        {speaker:'A', gender:'f', en:'Good evening! Do you have a reservation?', ro:'/ɡʊd ˈiːvnɪŋ duː juː hæv ə ˌrɛzərˈveɪʃən/', tr:'İyi akşamlar! Rezervasyonunuz var mı?'},
        {speaker:'B', gender:'m', en:'Yes, I have a reservation for two. The name is Smith.', ro:'/jɛs aɪ hæv ə ˌrɛzərˈveɪʃən fər tuː ðə neɪm ɪz smɪθ/', tr:'Evet, iki kişilik rezervasyonum var. İsim Smith.'},
-       {speaker:'A', gender:'f', en:'Of course. Please follow me. Here is your table.', ro:'/əv kɔːrs pliːz ˈfɒloʊ miː hɪr ɪz jɔːr ˈteɪbəl/', tr:'Tabii ki. Lütfen beni takip edin. İşte masanız.'},
+       {speaker:'A', gender:'f', en:'Of course. Please follow me. Here is your table.', ro:'/əv kɔːrs pliːz ˈfɒloʊ miː hɪər ɪz jɔːr ˈteɪbəl/', tr:'Tabii ki. Lütfen beni takip edin. İşte masanız.'},
        {speaker:'B', gender:'m', en:'Thank you. Can I see the menu?', ro:'/θæŋk juː kæn aɪ siː ðə ˈmɛnjuː/', tr:'Teşekkür ederim. Menüyü görebilir miyim?'},
        {speaker:'A', gender:'f', en:'Of course! What would you like to drink?', ro:'/əv kɔːrs wɒt wʊd juː laɪk tə drɪŋk/', tr:'Tabii! Ne içmek istersiniz?'},
        {speaker:'B', gender:'m', en:"I'd like water and a coffee, please.", ro:'/aɪd laɪk ˈwɔːtər ænd ə ˈkɒfi pliːz/', tr:'Su ve kahve istiyorum, lütfen.'},
