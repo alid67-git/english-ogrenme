@@ -576,7 +576,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.2';
+const APP_VERSION = 'v1.3';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -589,8 +589,19 @@ if(storedVersion && storedVersion !== APP_VERSION){
 }
 localStorage.setItem('app_version', APP_VERSION);
 
+// Eski uygulama anahtarlarından (tv3_*) tek seferlik taşıma
+(function migrateLegacyStorage(){
+  const suffixes = ['lang','star','visited','stats','complete','bonusOpen','srs'];
+  suffixes.forEach(s=>{
+    const oldKey = 'tv3_' + s;
+    const newKey = 'en1_' + s;
+    if(!localStorage.getItem(newKey) && localStorage.getItem(oldKey)!=null)
+      localStorage.setItem(newKey, localStorage.getItem(oldKey));
+  });
+})();
+
 // =================== DİL SİSTEMİ / LANGUAGE SYSTEM ===================
-let appLang = localStorage.getItem('tv3_lang') || 'tr';
+let appLang = localStorage.getItem('en1_lang') || 'tr';
 
 const UI = {
   tr:{
@@ -843,7 +854,7 @@ function Lf(item, field){
 
 function setLang(lang){
   appLang = lang;
-  localStorage.setItem('tv3_lang', lang);
+  localStorage.setItem('en1_lang', lang);
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
   document.querySelectorAll('[data-lk]').forEach(el=>{ el.textContent=s(el.dataset.lk); });
   // Re-render current view
@@ -875,7 +886,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v1.2</span>
+  <span class="vbadge" id="app-version">v1.3</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1081,20 +1092,20 @@ async function loadDers(num){
 }
 
 // =================== DURUM ===================
-let starred = JSON.parse(localStorage.getItem('tv3_star')||'{}');
+let starred = JSON.parse(localStorage.getItem('en1_star')||'{}');
 let currentLesson = {num:1};
-let visitedTabs = JSON.parse(localStorage.getItem('tv3_visited')||'{}');
+let visitedTabs = JSON.parse(localStorage.getItem('en1_visited')||'{}');
 
 // ── DERS İSTATİSTİKLERİ ──
 // {lessonNum: {totalSec, quizCorrect, quizTotal, listenCorrect, listenTotal}}
-let lessonStats = JSON.parse(localStorage.getItem('tv3_stats')||'{}');
-let completedLessons = JSON.parse(localStorage.getItem('tv3_complete')||'[]'); // [1,3,5...]
-function saveCompleted(){ localStorage.setItem('tv3_complete', JSON.stringify(completedLessons)); }
+let lessonStats = JSON.parse(localStorage.getItem('en1_stats')||'{}');
+let completedLessons = JSON.parse(localStorage.getItem('en1_complete')||'[]'); // [1,3,5...]
+function saveCompleted(){ localStorage.setItem('en1_complete', JSON.stringify(completedLessons)); }
 function isCompleted(num){ return completedLessons.includes(num); }
 
-let bonusOpen = localStorage.getItem('tv3_bonusOpen')==='true';
-function toggleBonus(){ bonusOpen=!bonusOpen; localStorage.setItem('tv3_bonusOpen',bonusOpen); renderLessonList(); }
-function saveLessonStats(){ localStorage.setItem('tv3_stats', JSON.stringify(lessonStats)); }
+let bonusOpen = localStorage.getItem('en1_bonusOpen')==='true';
+function toggleBonus(){ bonusOpen=!bonusOpen; localStorage.setItem('en1_bonusOpen',bonusOpen); renderLessonList(); }
+function saveLessonStats(){ localStorage.setItem('en1_stats', JSON.stringify(lessonStats)); }
 function getStats(num){
   if(!lessonStats[num]) lessonStats[num]={totalSec:0,quizCorrect:0,quizTotal:0,listenCorrect:0,listenTotal:0};
   return lessonStats[num];
@@ -1143,9 +1154,9 @@ function fmtTime(sec){
   const s = sec%60;
   return s>0 ? m+'dk '+s+'sn' : m+'dk';
 }
-function saveStars(){ localStorage.setItem('tv3_star', JSON.stringify(starred)); }
+function saveStars(){ localStorage.setItem('en1_star', JSON.stringify(starred)); }
 function saveVisited(){
-  localStorage.setItem('tv3_visited', JSON.stringify(visitedTabs));
+  localStorage.setItem('en1_visited', JSON.stringify(visitedTabs));
   updateProgressBar();
 }
 
@@ -2293,7 +2304,7 @@ function renderTestView(){
   // İstatistikler
   const db = SRS.load();
   const allCards = Object.values(db);
-  const starred = JSON.parse(localStorage.getItem('tv3_star')||'{}');
+  const starred = JSON.parse(localStorage.getItem('en1_star')||'{}');
   const starCount = Object.keys(starred).length;
   const completedCount = completedLessons.length;
   const totalLessons = LESSONS_META.filter(m=>m.hasContent).length;
@@ -2372,7 +2383,7 @@ function openTestModeMenu(source){
     title = '🗂️ '+s('test_all');
     subtitle = cards.length + ' '+s('test_cards_available');
   } else if(source==='starred'){
-    const starred = JSON.parse(localStorage.getItem('tv3_star')||'{}');
+    const starred = JSON.parse(localStorage.getItem('en1_star')||'{}');
     cards = Object.entries(starred).map(([k,v])=>({
       type:v.type||'word', th:v.th||'', ro:v.ro||k, tr:v.tr||'', cat:'phrases', bd:v.bd||[], lessonNum:0
     })).filter(c=>c.th||c.ro);
@@ -2700,7 +2711,7 @@ function showTestResult(){
 
 // =================== SRS MOTORU ===================
 const SRS = {
-  _key: 'tv3_srs',
+  _key: 'en1_srs',
 
   load(){
     try{ return JSON.parse(localStorage.getItem(this._key)||'{}'); }
@@ -3166,19 +3177,13 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
-          <div class="changelog-desc">${en?'English conversion cleanup: lesson engine fixed (pronunciation, grammar tables, dialogues, listening); Thai remnants removed from help and exercises':'İngilizce dönüşüm temizliği: ders motoru düzeltildi (telaffuz, gramer tabloları, diyalog, dinleme); yardım ve alıştırmalardan Tayca kalıntıları kaldırıldı'}</div></div>
+          <div class="changelog-desc">${en?'Removed legacy v3 version labels; storage keys renamed to en1_*; help changelog cleaned up':'Eski v3 sürüm etiketleri kaldırıldı; depolama anahtarları en1_* olarak güncellendi; yardım geçmişi temizlendi'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.2</div>
+          <div class="changelog-desc">${en?'Fixed lessons 2–48 when words had no examples array; quiz feedback for auto-generated questions':'Ders 2–48 çökme hatası giderildi (examples dizisi); otomatik quiz geri bildirimi düzeltildi'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.1</div>
+          <div class="changelog-desc">${en?'Lesson engine adapted for English data: pronunciation, grammar tables, dialogues, listening':'Ders motoru İngilizce veri yapısına uyarlandı: telaffuz, gramer, diyalog, dinleme'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.0</div>
-          <div class="changelog-desc">${en?'Converted from Thai app to English learning; 19 scenario lessons + 29 vocabulary sets':'Tayca uygulamadan İngilizce öğrenmeye dönüştürüldü; 19 senaryo dersi + 29 kelime seti'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v3.46</div>
-          <div class="changelog-desc">${en?'Bilingual UI; dark mode; BONUS vocabulary accordion; SRS and test modules':'Çift dil arayüz; karanlık mod; BONUS kelime setleri; SRS ve test modülleri'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v3.32</div>
-          <div class="changelog-desc">${en?'60-second mandatory wait per tab — lesson can\'t be completed until time is up; progress bar countdown':'Her sekme için 60 saniyelik zorunlu bekleme — süre dolmadan ders tamamlanamıyor'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v3.30</div>
-          <div class="changelog-desc">${en?'Lessons 10–19 added (all 19 lessons complete); listening format fix; lesson 17–19 dialogue speaker fix':'Ders 10-19 eklendi (tüm 19 ders tamamlandı); listening format düzeltmesi'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v3.19</div>
-          <div class="changelog-desc">${en?'Google Cloud TTS (Chirp3-HD) integration — Orus (male) and Aoede (female) voices, Web Speech API fallback':'Google Cloud TTS (Chirp3-HD) entegrasyonu — Orus (erkek) ve Aoede (kadın) sesleri'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v3.00</div>
-          <div class="changelog-desc">${en?'SRS system (Anki-style spaced repetition) · Test module (flashcard + multiple choice) · Starring + List tab · Dialogue playback · Color-coded sentence analysis · 9 full lessons':'SRS sistemi · Test modülü (flashcard + çoktan seçmeli) · Yıldızlama + Liste · Diyalog oynatma · Renk kodlu cümle analizi · 9 tam ders'}</div></div>
+          <div class="changelog-desc">${en?'Initial release: 19 scenario lessons, 29 bonus vocabulary sets, SRS, tests, bilingual UI':'İlk sürüm: 19 senaryo dersi, 29 bonus kelime seti, SRS, testler, çift dil arayüz'}</div></div>
       </div>
       <div class="help-card" style="margin-top:14px;background:#fff8e1;border-color:#ffe082;text-align:center;">
         <div style="width:100%;text-align:center;">
@@ -3206,12 +3211,23 @@ function saveGist(){
 
 const GIST_FILENAME = 'english-v1-sync.json';
 
+function gistApplyPayload(payload){
+  const star     = payload.en1_star     || payload['tv3_star'];
+  const complete = payload.en1_complete || payload['tv3_complete'];
+  const srs      = payload.en1_srs      || payload['tv3_srs'];
+  const stats    = payload.en1_stats    || payload['tv3_stats'];
+  if(star)     { localStorage.setItem('en1_star', star);     starred = JSON.parse(star); }
+  if(complete) { localStorage.setItem('en1_complete', complete); completedLessons = JSON.parse(complete); }
+  if(srs)      localStorage.setItem('en1_srs', srs);
+  if(stats)    localStorage.setItem('en1_stats', stats);
+}
+
 function gistData(){
   return {
-    tv3_star:     localStorage.getItem('tv3_star')     || '{}',
-    tv3_complete: localStorage.getItem('tv3_complete') || '[]',
-    tv3_srs:      localStorage.getItem('tv3_srs')      || '{}',
-    tv3_stats:    localStorage.getItem('tv3_stats')    || '{}',
+    en1_star:     localStorage.getItem('en1_star')     || '{}',
+    en1_complete: localStorage.getItem('en1_complete') || '[]',
+    en1_srs:      localStorage.getItem('en1_srs')      || '{}',
+    en1_stats:    localStorage.getItem('en1_stats')    || '{}',
     saved_at:     new Date().toISOString()
   };
 }
@@ -3269,10 +3285,7 @@ async function gistPull(){
     const raw = data.files?.[GIST_FILENAME]?.content;
     if(!raw) throw new Error(appLang==='en'?'Gist file not found.':'Gist dosyası bulunamadı.');
     const payload = JSON.parse(raw);
-    if(payload.tv3_star)     { localStorage.setItem('tv3_star',     payload.tv3_star);     starred = JSON.parse(payload.tv3_star); }
-    if(payload.tv3_complete) { localStorage.setItem('tv3_complete', payload.tv3_complete); completedLessons = JSON.parse(payload.tv3_complete); }
-    if(payload.tv3_srs)        localStorage.setItem('tv3_srs',      payload.tv3_srs);
-    if(payload.tv3_stats)      localStorage.setItem('tv3_stats',    payload.tv3_stats);
+    gistApplyPayload(payload);
     const saved = payload.saved_at ? new Date(payload.saved_at).toLocaleString(appLang==='en'?'en-US':'tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '?';
     gistSetStatus('✅ '+(appLang==='en'?'Loaded · Saved: ':'Alındı · Kaydedilme: ')+saved, '#059669');
     renderLessonList();
@@ -3296,10 +3309,7 @@ async function gistAutoSync(){
     const remoteSaved = payload.saved_at ? new Date(payload.saved_at).getTime() : 0;
     const localSaved  = parseInt(localStorage.getItem('english_last_push')||'0');
     if(remoteSaved > localSaved + 30000){ // 30 saniye tolerans
-      if(payload.tv3_star)     { localStorage.setItem('tv3_star',     payload.tv3_star);     starred = JSON.parse(payload.tv3_star); }
-      if(payload.tv3_complete) { localStorage.setItem('tv3_complete', payload.tv3_complete); completedLessons = JSON.parse(payload.tv3_complete); }
-      if(payload.tv3_srs)        localStorage.setItem('tv3_srs',      payload.tv3_srs);
-      if(payload.tv3_stats)      localStorage.setItem('tv3_stats',    payload.tv3_stats);
+      gistApplyPayload(payload);
       renderLessonList(); updateProgressBar(); updateReviewBadge();
       console.log('Gist auto-sync: buluttan güncellendi');
     }

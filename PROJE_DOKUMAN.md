@@ -43,7 +43,7 @@ Temel alanlar:
 - Ana uygulama dosyasi `english-v3.html` adini tasir.
 - Yeni ders dosyasi eklenirse `LESSONS_META` icine ayni numarayla eklenmeli.
 - Derslerde apostrof iceren Ingilizce metinler icin JS string tirnaklarina dikkat edilmeli. Ornek: `form:"I'll take..."`.
-- Kullanici ilerlemesi localStorage uzerinde tutulur. Eski `tv3_*` anahtar adlari uyumluluk icin korunmustur.
+- Kullanici ilerlemesi localStorage uzerinde tutulur (`en1_*` anahtarlari; eski `tv3_*` verisi otomatik tasinir).
 - Canliya almadan once ders dosyalarini `node --check dersN.js` ile kontrol et.
 
 ## Canliya Alma Kontrol Listesi
