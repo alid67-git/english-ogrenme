@@ -182,9 +182,8 @@ main{padding:14px;}
 .dline.ali .dspeaker{color:#3b82f6;}
 .dline.nada .dspeaker{color:#ec4899;}
 .dbubble{padding:8px 10px;flex:1;}
-.dbubble-clickable{cursor:pointer;position:relative;}
-.dbubble-clickable:hover{background:#f0fdf9!important;}
-.dbubble-hint{font-size:9px;color:#0d9488;font-weight:700;margin-top:4px;opacity:.85;}
+.dbubble-clickable{cursor:pointer;}
+.dbubble-clickable:hover{filter:brightness(.97);}
 .dbubble-th{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:1px;}
 .dbubble-ro{font-size:12px;color:#1a1a1a;font-weight:700;margin-top:1px;}
 .dbubble-tr{font-size:12px;color:#555;margin-top:2px;}
@@ -255,10 +254,17 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .gram-modal-sentence{font-size:16px;font-weight:700;margin-bottom:4px;color:#1a1a1a;}
 .gram-modal-tr{font-size:13px;color:#555;margin-bottom:16px;}
 .gram-pieces{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
-.gram-piece{background:#f5f3ff;border:1px solid #ede9fe;border-radius:8px;padding:8px 10px;text-align:center;min-width:60px;}
+.gram-piece{background:#f5f3ff;border:1px solid #ede9fe;border-radius:8px;padding:8px 10px;text-align:center;min-width:72px;max-width:100%;flex:1 1 100px;}
 .gram-piece-ro{font-size:13px;font-weight:700;color:#7c3aed;}
 .gram-piece-tr{font-size:11px;color:#555;margin-top:2px;}
 .gram-piece-role{font-size:10px;color:#9ca3af;margin-top:3px;font-weight:600;}
+.gram-piece-note{font-size:10px;color:#666;margin-top:6px;line-height:1.45;text-align:left;border-top:1px dashed #e8e8e8;padding-top:5px;}
+.gm-summary{background:#f0fdf9;border:1px solid #b2dfdb;border-radius:10px;padding:10px 12px;font-size:12px;color:#0d6b63;line-height:1.55;margin-bottom:14px;}
+.gram-piece.phrase{border-color:#7c3aed;background:#f5f3ff;} .gram-piece.phrase .gram-piece-role{color:#7c3aed;}
+.gram-piece.greeting,.gram-piece.farewell{border-color:#0d9488;background:#f0fdfa;} .gram-piece.greeting .gram-piece-role,.gram-piece.farewell .gram-piece-role{color:#0d9488;}
+.gram-piece.adj{border-color:#8b5cf6;background:#f5f3ff;} .gram-piece.adj .gram-piece-role{color:#8b5cf6;}
+.gram-piece.question{border-color:#ef4444;background:#fef2f2;} .gram-piece.question .gram-piece-role{color:#ef4444;}
+.gram-piece.courtesy{border-color:#ec4899;background:#fdf2f8;} .gram-piece.courtesy .gram-piece-role{color:#ec4899;}
 .gram-piece.S{border-color:#3b82f6;background:#eff6ff;} .gram-piece.S .gram-piece-role{color:#3b82f6;}
 .gram-piece.V{border-color:#10b981;background:#f0fdf4;} .gram-piece.V .gram-piece-role{color:#10b981;}
 .gram-piece.O{border-color:#f59e0b;background:#fffbeb;} .gram-piece.O .gram-piece-role{color:#f59e0b;}
@@ -316,7 +322,8 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .bonus-sub{font-size:11px;color:#888;margin-top:2px;}
 .bonus-toggle{font-size:18px;color:#0d9488;font-weight:700;}
 .bonus-lesson{margin-left:14px;border-left:3px solid #b2dfdb;}
-.ex-gram-btn{display:inline-block;margin-top:6px;padding:4px 10px;background:#f0fdf9;border:1px solid #b2dfdb;border-radius:6px;font-size:11px;font-weight:700;color:#0d9488;cursor:pointer;}
+.ex-texts[data-word-idx]{cursor:pointer;border-radius:8px;transition:background .15s;}
+.ex-texts[data-word-idx]:hover{background:#f0fdf9;}
 
 /* ===== DARK MODE ===== */
 @media (prefers-color-scheme: dark) {
@@ -614,7 +621,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.5.1';
+const APP_VERSION = 'v1.5.4';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -1319,37 +1326,67 @@ function speakWebSpeech(text, slow, gender){
 function showWordIdx(idx){
   const item = window._wordBD[idx];
   if(!item) return;
-  showGramModal(item.th, item.tr, JSON.stringify(item.bd));
+  showGramModal(item.th, item.tr, item.bd, item.summary||'');
+}
+function normalizeGramRole(role){
+  if(!role) return 'phrase';
+  const m = {subject:'S',verb:'V',object:'O',noun:'O',adjective:'adj',adj:'adj',
+    modal:'modal',time:'K',connector:'K',exclamation:'greeting',condolence:'phrase',
+    'S - Ozne':'S','V - Yuklem':'V','O - Nesne':'O','Kibar':'K','Soru':'Q'};
+  return m[role]||role;
+}
+function gramRoleClass(role){
+  role = normalizeGramRole(role);
+  const m = {S:'S',V:'V',O:'O',K:'K',Q:'Q',N:'N',
+    greeting:'greeting',farewell:'farewell',phrase:'phrase',adj:'adj',
+    question:'question',courtesy:'courtesy',modal:'modal',name:'O'};
+  return m[role]||'phrase';
+}
+function gramRoleLabel(role){
+  role = normalizeGramRole(role);
+  const tr = {S:'Özne',V:'Yüklem',O:'Nesne',K:'Zarf / Belirteç',Q:'Soru',
+    greeting:'Selamlama',farewell:'Veda',phrase:'Kalıp ifade',adj:'Sıfat / Durum',
+    question:'Soru kelimesi',courtesy:'Nezaket',modal:'Yardımcı fiil',name:'İsim',N:'Olumsuz'};
+  const en = {S:'Subject',V:'Verb',O:'Object',K:'Modifier',Q:'Question',
+    greeting:'Greeting',farewell:'Farewell',phrase:'Set phrase',adj:'Adjective',
+    question:'Question word',courtesy:'Courtesy',modal:'Auxiliary',name:'Name',N:'Negative'};
+  const L = appLang==='en'?en:tr;
+  return L[role]||role;
+}
+
+function showGramModal(th, tr, bdJson, summary){
+  const raw = typeof bdJson==='string' ? JSON.parse(bdJson) : (bdJson||[]);
+  const prep = prepareExampleBreakdown(th, tr, raw, summary||'');
+  const bd = prep.bd;
+  const sumText = prep.summary;
+  const gmSent = document.getElementById('gm-sentence');
+  gmSent.textContent = th;
+  document.getElementById('gm-tr').textContent = tr;
+  const sumEl = document.getElementById('gm-summary');
+  if(sumText){
+    sumEl.textContent = sumText;
+    sumEl.style.display = 'block';
+  } else sumEl.style.display = 'none';
+  document.getElementById('gm-pieces').innerHTML = bd.map(p=>{
+    const cls = gramRoleClass(p.role);
+    const noteHtml = p.note ? `<div class="gram-piece-note">${esc(p.note)}</div>` : '';
+    return `<div class="gram-piece ${cls}">
+      <div class="gram-piece-ro">${esc(p.ro)}</div>
+      <div class="gram-piece-tr">${esc(p.tr)}</div>
+      <div class="gram-piece-role">${gramRoleLabel(p.role)}</div>${noteHtml}
+    </div>`;
+  }).join('');
+  document.getElementById('gram-modal-overlay').classList.add('open');
 }
 function showGramIdx(idx){
   const d = window._gramBD[idx];
   if(!d) return;
-  showGramModal(d.th, d.tr, JSON.stringify(d.bd));
+  showGramModal(d.th, d.tr, d.bd, d.summary||'');
 }
 function openGramModal(th, tr, bd){
-  // Liste sekmesinden çağrılır — bd array veya JSON string olabilir
-  const bdJson = typeof bd === 'string' ? bd : JSON.stringify(bd);
-  showGramModal(th, tr, bdJson);
-}
-function showGramModal(th, tr, bdJson){
-  const bd = JSON.parse(bdJson);
-  const gmSent = document.getElementById('gm-sentence');
-  gmSent.textContent = th;
-  gmSent.style.color = '#1a1a1a';
-  gmSent.style.fontFamily = 'inherit';
-  document.getElementById('gm-tr').textContent = tr;
-  const roleClass = {
-    'S':'S','S - Ozne':'S','S - Soru':'S',
-    'V':'V','V - Yuklem':'V',
-    'O':'O','O - Nesne':'O','O - Soru (SONDA)':'Q','O - Soru':'Q',
-    'Kibar':'K','Soru (SONDA)':'Q','Soru (ONDE)':'Q',
-    'Olumsuz':'N','Modal':'K','Edat':'K',
-  };
-  document.getElementById('gm-pieces').innerHTML = bd.map(p=>{
-    const cls = roleClass[p.role]||'';
-    return '<div class="gram-piece '+cls+'"><div class="gram-piece-ro">'+p.ro+'</div><div class="gram-piece-tr">'+p.tr+'</div><div class="gram-piece-role">'+p.role+'</div></div>';
-  }).join('');
-  document.getElementById('gram-modal-overlay').classList.add('open');
+  const data = Array.isArray(bd) ? bd : (typeof bd==='string' ? JSON.parse(bd) : bd);
+  const prep = prepareExampleBreakdown(th, tr, data||[], '');
+  showGramModal(th, tr, prep.bd, prep.summary);
 }
 function closeGramModal(e){ if(e.target===document.getElementById('gram-modal-overlay')) document.getElementById('gram-modal-overlay').classList.remove('open'); }
 window.speechSynthesis.onvoiceschanged = ()=>window.speechSynthesis.getVoices();
@@ -1656,14 +1693,215 @@ function closeLessonDetail(){
   }
 }
 
+const GRAM_SPLIT_PHRASES = {
+  'nice to meet you too':['Nice to meet you','too'],
+  'nice to meet you':['Nice','to meet','you'],
+  'thank you':['thank','you'],
+  'good morning':['Good','morning'],
+  'good afternoon':['Good','afternoon'],
+  'good evening':['Good','evening'],
+  'good night':['Good','night'],
+  'how are you':['How','are','you'],
+  'my name is':['My','name','is'],
+  'what is your name':['What','is','your','name'],
+  'have you ever':['Have','you','ever'],
+  'going to':['going','to'],
+  'at the moment':['at','the','moment'],
+  'each other':['each','other'],
+  'last week':['last','week'],
+  'last night':['last','night'],
+  'next month':['next','month']
+};
+const GRAM_CONTRACTION_SPLIT = {
+  "i'm":['I',"'m"],"you're":['you',"'re"],"he's":['he',"'s"],"she's":['she',"'s"],
+  "it's":['it',"'s"],"we're":['we',"'re"],"they're":['they',"'re"],
+  "i've":['I',"'ve"],"we've":['we',"'ve"],"they've":['they',"'ve"],
+  "i'll":['I',"'ll"],"you'll":['you',"'ll"],"we'll":['we',"'ll"]
+};
+
+function expandPhraseTokens(tokens){
+  const out = [];
+  for(const t of tokens){
+    const key = t.toLowerCase();
+    if(GRAM_SPLIT_PHRASES[key]) GRAM_SPLIT_PHRASES[key].forEach(p=>out.push(p));
+    else if(GRAM_CONTRACTION_SPLIT[key]) GRAM_CONTRACTION_SPLIT[key].forEach(p=>out.push(p));
+    else out.push(t);
+  }
+  return out;
+}
+const GRAM_PHRASES = [
+  'nice to meet you too','nice to meet you','how are you','how much','how many',
+  'good morning','good afternoon','good evening','good night','goodbye',
+  'thank you','my name is','what is your name','what is','have you ever',
+  'going to','at the moment','each other','last week','last night','last year',
+  'next month','next week','two hours ago','a lot of',
+  "don't","doesn't","didn't","won't","can't","isn't","aren't","wasn't","weren't","haven't","hasn't",
+  "I'm","you're","he's","she's","it's","we're","they're","I've","we've","they've","I'll","you'll"
+];
+const GRAM_WORD_NOTES = {
+  i:'1. tekil özne (ben).',you:'2. tekil veya çoğul hitap (sen / siz).',
+  he:'3. tekil erkek özne (o).',she:'3. tekil kadın özne (o).',it:'3. tekil özne (o / nesne).',
+  we:'1. çoğul özne (biz).',they:'3. çoğul özne (onlar).',
+  am:'to be — sadece I ile: I am.',is:'to be — tekil öznelerle (he/she/it).',
+  are:'to be — you/we/they ile; soruda özneden önce gelir.',
+  was:'to be geçmiş zaman — tekil.',were:'to be geçmiş zaman — çoğul.',
+  have:'yardımcı fiil — Present Perfect veya sahiplik.',has:'have\'ın 3. tekil hali.',
+  do:'yardımcı fiil — soru ve olumsuz (Present Simple).',does:'do\'nun 3. tekil hali.',
+  did:'Past Simple yardımcı fiili — olumsuz ve soru.',will:'gelecek zaman: will + fiil.',
+  can:'yeterlilik / izin: can + fiil.',nice:'güzel, hoş — memnuniyet ifade eder.',
+  meet:'tanışmak, buluşmak.',fine:'iyi — hal/durum sıfatı (I am fine = iyiyim).',
+  hello:'merhaba — en yaygın selamlama.',hi:'selam — samimi selamlama.',
+  please:'lütfen — nezaket kelimesi.',thank:'teşekkür etmek.',
+  how:'nasıl — soru zarfı.',what:'ne — soru kelimesi.',where:'nerede — yer sorusu.',
+  when:'ne zaman — zaman sorusu.',why:'neden — sebep sorusu.',who:'kim — kişi sorusu.',
+  good:'iyi — good morning = günaydın.',morning:'sabah — öğlene kadar.',
+  my:'benim — sahiplik sıfatı.',your:'senin / sizin — sahiplik sıfatı.',name:'isim, ad.',
+  to:'-mek/-mak — mastar eki (to meet = tanışmak).',too:'de, da — karşılık ifadesi.',
+  the:'belirli tanımlık (the).',a:'belirsiz tanımlık — bir.',an:'belirsiz tanımlık — bir (sesli harften önce).',
+  yes:'evet — onay cevabı.',no:'hayır — red cevabı.',very:'çok — sıfatı güçlendirir.',
+  always:'her zaman — sıklık zarfı.',usually:'genellikle — sıklık zarfı.',often:'sık sık.',
+  now:'şimdi — zaman zarfı.',yesterday:'dün — geçmiş zaman işareti.',tomorrow:'yarın — gelecek zaman.',
+  already:'zaten / çoktan — Present Perfect ile.',yet:'henüz — soru ve olumsuzda sonda.',
+  just:'az önce — Present Perfect ile.',since:'-den beri — başlangıç noktası.',for:'... süredir — süre ifadesi.',
+  while:'... iken — eşzamanlı iki eylem.',ago:'... önce — süre + ago (two days ago).'
+};
+
+function isWholeSentencePiece(sentence, piece){
+  const a = sentence.replace(/[.!?,…]/g,'').trim().toLowerCase();
+  const b = (piece||'').replace(/[.!?,…]/g,'').trim().toLowerCase();
+  if(!b) return true;
+  return a === b || (b.length >= a.length * 0.65 && a.includes(b));
+}
+
+function splitTrParts(tr, n){
+  const parts = (tr||'').replace(/[.!?…]+$/,'').split(/[\s,]+/).filter(Boolean);
+  if(!parts.length) return Array(n).fill('—');
+  if(parts.length === n) return parts;
+  if(parts.length < n){
+    const out = parts.slice();
+    while(out.length < n) out.push(parts[parts.length-1]||'—');
+    return out;
+  }
+  const out = [];
+  const per = Math.ceil(parts.length / n);
+  for(let i=0;i<n;i++) out.push(parts.slice(i*per,(i+1)*per).join(' ')||'—');
+  return out;
+}
+
+function tokenizeForGram(en){
+  let s = en.replace(/[.!?…]+$/,'').trim();
+  const tokens = [];
+  while(s){
+    s = s.replace(/^[\s,]+/,'');
+    if(!s) break;
+    let found = null;
+    const low = s.toLowerCase();
+    for(const ph of GRAM_PHRASES){
+      if(low.startsWith(ph.toLowerCase())){
+        found = s.slice(0, ph.length);
+        s = s.slice(ph.length);
+        break;
+      }
+    }
+    if(!found){
+      const m = s.match(/^([A-Za-z]+(?:'[a-z]+)?)/);
+      if(m){ found = m[1]; s = s.slice(m[1].length); }
+      else { found = s[0]; s = s.slice(1); }
+    }
+    tokens.push(found);
+  }
+  return tokens;
+}
+
+function guessGramRole(ro, idx, all, sentence){
+  const w = ro.toLowerCase();
+  const courtesy = /^(please|thanks?|thank\s+you)$/i;
+  const greetings = /^(hello|hi|goodbye|bye|good\s+(morning|afternoon|evening|night))$/i;
+  if(/^(how|what|where|when|why|who|which)$/i.test(w)) return 'question';
+  if(greetings.test(w) || greetings.test(ro)) return 'greeting';
+  if(courtesy.test(w)) return 'courtesy';
+  if(/^(I|you|he|she|it|we|they|this|that|there)$/i.test(w)) return 'S';
+  if(/^(am|is|are|was|were|have|has|had|do|does|did|will|can|could|should|would|may|might)$/i.test(w)) return 'V';
+  if(/^(my|your|his|her|its|our|their|the|a|an)$/i.test(w)) return 'K';
+  if(/^(always|usually|often|sometimes|never|now|today|yesterday|tomorrow|already|yet|just|ago)$/i.test(w)) return 'K';
+  if(/^(nice|fine|good|bad|big|small|cheap|expensive|very)$/i.test(w)) return 'adj';
+  if(/ing$/i.test(w)) return 'V';
+  if(/ed$/i.test(w) && w.length>3) return 'V';
+  if(/^(don't|doesn't|didn't|won't|can't|isn't|aren't)$/i.test(w)) return 'N';
+  if(/^(I'm|you're|he's|she's|it's|we're|they're)$/i.test(ro)) return 'V';
+  if(idx === 0) return 'S';
+  if(/\?$/.test(sentence) && idx === all.length-1) return 'Q';
+  return idx < all.length-1 ? 'O' : 'V';
+}
+
+function guessPieceNote(ro, role, idx, all, sentence){
+  const w = ro.toLowerCase();
+  if(GRAM_WORD_NOTES[w]) return GRAM_WORD_NOTES[w];
+  if(w === 'to meet' || w === 'to meet you') return 'tanışmak — to meet = tanışmak (mastar eki to ile).';
+  if(w === "'m") return 'am fiilinin kısaltması (I am → I\'m).';
+  if(/'/.test(ro) && ro.length > 2) return `Kısaltma: ${ro} — yardımcı fiil birleşimi.`;
+  role = normalizeGramRole(role||guessGramRole(ro, idx, all, sentence));
+  if(role === 'question') return 'Soru kelimesi — cümleyi soru yapar.';
+  if(role === 'greeting') return 'Selamlama veya veda ifadesi.';
+  if(role === 'courtesy') return 'Nezaket ifadesi — kibarlık için eklenir.';
+  if(role === 'adj') return 'Sıfat — ismi veya durumu nitelendirir.';
+  if(role === 'V' && /ing$/i.test(w)) return 'Şimdiki zaman / süreklilik: -ing eki.';
+  if(role === 'V' && /ed$/i.test(w)) return 'Geçmiş zaman (Past Simple) fiil formu.';
+  if(role === 'S' && idx === 0) return 'Cümlenin öznesi — kim / ne hakkında.';
+  if(role === 'O') return 'Nesne veya tamamlayıcı öge.';
+  if(idx === all.length-1 && !/\?$/.test(sentence)) return 'Cümlenin son ögesi.';
+  return '';
+}
+
+function buildAutoSummary(en, bd){
+  const low = en.toLowerCase();
+  if(/nice to meet you/.test(low)) return 'Tanışma kalıbı — yeni biriyle tanışınca kullanılır. Nice = hoş, to meet = tanışmak.';
+  if(/^(hello|hi|good morning|good afternoon|good evening)/.test(low)) return 'Selamlama ifadesi.';
+  if(/^(goodbye|bye)/.test(low)) return 'Vedalaşma ifadesi.';
+  if(/thank you|thanks/.test(low)) return 'Teşekkür ifadesi — minnet göstermek için.';
+  if(/\?$/.test(en)) return 'Soru cümlesi — İngilizcede yardımcı fiil çoğu zaman özneden önce gelir.';
+  if(bd.length > 1) return 'Cümle '+bd.length+' parçaya ayrıldı. Her parçanın görevine dikkat et.';
+  return '';
+}
+
+function autoTokenBreakdown(en, tr){
+  const tokens = expandPhraseTokens(tokenizeForGram(en));
+  const trParts = splitTrParts(tr, tokens.length);
+  return tokens.map((ro,i)=>({
+    ro, tr: trParts[i]||'—',
+    role: guessGramRole(ro, i, tokens, en),
+    note: guessPieceNote(ro, null, i, tokens, en)
+  }));
+}
+
+function needsRetokenize(cleanEn, bd){
+  if(!bd.length) return true;
+  if(bd.length===1){
+    const p = bd[0];
+    return isWholeSentencePiece(cleanEn, p.ro) || normalizeGramRole(p.role)==='phrase';
+  }
+  return false;
+}
+
+function prepareExampleBreakdown(en, tr, rawBd, gramNote){
+  const text = (en||'').trim();
+  if(!text) return {bd:[], summary: gramNote||''};
+  const cleanEn = text.replace(/[.!?…]+$/,'').trim();
+  let bd = Array.isArray(rawBd) ? rawBd.filter(Boolean).map(p=>({...p})) : [];
+  const lacksNotes = !bd.some(p=>p.note);
+  if(needsRetokenize(cleanEn, bd)) bd = autoTokenBreakdown(cleanEn, tr);
+  else if(lacksNotes) bd = bd.map((p,i)=>({...p, note: guessPieceNote(p.ro, p.role, i, bd, cleanEn)}));
+  bd = bd.map((p,i,arr)=>({
+    ro: p.ro,
+    tr: p.tr || splitTrParts(tr, arr.length)[i] || '—',
+    role: normalizeGramRole(p.role) || guessGramRole(p.ro, i, arr.map(x=>x.ro), cleanEn),
+    note: p.note || guessPieceNote(p.ro, p.role, i, arr.map(x=>x.ro), cleanEn)
+  }));
+  return {bd, summary: gramNote || buildAutoSummary(text, bd)};
+}
+
 function lineBreakdown(line){
-  if(line.bd && line.bd.length) return line.bd;
-  const en = (line.en||'').replace(/[.!?,…]/g,'').trim();
-  const tr = (line.tr||'').trim();
-  if(!en) return [];
-  const ew = en.split(/\s+/).filter(Boolean);
-  const tw = tr.split(/\s+/).filter(Boolean);
-  return ew.map((w,i)=>({ro:w, tr:tw[i]||'—', role:i===0?'S':'V'}));
+  return prepareExampleBreakdown(line.en||'', line.tr||'', line.bd, line.gramNote).bd;
 }
 
 function buildLessonHTML(L, meta){
@@ -1681,17 +1919,15 @@ function buildLessonHTML(L, meta){
     const sk = starKey('w'+meta.num,w.en||w.ro);
     const exs = (w.examples||[]).map((e,ei)=>{
       const esk = starKey('ex'+meta.num+w.id,e.en||e.ro);
-      // pieces hem e.pieces hem e.bd olabilir
-      const exPieces = e.pieces || e.bd || [];
+      const exPrep = prepareExampleBreakdown(e.en||e.ro, e.tr, e.pieces||e.bd, e.gramNote);
+      const exPieces = exPrep.bd;
       const exBdIdx = window._wordBD.length;
-      window._wordBD.push({th:e.en||e.ro, tr:e.tr, bd:exPieces});
-      const exHasBd = exPieces.length>0;
+      window._wordBD.push({th:e.en||e.ro, tr:e.tr, bd:exPieces, summary:exPrep.summary});
       return `<div class="ex-item">
-        <div class="ex-texts">
+        <div class="ex-texts" style="cursor:pointer" data-word-idx="${exBdIdx}">
           <div class="ex-th">${e.en||''}</div>
           <div class="ex-ro">${e.ro||''}</div>
           <div class="ex-tr">${Lf(e,'tr')}</div>
-          ${exHasBd ? `<span class="ex-gram-btn" data-word-idx="${exBdIdx}" title="Gramer analizi">📖</span>` : ''}
         </div>
         <div class="ex-actions">
           <button class="sm-abtn" data-speak="${esc(e.en||e.ro)}" data-slow="0">🔊</button>
@@ -1797,12 +2033,12 @@ function buildLessonHTML(L, meta){
       </table>${g.note?`<div style="font-size:12px;color:#666;margin-top:8px;line-height:1.6;">💡 ${g.note}</div>`:''}`;
     } else {
     exHtml = (g.examples||[]).map((e,ei)=>{
+      const exPrep = prepareExampleBreakdown(e.en||e.ro, e.tr, e.bd, e.gramNote);
       const bdIdx = window._gramBD.length;
-      window._gramBD.push({th:e.en||e.ro, tr:e.tr, bd:e.bd||[]});
-      const hasB = e.bd && e.bd.length>0;
-      return '<div class="ex-item" '+(hasB?'style="cursor:pointer" data-gram="'+bdIdx+'"':'')+'>'+
+      window._gramBD.push({th:e.en||e.ro, tr:e.tr, bd:exPrep.bd, summary:exPrep.summary});
+      return '<div class="ex-item" style="cursor:pointer" data-gram="'+bdIdx+'">'+
         '<div class="ex-texts">'+
-          '<div class="ex-th">'+(e.en||'')+(hasB?' <span style="font-size:10px;color:#7c3aed;background:#f5f3ff;padding:1px 5px;border-radius:4px;font-weight:700;">📖</span>':'')+'</div>'+
+          '<div class="ex-th">'+(e.en||'')+'</div>'+
           '<div class="ex-ro">'+(e.ro||'')+'</div>'+
           '<div class="ex-tr">'+(Lf(e,'tr')||e.tr)+'</div>'+
         '</div>'+
@@ -1826,9 +2062,10 @@ function buildLessonHTML(L, meta){
       </div>
       ${d.lines.map((l,li)=>{
         const dsk = starKey('dia'+meta.num+di, (l.en||l.ro)+li);
-        const bd = lineBreakdown(l);
+        const exPrep = prepareExampleBreakdown(l.en||'', l.tr, l.bd, l.gramNote);
+        const bd = exPrep.bd;
         const dlineGramIdx = window._gramBD.length;
-        window._gramBD.push({th:l.en||'', tr:l.tr, bd});
+        window._gramBD.push({th:l.en||'', tr:l.tr, bd, summary:exPrep.summary});
         const sp = dialogueSpeaker(l);
         const dg = dialogueGender(l);
         return `<div class="dline ${dg==='m'?'ali':'nada'}" id="dline-${di}-${li}">
@@ -1836,7 +2073,6 @@ function buildLessonHTML(L, meta){
           <div class="dbubble dbubble-clickable" data-dline-idx="${dlineGramIdx}">
             <div class="dbubble-th">${l.en||''}</div>
             <div class="dbubble-tr">${Lf(l,'tr')||l.tr}</div>
-            <div class="dbubble-hint">📖 ${appLang==='en'?'Tap for grammar breakdown':'Gramer için dokun'}</div>
           </div>
           <div class="dline-actions">
             <button class="sm-abtn" data-speak="${esc(l.en||l.ro)}" data-slow="0" data-gender="${dg}">🔊</button>
@@ -1849,9 +2085,10 @@ function buildLessonHTML(L, meta){
 
   // KONUŞMA
   const speaking = (L.speaking||[]).map((sp,i)=>{
+    const spPrep = prepareExampleBreakdown(sp.en||'', sp.tr, sp.bd, sp.gramNote);
     const gramIdx = window._gramBD.length;
-    if(sp.bd) window._gramBD.push({th:sp.en||'', tr:sp.tr, bd:sp.bd});
-    const hasBd = sp.bd && sp.bd.length>0;
+    if(spPrep.bd.length) window._gramBD.push({th:sp.en||'', tr:sp.tr, bd:spPrep.bd, summary:spPrep.summary});
+    const hasBd = spPrep.bd.length>0;
     return '<div class="speak-card">'+
       '<div class="speak-task">'+(i+1)+'. '+(Lf(sp,'task')||sp.task||sp.prompt||'')+'</div>'+
       '<div class="speak-en" '+(hasBd?'style="cursor:pointer" data-gram="'+gramIdx+'"':'')+'>'+(sp.en||'')+'</div>'+
@@ -3259,6 +3496,10 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
+          <div class="changelog-desc">${en?'Grammar modal always re-expands shallow phrase breakdowns on open':'Gramer penceresi açılırken yüzeysel phrase analizleri her zaman yeniden parçalanır'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.5.3</div>
+          <div class="changelog-desc">${en?'Dialogue grammar: no hint text, richer word-by-word breakdown with Turkish notes':'Diyalog grameri: ipucu metni kaldırıldı, kelime kelime detaylı Türkçe açıklamalar'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.5.1</div>
           <div class="changelog-desc">${en?'Removed redundant Quiz tab from lessons; practice tab is the final step':'Derslerden gereksiz Quiz sekmesi kaldırıldı; son adım Alıştırma'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.5</div>
           <div class="changelog-desc">${en?'Slower audio, pronunciation removed, exercise word slots, clickable dialogues, Lesson 1 simplified':'Yavaş ses, telaffuz kaldırıldı, alıştırma kutuları, tıklanabilir diyaloglar, Ders 1 sadeleştirildi'}</div></div>
@@ -4106,6 +4347,7 @@ document.getElementById('google-tts-key-input').value = localStorage.getItem('en
     </div>
     <div id="gm-sentence" class="gram-modal-sentence"></div>
     <div id="gm-tr" class="gram-modal-tr"></div>
+    <div id="gm-summary" class="gm-summary" style="display:none;"></div>
     <div id="gm-pieces" class="gram-pieces"></div>
     <div class="gram-legend">
       <span class="legend-item" style="background:#eff6ff;color:#3b82f6;" data-lk="gram_legend_s">S = Özne</span>
