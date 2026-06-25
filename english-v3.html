@@ -367,59 +367,91 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
   .word-ro{color:#e0e0e0;}
   .word-tr{color:#aaa;}
   .word-note{background:#252525;color:#aaa;}
-  .word-note .ctx{color:#555;}
-  .ex-th{color:#444;}
-  .ex-ro{color:#e0e0e0;}
-  .ex-tr{color:#aaa;}
+  .word-note .ctx{color:#888;}
+  .ex-th{color:#f0f0f0;}
+  .ex-ro{color:#d0d0d0;}
+  .ex-tr{color:#b8b8b8;}
   .ex-item{border-bottom-color:#252525;}
-  .sm-abtn{background:#252525;border-color:#333;color:#0d9488;}
+  .ex-texts[data-word-idx]:hover{background:#0f2420;}
+  .sm-abtn{background:#252525;border-color:#333;color:#4db6ac;}
 
   /* Speaking */
   .speak-card{background:#1e1e1e;border-color:#2a2a2a;}
-  .speak-en{color:#444;}
-  .speak-ro{color:#e0e0e0;}
-  .speak-tr{color:#aaa;}
+  .speak-task{color:#4db6ac;}
+  .speak-en{color:#f0f0f0;}
+  .speak-ro{color:#d0d0d0;}
+  .speak-tr{color:#b8b8b8;}
 
   /* Dialogue */
   .dialog-card{background:#1e1e1e;border-color:#2a2a2a;}
-  .dbubble-th{color:#444;}
-  .dbubble-ro{color:#e0e0e0;}
-  .dbubble-tr{color:#aaa;}
-  .dline.ali .dbubble{background:#0d1a35;}
-  .dline.nada .dbubble{background:#2a1020;}
+  .dialog-title{color:#4db6ac;}
+  .dbubble-th{color:#f0f0f0;}
+  .dbubble-ro{color:#d0d0d0;}
+  .dbubble-tr{color:#b8c8d8;}
+  .dline.ali .dbubble{background:#152a4a;border:1px solid #1e3a5f;}
+  .dline.nada .dbubble{background:#3a1a2e;border:1px solid #5a2a45;}
   .dline.active-line{background:#25200a;border-left-color:#f59e0b;}
 
   /* Tones */
   .tone-card{background:#1e1e1e;}
-  .tone-symbol{color:#555;}
-  .tone-desc{color:#aaa;}
+  .tone-symbol{color:#888;}
+  .tone-desc{color:#b8b8b8;}
   .tone-word{background:#252525;border-color:#333;}
-  .tw-th{color:#444;}
-  .tw-ro{color:#e0e0e0;}
-  .tw-tr{color:#aaa;}
+  .tw-th{color:#f0f0f0;}
+  .tw-ro{color:#d0d0d0;}
+  .tw-tr{color:#b8b8b8;}
 
   /* Grammar */
   .gram-card{background:#1e1e1e;}
-  .gram-formula{background:#1c1528;border-color:#3b2d6a;color:#e0e0e0;}
-  .gram-explain{color:#aaa;}
+  .gram-title{color:#c4b5fd;}
+  .gram-formula{background:#1c1528;border-color:#3b2d6a;color:#e8e0ff;}
+  .gram-explain{color:#c0c0c0;}
   .gram-examples .ex-item{border-bottom-color:#252525;}
-  .gram-piece{background:#252525;border-color:#444;}
-  .gram-piece-ro{color:#b39ddb;}
-  .gram-piece-tr{color:#aaa;}
-  .gram-piece-role{color:#666;}
+  .gram-card table th{color:#9ca3af!important;background:#1c1528!important;}
+  .gram-card table td{color:#d8d8d8!important;border-bottom-color:#333!important;}
+  .gram-card table tr{border-bottom-color:#333!important;}
+  .gram-tips-box{background:#252525!important;color:#c0c0c0!important;border:1px solid #333;}
+  .gram-note-box{color:#b0b0b0!important;}
+  .gram-piece{background:#2a2a2a;border-color:#444;}
+  .gram-piece-ro{color:#d8b4fe;}
+  .gram-piece-tr{color:#c8c8c8;}
+  .gram-piece-role{color:#a0a0a0;}
+  .gram-piece-note{color:#b8b8b8;border-top-color:#3a3a3a;}
+  .gram-piece.phrase{background:#1c1528;border-color:#7c3aed;}
+  .gram-piece.phrase .gram-piece-ro{color:#d8b4fe;}
+  .gram-piece.phrase .gram-piece-role{color:#c4b5fd;}
+  .gram-piece.greeting,.gram-piece.farewell{background:#08201e;border-color:#0d9488;}
+  .gram-piece.greeting .gram-piece-ro,.gram-piece.farewell .gram-piece-ro{color:#5eead4;}
+  .gram-piece.adj{background:#1a1530;border-color:#8b5cf6;}
+  .gram-piece.adj .gram-piece-ro{color:#c4b5fd;}
+  .gram-piece.question,.gram-piece.courtesy{background:#2a1020;border-color:#ec4899;}
+  .gram-piece.question .gram-piece-ro,.gram-piece.courtesy .gram-piece-ro{color:#f9a8d4;}
+  .gram-piece.modal{background:#0a1828;border-color:#3b82f6;}
   .gram-piece.S{background:#0a1828;border-color:#3b82f6;}
-  .gram-piece.S .gram-piece-role{color:#3b82f6;}
+  .gram-piece.S .gram-piece-ro{color:#93c5fd;}
+  .gram-piece.S .gram-piece-role{color:#60a5fa;}
   .gram-piece.V{background:#0a2018;border-color:#10b981;}
-  .gram-piece.V .gram-piece-role{color:#10b981;}
+  .gram-piece.V .gram-piece-ro{color:#6ee7b7;}
+  .gram-piece.V .gram-piece-role{color:#34d399;}
   .gram-piece.O{background:#251a05;border-color:#f59e0b;}
-  .gram-piece.O .gram-piece-role{color:#f59e0b;}
+  .gram-piece.O .gram-piece-ro{color:#fcd34d;}
+  .gram-piece.O .gram-piece-role{color:#fbbf24;}
   .gram-piece.K{background:#08201e;border-color:#0d9488;}
-  .gram-piece.K .gram-piece-role{color:#0d9488;}
+  .gram-piece.K .gram-piece-ro{color:#5eead4;}
+  .gram-piece.K .gram-piece-role{color:#2dd4bf;}
   .gram-piece.Q,.gram-piece.N{background:#250a0a;border-color:#ef4444;}
-  .gram-piece.Q .gram-piece-role,.gram-piece.N .gram-piece-role{color:#ef4444;}
-  .gram-modal{background:#1e1e1e;}
-  .gram-modal-sentence{color:#444;}
-  .gram-modal-tr{color:#aaa;}
+  .gram-piece.Q .gram-piece-ro,.gram-piece.N .gram-piece-ro{color:#fca5a5;}
+  .gram-piece.Q .gram-piece-role,.gram-piece.N .gram-piece-role{color:#f87171;}
+  .gram-modal{background:#1a1a1a;color:#e8e8e8;}
+  .gram-modal-title{color:#c4b5fd;}
+  .gram-modal-sentence{color:#f5f5f5;}
+  .gram-modal-tr{color:#c0c0c0;}
+  .gm-summary{background:#0f2420;border-color:#1a5040;color:#a7f3d0;}
+  .gram-legend .legend-item:nth-child(1){background:#0a1828!important;color:#93c5fd!important;}
+  .gram-legend .legend-item:nth-child(2){background:#0a2018!important;color:#6ee7b7!important;}
+  .gram-legend .legend-item:nth-child(3){background:#251a05!important;color:#fcd34d!important;}
+  .gram-legend .legend-item:nth-child(4){background:#250a0a!important;color:#fca5a5!important;}
+  .gram-legend .legend-item:nth-child(5){background:#08201e!important;color:#5eead4!important;}
 
   /* Quiz / Listen */
   .listen-card{background:#1e1e1e;}
@@ -475,16 +507,16 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
   .stat-box{background:#252525;}
   .stat-lbl{color:#666;}
   .review-card{background:#1e1e1e;border-color:#2a2a2a;}
-  .rc-question{color:#444;}
-  .rc-ro{color:#e0e0e0;}
-  .rc-type{background:#252525;color:#aaa;}
+  .rc-question{color:#f0f0f0;}
+  .rc-ro{color:#d0d0d0;}
+  .rc-type{background:#252525;color:#b8b8b8;}
   .rc-answer{background:#0a2018;}
   .rc-answer-text{color:#6ee7b7;}
-  .rc-answer-ro{color:#666;}
+  .rc-answer-ro{color:#a0a0a0;}
   .review-progress{background:#2a2a2a;}
-  .rc-speak-btn{background:#252525;border-color:#333;color:#0d9488;}
-  .review-empty{color:#444;}
-  .review-done-sub{color:#666;}
+  .rc-speak-btn{background:#252525;border-color:#333;color:#4db6ac;}
+  .review-empty{color:#b0b0b0;}
+  .review-done-sub{color:#a0a0a0;}
   .lesson-srs-row{border-top-color:#252525;}
 }
 
@@ -608,7 +640,13 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
   .ex-bank-btn{background:#252525;border-color:#333;color:#e0e0e0;box-shadow:0 3px 0 #333;}
   .ex-footer{border-top-color:#2a2a2a;}
   .ex-answer-area{border-bottom-color:#333;}
-  .ex-close-btn{color:#555;}
+  .ex-close-btn{color:#aaa;}
+  .ex-slot{border-color:#444;background:#2a2a2a;color:#e0e0e0;}
+  .ex-slot.filled{border-color:#1cb0f6;background:#0d2233;color:#e0e0e0;}
+  .ex-slot.marked{border-color:#58cc02;background:#0a2a18;color:#6ee7b7;}
+  .ex-slot-hint{color:#888;}
+  .ex-fb-answer{color:#c0c0c0;}
+  .ex-skip-listen{color:#888;}
   .ex-listen-big-btn{background:#0d2233;box-shadow:0 4px 0 #0a1a2a;}
 }
 @keyframes popIn{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
@@ -621,7 +659,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.5.4';
+const APP_VERSION = 'v1.5.5';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -2030,7 +2068,7 @@ function buildLessonHTML(L, meta){
           <td style="padding:6px;font-weight:600;">${row.example||''}</td>
           <td style="padding:6px;color:#555;">${row.tr||''}</td>
         </tr>`).join('')}
-      </table>${g.note?`<div style="font-size:12px;color:#666;margin-top:8px;line-height:1.6;">💡 ${g.note}</div>`:''}`;
+      </table>${g.note?`<div class="gram-note-box" style="font-size:12px;margin-top:8px;line-height:1.6;">💡 ${g.note}</div>`:''}`;
     } else {
     exHtml = (g.examples||[]).map((e,ei)=>{
       const exPrep = prepareExampleBreakdown(e.en||e.ro, e.tr, e.bd, e.gramNote);
@@ -2050,7 +2088,7 @@ function buildLessonHTML(L, meta){
     const gTips = (appLang==='en' && g.tips_en) ? g.tips_en : g.tips;
     const gExplain = Lf(g,'explain')||g.explain||g.explanation||'';
     const gFormula = Lf(g,'formula')||g.formula||'';
-    return '<div class="gram-card"><div class="gram-title">📖 '+(Lf(g,'title')||g.title)+'</div>'+(gFormula?'<div class="gram-formula">'+gFormula+'</div>':'')+(gExplain?'<div class="gram-explain">'+gExplain+'</div>':'')+(gTips?'<div style="background:#f9f9f9;padding:8px;border-radius:6px;margin-bottom:10px;font-size:12px;color:#555;"><strong>'+s('gram_tip_label')+'</strong><ul style="margin:4px 0 0 14px;">'+gTips.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>':'')+'<div class="gram-examples">'+exHtml+'</div></div>';
+    return '<div class="gram-card"><div class="gram-title">📖 '+(Lf(g,'title')||g.title)+'</div>'+(gFormula?'<div class="gram-formula">'+gFormula+'</div>':'')+(gExplain?'<div class="gram-explain">'+gExplain+'</div>':'')+(gTips?'<div class="gram-tips-box" style="padding:8px;border-radius:6px;margin-bottom:10px;font-size:12px;"><strong>'+s('gram_tip_label')+'</strong><ul style="margin:4px 0 0 14px;">'+gTips.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>':'')+'<div class="gram-examples">'+exHtml+'</div></div>';
   }).join('');
 
   // DİYALOG
@@ -3496,8 +3534,8 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
-          <div class="changelog-desc">${en?'Grammar modal always re-expands shallow phrase breakdowns on open':'Gramer penceresi açılırken yüzeysel phrase analizleri her zaman yeniden parçalanır'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v1.5.3</div>
+          <div class="changelog-desc">${en?'Dark mode readability fixes for grammar modal, dialogues and examples on mobile':'Karanlık modda gramer penceresi, diyalog ve örneklerin okunabilirliği düzeltildi'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.5.4</div>
           <div class="changelog-desc">${en?'Dialogue grammar: no hint text, richer word-by-word breakdown with Turkish notes':'Diyalog grameri: ipucu metni kaldırıldı, kelime kelime detaylı Türkçe açıklamalar'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.5.1</div>
           <div class="changelog-desc">${en?'Removed redundant Quiz tab from lessons; practice tab is the final step':'Derslerden gereksiz Quiz sekmesi kaldırıldı; son adım Alıştırma'}</div></div>
@@ -4343,7 +4381,7 @@ document.getElementById('google-tts-key-input').value = localStorage.getItem('en
   <div class="gram-modal">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
       <div class="gram-modal-title" data-lk="gram_modal_title">📖 Cümle Analizi</div>
-      <button onclick="document.getElementById('gram-modal-overlay').classList.remove('open')" style="background:none;border:none;font-size:22px;cursor:pointer;color:#999;">✕</button>
+      <button onclick="document.getElementById('gram-modal-overlay').classList.remove('open')" style="background:none;border:none;font-size:22px;cursor:pointer;color:#aaa;">✕</button>
     </div>
     <div id="gm-sentence" class="gram-modal-sentence"></div>
     <div id="gm-tr" class="gram-modal-tr"></div>
