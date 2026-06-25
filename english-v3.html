@@ -659,7 +659,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.5.5';
+const APP_VERSION = 'v1.6.0';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -967,7 +967,9 @@ function Lf(item, field){
 
 function lessonSubtitle(meta){
   if(!meta) return '';
-  return appLang==='en' ? (meta.title||'') : (meta.title_en||'');
+  const sub = appLang==='en' ? (meta.subtitle_en||meta.subtitle) : (meta.subtitle||meta.subtitle_en);
+  if(sub) return sub;
+  return appLang==='en' ? (meta.title_en||'') : (meta.title_en||'');
 }
 
 function lessonNumLabel(num){
@@ -1144,7 +1146,7 @@ function listenResolve(lessonNum, idx){
 // 20 senaryo dersi (1–20) + 29 BONUS kelime seti (21–49)
 const LESSONS_META = [
   {num:1, emoji:'👋', title:'Selamlaşma ve Tanışma', title_en:'Greetings & Introductions', hasContent:true, hasTones:false},
-  {num:2, emoji:'📗', title:'Fiil Zamanları', title_en:'Verb Tenses', hasContent:true, hasTones:false},
+  {num:2, emoji:'📗', title:'Fiil Zamanları', title_en:'Verb Tenses', subtitle:'6 ana zaman — adım adım', subtitle_en:'6 main tenses — step by step', hasContent:true, hasTones:false},
   {num:3, emoji:'🔢', title:'Sayılar ve Para', title_en:'Numbers & Money', hasContent:true, hasTones:false},
   {num:4, emoji:'🕐', title:'Zaman ve Tarih', title_en:'Time & Dates', hasContent:true, hasTones:false},
   {num:5, emoji:'🍽️', title:'Restoran ve Yemek', title_en:'Restaurant & Food', hasContent:true, hasTones:false},
@@ -3534,8 +3536,8 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
-          <div class="changelog-desc">${en?'Dark mode readability fixes for grammar modal, dialogues and examples on mobile':'Karanlık modda gramer penceresi, diyalog ve örneklerin okunabilirliği düzeltildi'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v1.5.4</div>
+          <div class="changelog-desc">${en?'Lesson 2 redesigned: 6 tenses step-by-step (12 words, 2 dialogues, balanced sections)':'Ders 2 yeniden tasarlandı: 6 fiil zamanı adım adım (12 kelime, 2 diyalog, dengeli yapı)'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.5.5</div>
           <div class="changelog-desc">${en?'Dialogue grammar: no hint text, richer word-by-word breakdown with Turkish notes':'Diyalog grameri: ipucu metni kaldırıldı, kelime kelime detaylı Türkçe açıklamalar'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.5.1</div>
           <div class="changelog-desc">${en?'Removed redundant Quiz tab from lessons; practice tab is the final step':'Derslerden gereksiz Quiz sekmesi kaldırıldı; son adım Alıştırma'}</div></div>
