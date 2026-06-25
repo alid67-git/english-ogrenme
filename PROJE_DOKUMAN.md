@@ -6,12 +6,12 @@ Bu proje Turkce konusan kullanicilar icin pratik Ingilizce ogrenme uygulamasidir
 
 - `index.html`: GitHub Pages giris dosyasi. `english-v3.html` dosyasina yonlendirir.
 - `english-v3.html`: Ana uygulama. Arayuz, ders motoru, test, SRS, ceviri, ses ve yardim ekranlari burada.
-- `ders1.js` - `ders48.js`: Ders verileri. Uygulama ders acildikca ilgili dosyayi yukler.
+- `ders1.js` - `ders49.js`: Ders verileri. Uygulama ders acildikca ilgili dosyayi yukler.
 - `tools/enrich-bonus.mjs`: Bonus kelime setlerini zenginlestirmek icin yardimci arac.
 
 ## Uygulama Ozeti
 
-- 19 ana ders: gunluk Ingilizce konusma konulari.
+- 20 ana ders: gunluk Ingilizce konusma konulari (Ders 2: Fiil Zamanlari).
 - 29 bonus kelime seti: daha genis kelime havuzu.
 - Turkce/English arayuz secimi.
 - Web Speech API ve istege bagli Google TTS destegi.

@@ -1,76 +1,81 @@
-// ders15.js — English Lesson 15: Countries & Nationalities
+// ders15.js — English Lesson 15: Education
 const L15 = {
   words: [
-    {id:'w1', en:'country', ro:'/ˈkʌntri/', tr:'ülke'},
-    {id:'w2', en:'nationality', ro:'/ˌnæʃəˈnælɪti/', tr:'uyruk / milliyet'},
-    {id:'w3', en:'language', ro:'/ˈlæŋɡwɪdʒ/', tr:'dil'},
-    {id:'w4', en:'Turkey — Turkish', ro:'/ˈtɜːrki — ˈtɜːrkɪʃ/', tr:'Türkiye — Türk / Türkçe',
-     examples:[{en:"I'm Turkish. I speak Turkish and English.", ro:'/aɪm ˈtɜːrkɪʃ aɪ spiːk ˈtɜːrkɪʃ ænd ˈɪŋɡlɪʃ/', tr:'Ben Türküm. Türkçe ve İngilizce konuşuyorum.',
-       bd:[{ro:"I'm Turkish",tr:'Ben Türküm',role:'nationality'},{ro:'I speak',tr:'konuşuyorum',role:'verb'}]}]},
-    {id:'w5', en:'England — English', ro:'/ˈɪŋɡlənd — ˈɪŋɡlɪʃ/', tr:'İngiltere — İngiliz / İngilizce'},
-    {id:'w6', en:'United States (USA) — American', ro:'/juːˈnaɪtɪd steɪts — əˈmɛrɪkən/', tr:'Amerika Birleşik Devletleri — Amerikalı'},
-    {id:'w7', en:'Germany — German', ro:'/ˈdʒɜːrməni — ˈdʒɜːrmən/', tr:'Almanya — Alman'},
-    {id:'w8', en:'France — French', ro:'/frɑːns — frɛntʃ/', tr:'Fransa — Fransız'},
-    {id:'w9', en:'Spain — Spanish', ro:'/speɪn — ˈspænɪʃ/', tr:'İspanya — İspanyol'},
-    {id:'w10', en:'Italy — Italian', ro:'/ˈɪtəli — ɪˈtæliən/', tr:'İtalya — İtalyan'},
-    {id:'w11', en:'China — Chinese', ro:'/ˈtʃaɪnə — tʃaɪˈniːz/', tr:'Çin — Çinli'},
-    {id:'w12', en:'Japan — Japanese', ro:'/dʒəˈpæn — ˌdʒæpəˈniːz/', tr:'Japonya — Japon'},
-    {id:'w13', en:'Russia — Russian', ro:'/ˈrʌʃə — ˈrʌʃən/', tr:'Rusya — Rus'},
-    {id:'w14', en:'Brazil — Brazilian', ro:'/brəˈzɪl — brəˈzɪliən/', tr:'Brezilya — Brezilyalı'},
-    {id:'w15', en:'Australia — Australian', ro:'/ɒˈstreɪliə — ɒˈstreɪliən/', tr:'Avustralya — Avustralyalı'},
-    {id:'w16', en:'capital city', ro:'/ˈkæpɪtəl ˈsɪti/', tr:'başkent'},
-    {id:'w17', en:'population', ro:'/ˌpɒpjʊˈleɪʃən/', tr:'nüfus'},
-    {id:'w18', en:'continent', ro:'/ˈkɒntɪnənt/', tr:'kıta'},
-    {id:'w19', en:'abroad / overseas', ro:'/əˈbrɔːd / ˌoʊvərˈsiːz/', tr:'yurt dışında',
-     examples:[{en:'I have lived abroad for two years.', ro:'/aɪ hæv lɪvd əˈbrɔːd fər tuː jɪərz/', tr:'İki yıldır yurt dışında yaşıyorum.',
-       bd:[{ro:'I have lived',tr:'yaşıyorum',role:'verb'},{ro:'abroad',tr:'yurt dışında',role:'adverb'},{ro:'for two years',tr:'iki yıldır',role:'time'}]}]},
-    {id:'w20', en:'Where are you from?', ro:'/wɛr ɑːr juː frɒm/', tr:'Nerelisiniz?',
-     examples:[{en:"I'm from Ankara, in Turkey.", ro:'/aɪm frɒm ˈæŋkərə ɪn ˈtɜːrki/', tr:'Türkiye\'nin Ankara şehrindenim.',
-       bd:[{ro:"I'm from",tr:'...\'denim',role:'verb'},{ro:'Ankara',tr:'Ankara',role:'city'},{ro:'in Turkey',tr:'Türkiye\'de',role:'country'}]}]}
+    {id:'w1', en:'school', ro:'/skuːl/', tr:'okul'},
+    {id:'w2', en:'university / college', ro:'/ˌjuːnɪˈvɜːrsɪti / ˈkɒlɪdʒ/', tr:'üniversite'},
+    {id:'w3', en:'student', ro:'/ˈstjuːdənt/', tr:'öğrenci'},
+    {id:'w4', en:'teacher / professor', ro:'/ˈtiːtʃər / prəˈfɛsər/', tr:'öğretmen / profesör'},
+    {id:'w5', en:'class / lesson', ro:'/klɑːs / ˈlɛsən/', tr:'ders / sınıf'},
+    {id:'w6', en:'homework', ro:'/ˈhoʊmwɜːrk/', tr:'ev ödevi',
+     examples:[{en:'Have you done your homework?', ro:'/hæv juː dʌn jɔːr ˈhoʊmwɜːrk/', tr:'Ödevinizi yaptınız mı?',
+       bd:[{ro:'Have you done',tr:'Yaptınız mı',role:'question'},{ro:'your homework',tr:'ödevinizi',role:'noun'}]}]},
+    {id:'w7', en:'exam / test', ro:'/ɪɡˈzæm / tɛst/', tr:'sınav',
+     examples:[{en:'The exam is on Monday.', ro:'/ðə ɪɡˈzæm ɪz ɒn ˈmʌndeɪ/', tr:'Sınav Pazartesi.',
+       bd:[{ro:'The exam',tr:'Sınav',role:'noun'},{ro:'is on Monday',tr:'Pazartesi',role:'time'}]}]},
+    {id:'w8', en:'pass / fail', ro:'/pɑːs / feɪl/', tr:'geçmek / kalmak (sınav)'},
+    {id:'w9', en:'grade / mark', ro:'/ɡreɪd / mɑːrk/', tr:'not / puan'},
+    {id:'w10', en:'essay', ro:'/ˈɛseɪ/', tr:'deneme / makale'},
+    {id:'w11', en:'library', ro:'/ˈlaɪbrɛri/', tr:'kütüphane'},
+    {id:'w12', en:'degree', ro:'/dɪˈɡriː/', tr:'derece / diploma'},
+    {id:'w13', en:'subject', ro:'/ˈsʌbdʒɪkt/', tr:'ders / konu (akademik)'},
+    {id:'w14', en:'scholarship', ro:'/ˈskɒlərʃɪp/', tr:'burs'},
+    {id:'w15', en:'study', ro:'/ˈstʌdi/', tr:'çalışmak / okumak',
+     examples:[{en:'I study English every day.', ro:'/aɪ ˈstʌdi ˈɪŋɡlɪʃ ˈɛvri deɪ/', tr:'Her gün İngilizce çalışıyorum.',
+       bd:[{ro:'I study',tr:'Çalışıyorum',role:'verb'},{ro:'English',tr:'İngilizce',role:'noun'},{ro:'every day',tr:'her gün',role:'time'}]}]},
+    {id:'w16', en:'learn', ro:'/lɜːrn/', tr:'öğrenmek'},
+    {id:'w17', en:'understand', ro:'/ˌʌndərˈstænd/', tr:'anlamak'},
+    {id:'w18', en:'practise', ro:'/ˈpræktɪs/', tr:'pratik yapmak'},
+    {id:'w19', en:'fluent', ro:'/ˈfluːənt/', tr:'akıcı (dil)',
+     examples:[{en:'My goal is to become fluent in English.', ro:'/maɪ ɡoʊl ɪz tə bɪˈkʌm ˈfluːənt ɪn ˈɪŋɡlɪʃ/', tr:'Hedefim İngilizce\'de akıcı olmak.',
+       bd:[{ro:'My goal is',tr:'Hedefim',role:'noun'},{ro:'to become fluent',tr:'akıcı olmak',role:'verb'},{ro:'in English',tr:'İngilizce\'de',role:'noun'}]}]},
+    {id:'w20', en:'mistake', ro:'/mɪˈsteɪk/', tr:'hata',
+     examples:[{en:"Don't worry about making mistakes.", ro:"/doʊnt ˈwʌri əˈbaʊt ˈmeɪkɪŋ mɪˈsteɪks/", tr:'Hata yapmaktan endişelenme.',
+       bd:[{ro:"Don't worry",tr:'Endişelenme',role:'verb'},{ro:'about making mistakes',tr:'hata yapmak',role:'phrase'}]}]}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Milliyet Adjectives', title_en:'Nationality Adjectives',
-     explanation:'Milliyet sıfatları ülke adından türer; her zaman büyük harfle yazılır.',
+    {id:'g1', title:'Present Perfect — have/has + done', title_en:'Present Perfect',
+     explanation:'Present Perfect geçmişte olmuş ama şimdiye etkisi olan olayları anlatır.',
      table:[
-       {pronoun:'Kişi', form:'I am Turkish.', example:'She is French.', tr:'O Fransız.'},
-       {pronoun:'Dil', form:'I speak Turkish.', example:'He speaks German.', tr:'O Almanca konuşuyor.'},
-       {pronoun:'Köken', form:'I am from Turkey.', example:'They are from Italy.', tr:'Onlar İtalya\'dan.'},
-       {pronoun:'Soru', form:'Where are you from?', example:'What nationality are you?', tr:'Uyruğunuz ne?'}
+       {pronoun:'I/You/We/They', form:'have + past participle', example:'I have studied English for two years.', tr:'İki yıldır İngilizce çalışıyorum.'},
+       {pronoun:'He/She/It', form:'has + past participle', example:'She has passed the exam.', tr:'Sınavı geçti.'},
+       {pronoun:'Olumsuz', form:"haven't / hasn't", example:"I haven't done my homework.", tr:'Ödevimi yapmadım.'},
+       {pronoun:'Soru', form:'Have...? / Has...?', example:'Have you studied today?', tr:'Bugün çalıştın mı?'}
      ],
-     note:'Ülke: Turkey (büyük); milliyet sıfatı: Turkish (büyük, -ish/-an/-ese/-ian eklenir)'}
+     note:'Ever/never: "Have you ever been to London?" — hayatında hiç'}
   ],
 
   speaking: [
-    {id:'sp1', en:"I'm Turkish and I'm from Istanbul.", ro:'/aɪm ˈtɜːrkɪʃ ænd aɪm frɒm ˌɪstænˈbʊl/', tr:'Türküm ve İstanbul\'denim.',
-     tip:'Uyruk ve şehir.', prompt:'Uyruğunuzu ve şehrinizi söyleyin'},
-    {id:'sp2', en:'The capital of Turkey is Ankara, not Istanbul.', ro:'/ðə ˈkæpɪtəl əv ˈtɜːrki ɪz ˈæŋkərə nɒt ˌɪstænˈbʊl/', tr:'Türkiye\'nin başkenti Ankara, İstanbul değil.',
-     tip:'Coğrafi bilgi.', prompt:'Bir ülke hakkında bilgi verin'},
-    {id:'sp3', en:'I speak Turkish, English, and a little German.', ro:'/aɪ spiːk ˈtɜːrkɪʃ ˈɪŋɡlɪʃ ænd ə ˈlɪtəl ˈdʒɜːrmən/', tr:'Türkçe, İngilizce ve biraz Almanca konuşuyorum.',
-     tip:'Dil bilgisi anlatma.', prompt:'Konuştuğunuz dilleri söyleyin'}
+    {id:'sp1', en:'I study English at a language school three times a week.', ro:'/aɪ ˈstʌdi ˈɪŋɡlɪʃ æt ə ˈlæŋɡwɪdʒ skuːl θriː taɪmz ə wiːk/', tr:'Haftada üç kez dil okulunda İngilizce çalışıyorum.',
+     tip:'Eğitim bilgisi verme.', prompt:'Eğitiminizden bahsedin'},
+    {id:'sp2', en:'My favourite subject was history.', ro:'/maɪ ˈfeɪvərɪt ˈsʌbdʒɪkt wɒz ˈhɪstəri/', tr:'En sevdiğim ders tarihti.',
+     tip:'Favori ders anlatma.', prompt:'Favori dersinizi anlatın'},
+    {id:'sp3', en:"I've been learning English for six months and I've improved a lot.", ro:'/aɪv biːn ˈlɜːrnɪŋ ˈɪŋɡlɪʃ fər sɪks mʌnθs ænd aɪv ɪmˈpruːvd ə lɒt/', tr:'Altı aydır İngilizce öğreniyorum ve çok ilerleme kaydettim.',
+     tip:'İlerleme anlatma.', prompt:'İlerlemenizden bahsedin'}
   ],
 
   dialogues: [
-    {id:'d1', title:'Ülkeler Hakkında Konuşma', title_en:'Talking About Countries',
+    {id:'d1', title:'Dil Okulu Kaydı', title_en:'Enrolling in Language School',
      lines:[
-       {speaker:'A', gender:'m', en:"Excuse me, are you Japanese?", ro:'/ɪkˈskjuːz miː ɑːr juː ˌdʒæpəˈniːz/', tr:'Pardon, Japon musunuz?'},
-       {speaker:'B', gender:'f', en:"No, I'm Chinese. I'm from Beijing.", ro:'/noʊ aɪm tʃaɪˈniːz aɪm frɒm ˌbeɪˈdʒɪŋ/', tr:'Hayır, Çinliyim. Pekin\'denim.'},
-       {speaker:'A', gender:'m', en:"I see! My name is Ali. I'm from Turkey.", ro:'/aɪ siː maɪ neɪm ɪz æli aɪm frɒm ˈtɜːrki/', tr:'Anlıyorum! Benim adım Ali. Türkiye\'denim.'},
-       {speaker:'B', gender:'f', en:"Nice to meet you, Ali. I'm Wei. Have you ever been to China?", ro:'/naɪs tə miːt juː æli aɪm weɪ hæv juː ˈɛvər biːn tə ˈtʃaɪnə/', tr:'Tanıştığıma memnun oldum, Ali. Ben Wei. Hiç Çin\'e gittin mi?'},
-       {speaker:'A', gender:'m', en:"No, not yet. But it's on my list! Have you been to Turkey?", ro:'/noʊ nɒt jɛt bʌt ɪts ɒn maɪ lɪst hæv juː biːn tə ˈtɜːrki/', tr:'Hayır, henüz gitmedim. Ama listede var! Türkiye\'ye gittin mi hiç?'},
-       {speaker:'B', gender:'f', en:"Yes! I visited Istanbul last year. It was amazing!", ro:'/jɛs aɪ ˈvɪzɪtɪd ˌɪstænˈbʊl lɑːst jɪər ɪt wɒz əˈmeɪzɪŋ/', tr:'Evet! Geçen yıl İstanbul\'u ziyaret ettim. Harikaydı!'}
+       {speaker:'A', gender:'f', en:"Good morning! I'd like to enrol in an English course.", ro:'/ɡʊd ˈmɔːrnɪŋ aɪd laɪk tə ɪnˈroʊl ɪn ən ˈɪŋɡlɪʃ kɔːrs/', tr:'Günaydın! Bir İngilizce kursuna kaydolmak istiyorum.'},
+       {speaker:'B', gender:'m', en:"Welcome! What is your current level?", ro:'/ˈwɛlkəm wɒt ɪz jɔːr ˈkʌrənt ˈlɛvəl/', tr:'Hoş geldiniz! Mevcut seviyeniz nedir?'},
+       {speaker:'A', gender:'f', en:"I'm a beginner. I've only studied for a few weeks.", ro:'/aɪm ə bɪˈɡɪnər aɪv ˈoʊnli ˈstʌdid fər ə fjuː wiːks/', tr:'Yeni başlayandayım. Sadece birkaç haftadır çalışıyorum.'},
+       {speaker:'B', gender:'m', en:"We have a beginner's class on Monday, Wednesday, and Friday at six pm.", ro:'/wiː hæv ə bɪˈɡɪnərz klɑːs ɒn ˈmʌndeɪ ˈwɛnzdeɪ ænd ˈfraɪdeɪ æt sɪks piːɛm/', tr:'Pazartesi, Çarşamba ve Cuma saat 18:00\'de başlangıç sınıfımız var.'},
+       {speaker:'A', gender:'f', en:"That's perfect for me. How much is the course?", ro:'/ðæts ˈpɜːrfɪkt fər miː haʊ mʌtʃ ɪz ðə kɔːrs/', tr:'Bu benim için mükemmel. Kurs ne kadar?'},
+       {speaker:'B', gender:'m', en:"Two hundred pounds for ten weeks, including all materials.", ro:'/tuː ˈhʌndrəd paʊndz fər tɛn wiːks ɪnˈkluːdɪŋ ɔːl məˈtɪərɪəlz/', tr:'Tüm materyaller dahil, on hafta için iki yüz sterlin.'},
+       {speaker:'A', gender:'f', en:'I\'ll take it! Can I start next Monday?', ro:'/aɪl teɪk ɪt kæn aɪ stɑːrt nɛkst ˈmʌndeɪ/', tr:'Alıyorum! Gelecek Pazartesi başlayabilir miyim?'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"English is spoken as a first language in countries including the United Kingdom, the United States, Canada, Australia, and New Zealand. It is also used as an official language in over seventy countries worldwide, making it the most widely spoken language in the world.",
-     tr:'İngilizce; Birleşik Krallık, Amerika Birleşik Devletleri, Kanada, Avustralya ve Yeni Zelanda dahil birçok ülkede ana dil olarak konuşulmaktadır. Aynı zamanda dünya genelinde yetmişten fazla ülkede resmi dil olarak kullanılmakta olup dünyanın en yaygın dili haline gelmektedir.',
+    {id:'li1', audio:'', transcript:"To improve your English, you should practise every day. Reading, writing, listening, and speaking are all important skills. Try to watch films and TV series in English. Use subtitles at first, then try without them. Most importantly, do not be afraid of making mistakes.",
+     tr:'İngilizce\'nizi geliştirmek için her gün pratik yapmalısınız. Okuma, yazma, dinleme ve konuşma önemli becerilerdir. İngilizce film ve dizi izlemeyi deneyin. Önce altyazıyla, sonra altyazısız deneyin. En önemlisi, hata yapmaktan korkmayın.',
      questions:[
-       {q:'In which continent is Australia?', opts:['Asia','Africa','Oceania','South America'], answer:2, tr:'Avustralya hangi kıtadadır?'},
-       {q:'Approximately how many countries have English as an official language?', opts:['30','50','70','100'], answer:2, tr:'Yaklaşık kaç ülkede İngilizce resmi dil?'},
-       {q:'Which country is NOT mentioned?', opts:['Canada','New Zealand','South Africa','United States'], answer:2, tr:'Hangi ülke bahsedilmedi?'}
+       {q:'What should you do every day?', opts:['take a test','practise','write essays','take notes'], answer:1, tr:'Her gün ne yapmalısınız?'},
+       {q:'What is recommended for listening practice?', opts:['radio news','podcasts','films and TV','audiobooks'], answer:2, tr:'Dinleme pratiği için ne tavsiye ediliyor?'},
+       {q:'What should you NOT be afraid of?', opts:['speaking','exams','making mistakes','teachers'], answer:2, tr:'Neden korkmamak gerekiyor?'}
      ]}
   ]
 };

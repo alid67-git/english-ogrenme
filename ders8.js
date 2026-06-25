@@ -1,85 +1,84 @@
-// ders8.js — English Lesson 8: Hotel & Accommodation
+// ders8.js — English Lesson 8: Transport
 const L8 = {
   words: [
-    {id:'w1', en:'hotel', ro:'/hoʊˈtɛl/', tr:'otel'},
-    {id:'w2', en:'hostel', ro:'/ˈhɒstəl/', tr:'hostel / ucuz pansiyon'},
-    {id:'w3', en:'check in', ro:'/tʃɛk ɪn/', tr:'giriş yapmak (check-in)',
-     examples:[{en:'I would like to check in, please.', ro:'/aɪ wʊd laɪk tə tʃɛk ɪn pliːz/', tr:'Check-in yapmak istiyorum, lütfen.',
-       bd:[{ro:'I would like to',tr:'İstiyorum',role:'modal'},{ro:'check in',tr:'giriş yapmak',role:'verb'}]}]},
-    {id:'w4', en:'check out', ro:'/tʃɛk aʊt/', tr:'çıkış yapmak (check-out)'},
-    {id:'w5', en:'reservation / booking', ro:'/ˌrɛzərˈveɪʃən/', tr:'rezervasyon',
-     examples:[{en:'I have a reservation under the name Ali.', ro:'/aɪ hæv ə ˌrɛzərˈveɪʃən ˈʌndər ðə neɪm æli/', tr:'Ali adına rezervasyonum var.',
-       bd:[{ro:'I have a reservation',tr:'Rezervasyonum var',role:'noun'},{ro:'under the name',tr:'adına',role:'phrase'}]}]},
-    {id:'w6', en:'room', ro:'/ruːm/', tr:'oda'},
-    {id:'w7', en:'single room', ro:'/ˈsɪŋɡəl ruːm/', tr:'tek kişilik oda'},
-    {id:'w8', en:'double room', ro:'/ˈdʌbəl ruːm/', tr:'çift kişilik oda'},
-    {id:'w9', en:'twin room', ro:'/twɪn ruːm/', tr:'iki ayrı yataklı oda'},
-    {id:'w10', en:'floor / storey', ro:'/flɔːr/', tr:'kat'},
-    {id:'w11', en:'lift / elevator', ro:'/lɪft / ˈɛlɪveɪtər/', tr:'asansör'},
-    {id:'w12', en:'key', ro:'/kiː/', tr:'anahtar'},
-    {id:'w13', en:'key card', ro:'/kiː kɑːrd/', tr:'anahtar kartı'},
-    {id:'w14', en:'breakfast included', ro:'/ˈbrɛkfəst ɪnˈkluːdɪd/', tr:'kahvaltı dahil',
-     examples:[{en:'Is breakfast included?', ro:'/ɪz ˈbrɛkfəst ɪnˈkluːdɪd/', tr:'Kahvaltı dahil mi?',
-       bd:[{ro:'Is breakfast',tr:'Kahvaltı',role:'noun'},{ro:'included',tr:'dahil mi',role:'adjective'}]}]},
-    {id:'w15', en:'Wi-Fi', ro:'/ˈwaɪfaɪ/', tr:'Wi-Fi / kablosuz internet'},
-    {id:'w16', en:'air conditioning', ro:'/ɛr kənˈdɪʃənɪŋ/', tr:'klima'},
-    {id:'w17', en:'noisy / quiet', ro:'/ˈnɔɪzi / ˈkwaɪət/', tr:'gürültülü / sessiz'},
-    {id:'w18', en:'complaint', ro:'/kəmˈpleɪnt/', tr:'şikayet',
-     examples:[{en:'I have a complaint about the room.', ro:'/aɪ hæv ə kəmˈpleɪnt əˈbaʊt ðə ruːm/', tr:'Oda hakkında şikayetim var.',
-       bd:[{ro:'I have a complaint',tr:'Şikayetim var',role:'noun'},{ro:'about the room',tr:'oda hakkında',role:'phrase'}]}]},
-    {id:'w19', en:'towel', ro:'/ˈtaʊəl/', tr:'havlu'},
-    {id:'w20', en:'room service', ro:'/ruːm ˈsɜːrvɪs/', tr:'oda servisi'},
-    {id:'w21', en:'wake-up call', ro:'/weɪk ʌp kɔːl/', tr:'uyandırma servisi'},
-    {id:'w22', en:'per night', ro:'/pər naɪt/', tr:'gecelik',
-     examples:[{en:'How much is it per night?', ro:'/haʊ mʌtʃ ɪz ɪt pər naɪt/', tr:'Geceliği ne kadar?',
-       bd:[{ro:'How much',tr:'Ne kadar',role:'question'},{ro:'per night',tr:'geceliği',role:'time'}]}]}
+    {id:'w1', en:'bus', ro:'/bʌs/', tr:'otobüs',
+     examples:[{en:'Which bus goes to the airport?', ro:'/wɪtʃ bʌs ɡoʊz tə ðə ˈɛərpɔːrt/', tr:'Hangi otobüs havalimanına gidiyor?',
+       bd:[{ro:'Which bus',tr:'Hangi otobüs',role:'question'},{ro:'goes to',tr:'gidiyor',role:'verb'},{ro:'the airport',tr:'havalimanı',role:'noun'}]}]},
+    {id:'w2', en:'train', ro:'/treɪn/', tr:'tren'},
+    {id:'w3', en:'underground / subway / tube', ro:'/ˈʌndərɡraʊnd/', tr:'metro'},
+    {id:'w4', en:'taxi / cab', ro:'/ˈtæksi / kæb/', tr:'taksi'},
+    {id:'w5', en:'plane', ro:'/pleɪn/', tr:'uçak'},
+    {id:'w6', en:'ferry', ro:'/ˈfɛri/', tr:'feribot / vapur'},
+    {id:'w7', en:'ticket', ro:'/ˈtɪkɪt/', tr:'bilet',
+     examples:[{en:'A single ticket to London, please.', ro:'/ə ˈsɪŋɡəl ˈtɪkɪt tə ˈlʌndən pliːz/', tr:'Londra\'ya tek gidiş bilet, lütfen.',
+       bd:[{ro:'A single ticket',tr:'Tek gidiş bilet',role:'noun'},{ro:'to London',tr:'Londra\'ya',role:'destination'}]}]},
+    {id:'w8', en:'single / one-way', ro:'/ˈsɪŋɡəl / wʌn weɪ/', tr:'tek gidiş'},
+    {id:'w9', en:'return / round-trip', ro:'/rɪˈtɜːrn/', tr:'gidiş-dönüş'},
+    {id:'w10', en:'platform', ro:'/ˈplætfɔːrm/', tr:'peron'},
+    {id:'w11', en:'departure', ro:'/dɪˈpɑːrtʃər/', tr:'kalkış'},
+    {id:'w12', en:'arrival', ro:'/əˈraɪvəl/', tr:'varış'},
+    {id:'w13', en:'delay', ro:'/dɪˈleɪ/', tr:'gecikme',
+     examples:[{en:"The train is delayed by 20 minutes.", ro:'/ðə treɪn ɪz dɪˈleɪd baɪ ˈtwɛnti ˈmɪnɪts/', tr:'Tren 20 dakika gecikmeli.',
+       bd:[{ro:'The train is delayed',tr:'Tren gecikmeli',role:'verb'},{ro:'by 20 minutes',tr:'20 dakika',role:'time'}]}]},
+    {id:'w14', en:'on time', ro:'/ɒn taɪm/', tr:'zamanında'},
+    {id:'w15', en:'station', ro:'/ˈsteɪʃən/', tr:'istasyon'},
+    {id:'w16', en:'airport', ro:'/ˈɛərpɔːrt/', tr:'havalimanı'},
+    {id:'w17', en:'bus stop', ro:'/bʌs stɒp/', tr:'otobüs durağı'},
+    {id:'w18', en:'get on / get off', ro:'/ɡɛt ɒn / ɡɛt ɒf/', tr:'binmek / inmek',
+     examples:[{en:'Get off at the next stop.', ro:'/ɡɛt ɒf æt ðə nɛkst stɒp/', tr:'Bir sonraki durakta inin.',
+       bd:[{ro:'Get off',tr:'İnin',role:'verb'},{ro:'at the next stop',tr:'bir sonraki durağa',role:'location'}]}]},
+    {id:'w19', en:'change (trains)', ro:'/tʃeɪndʒ/', tr:'aktarma yapmak',
+     examples:[{en:'You need to change at Victoria.', ro:'/juː niːd tə tʃeɪndʒ æt vɪkˈtɔːrɪə/', tr:'Victoria\'da aktarma yapmanız gerekiyor.',
+       bd:[{ro:'You need to change',tr:'Aktarma yapmanız gerekiyor',role:'verb'},{ro:'at Victoria',tr:'Victoria\'da',role:'location'}]}]},
+    {id:'w20', en:'How long does it take?', ro:'/haʊ lɒŋ dəz ɪt teɪk/', tr:'Ne kadar sürer?',
+     examples:[{en:'How long does the journey take?', ro:'/haʊ lɒŋ dəz ðə ˈdʒɜːrni teɪk/', tr:'Yolculuk ne kadar sürer?',
+       bd:[{ro:'How long',tr:'Ne kadar',role:'question'},{ro:'does it take',tr:'sürer',role:'verb'}]}]}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Otelde Konuşma Kalıpları', title_en:'Hotel Phrases',
-     explanation:'Otelde check-in, istek ve şikayet için kalıplar.',
+    {id:'g1', title:'Ulaşım Sorguları', title_en:'Transport Questions',
+     explanation:'Ulaşım konusunda sık kullanılan soru kalıpları.',
      table:[
-       {pronoun:'Check-in', form:'I have a reservation...', example:'I have a reservation for two nights.', tr:'İki gecelik rezervasyonum var.'},
-       {pronoun:'İstek', form:'Could I have...?', example:'Could I have a quiet room?', tr:'Sessiz bir oda alabilir miyim?'},
-       {pronoun:'Sorun', form:"There's a problem with...", example:"There's a problem with the shower.", tr:'Duşta bir sorun var.'},
-       {pronoun:'Soru', form:'What time is...?', example:'What time is breakfast?', tr:'Kahvaltı saat kaçta?'}
+       {pronoun:'Gidiş', form:'How do I get to...?', example:'How do I get to Oxford?', tr:'Oxford\'a nasıl gidebilirim?'},
+       {pronoun:'Süre', form:'How long does it take?', example:'How long does it take by train?', tr:'Trenle ne kadar sürer?'},
+       {pronoun:'Sıklık', form:'How often does...run?', example:'How often does the bus run?', tr:'Otobüs ne sıklıkla çalışır?'},
+       {pronoun:'Ücret', form:'How much is a ticket?', example:'How much is a ticket to Bath?', tr:'Bath\'a bilet ne kadar?'}
      ],
-     note:'"Could I..." = "Can I..."\'den daha kibar bir istek biçimi'}
+     note:'"By bus/train/car/plane" — ulaşım araçlarından önce "by" kullanılır, "on foot" hariç'}
   ],
 
   speaking: [
-    {id:'sp1', en:"I'd like to check in. I have a reservation.", ro:'/aɪd laɪk tə tʃɛk ɪn aɪ hæv ə ˌrɛzərˈveɪʃən/', tr:'Check-in yapmak istiyorum. Rezervasyonum var.',
-     tip:'Otele giriş.', prompt:'Otele giriş yapın'},
-    {id:'sp2', en:'Could I have a non-smoking room on a high floor?', ro:'/kʊd aɪ hæv ə nɒn ˈsmoʊkɪŋ ruːm ɒn ə haɪ flɔːr/', tr:'Üst kattan sigara içilmeyen oda alabilir miyim?',
-     tip:'Oda tercihi.', prompt:'Oda tercihinizi belirtin'},
-    {id:'sp3', en:"There's no hot water in my room.", ro:'/ðɛrz noʊ hɒt ˈwɔːtər ɪn maɪ ruːm/', tr:'Odamda sıcak su yok.',
-     tip:'Sorun bildirme.', prompt:'Bir sorun bildirin'},
-    {id:'sp4', en:"I'd like to check out, please. Can I have the bill?", ro:'/aɪd laɪk tə tʃɛk aʊt pliːz kæn aɪ hæv ðə bɪl/', tr:'Check-out yapmak istiyorum, lütfen. Faturayı alabilir miyim?',
-     tip:'Otel çıkışı.', prompt:'Check-out yapın'}
+    {id:'sp1', en:'A return ticket to Edinburgh, please.', ro:'/ə rɪˈtɜːrn ˈtɪkɪt tə ˈɛdɪnbrə pliːz/', tr:'Edinburgh\'a gidiş-dönüş bilet, lütfen.',
+     tip:'Bilet satın alma.', prompt:'Bilet isteyin'},
+    {id:'sp2', en:'Which platform does the Manchester train leave from?', ro:'/wɪtʃ ˈplætfɔːrm dəz ðə ˈmæntʃɪstər treɪn liːv frɒm/', tr:'Manchester treni hangi perondan kalkıyor?',
+     tip:'Peron sormak.', prompt:'Peron sorun'},
+    {id:'sp3', en:'Is this the bus to the city centre?', ro:'/ɪz ðɪs ðə bʌs tə ðə ˈsɪti ˈsɛntər/', tr:'Bu otobüs şehir merkezine gidiyor mu?',
+     tip:'Doğru araç kontrolü.', prompt:'Doğru aracı kontrol edin'},
+    {id:'sp4', en:'Excuse me, do I need to change trains?', ro:'/ɪkˈskjuːz miː duː aɪ niːd tə tʃeɪndʒ treɪnz/', tr:'Pardon, aktarma yapmam gerekiyor mu?',
+     tip:'Aktarma sorma.', prompt:'Aktarma sorun'}
   ],
 
   dialogues: [
-    {id:'d1', title:'Otel Check-in', title_en:'Hotel Check-in',
+    {id:'d1', title:'Bilet Gişesinde', title_en:'At the Ticket Office',
      lines:[
-       {speaker:'A', gender:'f', en:'Good evening! Welcome. How can I help you?', ro:'/ɡʊd ˈiːvnɪŋ ˈwɛlkəm haʊ kæn aɪ hɛlp juː/', tr:'İyi akşamlar! Hoş geldiniz. Nasıl yardımcı olabilirim?'},
-       {speaker:'B', gender:'m', en:"I'd like to check in. I have a reservation. My name is Johnson.", ro:'/aɪd laɪk tə tʃɛk ɪn aɪ hæv ə ˌrɛzərˈveɪʃən maɪ neɪm ɪz ˈdʒɒnsən/', tr:'Check-in yapmak istiyorum. Rezervasyonum var. Adım Johnson.'},
-       {speaker:'A', gender:'f', en:'Yes, Mr Johnson. A double room for three nights. Is that correct?', ro:'/jɛs mɪstər ˈdʒɒnsən ə ˈdʌbəl ruːm fər θriː naɪts ɪz ðæt kəˈrɛkt/', tr:'Evet, Bay Johnson. Üç gecelik çift kişilik oda. Doğru mu?'},
-       {speaker:'B', gender:'m', en:'Yes, that is correct. Is breakfast included?', ro:'/jɛs ðæt ɪz kəˈrɛkt ɪz ˈbrɛkfəst ɪnˈkluːdɪd/', tr:'Evet, doğru. Kahvaltı dahil mi?'},
-       {speaker:'A', gender:'f', en:'Yes, breakfast is served from seven to ten. Here is your key card. Room two hundred and four, on the second floor.', ro:'/jɛs ˈbrɛkfəst ɪz sɜːrvd frɒm ˈsɛvən tə tɛn hɪr ɪz jɔːr kiː kɑːrd ruːm tuː ˈhʌndrəd ænd fɔːr ɒn ðə ˈsɛkənd flɔːr/', tr:'Evet, kahvaltı yediden ona kadar servis ediliyor. İşte anahtar kartınız. İkinci kattaki 204 numaralı oda.'},
-       {speaker:'B', gender:'m', en:'Thank you. Is there Wi-Fi in the rooms?', ro:'/θæŋk juː ɪz ðɛr ˈwaɪfaɪ ɪn ðə ruːmz/', tr:'Teşekkür ederim. Odalarda Wi-Fi var mı?'},
-       {speaker:'A', gender:'f', en:'Yes, free Wi-Fi throughout. The password is on the card. Enjoy your stay!', ro:'/jɛs friː ˈwaɪfaɪ θruːˈaʊt ðə ˈpæswɜːrd ɪz ɒn ðə kɑːrd ɪnˈdʒɔɪ jɔːr steɪ/', tr:'Evet, her yerde ücretsiz Wi-Fi. Şifre kartta. Konaklamanızın tadını çıkarın!'}
+       {speaker:'A', gender:'m', en:'Good morning! Can I help you?', ro:'/ɡʊd ˈmɔːrnɪŋ kæn aɪ hɛlp juː/', tr:'Günaydın! Yardımcı olabilir miyim?'},
+       {speaker:'B', gender:'f', en:"Yes, please. I'd like two return tickets to Cambridge.", ro:'/jɛs pliːz aɪd laɪk tuː rɪˈtɜːrn ˈtɪkɪts tə ˈkeɪmbrɪdʒ/', tr:'Evet, lütfen. Cambridge\'e iki gidiş-dönüş bilet istiyorum.'},
+       {speaker:'A', gender:'m', en:'When are you travelling?', ro:'/wɛn ɑːr juː ˈtrævəlɪŋ/', tr:'Ne zaman seyahat ediyorsunuz?'},
+       {speaker:'B', gender:'f', en:'This Saturday, returning Sunday evening.', ro:'/ðɪs ˈsætərdeɪ rɪˈtɜːrnɪŋ ˈsʌndeɪ ˈiːvnɪŋ/', tr:'Bu Cumartesi, Pazar akşamı dönüşlü.'},
+       {speaker:'A', gender:'m', en:"That'll be fifty-four pounds. Which platform? Platform six, departing at nine fifteen.", ro:'/ðætl biː ˈfɪfti fɔːr paʊndz wɪtʃ ˈplætfɔːrm ˈplætfɔːrm sɪks dɪˈpɑːrtɪŋ æt naɪn ˈfɪftiːn/', tr:'Elli dört sterlin olacak. Hangi peron? Altıncı peron, dokuz on beşte kalkıyor.'},
+       {speaker:'B', gender:'f', en:'Perfect. Here is my card.', ro:'/ˈpɜːrfɪkt hɪr ɪz maɪ kɑːrd/', tr:'Mükemmel. İşte kartım.'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"Welcome to the Grand Hotel. Check-in is from two pm and check-out is by eleven am. Breakfast is served in the restaurant on the ground floor from six thirty to ten thirty. Room service is available twenty-four hours.",
-     tr:'Grand Hotel\'e hoş geldiniz. Check-in saat 14:00\'den itibaren, check-out 11:00\'e kadar. Kahvaltı zemin kattaki restoranda 06:30-10:30 arası. Oda servisi 24 saat.',
+    {id:'li1', audio:'', transcript:"This is a platform announcement. The nine forty-five train to Bristol will depart from platform three. This train is running approximately ten minutes late. We apologise for any inconvenience.",
+     tr:'Platform duyurusu. Bristol\'a giden dokuz kırk beşlik tren üçüncü peronda hareket edecek. Bu tren yaklaşık on dakika gecikmeli. Rahatsızlık için özür dileriz.',
      questions:[
-       {q:'What time is check-in?', opts:['12pm','1pm','2pm','3pm'], answer:2, tr:'Check-in saat kaçta?'},
-       {q:'Where is breakfast served?', opts:['room service','rooftop','ground floor','second floor'], answer:2, tr:'Kahvaltı nerede servis ediliyor?'},
-       {q:'Is room service available at midnight?', opts:['yes','no','weekends only','on request'], answer:0, tr:'Oda servisi gece yarısı da var mı?'}
+       {q:'Where is the train going?', opts:['London','Manchester','Bristol','Oxford'], answer:2, tr:'Tren nereye gidiyor?'},
+       {q:'What platform?', opts:['1','2','3','4'], answer:2, tr:'Kaçıncı peron?'},
+       {q:'How late is it?', opts:['5 minutes','10 minutes','15 minutes','20 minutes'], answer:1, tr:'Ne kadar gecikmeli?'}
      ]}
   ]
 };

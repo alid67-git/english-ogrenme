@@ -1,95 +1,107 @@
-// ders4.js — English Lesson 4: Restaurant & Food
+// ders4.js — English Lesson 4: Time & Date
 const L4 = {
   words: [
-    {id:'w1', en:'A table for two, please.', ro:'/ə ˈteɪbəl fər tuː pliːz/', tr:'İki kişilik masa, lütfen.',
-     tip:'Restoranda masa istemek.', ctx:'Restorana girişte.',
-     examples:[{en:'Good evening. A table for two, please.', ro:'/ɡʊd ˈiːvnɪŋ ə ˈteɪbəl fər tuː pliːz/', tr:'İyi akşamlar. İki kişilik masa, lütfen.',
-       bd:[{ro:'A table for two',tr:'iki kişilik masa',role:'noun'},{ro:'please',tr:'lütfen',role:'courtesy'}]}]},
-    {id:'w2', en:'menu', ro:'/ˈmɛnjuː/', tr:'menü',
-     examples:[{en:'Can I see the menu, please?', ro:'/kæn aɪ siː ðə ˈmɛnjuː pliːz/', tr:'Menüyü görebilir miyim, lütfen?',
-       bd:[{ro:'Can I see',tr:'Görebilir miyim',role:'modal'},{ro:'the menu',tr:'menüyü',role:'noun'}]}]},
-    {id:'w3', en:'order', ro:'/ˈɔːrdər/', tr:'sipariş (vermek)',
-     examples:[{en:'Are you ready to order?', ro:'/ɑːr juː ˈrɛdi tə ˈɔːrdər/', tr:'Sipariş vermeye hazır mısınız?',
-       bd:[{ro:'Are you ready',tr:'Hazır mısınız',role:'question'},{ro:'to order',tr:'sipariş vermek',role:'verb'}]}]},
-    {id:'w4', en:"I'd like...", ro:'/aɪd laɪk/', tr:'...istiyorum / ...alabilir miyim',
-     tip:'Sipariş verirken nazik ifade.', ctx:'Restoran, kafe, dükkan.',
-     examples:[{en:"I'd like a coffee, please.", ro:'/aɪd laɪk ə ˈkɒfi pliːz/', tr:'Bir kahve istiyorum, lütfen.',
-       bd:[{ro:"I'd like",tr:'İstiyorum',role:'modal'},{ro:'a coffee',tr:'bir kahve',role:'noun'}]}]},
-    {id:'w5', en:'starter / appetizer', ro:'/ˈstɑːrtər / ˈæpɪtaɪzər/', tr:'başlangıç yemeği'},
-    {id:'w6', en:'main course', ro:'/meɪn kɔːrs/', tr:'ana yemek'},
-    {id:'w7', en:'dessert', ro:'/dɪˈzɜːrt/', tr:'tatlı'},
-    {id:'w8', en:'drink', ro:'/drɪŋk/', tr:'içecek'},
-    {id:'w9', en:'water', ro:'/ˈwɔːtər/', tr:'su'},
-    {id:'w10', en:'coffee', ro:'/ˈkɒfi/', tr:'kahve'},
-    {id:'w11', en:'tea', ro:'/tiː/', tr:'çay'},
-    {id:'w12', en:'juice', ro:'/dʒuːs/', tr:'meyve suyu'},
-    {id:'w13', en:'bread', ro:'/brɛd/', tr:'ekmek'},
-    {id:'w14', en:'soup', ro:'/suːp/', tr:'çorba'},
-    {id:'w15', en:'salad', ro:'/ˈsæləd/', tr:'salata'},
-    {id:'w16', en:'chicken', ro:'/ˈtʃɪkɪn/', tr:'tavuk'},
-    {id:'w17', en:'beef', ro:'/biːf/', tr:'sığır eti'},
-    {id:'w18', en:'fish', ro:'/fɪʃ/', tr:'balık'},
-    {id:'w19', en:'vegetarian', ro:'/ˌvɛdʒɪˈtɛərɪən/', tr:'vejetaryen',
-     examples:[{en:'Do you have vegetarian options?', ro:'/duː juː hæv ˌvɛdʒɪˈtɛərɪən ˈɒpʃənz/', tr:'Vejetaryen seçeneğiniz var mı?',
-       bd:[{ro:'Do you have',tr:'Var mı',role:'question'},{ro:'vegetarian options',tr:'vejetaryen seçenek',role:'noun'}]}]},
-    {id:'w20', en:'delicious', ro:'/dɪˈlɪʃəs/', tr:'lezzetli / nefis'},
-    {id:'w21', en:'bill', ro:'/bɪl/', tr:'hesap'},
-    {id:'w22', en:'tip', ro:'/tɪp/', tr:'bahşiş'},
-    {id:'w23', en:'reservation', ro:'/ˌrɛzərˈveɪʃən/', tr:'rezervasyon',
-     examples:[{en:'I have a reservation for two.', ro:'/aɪ hæv ə ˌrɛzərˈveɪʃən fər tuː/', tr:'İki kişilik rezervasyonum var.',
-       bd:[{ro:'I have',tr:'var',role:'verb'},{ro:'a reservation',tr:'rezervasyon',role:'noun'},{ro:'for two',tr:'iki kişilik',role:'quantity'}]}]},
-    {id:'w24', en:'allergic', ro:'/əˈlɜːrdʒɪk/', tr:'alerjik',
-     examples:[{en:'I am allergic to nuts.', ro:'/aɪ æm əˈlɜːrdʒɪk tə nʌts/', tr:'Kuruyemişe alerjim var.',
-       bd:[{ro:'I am allergic',tr:'Alerjim var',role:'adjective'},{ro:'to nuts',tr:'kuruyemişe',role:'noun'}]}]},
-    {id:'w25', en:'enjoy your meal', ro:'/ɪnˈdʒɔɪ jɔːr miːl/', tr:'Afiyet olsun'}
+    {id:'w1', en:'What time is it?', ro:'/wɒt taɪm ɪz ɪt/', tr:'Saat kaç?',
+     tip:'Saat sormak için.', ctx:'Günlük konuşma.',
+     examples:[{en:'Excuse me, what time is it?', ro:'/ɪkˈskjuːz miː wɒt taɪm ɪz ɪt/', tr:'Pardon, saat kaç?',
+       bd:[{ro:'Excuse me',tr:'Pardon',role:'courtesy'},{ro:'what time is it',tr:'saat kaç',role:'question'}]}]},
+    {id:'w2', en:"It's three o'clock.", ro:'/ɪts θriː əˈklɒk/', tr:'Saat üç.',
+     examples:[{en:"It's three o'clock in the afternoon.", ro:'/ɪts θriː əˈklɒk ɪn ðə ˌæftəˈnuːn/', tr:'Öğleden sonra saat üç.',
+       bd:[{ro:"It's three o'clock",tr:'Saat üç',role:'time'},{ro:'in the afternoon',tr:'öğleden sonra',role:'time'}]}]},
+    {id:'w3', en:'morning', ro:'/ˈmɔːrnɪŋ/', tr:'sabah'},
+    {id:'w4', en:'afternoon', ro:'/ˌæftərˈnuːn/', tr:'öğleden sonra'},
+    {id:'w5', en:'evening', ro:'/ˈiːvnɪŋ/', tr:'akşam'},
+    {id:'w6', en:'night', ro:'/naɪt/', tr:'gece'},
+    {id:'w7', en:'today', ro:'/təˈdeɪ/', tr:'bugün',
+     examples:[{en:'What day is today?', ro:'/wɒt deɪ ɪz təˈdeɪ/', tr:'Bugün hangi gün?',
+       bd:[{ro:'What day',tr:'Hangi gün',role:'question'},{ro:'is today',tr:'bugün',role:'verb'}]}]},
+    {id:'w8', en:'tomorrow', ro:'/təˈmɒroʊ/', tr:'yarın'},
+    {id:'w9', en:'yesterday', ro:'/ˈjɛstərdeɪ/', tr:'dün'},
+    {id:'w10', en:'Monday', ro:'/ˈmʌndeɪ/', tr:'Pazartesi'},
+    {id:'w11', en:'Tuesday', ro:'/ˈtjuːzdeɪ/', tr:'Salı'},
+    {id:'w12', en:'Wednesday', ro:'/ˈwɛnzdeɪ/', tr:'Çarşamba'},
+    {id:'w13', en:'Thursday', ro:'/ˈθɜːrzdeɪ/', tr:'Perşembe'},
+    {id:'w14', en:'Friday', ro:'/ˈfraɪdeɪ/', tr:'Cuma'},
+    {id:'w15', en:'Saturday', ro:'/ˈsætərdeɪ/', tr:'Cumartesi'},
+    {id:'w16', en:'Sunday', ro:'/ˈsʌndeɪ/', tr:'Pazar'},
+    {id:'w17', en:'January', ro:'/ˈdʒænjuɛri/', tr:'Ocak'},
+    {id:'w18', en:'February', ro:'/ˈfɛbruɛri/', tr:'Şubat'},
+    {id:'w19', en:'March', ro:'/mɑːrtʃ/', tr:'Mart'},
+    {id:'w20', en:'April', ro:'/ˈeɪprəl/', tr:'Nisan'},
+    {id:'w21', en:'May', ro:'/meɪ/', tr:'Mayıs'},
+    {id:'w22', en:'June', ro:'/dʒuːn/', tr:'Haziran'},
+    {id:'w23', en:'July', ro:'/dʒʊˈlaɪ/', tr:'Temmuz'},
+    {id:'w24', en:'August', ro:'/ˈɔːɡəst/', tr:'Ağustos'},
+    {id:'w25', en:'September', ro:'/sɛpˈtɛmbər/', tr:'Eylül'},
+    {id:'w26', en:'October', ro:'/ɒkˈtoʊbər/', tr:'Ekim'},
+    {id:'w27', en:'November', ro:'/noʊˈvɛmbər/', tr:'Kasım'},
+    {id:'w28', en:'December', ro:'/dɪˈsɛmbər/', tr:'Aralık'},
+    {id:'w29', en:'year', ro:'/jɪər/', tr:'yıl'},
+    {id:'w30', en:'month', ro:'/mʌnθ/', tr:'ay'},
+    {id:'w31', en:'week', ro:'/wiːk/', tr:'hafta'},
+    {id:'w32', en:'day', ro:'/deɪ/', tr:'gün'},
+    {id:'w33', en:'hour', ro:'/aʊər/', tr:'saat (birim)'},
+    {id:'w34', en:'minute', ro:'/ˈmɪnɪt/', tr:'dakika'},
+    {id:'w35', en:'now', ro:'/naʊ/', tr:'şimdi'},
+    {id:'w36', en:'later', ro:'/ˈleɪtər/', tr:'sonra'},
+    {id:'w37', en:'early', ro:'/ˈɜːrli/', tr:'erken'},
+    {id:'w38', en:'late', ro:'/leɪt/', tr:'geç',
+     examples:[{en:'Sorry, I am late.', ro:'/ˈsɒri aɪ æm leɪt/', tr:'Özür dilerim, geç kaldım.',
+       bd:[{ro:'Sorry',tr:'Özür dilerim',role:'courtesy'},{ro:'I am late',tr:'geç kaldım',role:'verb'}]}]}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Sipariş Verme Kalıpları', title_en:'Ordering Phrases',
-     explanation:'Restoranda sipariş verirken kullanılan nazik kalıplar.',
+    {id:'g1', title:'Saat İfade Etme', title_en:'Telling the Time',
+     explanation:'İngilizce\'de saat ifade etmenin iki yolu vardır.',
      table:[
-       {pronoun:'Nazik istek', form:"I'd like / I'll have", example:"I'd like the soup.", tr:'Çorba istiyorum.'},
-       {pronoun:'Soru', form:'Can I have...?', example:'Can I have the menu?', tr:'Menüyü alabilir miyim?'},
-       {pronoun:'Seçim', form:"I'll take...", example:"I'll take the fish.", tr:'Balığı alıyorum.'},
-       {pronoun:'Tavsiye', form:'What do you recommend?', example:'What do you recommend?', tr:'Ne tavsiye edersiniz?'}
+       {pronoun:'Tam saat', form:"o'clock", example:"It's five o'clock.", tr:'Saat beş.'},
+       {pronoun:'Geçiyor', form:'past', example:"It's ten past three.", tr:'Üçü on geçiyor.'},
+       {pronoun:'Var', form:'to', example:"It's ten to four.", tr:'Dörde on var.'},
+       {pronoun:'Buçuk', form:'half past', example:"It's half past two.", tr:'İki buçuk.'},
+       {pronoun:'Çeyrek', form:'quarter', example:"It's quarter past one.", tr:'Biri çeyrek geçiyor.'}
      ],
-     note:'"Would you like..." = Arz etmek; "I would like..." = İstemek'}
+     note:'AM = gece yarısından öğlene; PM = öğleden gece yarısına'},
+    {id:'g2', title:'Tarih Söyleme', title_en:'Saying Dates',
+     explanation:'Amerikan İngilizcesi: month/day/year. İngiliz İngilizcesi: day/month/year.',
+     table:[
+       {pronoun:'ABD', form:'Month Day, Year', example:'June 25, 2026', tr:'25 Haziran 2026'},
+       {pronoun:'İngiltere', form:'Day Month Year', example:'25 June 2026', tr:'25 Haziran 2026'},
+       {pronoun:'Soru', form:'What date?', example:'What is the date today?', tr:'Bugün tarihi ne?'}
+     ],
+     note:'Günler sıra sayısı olarak okunur: 1st, 2nd, 3rd, 4th...'}
   ],
 
   speaking: [
-    {id:'sp1', en:'A table for three, please.', ro:'/ə ˈteɪbəl fər θriː pliːz/', tr:'Üç kişilik masa, lütfen.',
-     tip:'Masa isteme.', prompt:'Masa isteyin'},
-    {id:'sp2', en:"I'd like the chicken soup, please.", ro:'/aɪd laɪk ðə ˈtʃɪkɪn suːp pliːz/', tr:'Tavuk çorbası istiyorum, lütfen.',
-     tip:'Yemek sipariş etme.', prompt:'Yemek sipariş edin'},
-    {id:'sp3', en:'Can I have the bill, please?', ro:'/kæn aɪ hæv ðə bɪl pliːz/', tr:'Hesabı alabilir miyim, lütfen?',
-     tip:'Hesap isteme.', prompt:'Hesap isteyin'},
-    {id:'sp4', en:'This is delicious! Compliments to the chef.', ro:'/ðɪs ɪz dɪˈlɪʃəs ˈkɒmplɪmənts tə ðə ʃɛf/', tr:'Bu çok lezzetli! Aşçıya saygılar.',
-     tip:'Yemeği övme.', prompt:'Yemeği övün'}
+    {id:'sp1', en:'What time is it, please?', ro:'/wɒt taɪm ɪz ɪt pliːz/', tr:'Saat kaç, lütfen?',
+     tip:'Saat sorma.', prompt:'Saat sorun'},
+    {id:'sp2', en:"It's half past seven in the morning.", ro:'/ɪts hɑːf pɑːst ˈsɛvən ɪn ðə ˈmɔːrnɪŋ/', tr:'Sabah yedi buçuk.',
+     tip:'Saat ifade etme.', prompt:'Saat söyleyin'},
+    {id:'sp3', en:'What day is it today?', ro:'/wɒt deɪ ɪz ɪt təˈdeɪ/', tr:'Bugün ne günü?',
+     tip:'Gün sorma.', prompt:'Günü sorun'},
+    {id:'sp4', en:'My birthday is on the fifteenth of March.', ro:'/maɪ ˈbɜːrθdeɪ ɪz ɒn ðə ˈfɪftiːnθ əv mɑːrtʃ/', tr:'Doğum günüm 15 Mart\'ta.',
+     tip:'Tarih ifade etme.', prompt:'Tarih söyleyin'}
   ],
 
   dialogues: [
-    {id:'d1', title:'Restoran Konuşması', title_en:'At the Restaurant',
+    {id:'d1', title:'Saat Sorma', title_en:'Asking for the Time',
      lines:[
-       {speaker:'A', gender:'f', en:'Good evening! Do you have a reservation?', ro:'/ɡʊd ˈiːvnɪŋ duː juː hæv ə ˌrɛzərˈveɪʃən/', tr:'İyi akşamlar! Rezervasyonunuz var mı?'},
-       {speaker:'B', gender:'m', en:'Yes, I have a reservation for two. The name is Smith.', ro:'/jɛs aɪ hæv ə ˌrɛzərˈveɪʃən fər tuː ðə neɪm ɪz smɪθ/', tr:'Evet, iki kişilik rezervasyonum var. İsim Smith.'},
-       {speaker:'A', gender:'f', en:'Of course. Please follow me. Here is your table.', ro:'/əv kɔːrs pliːz ˈfɒloʊ miː hɪər ɪz jɔːr ˈteɪbəl/', tr:'Tabii ki. Lütfen beni takip edin. İşte masanız.'},
-       {speaker:'B', gender:'m', en:'Thank you. Can I see the menu?', ro:'/θæŋk juː kæn aɪ siː ðə ˈmɛnjuː/', tr:'Teşekkür ederim. Menüyü görebilir miyim?'},
-       {speaker:'A', gender:'f', en:'Of course! What would you like to drink?', ro:'/əv kɔːrs wɒt wʊd juː laɪk tə drɪŋk/', tr:'Tabii! Ne içmek istersiniz?'},
-       {speaker:'B', gender:'m', en:"I'd like water and a coffee, please.", ro:'/aɪd laɪk ˈwɔːtər ænd ə ˈkɒfi pliːz/', tr:'Su ve kahve istiyorum, lütfen.'},
-       {speaker:'A', gender:'f', en:'Are you ready to order?', ro:'/ɑːr juː ˈrɛdi tə ˈɔːrdər/', tr:'Sipariş vermeye hazır mısınız?'},
-       {speaker:'B', gender:'m', en:"Yes. I'd like the chicken and salad, please.", ro:'/jɛs aɪd laɪk ðə ˈtʃɪkɪn ænd ˈsæləd pliːz/', tr:'Evet. Tavuk ve salata istiyorum, lütfen.'}
+       {speaker:'A', gender:'m', en:'Excuse me! Do you have the time?', ro:'/ɪkˈskjuːz miː duː juː hæv ðə taɪm/', tr:'Pardon! Saatiniz var mı?'},
+       {speaker:'B', gender:'f', en:"Yes, it's quarter past two.", ro:'/jɛs ɪts ˈkwɔːrtər pɑːst tuː/', tr:'Evet, ikiyi çeyrek geçiyor.'},
+       {speaker:'A', gender:'m', en:'Thank you! Am I late for the meeting?', ro:'/θæŋk juː æm aɪ leɪt fər ðə ˈmiːtɪŋ/', tr:'Teşekkür ederim! Toplantıya geç mi kaldım?'},
+       {speaker:'B', gender:'f', en:'The meeting is at three. You have forty-five minutes.', ro:'/ðə ˈmiːtɪŋ ɪz æt θriː juː hæv ˈfɔːrti faɪv ˈmɪnɪts/', tr:'Toplantı saat üçte. Kırk beş dakikan var.'},
+       {speaker:'A', gender:'m', en:"Great, I'm not late. Thank you!", ro:'/ɡreɪt aɪm nɒt leɪt θæŋk juː/', tr:'Harika, geç kalmadım. Teşekkürler!'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"Today's specials are grilled salmon with vegetables for fourteen pounds, and a vegetarian pasta for ten pounds. Dessert is chocolate cake for five pounds.",
-     tr:'Bugünün özel yemekleri: sebzeli ızgara somon on dört sterlin, vejetaryen makarna on sterlin. Tatlı: çikolatalı kek beş sterlin.',
+    {id:'li1', audio:'', transcript:"The train to London departs at nine forty-five. That's platform three. Next departure is Monday, the twenty-second of June.",
+     tr:'Londra treni dokuz kırk beşte kalkıyor. Platform üç. Bir sonraki sefer 22 Haziran Pazartesi.',
      questions:[
-       {q:'How much is the salmon?', opts:['£10','£12','£14','£16'], answer:2, tr:'Somon ne kadar?'},
-       {q:'What vegetarian option is available?', opts:['soup','salad','pasta','pizza'], answer:2, tr:'Hangi vejetaryen seçenek var?'},
-       {q:'What is the dessert?', opts:['ice cream','cheesecake','apple pie','chocolate cake'], answer:3, tr:'Tatlı ne?'}
+       {q:'What time does the train depart?', opts:['9:15','9:45','10:45','9:05'], answer:1, tr:'Tren saat kaçta kalkıyor?'},
+       {q:'Which platform?', opts:['1','2','3','4'], answer:2, tr:'Kaçıncı platform?'},
+       {q:'What day is the next departure?', opts:['Sunday','Saturday','Tuesday','Monday'], answer:3, tr:'Sonraki sefer hangi gün?'}
      ]}
   ]
 };

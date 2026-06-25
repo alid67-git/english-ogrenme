@@ -1,84 +1,82 @@
-// ders11.js — English Lesson 11: Phone & Communication
+// ders11.js — English Lesson 11: Health
 const L11 = {
   words: [
-    {id:'w1', en:'phone / mobile', ro:'/foʊn / ˈmoʊbaɪl/', tr:'telefon / cep telefonu'},
-    {id:'w2', en:'call', ro:'/kɔːl/', tr:'aramak / çağrı',
-     examples:[{en:'Can I call you later?', ro:'/kæn aɪ kɔːl juː ˈleɪtər/', tr:'Sizi daha sonra arayabilir miyim?',
-       bd:[{ro:'Can I call',tr:'Arayabilir miyim',role:'modal'},{ro:'you later',tr:'sizi daha sonra',role:'time'}]}]},
-    {id:'w3', en:'text / message', ro:'/tɛkst / ˈmɛsɪdʒ/', tr:'mesaj atmak / mesaj',
-     examples:[{en:'I will send you a text message.', ro:'/aɪ wɪl sɛnd juː ə tɛkst ˈmɛsɪdʒ/', tr:'Size bir mesaj göndereceğim.',
-       bd:[{ro:'I will send',tr:'Göndereceğim',role:'verb'},{ro:'you a text message',tr:'size mesaj',role:'object'}]}]},
-    {id:'w4', en:'Hello? Is that...?', ro:'/həˈloʊ ɪz ðæt/', tr:'Alo? ...mısınız?',
-     tip:'Telefonu açarken.', ctx:'Telefon konuşması başlangıcı.'},
-    {id:'w5', en:'Speaking.', ro:'/ˈspiːkɪŋ/', tr:'Benim. / Evet, o benim.',
-     tip:'Telefonda kendinizi onaylamak için.',
-     examples:[{en:'Can I speak to Ali? — Speaking.', ro:'/kæn aɪ spiːk tə æli ˈspiːkɪŋ/', tr:'Ali\'yle görüşebilir miyim? — Benim.',
-       bd:[{ro:'Can I speak to',tr:'Görüşebilir miyim',role:'modal'},{ro:'Speaking',tr:'Benim',role:'response'}]}]},
-    {id:'w6', en:'Hold on / One moment', ro:'/hoʊld ɒn / wʌn ˈmoʊmənt/', tr:'Bir saniye / Bir dakika'},
-    {id:'w7', en:'I will put you through.', ro:'/aɪ wɪl pʊt juː θruː/', tr:'Sizi bağlıyorum.',
-     examples:[{en:'Please hold on. I will put you through to the manager.', ro:'/pliːz hoʊld ɒn aɪ wɪl pʊt juː θruː tə ðə ˈmænɪdʒər/', tr:'Lütfen bekleyin. Sizi müdüre bağlıyorum.',
-       bd:[{ro:'Hold on',tr:'Bekleyin',role:'verb'},{ro:'I will put you through',tr:'Bağlıyorum',role:'verb'},{ro:'to the manager',tr:'müdüre',role:'noun'}]}]},
-    {id:'w8', en:'leave a message', ro:'/liːv ə ˈmɛsɪdʒ/', tr:'mesaj bırakmak',
-     examples:[{en:'Can I leave a message?', ro:'/kæn aɪ liːv ə ˈmɛsɪdʒ/', tr:'Mesaj bırakabilir miyim?',
-       bd:[{ro:'Can I leave',tr:'Bırakabilir miyim',role:'modal'},{ro:'a message',tr:'mesaj',role:'noun'}]}]},
-    {id:'w9', en:'voicemail', ro:'/ˈvɔɪsmeɪl/', tr:'sesli mesaj'},
-    {id:'w10', en:'busy', ro:'/ˈbɪzi/', tr:'meşgul (hat)'},
-    {id:'w11', en:'signal', ro:'/ˈsɪɡnəl/', tr:'sinyal / çekim'},
-    {id:'w12', en:"I can't hear you.", ro:'/aɪ kɑːnt hɪər juː/', tr:'Sizi duyamıyorum.'},
-    {id:'w13', en:'Could you repeat that?', ro:'/kʊd juː rɪˈpiːt ðæt/', tr:'Tekrar edebilir misiniz?'},
-    {id:'w14', en:'Sorry, wrong number.', ro:'/ˈsɒri rɒŋ ˈnʌmbər/', tr:'Özür dilerim, yanlış numara.',
-     examples:[{en:"Sorry, I think you have the wrong number.", ro:'/ˈsɒri aɪ θɪŋk juː hæv ðə rɒŋ ˈnʌmbər/', tr:'Özür dilerim, sanırım yanlış numarayı çevirdiniz.',
-       bd:[{ro:'Sorry',tr:'Özür dilerim',role:'courtesy'},{ro:'wrong number',tr:'yanlış numara',role:'noun'}]}]},
-    {id:'w15', en:'missed call', ro:'/mɪst kɔːl/', tr:'cevapsız çağrı'},
-    {id:'w16', en:'call back', ro:'/kɔːl bæk/', tr:'geri aramak'},
-    {id:'w17', en:'internet / Wi-Fi', ro:'/ˈɪntərˌnɛt / ˈwaɪfaɪ/', tr:'internet / Wi-Fi'},
-    {id:'w18', en:'social media', ro:'/ˈsoʊʃəl ˈmiːdiə/', tr:'sosyal medya'},
-    {id:'w19', en:'video call', ro:'/ˈvɪdiˌoʊ kɔːl/', tr:'görüntülü arama'},
-    {id:'w20', en:'password', ro:'/ˈpæswɜːrd/', tr:'şifre / parola'}
+    {id:'w1', en:'doctor', ro:'/ˈdɒktər/', tr:'doktor'},
+    {id:'w2', en:'hospital', ro:'/ˈhɒspɪtəl/', tr:'hastane'},
+    {id:'w3', en:'pharmacy / chemist', ro:'/ˈfɑːrməsi/', tr:'eczane'},
+    {id:'w4', en:"I don't feel well.", ro:'/aɪ doʊnt fiːl wɛl/', tr:'İyi hissetmiyorum.',
+     tip:'Hastalandığınızda.', ctx:'Doktora veya birine söylemek için.',
+     examples:[{en:"I don't feel well. I have a headache.", ro:'/aɪ doʊnt fiːl wɛl aɪ hæv ə ˈhɛdeɪk/', tr:'İyi hissetmiyorum. Baş ağrım var.',
+       bd:[{ro:"I don't feel well",tr:'İyi hissetmiyorum',role:'verb'},{ro:'I have a headache',tr:'Baş ağrım var',role:'symptom'}]}]},
+    {id:'w5', en:'headache', ro:'/ˈhɛdeɪk/', tr:'baş ağrısı'},
+    {id:'w6', en:'stomachache', ro:'/ˈstʌməkeɪk/', tr:'mide ağrısı'},
+    {id:'w7', en:'fever', ro:'/ˈfiːvər/', tr:'ateş'},
+    {id:'w8', en:'cold', ro:'/koʊld/', tr:'soğuk algınlığı',
+     examples:[{en:'I have a cold.', ro:'/aɪ hæv ə koʊld/', tr:'Soğuk algınlığım var.',
+       bd:[{ro:'I have',tr:'var',role:'verb'},{ro:'a cold',tr:'soğuk algınlığı',role:'noun'}]}]},
+    {id:'w9', en:'cough', ro:'/kɒf/', tr:'öksürük'},
+    {id:'w10', en:'sore throat', ro:'/sɔːr θroʊt/', tr:'boğaz ağrısı'},
+    {id:'w11', en:'pain', ro:'/peɪn/', tr:'ağrı / acı'},
+    {id:'w12', en:'medicine / medication', ro:'/ˈmɛdɪsɪn/', tr:'ilaç'},
+    {id:'w13', en:'prescription', ro:'/prɪˈskrɪpʃən/', tr:'reçete'},
+    {id:'w14', en:'allergy', ro:'/ˈælərdʒi/', tr:'alerji'},
+    {id:'w15', en:'appointment', ro:'/əˈpɔɪntmənt/', tr:'randevu',
+     examples:[{en:"I'd like to make an appointment with the doctor.", ro:'/aɪd laɪk tə meɪk ən əˈpɔɪntmənt wɪð ðə ˈdɒktər/', tr:'Doktorla randevu almak istiyorum.',
+       bd:[{ro:"I'd like to make",tr:'Almak istiyorum',role:'modal'},{ro:'an appointment',tr:'randevu',role:'noun'},{ro:'with the doctor',tr:'doktorla',role:'phrase'}]}]},
+    {id:'w16', en:'emergency', ro:'/ɪˈmɜːrdʒənsi/', tr:'acil durum'},
+    {id:'w17', en:'ambulance', ro:'/ˈæmbjʊləns/', tr:'ambulans'},
+    {id:'w18', en:'hurt', ro:'/hɜːrt/', tr:'acıyor / ağrıyor',
+     examples:[{en:'My leg hurts.', ro:'/maɪ lɛɡ hɜːrts/', tr:'Bacağım ağrıyor.',
+       bd:[{ro:'My leg',tr:'Bacağım',role:'subject'},{ro:'hurts',tr:'ağrıyor',role:'verb'}]}]},
+    {id:'w19', en:'broken', ro:'/ˈbroʊkən/', tr:'kırık',
+     examples:[{en:'I think my arm is broken.', ro:'/aɪ θɪŋk maɪ ɑːrm ɪz ˈbroʊkən/', tr:'Sanırım kolum kırık.',
+       bd:[{ro:'I think',tr:'Sanırım',role:'phrase'},{ro:'my arm is broken',tr:'kolum kırık',role:'adjective'}]}]},
+    {id:'w20', en:'blood pressure', ro:'/blʌd ˈprɛʃər/', tr:'tansiyon / kan basıncı'}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Telefon Kalıpları', title_en:'Phone Expressions',
-     explanation:'Telefon konuşmalarında kullanılan standart ifadeler.',
+    {id:'g1', title:'Şikayet Bildirme', title_en:'Describing Symptoms',
+     explanation:'Sağlık şikayetleri için farklı kalıplar.',
      table:[
-       {pronoun:'Açış', form:'Hello, [name] speaking.', example:'Hello, Ali speaking.', tr:'Alo, Ali konuşuyor.'},
-       {pronoun:'Bağlanma', form:'Could I speak to...?', example:'Could I speak to the manager?', tr:'Müdürle görüşebilir miyim?'},
-       {pronoun:'Bekleme', form:'Hold on / Just a moment', example:'Just a moment, please.', tr:'Bir dakika, lütfen.'},
-       {pronoun:'Mesaj', form:'Can I take a message?', example:'Can I take a message?', tr:'Mesaj alabilir miyim?'}
+       {pronoun:'have', form:'I have + noun', example:'I have a fever.', tr:'Ateşim var.'},
+       {pronoun:'feel', form:'I feel + adjective', example:'I feel dizzy.', tr:'Başım dönüyor.'},
+       {pronoun:'hurts', form:'My [part] hurts', example:'My back hurts.', tr:'Sırtım ağrıyor.'},
+       {pronoun:'since', form:'since / for', example:"I've had a cough for three days.", tr:'Üç gündür öksürüğüm var.'}
      ],
-     note:'Resmi telefon: "Good morning, [Company], how may I help you?"'}
+     note:'"for" = süre (for three days); "since" = başlangıç noktası (since Monday)'}
   ],
 
   speaking: [
-    {id:'sp1', en:'Hello, this is Ali. Could I speak to Sarah, please?', ro:'/həˈloʊ ðɪs ɪz æli kʊd aɪ spiːk tə ˈsɛrə pliːz/', tr:'Alo, ben Ali. Sarah\'yla görüşebilir miyim, lütfen?',
-     tip:'Arama başlatma.', prompt:'Birini arayın'},
-    {id:'sp2', en:"I'm sorry, she's not available. Can I take a message?", ro:'/aɪm ˈsɒri ʃiːz nɒt əˈveɪləbəl kæn aɪ teɪk ə ˈmɛsɪdʒ/', tr:'Üzgünüm, müsait değil. Mesaj alabilir miyim?',
-     tip:'Telefon yönlendirme.', prompt:'Mesaj alın'},
-    {id:'sp3', en:'Could you ask her to call me back? My number is...', ro:'/kʊd juː æsk hɜːr tə kɔːl miː bæk maɪ ˈnʌmbər ɪz/', tr:'Beni geri aramasını söyler misiniz? Numaram...',
-     tip:'Geri arama isteği.', prompt:'Geri arama isteyin'}
+    {id:'sp1', en:"I don't feel well. I have a fever and a sore throat.", ro:'/aɪ doʊnt fiːl wɛl aɪ hæv ə ˈfiːvər ænd ə sɔːr θroʊt/', tr:'İyi hissetmiyorum. Ateşim ve boğaz ağrım var.',
+     tip:'Semptom anlatma.', prompt:'Semptomlarınızı anlatın'},
+    {id:'sp2', en:"I'd like to make an appointment for tomorrow morning.", ro:'/aɪd laɪk tə meɪk ən əˈpɔɪntmənt fər təˈmɒroʊ ˈmɔːrnɪŋ/', tr:'Yarın sabah için randevu almak istiyorum.',
+     tip:'Randevu alma.', prompt:'Randevu alın'},
+    {id:'sp3', en:"I'm allergic to penicillin.", ro:'/aɪm əˈlɜːrdʒɪk tə ˌpɛnɪˈsɪlɪn/', tr:'Penisiline alerjim var.',
+     tip:'Alerji bildirme.', prompt:'Alerjinizi bildirin'}
   ],
 
   dialogues: [
-    {id:'d1', title:'İş Telefonu', title_en:'Business Phone Call',
+    {id:'d1', title:'Doktorda', title_en:'At the Doctor\'s',
      lines:[
-       {speaker:'A', gender:'f', en:'Good afternoon, ABC Company, how may I help you?', ro:'/ɡʊd ˌæftərˈnuːn eɪbiːsiː ˈkʌmpəni haʊ meɪ aɪ hɛlp juː/', tr:'İyi günler, ABC Şirketi, nasıl yardımcı olabilirim?'},
-       {speaker:'B', gender:'m', en:'Hello. Could I speak to Mr Brown, please?', ro:'/həˈloʊ kʊd aɪ spiːk tə mɪstər braʊn pliːz/', tr:'Merhaba. Bay Brown ile görüşebilir miyim, lütfen?'},
-       {speaker:'A', gender:'f', en:"I'm sorry, Mr Brown is in a meeting. Can I take a message?", ro:'/aɪm ˈsɒri mɪstər braʊn ɪz ɪn ə ˈmiːtɪŋ kæn aɪ teɪk ə ˈmɛsɪdʒ/', tr:'Üzgünüm, Bay Brown toplantıda. Mesaj alabilir miyim?'},
-       {speaker:'B', gender:'m', en:"Yes, please. Could you tell him that Ali called? I'll call back after three.", ro:'/jɛs pliːz kʊd juː tɛl hɪm ðæt æli kɔːld aɪl kɔːl bæk ˈɑːftər θriː/', tr:'Evet, lütfen. Ali\'nin aradığını söyler misiniz? Üçten sonra geri arayacağım.'},
-       {speaker:'A', gender:'f', en:"Of course. I'll let him know. Does he have your number?", ro:'/əv kɔːrs aɪl lɛt hɪm noʊ dəz hiː hæv jɔːr ˈnʌmbər/', tr:'Tabii. Haber vereceğim. Numaranız onda var mı?'},
-       {speaker:'B', gender:'m', en:"I'm not sure. It's oh-seven-nine, double-four-five, three-two-one.", ro:"/aɪm nɒt ʃʊər ɪts oʊ sevən naɪn ˈdʌbəl fɔːr faɪv θriː tuː wʌn/", tr:'Emin değilim. 079-4453-21.'},
-       {speaker:'A', gender:'f', en:"I'll pass that on. Thank you for calling.", ro:'/aɪl pɑːs ðæt ɒn θæŋk juː fər ˈkɔːlɪŋ/', tr:'İletirim. Aradığınız için teşekkürler.'}
+       {speaker:'A', gender:'f', en:'Good morning. What seems to be the problem?', ro:'/ɡʊd ˈmɔːrnɪŋ wɒt siːmz tə biː ðə ˈprɒbləm/', tr:'Günaydın. Sorun ne gibi görünüyor?'},
+       {speaker:'B', gender:'m', en:"I haven't been feeling well for two days. I have a headache and a sore throat.", ro:'/aɪ hævnt biːn ˈfiːlɪŋ wɛl fər tuː deɪz aɪ hæv ə ˈhɛdeɪk ænd ə sɔːr θroʊt/', tr:'İki gündür iyi hissetmiyorum. Baş ağrım ve boğaz ağrım var.'},
+       {speaker:'A', gender:'f', en:'Do you have a fever?', ro:'/duː juː hæv ə ˈfiːvər/', tr:'Ateşiniz var mı?'},
+       {speaker:'B', gender:'m', en:'Yes, thirty-eight degrees since yesterday.', ro:'/jɛs ˈθɜːrti eɪt dɪˈɡriːz sɪns ˈjɛstərdeɪ/', tr:'Evet, dünden beri otuz sekiz derece.'},
+       {speaker:'A', gender:'f', en:"Open your mouth, please. I see. It's a throat infection. I'll prescribe antibiotics.", ro:'/ˈoʊpən jɔːr maʊθ pliːz aɪ siː ɪts ə θroʊt ɪnˈfɛkʃən aɪl prɪˈskraɪb ˌæntɪbaɪˈɒtɪks/', tr:'Ağzınızı açın lütfen. Anlıyorum. Boğaz enfeksiyonu. Antibiyotik yazacağım.'},
+       {speaker:'B', gender:'m', en:'Are there any side effects?', ro:'/ɑːr ðɛr ɛni saɪd ɪˈfɛkts/', tr:'Yan etkileri var mı?'},
+       {speaker:'A', gender:'f', en:'Mild nausea possibly. Take one tablet three times a day with food. Rest and drink plenty of water.', ro:'/maɪld ˈnɔːzɪə ˈpɒsɪbli teɪk wʌn ˈtæblɪt θriː taɪmz ə deɪ wɪð fuːd rɛst ænd drɪŋk ˈplɛnti əv ˈwɔːtər/', tr:'Hafif mide bulantısı olabilir. Günde üç kez yemekle bir tablet alın. Dinlenin ve bol su için.'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"You have reached the voicemail of John Smith. I am unavailable at the moment. Please leave your name, number, and a brief message after the beep, and I will return your call as soon as possible.",
-     tr:'John Smith\'in sesli mesajına ulaştınız. Şu an müsait değilim. Bip sesinden sonra adınızı, numaranızı ve kısa bir mesaj bırakın, en kısa sürede geri arayacağım.',
+    {id:'li1', audio:'', transcript:"The clinic is open Monday to Friday, eight am to six pm, and Saturday nine to one. To make an appointment, call oh-two-oh, seven-seven-seven-four. In an emergency, please go to the nearest hospital or call nine-nine-nine.",
+     tr:'Klinik Pazartesi-Cuma 08:00-18:00, Cumartesi 09:00-13:00 açık. Randevu için 020-7774\'ü arayın. Acil durumda en yakın hastaneye gidin veya 999\'u arayın.',
      questions:[
-       {q:'Whose voicemail is this?', opts:['Ali Smith','John Brown','John Smith','Jim Stone'], answer:2, tr:'Bu kimin sesli mesajı?'},
-       {q:'What should you leave after the beep?', opts:['only your name','name and number','name, number and message','just a number'], answer:2, tr:'Bip sesinden sonra ne bırakmalısınız?'}
+       {q:'What time does the clinic open on Saturday?', opts:['8am','9am','10am','11am'], answer:1, tr:'Cumartesi saat kaçta açılıyor?'},
+       {q:'How do you make an appointment?', opts:['walk in','email','call','online'], answer:2, tr:'Nasıl randevu alırsınız?'},
+       {q:'What is the emergency number?', opts:['112','911','999','000'], answer:2, tr:'Acil numarası ne?'}
      ]}
   ]
 };

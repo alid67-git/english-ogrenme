@@ -1,89 +1,81 @@
-// ders19.js — English Lesson 19: Daily Conversation Practice
+// ders19.js — English Lesson 19: Entertainment & Hobbies
 const L19 = {
   words: [
-    {id:'w1', en:'small talk', ro:'/smɔːl tɔːk/', tr:'sohbet / gündelik konuşma',
-     tip:'İngilizce\'de sosyal bağ kurmanın önemli yolu.'},
-    {id:'w2', en:'By the way...', ro:'/baɪ ðə weɪ/', tr:'Bu arada...',
-     examples:[{en:'By the way, did you hear the news?', ro:'/baɪ ðə weɪ dɪd juː hɪər ðə njuːz/', tr:'Bu arada, haberleri duydun mu?',
-       bd:[{ro:'By the way',tr:'Bu arada',role:'connector'},{ro:'did you hear',tr:'duydun mu',role:'question'},{ro:'the news',tr:'haberler',role:'noun'}]}]},
-    {id:'w3', en:'Actually...', ro:'/ˈæktʃuəli/', tr:'Aslında...',
-     examples:[{en:"Actually, I changed my mind.", ro:"/ˈæktʃuəli aɪ tʃeɪndʒd maɪ maɪnd/", tr:'Aslında, fikrimi değiştirdim.',
-       bd:[{ro:'Actually',tr:'Aslında',role:'connector'},{ro:'I changed my mind',tr:'fikrimi değiştirdim',role:'phrase'}]}]},
-    {id:'w4', en:'To be honest...', ro:'/tə biː ˈɒnɪst/', tr:'Açıkçası...'},
-    {id:'w5', en:"You know what I mean?", ro:"/juː noʊ wɒt aɪ miːn/", tr:'Ne demek istediğimi anlıyor musun?'},
-    {id:'w6', en:'I see what you mean.', ro:'/aɪ siː wɒt juː miːn/', tr:'Ne demek istediğini anlıyorum.'},
-    {id:'w7', en:"That's interesting!", ro:"/ðæts ˈɪntrɪstɪŋ/", tr:'Bu ilginç!'},
-    {id:'w8', en:"Really? Tell me more.", ro:"/ˈrɪəli tɛl miː mɔːr/", tr:'Gerçekten mi? Daha fazla anlat.'},
-    {id:'w9', en:'I agree / I disagree.', ro:'/aɪ əˈɡriː / aɪ ˌdɪsəˈɡriː/', tr:'Katılıyorum / Katılmıyorum.',
-     examples:[{en:"I completely agree with you.", ro:"/aɪ kəmˈpliːtli əˈɡriː wɪð juː/", tr:'Seninle tamamen aynı fikirdeyim.',
-       bd:[{ro:'I completely agree',tr:'Tamamen katılıyorum',role:'verb'},{ro:'with you',tr:'seninle',role:'phrase'}]}]},
-    {id:'w10', en:'Anyway...', ro:'/ˈɛniweɪ/', tr:'Her neyse... / Neyse...'},
-    {id:'w11', en:'So...', ro:'/soʊ/', tr:'Yani... / Öyleyse...'},
-    {id:'w12', en:"Well...", ro:'/wɛl/', tr:'Şey... / Ee...'},
-    {id:'w13', en:'Could you say that again?', ro:'/kʊd juː seɪ ðæt əˈɡɛn/', tr:'Tekrar söyleyebilir misiniz?'},
-    {id:'w14', en:'Could you speak more slowly?', ro:'/kʊd juː spiːk mɔːr ˈsloʊli/', tr:'Daha yavaş konuşabilir misiniz?'},
-    {id:'w15', en:"How do you spell that?", ro:"/haʊ duː juː spɛl ðæt/", tr:'Bunu nasıl yazıyorsunuz? / Nasıl heceleniyor?'},
-    {id:'w16', en:"What does ... mean?", ro:"/wɒt dəz ... miːn/", tr:'... ne anlama geliyor?',
-     examples:[{en:"What does 'fluent' mean?", ro:"/wɒt dəz ˈfluːənt miːn/", tr:'"Fluent" ne anlama geliyor?',
-       bd:[{ro:'What does',tr:'Ne anlama geliyor',role:'question'},{ro:'fluent',tr:'(kelime)',role:'noun'}]}]},
-    {id:'w17', en:'In other words...', ro:'/ɪn ˈʌðər wɜːrdz/', tr:'Başka bir deyişle...'},
-    {id:'w18', en:"Let me think...", ro:"/lɛt miː θɪŋk/", tr:'Bir düşüneyim...'},
-    {id:'w19', en:"That reminds me...", ro:"/ðæt rɪˈmaɪndz miː/", tr:'Bu bana şunu hatırlattı...'},
-    {id:'w20', en:"Nice talking to you!", ro:"/naɪs ˈtɔːkɪŋ tə juː/", tr:'Seninle konuşmak güzeldi!'}
+    {id:'w1', en:'film / movie', ro:'/fɪlm / ˈmuːvi/', tr:'film',
+     examples:[{en:'What kind of films do you like?', ro:'/wɒt kaɪnd əv fɪlmz duː juː laɪk/', tr:'Ne tür filmler seversin?',
+       bd:[{ro:'What kind of',tr:'Ne tür',role:'question'},{ro:'films',tr:'filmler',role:'noun'},{ro:'do you like',tr:'seversin',role:'verb'}]}]},
+    {id:'w2', en:'music', ro:'/ˈmjuːzɪk/', tr:'müzik'},
+    {id:'w3', en:'book', ro:'/bʊk/', tr:'kitap'},
+    {id:'w4', en:'sport', ro:'/spɔːrt/', tr:'spor'},
+    {id:'w5', en:'game / video game', ro:'/ɡeɪm / ˈvɪdiˌoʊ ɡeɪm/', tr:'oyun / video oyunu'},
+    {id:'w6', en:'travel', ro:'/ˈtrævəl/', tr:'seyahat etmek / seyahat'},
+    {id:'w7', en:'cooking', ro:'/ˈkʊkɪŋ/', tr:'yemek pişirmek'},
+    {id:'w8', en:'photography', ro:'/fəˈtɒɡrəfi/', tr:'fotoğrafçılık'},
+    {id:'w9', en:'painting / drawing', ro:'/ˈpeɪntɪŋ / ˈdrɔːɪŋ/', tr:'resim yapmak'},
+    {id:'w10', en:'hiking', ro:'/ˈhaɪkɪŋ/', tr:'yürüyüş (doğa)'},
+    {id:'w11', en:'swimming', ro:'/ˈswɪmɪŋ/', tr:'yüzme'},
+    {id:'w12', en:'cycling', ro:'/ˈsaɪklɪŋ/', tr:'bisiklete binme'},
+    {id:'w13', en:'theatre', ro:'/ˈθɪətər/', tr:'tiyatro'},
+    {id:'w14', en:'museum', ro:'/mjuːˈziːəm/', tr:'müze'},
+    {id:'w15', en:'What do you do in your free time?', ro:'/wɒt duː juː duː ɪn jɔːr friː taɪm/', tr:'Boş zamanında ne yaparsın?',
+     examples:[{en:'What do you do in your free time? I enjoy reading.', ro:'/wɒt duː juː duː ɪn jɔːr friː taɪm aɪ ɪnˈdʒɔɪ ˈriːdɪŋ/', tr:'Boş zamanında ne yaparsın? Okumaktan keyif alıyorum.',
+       bd:[{ro:'What do you do',tr:'Ne yaparsın',role:'question'},{ro:'in your free time',tr:'boş zamanında',role:'time'},{ro:'I enjoy reading',tr:'okumaktan keyif alıyorum',role:'answer'}]}]},
+    {id:'w16', en:'I enjoy / I love / I like', ro:'/aɪ ɪnˈdʒɔɪ / aɪ lʌv / aɪ laɪk/', tr:'Keyif alırım / Severim / Beğenirim',
+     tip:'Keyif ifade etme kalıpları.'},
+    {id:'w17', en:"I'm into...", ro:"/aɪm ˈɪntuː/", tr:'...a meraklıyım / ilgileniyorum',
+     examples:[{en:"I'm really into jazz music.", ro:"/aɪm ˈrɪəli ˈɪntuː dʒæz ˈmjuːzɪk/", tr:'Caz müziğine gerçekten meraklıyım.',
+       bd:[{ro:"I'm into",tr:'Meraklıyım',role:'phrase'},{ro:'jazz music',tr:'caz müziği',role:'noun'}]}]},
+    {id:'w18', en:"I can't stand...", ro:"/aɪ kɑːnt stænd/", tr:'...ye tahammül edemiyorum',
+     examples:[{en:"I can't stand horror films.", ro:"/aɪ kɑːnt stænd ˈhɒrər fɪlmz/", tr:'Korku filmlerine tahammül edemiyorum.',
+       bd:[{ro:"I can't stand",tr:'Tahammül edemiyorum',role:'phrase'},{ro:'horror films',tr:'korku filmleri',role:'noun'}]}]},
+    {id:'w19', en:'favourite', ro:'/ˈfeɪvərɪt/', tr:'favori / en sevilen'},
+    {id:'w20', en:'recommend', ro:'/ˌrɛkəˈmɛnd/', tr:'tavsiye etmek',
+     examples:[{en:'Can you recommend a good book?', ro:'/kæn juː ˌrɛkəˈmɛnd ə ɡʊd bʊk/', tr:'İyi bir kitap tavsiye edebilir misin?',
+       bd:[{ro:'Can you recommend',tr:'Tavsiye edebilir misin',role:'modal'},{ro:'a good book',tr:'iyi bir kitap',role:'noun'}]}]}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Konuşmayı Yönetme', title_en:'Discourse Markers',
-     explanation:'Konuşmayı akıcı yapmak için bağlayıcı ifadeler.',
+    {id:'g1', title:'-ing vs. to + infinitive', title_en:'Gerund vs. Infinitive',
+     explanation:'Bazı fiiller -ing alır, bazıları "to + verb" alır.',
      table:[
-       {pronoun:'Konu eklemek', form:'Also / Moreover / In addition', example:'Also, I should mention...', tr:'Ayrıca belirtmeliyim ki...'},
-       {pronoun:'Konuya dönmek', form:'Anyway / As I was saying', example:'Anyway, back to my point...', tr:'Her neyse, konuya dönersek...'},
-       {pronoun:'Açıklamak', form:'I mean / In other words', example:'I mean, it was difficult.', tr:'Yani, zordu.'},
-       {pronoun:'Özetlemek', form:'In short / To sum up', example:'To sum up, it was great.', tr:'Özetle, harikaydı.'}
+       {pronoun:'enjoy / love / like', form:'verb + -ing', example:'I enjoy swimming.', tr:'Yüzmekten keyif alıyorum.'},
+       {pronoun:'want / would like', form:'verb + to + inf.', example:'I want to travel.', tr:'Seyahat etmek istiyorum.'},
+       {pronoun:'like', form:'both forms', example:'I like reading / to read.', tr:'Okumayı seviyorum. (ikisi de olur)'},
+       {pronoun:"can't stand / avoid", form:'verb + -ing', example:"I can't stand waiting.", tr:'Beklemekten nefret ederim.'}
      ],
-     note:'Bu ifadeler konuşmayı doğal ve akıcı yapar — sık kullanın!'}
+     note:'"I would love to..." = kibar/özel bir istek ifadesi'}
   ],
 
   speaking: [
-    {id:'sp1', en:"So, how long have you been learning English?", ro:"/soʊ haʊ lɒŋ hæv juː biːn ˈlɜːrnɪŋ ˈɪŋɡlɪʃ/", tr:'Peki, ne zamandır İngilizce öğreniyorsun?',
-     tip:'Sohbet açma sorusu.', prompt:'Dil öğrenimi hakkında sohbet başlatın'},
-    {id:'sp2', en:"Actually, I started six months ago. I find listening the most challenging.", ro:"/ˈæktʃuəli aɪ ˈstɑːrtɪd sɪks mʌnθs əˈɡoʊ aɪ faɪnd ˈlɪsənɪŋ ðə moʊst ˈtʃælɪndʒɪŋ/", tr:'Aslında, altı ay önce başladım. Dinlemeyi en zorlu buluyorum.',
-     tip:'Dürüst cevap verme.', prompt:'Dürüstçe cevaplayın'},
-    {id:'sp3', en:"Could you speak more slowly, please? I'm still learning.", ro:"/kʊd juː spiːk mɔːr ˈsloʊli pliːz aɪm stɪl ˈlɜːrnɪŋ/", tr:'Daha yavaş konuşabilir misiniz, lütfen? Hâlâ öğreniyorum.',
-     tip:'Anlayışla karşılanan kibarlık.', prompt:'Yavaş konuşmasını isteyin'}
+    {id:'sp1', en:'In my free time, I enjoy reading and watching films.', ro:'/ɪn maɪ friː taɪm aɪ ɪnˈdʒɔɪ ˈriːdɪŋ ænd ˈwɒtʃɪŋ fɪlmz/', tr:'Boş zamanımda okumaktan ve film izlemekten keyif alıyorum.',
+     tip:'Hobileri anlatma.', prompt:'Hobilerinizi anlatın'},
+    {id:'sp2', en:"I'm really into Turkish cinema at the moment.", ro:"/aɪm ˈrɪəli ˈɪntuː ˈtɜːrkɪʃ ˈsɪnəmə æt ðə ˈmoʊmənt/", tr:'Şu an Türk sinemasına gerçekten meraklıyım.',
+     tip:'Şu anki ilgi alanı.', prompt:'Şu an ilgilendiğiniz bir şey söyleyin'},
+    {id:'sp3', en:'I would highly recommend this book. It is fascinating.', ro:'/aɪ wʊd ˈhaɪli ˌrɛkəˈmɛnd ðɪs bʊk ɪt ɪz ˈfæsɪneɪtɪŋ/', tr:'Bu kitabı kesinlikle tavsiye ederim. Büyüleyici.',
+     tip:'Tavsiye etme.', prompt:'Bir şey tavsiye edin'}
   ],
 
   dialogues: [
-    {id:'d1', title:'Sınıfta Genel Sohbet', title_en:'General Conversation Practice',
+    {id:'d1', title:'Ortak İlgi Alanları', title_en:'Common Interests',
      lines:[
-       {speaker:'A', gender:'f', en:"Hi! I haven't seen you for ages. How have you been?", ro:"/haɪ aɪ hævnt siːn juː fər eɪdʒɪz haʊ hæv juː biːn/", tr:'Merhaba! Uzun zamandır görüşmedik. Nasılsın?'},
-       {speaker:'B', gender:'m', en:"Really well, thanks! I've been really busy lately. You?", ro:"/ˈrɪəli wɛl θæŋks aɪv biːn ˈrɪəli ˈbɪzi ˈleɪtli juː/", tr:'Gerçekten iyi, teşekkürler! Son zamanlarda çok meşgulüm. Sen?'},
-       {speaker:'A', gender:'f', en:"Not bad. By the way, did you hear about the new English course starting next month?", ro:"/nɒt bæd baɪ ðə weɪ dɪd juː hɪər əˈbaʊt ðə njuː ˈɪŋɡlɪʃ kɔːrs ˈstɑːrtɪŋ nɛkst mʌnθ/", tr:'Fena değil. Bu arada, gelecek ay başlayacak yeni İngilizce kursu duydun mu?'},
-       {speaker:'B', gender:'m', en:"Actually, yes! I was thinking about signing up. Is it any good?", ro:"/ˈæktʃuəli jɛs aɪ wɒz ˈθɪŋkɪŋ əˈbaʊt ˈsaɪnɪŋ ʌp ɪz ɪt ˈɛni ɡʊd/", tr:'Aslında, evet! Kaydolmayı düşünüyordum. İyi mi?'},
-       {speaker:'A', gender:'f', en:"I've heard great things. To be honest, I think it is worth trying.", ro:"/aɪv hɜːrd ɡreɪt θɪŋz tə biː ˈɒnɪst aɪ θɪŋk ɪt ɪz wɜːrθ ˈtraɪɪŋ/", tr:'Çok iyi şeyler duydum. Açıkçası, denemeye değer diye düşünüyorum.'},
-       {speaker:'B', gender:'m', en:"Great! Well, I should get going. Nice talking to you!", ro:"/ɡreɪt wɛl aɪ ʃʊd ɡɛt ˈɡoʊɪŋ naɪs ˈtɔːkɪŋ tə juː/", tr:'Harika! Neyse, gitmeliyim. Seninle konuşmak güzeldi!'},
-       {speaker:'A', gender:'f', en:"You too! Take care. See you soon!", ro:"/juː tuː teɪk kɛr siː juː suːn/", tr:'Sana da! Kendine iyi bak. Yakında görüşürüz!'}
-     ]},
-    {id:'d2', title:'Dil Öğrencisi Konuşması', title_en:'Language Learner Conversation',
-     lines:[
-       {speaker:'A', gender:'m', en:"Excuse me, I couldn't help overhearing — are you learning English too?", ro:"/ɪkˈskjuːz miː aɪ kʊdnt hɛlp ˌoʊvərˈhɪərɪŋ ɑːr juː ˈlɜːrnɪŋ ˈɪŋɡlɪʃ tuː/", tr:'Pardon, duymamaya çalışamadım — siz de İngilizce mi öğreniyorsunuz?'},
-       {speaker:'B', gender:'f', en:"Yes! I'm from Turkey. I've been studying for about a year. And you?", ro:"/jɛs aɪm frɒm ˈtɜːrki aɪv biːn ˈstʌdiɪŋ fər əˈbaʊt ə jɪər ænd juː/", tr:'Evet! Türkiye\'denim. Yaklaşık bir yıldır çalışıyorum. Ya siz?'},
-       {speaker:'A', gender:'m', en:"Same! I'm from Spain. My English is still not perfect, I'm afraid.", ro:"/seɪm aɪm frɒm speɪn maɪ ˈɪŋɡlɪʃ ɪz stɪl nɒt ˈpɜːrfɪkt aɪm əˈfreɪd/", tr:'Aynı! İspanya\'denim. Korkarım İngilizcesi hâlâ mükemmel değil.'},
-       {speaker:'B', gender:'f', en:"Mine either! But I think the best way to improve is to speak with people.", ro:"/maɪn ˈiːðər bʌt aɪ θɪŋk ðə bɛst weɪ tə ɪmˈpruːv ɪz tə spiːk wɪð ˈpiːpəl/", tr:'Benimki de değil! Ama bence gelişmenin en iyi yolu insanlarla konuşmak.'},
-       {speaker:'A', gender:'m', en:"I completely agree. What does 'improve' mean exactly? Something like 'get better'?", ro:"/aɪ kəmˈpliːtli əˈɡriː wɒt dəz ɪmˈpruːv miːn ɪɡˈzæktli ˈsʌmθɪŋ laɪk ɡɛt ˈbɛtər/", tr:'Tamamen katılıyorum. \'Improve\' tam olarak ne anlama geliyor? \'Daha iyi olmak\' gibi bir şey mi?'},
-       {speaker:'B', gender:'f', en:"Yes, exactly! In other words, to become better at something. Shall we practise together?", ro:"/jɛs ɪɡˈzæktli ɪn ˈʌðər wɜːrdz tə bɪˈkʌm ˈbɛtər æt ˈsʌmθɪŋ ʃæl wiː ˈpræktɪs təˈɡɛðər/", tr:'Evet, kesinlikle! Başka bir deyişle, bir şeyde daha iyi olmak. Birlikte pratik yapalım mı?'}
+       {speaker:'A', gender:'f', en:"What do you like to do at the weekend?", ro:"/wɒt duː juː laɪk tə duː æt ðə ˌwiːkˈɛnd/", tr:'Hafta sonu ne yapmayı seviyorsun?'},
+       {speaker:'B', gender:'m', en:"I love cycling and hiking. I try to get outside as much as possible. What about you?", ro:"/aɪ lʌv ˈsaɪklɪŋ ænd ˈhaɪkɪŋ aɪ traɪ tə ɡɛt ˈaʊtsaɪd æz mʌtʃ æz ˈpɒsɪbəl wɒt əˈbaʊt juː/", tr:'Bisiklet sürmeyi ve doğa yürüyüşünü seviyorum. Olabildiğince dışarı çıkmaya çalışıyorum. Ya sen?'},
+       {speaker:'A', gender:'f', en:"I enjoy cooking and reading. I'm also really into photography.", ro:"/aɪ ɪnˈdʒɔɪ ˈkʊkɪŋ ænd ˈriːdɪŋ aɪm ˈɔːlsoʊ ˈrɪəli ˈɪntuː fəˈtɒɡrəfi/", tr:'Yemek pişirmeyi ve okumayı seviyorum. Ayrıca fotoğrafçılığa gerçekten meraklıyım.'},
+       {speaker:'B', gender:'m', en:"Oh, that is great! You should try taking photos while hiking — it combines both hobbies!", ro:"/oʊ ðæt ɪz ɡreɪt juː ʃʊd traɪ ˈteɪkɪŋ ˈfoʊtoʊz waɪl ˈhaɪkɪŋ ɪt kəmˈbaɪnz boʊθ ˈhɒbiz/", tr:'Harika! Yürüyüş yaparken fotoğraf çekmeyi denemelisi — iki hobi bir arada!'},
+       {speaker:'A', gender:'f', en:"What a great idea! Is there a good hiking trail near the city?", ro:"/wɒt ə ɡreɪt aɪˈdɪə ɪz ðɛr ə ɡʊd ˈhaɪkɪŋ treɪl nɪər ðə ˈsɪti/", tr:'Ne güzel fikir! Şehrin yakınında iyi bir yürüyüş parkuru var mı?'},
+       {speaker:'B', gender:'m', en:"Yes, there are several. I can recommend one — it takes about two hours and the views are stunning.", ro:"/jɛs ðɛr ɑːr ˈsɛvərəl aɪ kæn ˌrɛkəˈmɛnd wʌn ɪt teɪks əˈbaʊt tuː aʊərz ænd ðə vjuːz ɑːr ˈstʌnɪŋ/", tr:'Evet, birkaç tane var. Birini tavsiye edebilirim — yaklaşık iki saat sürer ve manzaralar muhteşem.'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"One of the best ways to practise your English is to find a language partner — someone who is a native English speaker and wants to learn your language. You can meet online or in person. Try to meet regularly, at least once a week. Speak English for half the time and your native language for the other half. This way, you both benefit.",
-     tr:'İngilizce pratiği yapmanın en iyi yollarından biri bir dil arkadaşı bulmaktır — İngilizce ana dil konuşmacısı olan ve sizin dilinizi öğrenmek isteyen biri. Çevrimiçi veya yüz yüze buluşabilirsiniz. Düzenli buluşmaya çalışın, en az haftada bir. Zamanın yarısında İngilizce, diğer yarısında ana dilinizde konuşun. Böylece ikiniz de fayda görürsünüz.',
+    {id:'li1', audio:'', transcript:"Reading is one of the most beneficial hobbies you can have. It improves your vocabulary, your concentration, and your general knowledge. Research shows that people who read regularly tend to be more creative and empathetic. You do not need expensive equipment — just a book and some free time.",
+     tr:'Okumak sahip olabileceğiniz en faydalı hobilerden biridir. Kelime dağarcığınızı, konsantrasyonunuzu ve genel bilginizi geliştirir. Araştırmalar, düzenli okuyan insanların daha yaratıcı ve empatik olduğunu göstermektedir. Pahalı ekipmana gerek yok — sadece bir kitap ve biraz boş zaman.',
      questions:[
-       {q:'What is a language partner?', opts:['a teacher','a native speaker who wants to learn your language','a classmate','an app'], answer:1, tr:'Dil arkadaşı nedir?'},
-       {q:'How often should you meet?', opts:['every day','once a month','at least once a week','twice a year'], answer:2, tr:'Ne sıklıkta buluşmalısınız?'},
-       {q:'How should you divide the time?', opts:['all in English','half English, half your language','all in your language','depends on the day'], answer:1, tr:'Zamanı nasıl paylaştırmalısınız?'}
+       {q:'What does reading improve?', opts:['only vocabulary','vocabulary, concentration, knowledge','fitness','social skills'], answer:1, tr:'Okumak neyi geliştirir?'},
+       {q:'What do regular readers tend to be?', opts:['more athletic','richer','more creative and empathetic','happier'], answer:2, tr:'Düzenli okuyucular nasıl olmaya meyillidir?'},
+       {q:'What equipment do you need?', opts:['a kindle only','nothing at all','just a book and time','a library card'], answer:2, tr:'Ne gibi ekipmana ihtiyacınız var?'}
      ]}
   ]
 };

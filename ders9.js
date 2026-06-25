@@ -1,81 +1,85 @@
-// ders9.js — English Lesson 9: Work & Business
+// ders9.js — English Lesson 9: Hotel & Accommodation
 const L9 = {
   words: [
-    {id:'w1', en:'job / work', ro:'/dʒɒb / wɜːrk/', tr:'iş',
-     examples:[{en:'What do you do for work?', ro:'/wɒt duː juː duː fər wɜːrk/', tr:'Ne iş yapıyorsunuz?',
-       bd:[{ro:'What do you do',tr:'Ne yapıyorsunuz',role:'question'},{ro:'for work',tr:'iş olarak',role:'phrase'}]}]},
-    {id:'w2', en:'company / firm', ro:'/ˈkʌmpəni / fɜːrm/', tr:'şirket / firma'},
-    {id:'w3', en:'office', ro:'/ˈɒfɪs/', tr:'ofis'},
-    {id:'w4', en:'meeting', ro:'/ˈmiːtɪŋ/', tr:'toplantı',
-     examples:[{en:'I have a meeting at three o\'clock.', ro:'/aɪ hæv ə ˈmiːtɪŋ æt θriː əˈklɒk/', tr:'Saat üçte toplantım var.',
-       bd:[{ro:'I have a meeting',tr:'toplantım var',role:'noun'},{ro:'at three o\'clock',tr:'saat üçte',role:'time'}]}]},
-    {id:'w5', en:'colleague', ro:'/ˈkɒliːɡ/', tr:'iş arkadaşı'},
-    {id:'w6', en:'manager / boss', ro:'/ˈmænɪdʒər / bɒs/', tr:'müdür / patron'},
-    {id:'w7', en:'employee', ro:'/ɪmˈplɔɪiː/', tr:'çalışan'},
-    {id:'w8', en:'deadline', ro:'/ˈdɛdlaɪn/', tr:'son teslim tarihi',
-     examples:[{en:'The deadline is this Friday.', ro:'/ðə ˈdɛdlaɪn ɪz ðɪs ˈfraɪdeɪ/', tr:'Son teslim tarihi bu Cuma.',
-       bd:[{ro:'The deadline',tr:'Son teslim tarihi',role:'noun'},{ro:'is this Friday',tr:'bu Cuma',role:'time'}]}]},
-    {id:'w9', en:'project', ro:'/ˈprɒdʒɛkt/', tr:'proje'},
-    {id:'w10', en:'report', ro:'/rɪˈpɔːrt/', tr:'rapor'},
-    {id:'w11', en:'email', ro:'/ˈiːmeɪl/', tr:'e-posta'},
-    {id:'w12', en:'presentation', ro:'/ˌprɛzənˈteɪʃən/', tr:'sunum'},
-    {id:'w13', en:'salary / wage', ro:'/ˈsæləri / weɪdʒ/', tr:'maaş'},
-    {id:'w14', en:'apply for a job', ro:'/əˈplaɪ fər ə dʒɒb/', tr:'iş başvurusu yapmak',
-     examples:[{en:'I am applying for a marketing position.', ro:'/aɪ æm əˈplaɪɪŋ fər ə ˈmɑːrkɪtɪŋ pəˈzɪʃən/', tr:'Pazarlama pozisyonuna başvuruyorum.',
-       bd:[{ro:'I am applying for',tr:'Başvuruyorum',role:'verb'},{ro:'a marketing position',tr:'pazarlama pozisyonu',role:'noun'}]}]},
-    {id:'w15', en:'interview', ro:'/ˈɪntərvjuː/', tr:'iş görüşmesi / mülakat'},
-    {id:'w16', en:'CV / resume', ro:'/ˌsiːˈviː / ˈrɛzjʊmeɪ/', tr:'özgeçmiş'},
-    {id:'w17', en:'promotion', ro:'/prəˈmoʊʃən/', tr:'terfi'},
-    {id:'w18', en:'overtime', ro:'/ˈoʊvərtaɪm/', tr:'fazla mesai'},
-    {id:'w19', en:'work from home', ro:'/wɜːrk frɒm hoʊm/', tr:'evden çalışmak'},
-    {id:'w20', en:"I'll send you an email.", ro:'/aɪl sɛnd juː ən ˈiːmeɪl/', tr:'Size bir e-posta göndereceğim.',
-     examples:[{en:"I'll send you the report by email.", ro:'/aɪl sɛnd juː ðə rɪˈpɔːrt baɪ ˈiːmeɪl/', tr:'Size raporu e-posta ile göndereceğim.',
-       bd:[{ro:"I'll send",tr:'Göndereceğim',role:'verb'},{ro:'you the report',tr:'size raporu',role:'object'},{ro:'by email',tr:'e-posta ile',role:'method'}]}]}
+    {id:'w1', en:'hotel', ro:'/hoʊˈtɛl/', tr:'otel'},
+    {id:'w2', en:'hostel', ro:'/ˈhɒstəl/', tr:'hostel / ucuz pansiyon'},
+    {id:'w3', en:'check in', ro:'/tʃɛk ɪn/', tr:'giriş yapmak (check-in)',
+     examples:[{en:'I would like to check in, please.', ro:'/aɪ wʊd laɪk tə tʃɛk ɪn pliːz/', tr:'Check-in yapmak istiyorum, lütfen.',
+       bd:[{ro:'I would like to',tr:'İstiyorum',role:'modal'},{ro:'check in',tr:'giriş yapmak',role:'verb'}]}]},
+    {id:'w4', en:'check out', ro:'/tʃɛk aʊt/', tr:'çıkış yapmak (check-out)'},
+    {id:'w5', en:'reservation / booking', ro:'/ˌrɛzərˈveɪʃən/', tr:'rezervasyon',
+     examples:[{en:'I have a reservation under the name Ali.', ro:'/aɪ hæv ə ˌrɛzərˈveɪʃən ˈʌndər ðə neɪm æli/', tr:'Ali adına rezervasyonum var.',
+       bd:[{ro:'I have a reservation',tr:'Rezervasyonum var',role:'noun'},{ro:'under the name',tr:'adına',role:'phrase'}]}]},
+    {id:'w6', en:'room', ro:'/ruːm/', tr:'oda'},
+    {id:'w7', en:'single room', ro:'/ˈsɪŋɡəl ruːm/', tr:'tek kişilik oda'},
+    {id:'w8', en:'double room', ro:'/ˈdʌbəl ruːm/', tr:'çift kişilik oda'},
+    {id:'w9', en:'twin room', ro:'/twɪn ruːm/', tr:'iki ayrı yataklı oda'},
+    {id:'w10', en:'floor / storey', ro:'/flɔːr/', tr:'kat'},
+    {id:'w11', en:'lift / elevator', ro:'/lɪft / ˈɛlɪveɪtər/', tr:'asansör'},
+    {id:'w12', en:'key', ro:'/kiː/', tr:'anahtar'},
+    {id:'w13', en:'key card', ro:'/kiː kɑːrd/', tr:'anahtar kartı'},
+    {id:'w14', en:'breakfast included', ro:'/ˈbrɛkfəst ɪnˈkluːdɪd/', tr:'kahvaltı dahil',
+     examples:[{en:'Is breakfast included?', ro:'/ɪz ˈbrɛkfəst ɪnˈkluːdɪd/', tr:'Kahvaltı dahil mi?',
+       bd:[{ro:'Is breakfast',tr:'Kahvaltı',role:'noun'},{ro:'included',tr:'dahil mi',role:'adjective'}]}]},
+    {id:'w15', en:'Wi-Fi', ro:'/ˈwaɪfaɪ/', tr:'Wi-Fi / kablosuz internet'},
+    {id:'w16', en:'air conditioning', ro:'/ɛr kənˈdɪʃənɪŋ/', tr:'klima'},
+    {id:'w17', en:'noisy / quiet', ro:'/ˈnɔɪzi / ˈkwaɪət/', tr:'gürültülü / sessiz'},
+    {id:'w18', en:'complaint', ro:'/kəmˈpleɪnt/', tr:'şikayet',
+     examples:[{en:'I have a complaint about the room.', ro:'/aɪ hæv ə kəmˈpleɪnt əˈbaʊt ðə ruːm/', tr:'Oda hakkında şikayetim var.',
+       bd:[{ro:'I have a complaint',tr:'Şikayetim var',role:'noun'},{ro:'about the room',tr:'oda hakkında',role:'phrase'}]}]},
+    {id:'w19', en:'towel', ro:'/ˈtaʊəl/', tr:'havlu'},
+    {id:'w20', en:'room service', ro:'/ruːm ˈsɜːrvɪs/', tr:'oda servisi'},
+    {id:'w21', en:'wake-up call', ro:'/weɪk ʌp kɔːl/', tr:'uyandırma servisi'},
+    {id:'w22', en:'per night', ro:'/pər naɪt/', tr:'gecelik',
+     examples:[{en:'How much is it per night?', ro:'/haʊ mʌtʃ ɪz ɪt pər naɪt/', tr:'Geceliği ne kadar?',
+       bd:[{ro:'How much',tr:'Ne kadar',role:'question'},{ro:'per night',tr:'geceliği',role:'time'}]}]}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Gelecek Zaman — will / going to', title_en:'Future Tense',
-     explanation:'"will" anlık karar veya tahmin; "going to" önceden planlanan şeyler için kullanılır.',
+    {id:'g1', title:'Otelde Konuşma Kalıpları', title_en:'Hotel Phrases',
+     explanation:'Otelde check-in, istek ve şikayet için kalıplar.',
      table:[
-       {pronoun:'will (karar)', form:"I'll + verb", example:"I'll call you tomorrow.", tr:'Yarın seni ararım.'},
-       {pronoun:'going to (plan)', form:'am/is/are going to', example:'I am going to send the report.', tr:'Raporu göndereceğim.'},
-       {pronoun:'Olumsuz', form:"won't / not going to", example:"I won't be late.", tr:'Geç kalmayacağım.'},
-       {pronoun:'Soru', form:'Will...? / Are...going to?', example:'Will you be at the meeting?', tr:'Toplantıda olacak mısın?'}
+       {pronoun:'Check-in', form:'I have a reservation...', example:'I have a reservation for two nights.', tr:'İki gecelik rezervasyonum var.'},
+       {pronoun:'İstek', form:'Could I have...?', example:'Could I have a quiet room?', tr:'Sessiz bir oda alabilir miyim?'},
+       {pronoun:'Sorun', form:"There's a problem with...", example:"There's a problem with the shower.", tr:'Duşta bir sorun var.'},
+       {pronoun:'Soru', form:'What time is...?', example:'What time is breakfast?', tr:'Kahvaltı saat kaçta?'}
      ],
-     note:'"Can you...?" ve "Could you...?" iş ortamında sık kullanılan kibar istek kalıplarıdır'}
+     note:'"Could I..." = "Can I..."\'den daha kibar bir istek biçimi'}
   ],
 
   speaking: [
-    {id:'sp1', en:'I work as a software engineer at a tech company.', ro:'/aɪ wɜːrk æz ə ˈsɒftweər ˌɛndʒɪˈnɪər æt ə tɛk ˈkʌmpəni/', tr:'Bir teknoloji şirketinde yazılım mühendisi olarak çalışıyorum.',
-     tip:'İşinizi tanıtma.', prompt:'Mesleğinizi tanıtın'},
-    {id:'sp2', en:'Could you send me the report by Friday, please?', ro:'/kʊd juː sɛnd miː ðə rɪˈpɔːrt baɪ ˈfraɪdeɪ pliːz/', tr:'Raporu Cuma\'ya kadar gönderebilir misiniz, lütfen?',
-     tip:'Kibar istek.', prompt:'Kibar bir istek yapın'},
-    {id:'sp3', en:"I'm afraid I can't make the meeting. Can we reschedule?", ro:'/aɪm əˈfreɪd aɪ kɑːnt meɪk ðə ˈmiːtɪŋ kæn wiː ˌriːˈʃɛdjuːl/', tr:'Toplantıya katılamayacağım. Erteleyebilir miyiz?',
-     tip:'Toplantı erteleme.', prompt:'Toplantı erteleyin'}
+    {id:'sp1', en:"I'd like to check in. I have a reservation.", ro:'/aɪd laɪk tə tʃɛk ɪn aɪ hæv ə ˌrɛzərˈveɪʃən/', tr:'Check-in yapmak istiyorum. Rezervasyonum var.',
+     tip:'Otele giriş.', prompt:'Otele giriş yapın'},
+    {id:'sp2', en:'Could I have a non-smoking room on a high floor?', ro:'/kʊd aɪ hæv ə nɒn ˈsmoʊkɪŋ ruːm ɒn ə haɪ flɔːr/', tr:'Üst kattan sigara içilmeyen oda alabilir miyim?',
+     tip:'Oda tercihi.', prompt:'Oda tercihinizi belirtin'},
+    {id:'sp3', en:"There's no hot water in my room.", ro:'/ðɛrz noʊ hɒt ˈwɔːtər ɪn maɪ ruːm/', tr:'Odamda sıcak su yok.',
+     tip:'Sorun bildirme.', prompt:'Bir sorun bildirin'},
+    {id:'sp4', en:"I'd like to check out, please. Can I have the bill?", ro:'/aɪd laɪk tə tʃɛk aʊt pliːz kæn aɪ hæv ðə bɪl/', tr:'Check-out yapmak istiyorum, lütfen. Faturayı alabilir miyim?',
+     tip:'Otel çıkışı.', prompt:'Check-out yapın'}
   ],
 
   dialogues: [
-    {id:'d1', title:'İş Görüşmesi', title_en:'Job Interview',
+    {id:'d1', title:'Otel Check-in', title_en:'Hotel Check-in',
      lines:[
-       {speaker:'A', gender:'f', en:'Good morning! Please sit down. Tell me about yourself.', ro:'/ɡʊd ˈmɔːrnɪŋ pliːz sɪt daʊn tɛl miː əˈbaʊt jɔːrsɛlf/', tr:'Günaydın! Lütfen oturun. Kendinizden bahsedin.'},
-       {speaker:'B', gender:'m', en:"Good morning. I'm Ali. I have five years' experience in marketing.", ro:'/ɡʊd ˈmɔːrnɪŋ aɪm æli aɪ hæv faɪv jɪərz ɪkˈspɪərɪəns ɪn ˈmɑːrkɪtɪŋ/', tr:'Günaydın. Ben Ali. Pazarlamada beş yıl deneyimim var.'},
-       {speaker:'A', gender:'f', en:'Why do you want to work for our company?', ro:'/waɪ duː juː wɒnt tə wɜːrk fər aʊər ˈkʌmpəni/', tr:'Neden şirketimizde çalışmak istiyorsunuz?'},
-       {speaker:'B', gender:'m', en:"Your company has an excellent reputation. I believe I can contribute to your team's success.", ro:'/jɔːr ˈkʌmpəni hæz ən ˈɛksələnt ˌrɛpjʊˈteɪʃən aɪ bɪˈliːv aɪ kæn kənˈtrɪbjuːt tə jɔːr tiːmz səkˈsɛs/', tr:'Şirketinizin mükemmel bir itibarı var. Ekibinizin başarısına katkıda bulunabileceğime inanıyorum.'},
-       {speaker:'A', gender:'f', en:'What is your greatest strength?', ro:'/wɒt ɪz jɔːr ˈɡreɪtɪst strɛŋθ/', tr:'En büyük güçlü yönünüz nedir?'},
-       {speaker:'B', gender:'m', en:'I am very organised and I work well under pressure.', ro:'/aɪ æm ˈvɛri ˈɔːrɡənaɪzd ænd aɪ wɜːrk wɛl ˈʌndər ˈprɛʃər/', tr:'Çok düzenli biriyim ve baskı altında iyi çalışırım.'},
-       {speaker:'A', gender:'f', en:'Excellent. We will contact you by Friday.', ro:'/ˈɛksələnt wiː wɪl ˈkɒntækt juː baɪ ˈfraɪdeɪ/', tr:'Mükemmel. Cuma\'ya kadar sizinle iletişime geçeceğiz.'}
+       {speaker:'A', gender:'f', en:'Good evening! Welcome. How can I help you?', ro:'/ɡʊd ˈiːvnɪŋ ˈwɛlkəm haʊ kæn aɪ hɛlp juː/', tr:'İyi akşamlar! Hoş geldiniz. Nasıl yardımcı olabilirim?'},
+       {speaker:'B', gender:'m', en:"I'd like to check in. I have a reservation. My name is Johnson.", ro:'/aɪd laɪk tə tʃɛk ɪn aɪ hæv ə ˌrɛzərˈveɪʃən maɪ neɪm ɪz ˈdʒɒnsən/', tr:'Check-in yapmak istiyorum. Rezervasyonum var. Adım Johnson.'},
+       {speaker:'A', gender:'f', en:'Yes, Mr Johnson. A double room for three nights. Is that correct?', ro:'/jɛs mɪstər ˈdʒɒnsən ə ˈdʌbəl ruːm fər θriː naɪts ɪz ðæt kəˈrɛkt/', tr:'Evet, Bay Johnson. Üç gecelik çift kişilik oda. Doğru mu?'},
+       {speaker:'B', gender:'m', en:'Yes, that is correct. Is breakfast included?', ro:'/jɛs ðæt ɪz kəˈrɛkt ɪz ˈbrɛkfəst ɪnˈkluːdɪd/', tr:'Evet, doğru. Kahvaltı dahil mi?'},
+       {speaker:'A', gender:'f', en:'Yes, breakfast is served from seven to ten. Here is your key card. Room two hundred and four, on the second floor.', ro:'/jɛs ˈbrɛkfəst ɪz sɜːrvd frɒm ˈsɛvən tə tɛn hɪr ɪz jɔːr kiː kɑːrd ruːm tuː ˈhʌndrəd ænd fɔːr ɒn ðə ˈsɛkənd flɔːr/', tr:'Evet, kahvaltı yediden ona kadar servis ediliyor. İşte anahtar kartınız. İkinci kattaki 204 numaralı oda.'},
+       {speaker:'B', gender:'m', en:'Thank you. Is there Wi-Fi in the rooms?', ro:'/θæŋk juː ɪz ðɛr ˈwaɪfaɪ ɪn ðə ruːmz/', tr:'Teşekkür ederim. Odalarda Wi-Fi var mı?'},
+       {speaker:'A', gender:'f', en:'Yes, free Wi-Fi throughout. The password is on the card. Enjoy your stay!', ro:'/jɛs friː ˈwaɪfaɪ θruːˈaʊt ðə ˈpæswɜːrd ɪz ɒn ðə kɑːrd ɪnˈdʒɔɪ jɔːr steɪ/', tr:'Evet, her yerde ücretsiz Wi-Fi. Şifre kartta. Konaklamanızın tadını çıkarın!'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"This is a reminder about tomorrow's all-staff meeting at ten am in the main conference room. Please bring your Q3 reports. The meeting will last approximately one hour. Lunch will be provided afterwards.",
-     tr:'Yarın saat 10:00\'da ana toplantı odasında tüm personel toplantısı hatırlatması. Lütfen 3. çeyrek raporlarınızı getirin. Toplantı yaklaşık bir saat sürecek. Ardından öğle yemeği ikram edilecek.',
+    {id:'li1', audio:'', transcript:"Welcome to the Grand Hotel. Check-in is from two pm and check-out is by eleven am. Breakfast is served in the restaurant on the ground floor from six thirty to ten thirty. Room service is available twenty-four hours.",
+     tr:'Grand Hotel\'e hoş geldiniz. Check-in saat 14:00\'den itibaren, check-out 11:00\'e kadar. Kahvaltı zemin kattaki restoranda 06:30-10:30 arası. Oda servisi 24 saat.',
      questions:[
-       {q:'What time is the meeting?', opts:['9am','10am','11am','12pm'], answer:1, tr:'Toplantı saat kaçta?'},
-       {q:'What should staff bring?', opts:['ID cards','Q3 reports','laptops','contracts'], answer:1, tr:'Personel ne getirmeli?'},
-       {q:'How long is the meeting?', opts:['30 min','45 min','1 hour','2 hours'], answer:2, tr:'Toplantı ne kadar sürecek?'}
+       {q:'What time is check-in?', opts:['12pm','1pm','2pm','3pm'], answer:2, tr:'Check-in saat kaçta?'},
+       {q:'Where is breakfast served?', opts:['room service','rooftop','ground floor','second floor'], answer:2, tr:'Kahvaltı nerede servis ediliyor?'},
+       {q:'Is room service available at midnight?', opts:['yes','no','weekends only','on request'], answer:0, tr:'Oda servisi gece yarısı da var mı?'}
      ]}
   ]
 };

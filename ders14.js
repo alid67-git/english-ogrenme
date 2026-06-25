@@ -1,81 +1,77 @@
-// ders14.js — English Lesson 14: Education
+// ders14.js — English Lesson 14: Home & Living
 const L14 = {
   words: [
-    {id:'w1', en:'school', ro:'/skuːl/', tr:'okul'},
-    {id:'w2', en:'university / college', ro:'/ˌjuːnɪˈvɜːrsɪti / ˈkɒlɪdʒ/', tr:'üniversite'},
-    {id:'w3', en:'student', ro:'/ˈstjuːdənt/', tr:'öğrenci'},
-    {id:'w4', en:'teacher / professor', ro:'/ˈtiːtʃər / prəˈfɛsər/', tr:'öğretmen / profesör'},
-    {id:'w5', en:'class / lesson', ro:'/klɑːs / ˈlɛsən/', tr:'ders / sınıf'},
-    {id:'w6', en:'homework', ro:'/ˈhoʊmwɜːrk/', tr:'ev ödevi',
-     examples:[{en:'Have you done your homework?', ro:'/hæv juː dʌn jɔːr ˈhoʊmwɜːrk/', tr:'Ödevinizi yaptınız mı?',
-       bd:[{ro:'Have you done',tr:'Yaptınız mı',role:'question'},{ro:'your homework',tr:'ödevinizi',role:'noun'}]}]},
-    {id:'w7', en:'exam / test', ro:'/ɪɡˈzæm / tɛst/', tr:'sınav',
-     examples:[{en:'The exam is on Monday.', ro:'/ðə ɪɡˈzæm ɪz ɒn ˈmʌndeɪ/', tr:'Sınav Pazartesi.',
-       bd:[{ro:'The exam',tr:'Sınav',role:'noun'},{ro:'is on Monday',tr:'Pazartesi',role:'time'}]}]},
-    {id:'w8', en:'pass / fail', ro:'/pɑːs / feɪl/', tr:'geçmek / kalmak (sınav)'},
-    {id:'w9', en:'grade / mark', ro:'/ɡreɪd / mɑːrk/', tr:'not / puan'},
-    {id:'w10', en:'essay', ro:'/ˈɛseɪ/', tr:'deneme / makale'},
-    {id:'w11', en:'library', ro:'/ˈlaɪbrɛri/', tr:'kütüphane'},
-    {id:'w12', en:'degree', ro:'/dɪˈɡriː/', tr:'derece / diploma'},
-    {id:'w13', en:'subject', ro:'/ˈsʌbdʒɪkt/', tr:'ders / konu (akademik)'},
-    {id:'w14', en:'scholarship', ro:'/ˈskɒlərʃɪp/', tr:'burs'},
-    {id:'w15', en:'study', ro:'/ˈstʌdi/', tr:'çalışmak / okumak',
-     examples:[{en:'I study English every day.', ro:'/aɪ ˈstʌdi ˈɪŋɡlɪʃ ˈɛvri deɪ/', tr:'Her gün İngilizce çalışıyorum.',
-       bd:[{ro:'I study',tr:'Çalışıyorum',role:'verb'},{ro:'English',tr:'İngilizce',role:'noun'},{ro:'every day',tr:'her gün',role:'time'}]}]},
-    {id:'w16', en:'learn', ro:'/lɜːrn/', tr:'öğrenmek'},
-    {id:'w17', en:'understand', ro:'/ˌʌndərˈstænd/', tr:'anlamak'},
-    {id:'w18', en:'practise', ro:'/ˈpræktɪs/', tr:'pratik yapmak'},
-    {id:'w19', en:'fluent', ro:'/ˈfluːənt/', tr:'akıcı (dil)',
-     examples:[{en:'My goal is to become fluent in English.', ro:'/maɪ ɡoʊl ɪz tə bɪˈkʌm ˈfluːənt ɪn ˈɪŋɡlɪʃ/', tr:'Hedefim İngilizce\'de akıcı olmak.',
-       bd:[{ro:'My goal is',tr:'Hedefim',role:'noun'},{ro:'to become fluent',tr:'akıcı olmak',role:'verb'},{ro:'in English',tr:'İngilizce\'de',role:'noun'}]}]},
-    {id:'w20', en:'mistake', ro:'/mɪˈsteɪk/', tr:'hata',
-     examples:[{en:"Don't worry about making mistakes.", ro:"/doʊnt ˈwʌri əˈbaʊt ˈmeɪkɪŋ mɪˈsteɪks/", tr:'Hata yapmaktan endişelenme.',
-       bd:[{ro:"Don't worry",tr:'Endişelenme',role:'verb'},{ro:'about making mistakes',tr:'hata yapmak',role:'phrase'}]}]}
+    {id:'w1', en:'house / flat / apartment', ro:'/haʊs / flæt / əˈpɑːrtmənt/', tr:'ev / daire'},
+    {id:'w2', en:'living room', ro:'/ˈlɪvɪŋ ruːm/', tr:'oturma odası'},
+    {id:'w3', en:'bedroom', ro:'/ˈbɛdruːm/', tr:'yatak odası'},
+    {id:'w4', en:'bathroom', ro:'/ˈbæθruːm/', tr:'banyo'},
+    {id:'w5', en:'kitchen', ro:'/ˈkɪtʃɪn/', tr:'mutfak'},
+    {id:'w6', en:'garden / yard', ro:'/ˈɡɑːrdən / jɑːrd/', tr:'bahçe'},
+    {id:'w7', en:'neighbour', ro:'/ˈneɪbər/', tr:'komşu'},
+    {id:'w8', en:'rent', ro:'/rɛnt/', tr:'kira / kiralamak',
+     examples:[{en:'How much is the rent per month?', ro:'/haʊ mʌtʃ ɪz ðə rɛnt pər mʌnθ/', tr:'Aylık kira ne kadar?',
+       bd:[{ro:'How much',tr:'Ne kadar',role:'question'},{ro:'is the rent',tr:'kira',role:'noun'},{ro:'per month',tr:'aylık',role:'time'}]}]},
+    {id:'w9', en:'furniture', ro:'/ˈfɜːrnɪtʃər/', tr:'mobilya'},
+    {id:'w10', en:'sofa / couch', ro:'/ˈsoʊfə / kaʊtʃ/', tr:'kanepe'},
+    {id:'w11', en:'table', ro:'/ˈteɪbəl/', tr:'masa'},
+    {id:'w12', en:'chair', ro:'/tʃɛr/', tr:'sandalye'},
+    {id:'w13', en:'bed', ro:'/bɛd/', tr:'yatak'},
+    {id:'w14', en:'window', ro:'/ˈwɪndoʊ/', tr:'pencere'},
+    {id:'w15', en:'door', ro:'/dɔːr/', tr:'kapı'},
+    {id:'w16', en:'stairs', ro:'/stɛrz/', tr:'merdiven'},
+    {id:'w17', en:'washing machine', ro:'/ˈwɒʃɪŋ məˈʃiːn/', tr:'çamaşır makinesi'},
+    {id:'w18', en:'fridge', ro:'/frɪdʒ/', tr:'buzdolabı'},
+    {id:'w19', en:'clean', ro:'/kliːn/', tr:'temizlemek / temiz'},
+    {id:'w20', en:'messy', ro:'/ˈmɛsi/', tr:'dağınık'},
+    {id:'w21', en:'move in / move out', ro:'/muːv ɪn / muːv aʊt/', tr:'taşınmak (içeri/dışarı)',
+     examples:[{en:'We are moving in next week.', ro:'/wiː ɑːr ˈmuːvɪŋ ɪn nɛkst wiːk/', tr:'Gelecek hafta taşınıyoruz.',
+       bd:[{ro:'We are moving in',tr:'Taşınıyoruz',role:'verb'},{ro:'next week',tr:'gelecek hafta',role:'time'}]}]},
+    {id:'w22', en:'bills', ro:'/bɪlz/', tr:'faturalar (su, elektrik, gaz)'}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Present Perfect — have/has + done', title_en:'Present Perfect',
-     explanation:'Present Perfect geçmişte olmuş ama şimdiye etkisi olan olayları anlatır.',
+    {id:'g1', title:'There is / There are', title_en:'There is / There are',
+     explanation:'"There is" tekil ve sayılamaz isimler için; "There are" çoğul isimler için.',
      table:[
-       {pronoun:'I/You/We/They', form:'have + past participle', example:'I have studied English for two years.', tr:'İki yıldır İngilizce çalışıyorum.'},
-       {pronoun:'He/She/It', form:'has + past participle', example:'She has passed the exam.', tr:'Sınavı geçti.'},
-       {pronoun:'Olumsuz', form:"haven't / hasn't", example:"I haven't done my homework.", tr:'Ödevimi yapmadım.'},
-       {pronoun:'Soru', form:'Have...? / Has...?', example:'Have you studied today?', tr:'Bugün çalıştın mı?'}
+       {pronoun:'Tekil', form:'There is a...', example:'There is a sofa in the living room.', tr:'Oturma odasında bir kanepe var.'},
+       {pronoun:'Çoğul', form:'There are...', example:'There are three bedrooms.', tr:'Üç yatak odası var.'},
+       {pronoun:'Olumsuz', form:"There isn't / There aren't", example:"There isn't a garage.", tr:'Garaj yok.'},
+       {pronoun:'Soru', form:'Is there...? / Are there...?', example:'Is there a garden?', tr:'Bahçe var mı?'}
      ],
-     note:'Ever/never: "Have you ever been to London?" — hayatında hiç'}
+     note:'"Is there a...?" → "Yes, there is." / "No, there isn\'t."'}
   ],
 
   speaking: [
-    {id:'sp1', en:'I study English at a language school three times a week.', ro:'/aɪ ˈstʌdi ˈɪŋɡlɪʃ æt ə ˈlæŋɡwɪdʒ skuːl θriː taɪmz ə wiːk/', tr:'Haftada üç kez dil okulunda İngilizce çalışıyorum.',
-     tip:'Eğitim bilgisi verme.', prompt:'Eğitiminizden bahsedin'},
-    {id:'sp2', en:'My favourite subject was history.', ro:'/maɪ ˈfeɪvərɪt ˈsʌbdʒɪkt wɒz ˈhɪstəri/', tr:'En sevdiğim ders tarihti.',
-     tip:'Favori ders anlatma.', prompt:'Favori dersinizi anlatın'},
-    {id:'sp3', en:"I've been learning English for six months and I've improved a lot.", ro:'/aɪv biːn ˈlɜːrnɪŋ ˈɪŋɡlɪʃ fər sɪks mʌnθs ænd aɪv ɪmˈpruːvd ə lɒt/', tr:'Altı aydır İngilizce öğreniyorum ve çok ilerleme kaydettim.',
-     tip:'İlerleme anlatma.', prompt:'İlerlemenizden bahsedin'}
+    {id:'sp1', en:'I live in a two-bedroom flat in the city centre.', ro:'/aɪ lɪv ɪn ə tuː ˈbɛdruːm flæt ɪn ðə ˈsɪti ˈsɛntər/', tr:'Şehir merkezinde iki yatak odalı bir dairede yaşıyorum.',
+     tip:'Evinizi tanıtma.', prompt:'Evinizi tanıtın'},
+    {id:'sp2', en:'Is there a washing machine in the flat?', ro:'/ɪz ðɛr ə ˈwɒʃɪŋ məˈʃiːn ɪn ðə flæt/', tr:'Dairede çamaşır makinesi var mı?',
+     tip:'Ev özellikleri sorma.', prompt:'Ev özelliği sorun'},
+    {id:'sp3', en:"The rent is eight hundred pounds a month, bills included.", ro:'/ðə rɛnt ɪz eɪt ˈhʌndrəd paʊndz ə mʌnθ bɪlz ɪnˈkluːdɪd/', tr:'Kira aylık sekiz yüz sterlin, faturalar dahil.',
+     tip:'Kira bilgisi verme.', prompt:'Kira bilgisi verin'}
   ],
 
   dialogues: [
-    {id:'d1', title:'Dil Okulu Kaydı', title_en:'Enrolling in Language School',
+    {id:'d1', title:'Ev Kiralama', title_en:'Renting a Flat',
      lines:[
-       {speaker:'A', gender:'f', en:"Good morning! I'd like to enrol in an English course.", ro:'/ɡʊd ˈmɔːrnɪŋ aɪd laɪk tə ɪnˈroʊl ɪn ən ˈɪŋɡlɪʃ kɔːrs/', tr:'Günaydın! Bir İngilizce kursuna kaydolmak istiyorum.'},
-       {speaker:'B', gender:'m', en:"Welcome! What is your current level?", ro:'/ˈwɛlkəm wɒt ɪz jɔːr ˈkʌrənt ˈlɛvəl/', tr:'Hoş geldiniz! Mevcut seviyeniz nedir?'},
-       {speaker:'A', gender:'f', en:"I'm a beginner. I've only studied for a few weeks.", ro:'/aɪm ə bɪˈɡɪnər aɪv ˈoʊnli ˈstʌdid fər ə fjuː wiːks/', tr:'Yeni başlayandayım. Sadece birkaç haftadır çalışıyorum.'},
-       {speaker:'B', gender:'m', en:"We have a beginner's class on Monday, Wednesday, and Friday at six pm.", ro:'/wiː hæv ə bɪˈɡɪnərz klɑːs ɒn ˈmʌndeɪ ˈwɛnzdeɪ ænd ˈfraɪdeɪ æt sɪks piːɛm/', tr:'Pazartesi, Çarşamba ve Cuma saat 18:00\'de başlangıç sınıfımız var.'},
-       {speaker:'A', gender:'f', en:"That's perfect for me. How much is the course?", ro:'/ðæts ˈpɜːrfɪkt fər miː haʊ mʌtʃ ɪz ðə kɔːrs/', tr:'Bu benim için mükemmel. Kurs ne kadar?'},
-       {speaker:'B', gender:'m', en:"Two hundred pounds for ten weeks, including all materials.", ro:'/tuː ˈhʌndrəd paʊndz fər tɛn wiːks ɪnˈkluːdɪŋ ɔːl məˈtɪərɪəlz/', tr:'Tüm materyaller dahil, on hafta için iki yüz sterlin.'},
-       {speaker:'A', gender:'f', en:'I\'ll take it! Can I start next Monday?', ro:'/aɪl teɪk ɪt kæn aɪ stɑːrt nɛkst ˈmʌndeɪ/', tr:'Alıyorum! Gelecek Pazartesi başlayabilir miyim?'}
+       {speaker:'A', gender:'m', en:"Hello! I'm calling about the flat for rent. Is it still available?", ro:'/həˈloʊ aɪm ˈkɔːlɪŋ əˈbaʊt ðə flæt fər rɛnt ɪz ɪt stɪl əˈveɪləbəl/', tr:'Merhaba! Kiralık daire için arıyorum. Hâlâ müsait mi?'},
+       {speaker:'B', gender:'f', en:"Yes, it is. It's a two-bedroom flat on the third floor.", ro:'/jɛs ɪt ɪz ɪts ə tuː ˈbɛdruːm flæt ɒn ðə θɜːrd flɔːr/', tr:'Evet, müsait. Üçüncü katta iki yatak odalı bir daire.'},
+       {speaker:'A', gender:'m', en:'How much is the rent?', ro:'/haʊ mʌtʃ ɪz ðə rɛnt/', tr:'Kira ne kadar?'},
+       {speaker:'B', gender:'f', en:"Nine hundred a month. Bills are not included.", ro:'/naɪn ˈhʌndrəd ə mʌnθ bɪlz ɑːr nɒt ɪnˈkluːdɪd/', tr:'Ayda dokuz yüz. Faturalar dahil değil.'},
+       {speaker:'A', gender:'m', en:'Is there parking?', ro:'/ɪz ðɛr ˈpɑːrkɪŋ/', tr:'Otopark var mı?'},
+       {speaker:'B', gender:'f', en:"Yes, there is one parking space. Would you like to view it?", ro:'/jɛs ðɛr ɪz wʌn ˈpɑːrkɪŋ speɪs wʊd juː laɪk tə vjuː ɪt/', tr:'Evet, bir park yeri var. Görmeye gelmek ister misiniz?'},
+       {speaker:'A', gender:'m', en:"Yes, please. Can I come tomorrow afternoon?", ro:'/jɛs pliːz kæn aɪ kʌm təˈmɒroʊ ˌæftərˈnuːn/', tr:'Evet, lütfen. Yarın öğleden sonra gelebilir miyim?'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"To improve your English, you should practise every day. Reading, writing, listening, and speaking are all important skills. Try to watch films and TV series in English. Use subtitles at first, then try without them. Most importantly, do not be afraid of making mistakes.",
-     tr:'İngilizce\'nizi geliştirmek için her gün pratik yapmalısınız. Okuma, yazma, dinleme ve konuşma önemli becerilerdir. İngilizce film ve dizi izlemeyi deneyin. Önce altyazıyla, sonra altyazısız deneyin. En önemlisi, hata yapmaktan korkmayın.',
+    {id:'li1', audio:'', transcript:"The flat has two bedrooms, a large living room, and a modern kitchen. There is a bathroom and a separate toilet. The flat is on the second floor and there is a lift. The monthly rent is one thousand pounds, bills not included. Available from the first of next month.",
+     tr:'Dairede iki yatak odası, geniş bir oturma odası ve modern bir mutfak var. Banyo ve ayrı tuvalet mevcut. Daire ikinci katta ve asansör var. Aylık kira bin sterlin, faturalar hariç. Gelecek ayın birinden itibaren müsait.',
      questions:[
-       {q:'What should you do every day?', opts:['take a test','practise','write essays','take notes'], answer:1, tr:'Her gün ne yapmalısınız?'},
-       {q:'What is recommended for listening practice?', opts:['radio news','podcasts','films and TV','audiobooks'], answer:2, tr:'Dinleme pratiği için ne tavsiye ediliyor?'},
-       {q:'What should you NOT be afraid of?', opts:['speaking','exams','making mistakes','teachers'], answer:2, tr:'Neden korkmamak gerekiyor?'}
+       {q:'How many bedrooms?', opts:['1','2','3','4'], answer:1, tr:'Kaç yatak odası var?'},
+       {q:'What floor is it on?', opts:['1st','2nd','3rd','ground'], answer:1, tr:'Kaçıncı katta?'},
+       {q:'Are bills included?', opts:['yes','no','partially','weekends only'], answer:1, tr:'Faturalar dahil mi?'}
      ]}
   ]
 };

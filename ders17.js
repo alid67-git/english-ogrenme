@@ -1,79 +1,80 @@
-// ders17.js — English Lesson 17: Weather
+// ders17.js — English Lesson 17: Emotions & Feelings
 const L17 = {
   words: [
-    {id:'w1', en:"What's the weather like?", ro:"/wɒts ðə ˈwɛðər laɪk/", tr:'Hava nasıl?',
-     tip:'Hava durumunu sormak için.', ctx:'Günlük konuşma.',
-     examples:[{en:"What's the weather like in London in winter?", ro:"/wɒts ðə ˈwɛðər laɪk ɪn ˈlʌndən ɪn ˈwɪntər/", tr:'Londra\'da kışın hava nasıl?',
-       bd:[{ro:"What's the weather like",tr:'Hava nasıl',role:'question'},{ro:'in London in winter',tr:'Londra\'da kışın',role:'time'}]}]},
-    {id:'w2', en:"It's sunny.", ro:"/ɪts ˈsʌni/", tr:'Güneşli.',
-     examples:[{en:"It's sunny and warm today.", ro:"/ɪts ˈsʌni ænd wɔːrm təˈdeɪ/", tr:'Bugün güneşli ve sıcak.',
-       bd:[{ro:"It's sunny",tr:'Güneşli',role:'adjective'},{ro:'and warm',tr:'ve sıcak',role:'adjective'}]}]},
-    {id:'w3', en:"It's raining.", ro:"/ɪts ˈreɪnɪŋ/", tr:'Yağmur yağıyor.'},
-    {id:'w4', en:"It's snowing.", ro:"/ɪts ˈsnoʊɪŋ/", tr:'Kar yağıyor.'},
-    {id:'w5', en:"It's cloudy.", ro:"/ɪts ˈklaʊdi/", tr:'Bulutlu.'},
-    {id:'w6', en:"It's windy.", ro:"/ɪts ˈwɪndi/", tr:'Rüzgarlı.'},
-    {id:'w7', en:"It's foggy.", ro:"/ɪts ˈfɒɡi/", tr:'Sisli.'},
-    {id:'w8', en:'hot', ro:'/hɒt/', tr:'sıcak (hava)'},
-    {id:'w9', en:'cold', ro:'/koʊld/', tr:'soğuk (hava)'},
-    {id:'w10', en:'warm', ro:'/wɔːrm/', tr:'ılık'},
-    {id:'w11', en:'cool', ro:'/kuːl/', tr:'serin'},
-    {id:'w12', en:'degrees', ro:'/dɪˈɡriːz/', tr:'derece',
-     examples:[{en:"It's twenty-five degrees Celsius.", ro:"/ɪts ˈtwɛnti faɪv dɪˈɡriːz ˈsɛlsiəs/", tr:'Sıcaklık yirmi beş santigrat derece.',
-       bd:[{ro:"It's",tr:'(sıcaklık)',role:'verb'},{ro:'twenty-five degrees',tr:'yirmi beş derece',role:'temperature'},{ro:'Celsius',tr:'santigrat',role:'unit'}]}]},
-    {id:'w13', en:'forecast', ro:'/ˈfɔːrkæst/', tr:'hava tahmini'},
-    {id:'w14', en:'umbrella', ro:'/ʌmˈbrɛlə/', tr:'şemsiye'},
-    {id:'w15', en:'coat', ro:'/koʊt/', tr:'palto / mont'},
-    {id:'w16', en:'spring', ro:'/sprɪŋ/', tr:'ilkbahar'},
-    {id:'w17', en:'summer', ro:'/ˈsʌmər/', tr:'yaz'},
-    {id:'w18', en:'autumn / fall', ro:'/ˈɔːtəm / fɔːl/', tr:'sonbahar'},
-    {id:'w19', en:'winter', ro:'/ˈwɪntər/', tr:'kış'},
-    {id:'w20', en:'flood', ro:'/flʌd/', tr:'sel'},
-    {id:'w21', en:'storm', ro:'/stɔːrm/', tr:'fırtına'},
-    {id:'w22', en:'rainbow', ro:'/ˈreɪnboʊ/', tr:'gökkuşağı'}
+    {id:'w1', en:'happy', ro:'/ˈhæpi/', tr:'mutlu',
+     examples:[{en:"I'm so happy today!", ro:'/aɪm soʊ ˈhæpi təˈdeɪ/', tr:'Bugün çok mutluyum!',
+       bd:[{ro:"I'm",tr:'Ben',role:'subject'},{ro:'so happy',tr:'çok mutlu',role:'adjective'},{ro:'today',tr:'bugün',role:'time'}]}]},
+    {id:'w2', en:'sad', ro:'/sæd/', tr:'üzgün'},
+    {id:'w3', en:'angry', ro:'/ˈæŋɡri/', tr:'kızgın / sinirli'},
+    {id:'w4', en:'excited', ro:'/ɪkˈsaɪtɪd/', tr:'heyecanlı'},
+    {id:'w5', en:'nervous', ro:'/ˈnɜːrvəs/', tr:'gergin / sinirli'},
+    {id:'w6', en:'tired', ro:'/ˈtaɪərd/', tr:'yorgun'},
+    {id:'w7', en:'bored', ro:'/bɔːrd/', tr:'sıkılmış'},
+    {id:'w8', en:'surprised', ro:'/sərˈpraɪzd/', tr:'şaşırmış'},
+    {id:'w9', en:'scared / afraid', ro:'/skɛrd / əˈfreɪd/', tr:'korkmuş'},
+    {id:'w10', en:'confident', ro:'/ˈkɒnfɪdənt/', tr:'kendinden emin / özgüvenli'},
+    {id:'w11', en:'worried', ro:'/ˈwʌrid/', tr:'endişeli',
+     examples:[{en:"I'm worried about the exam.", ro:"/aɪm ˈwʌrid əˈbaʊt ðə ɪɡˈzæm/", tr:'Sınav için endişeleniyorum.',
+       bd:[{ro:"I'm worried",tr:'Endişeleniyorum',role:'adjective'},{ro:'about the exam',tr:'sınav için',role:'phrase'}]}]},
+    {id:'w12', en:'relieved', ro:'/rɪˈliːvd/', tr:'rahatlamış'},
+    {id:'w13', en:'proud', ro:'/praʊd/', tr:'gururlu',
+     examples:[{en:"I'm proud of you.", ro:'/aɪm praʊd əv juː/', tr:'Seninle gurur duyuyorum.',
+       bd:[{ro:"I'm proud",tr:'Gurur duyuyorum',role:'adjective'},{ro:'of you',tr:'seninle',role:'phrase'}]}]},
+    {id:'w14', en:'lonely', ro:'/ˈloʊnli/', tr:'yalnız'},
+    {id:'w15', en:'embarrassed', ro:'/ɪmˈbærəst/', tr:'utanmış'},
+    {id:'w16', en:'feel', ro:'/fiːl/', tr:'hissetmek',
+     examples:[{en:'How do you feel today?', ro:'/haʊ duː juː fiːl təˈdeɪ/', tr:'Bugün nasıl hissediyorsun?',
+       bd:[{ro:'How do you feel',tr:'Nasıl hissediyorsun',role:'question'},{ro:'today',tr:'bugün',role:'time'}]}]},
+    {id:'w17', en:'mood', ro:'/muːd/', tr:'ruh hali',
+     examples:[{en:"I'm in a good mood today.", ro:'/aɪm ɪn ə ɡʊd muːd təˈdeɪ/', tr:'Bugün modum yerinde.',
+       bd:[{ro:"I'm in a",tr:'...dayım',role:'verb'},{ro:'good mood',tr:'iyi ruh hali',role:'noun'}]}]},
+    {id:'w18', en:'stress', ro:'/strɛs/', tr:'stres'},
+    {id:'w19', en:'calm down', ro:'/kɑːm daʊn/', tr:'sakinleşmek'},
+    {id:'w20', en:'cheer up', ro:'/tʃɪər ʌp/', tr:'neşelenmek / sevinmek'}
   ],
 
   tones: [],
 
   grammar: [
-    {id:'g1', title:'Hava Durumu İfadeleri', title_en:'Weather Expressions',
-     explanation:'İngilizce\'de hava durumu genellikle "It\'s" ile başlar.',
+    {id:'g1', title:'Duygular İçin Sıfatlar', title_en:'Adjectives for Emotions',
+     explanation:'"I am + adjective" duygu anlatmak için en temel kalıptır.',
      table:[
-       {pronoun:'Güneş', form:"It's sunny / It's hot", example:"It's very hot in July.", tr:'Temmuz\'da çok sıcak.'},
-       {pronoun:'Yağmur', form:"It's raining / It's wet", example:"Take an umbrella — it's raining.", tr:'Şemsiye al — yağmur yağıyor.'},
-       {pronoun:'Kar', form:"It's snowing / It's freezing", example:"It's freezing cold today.", tr:'Bugün dondurucu soğuk.'},
-       {pronoun:'Gelecek', form:'It will be...', example:"It'll be sunny tomorrow.", tr:'Yarın güneşli olacak.'}
+       {pronoun:'Anlık duygu', form:'I am + adj.', example:"I'm really excited.", tr:'Gerçekten heyecanlıyım.'},
+       {pronoun:'Neden', form:'I am...about/of/with', example:"I'm nervous about the interview.", tr:'Mülakata gerginim.'},
+       {pronoun:'Nedenini sorma', form:'Why are you...?', example:"Why are you sad?", tr:'Neden üzgünsün?'},
+       {pronoun:'Empati', form:'I understand how you feel.', example:'That must be difficult.', tr:'Bunun zor olduğunu anlıyorum.'}
      ],
-     note:'"The weather is nice/terrible/awful" de kullanılır'}
+     note:'"Feeling" ile de kullanılır: "I\'m feeling tired."'}
   ],
 
   speaking: [
-    {id:'sp1', en:"What's the weather like today? It's cold and cloudy.", ro:"/wɒts ðə ˈwɛðər laɪk təˈdeɪ ɪts koʊld ænd ˈklaʊdi/", tr:'Bugün hava nasıl? Soğuk ve bulutlu.',
-     tip:'Hava durumu hakkında konuşma.', prompt:'Hava durumunu anlatın'},
-    {id:'sp2', en:"I prefer summer. I love hot and sunny weather.", ro:"/aɪ prɪˈfɜːr ˈsʌmər aɪ lʌv hɒt ænd ˈsʌni ˈwɛðər/", tr:'Yazı tercih ederim. Sıcak ve güneşli havayı seviyorum.',
-     tip:'Hava tercihi anlatma.', prompt:'Tercih ettiğiniz havayı söyleyin'},
-    {id:'sp3', en:"According to the forecast, it will rain all week.", ro:"/əˈkɔːrdɪŋ tə ðə ˈfɔːrkæst ɪt wɪl reɪn ɔːl wiːk/", tr:'Hava tahminine göre tüm hafta yağmur yağacak.',
-     tip:'Tahmin anlatma.', prompt:'Bir hava tahminini anlatın'}
+    {id:'sp1', en:"I'm feeling really excited about my trip to London!", ro:"/aɪm ˈfiːlɪŋ ˈrɪəli ɪkˈsaɪtɪd əˈbaʊt maɪ trɪp tə ˈlʌndən/", tr:'Londra gezisi için gerçekten heyecanlıyım!',
+     tip:'Duygu anlatma.', prompt:'Bir duygunuzu anlatın'},
+    {id:'sp2', en:"Don't worry! I'm sure it will be fine.", ro:"/doʊnt ˈwʌri aɪm ʃʊər ɪt wɪl biː faɪn/", tr:'Endişelenme! Eminim iyi olacak.',
+     tip:'Birisini sakinleştirme.', prompt:'Birini rahatlatın'},
+    {id:'sp3', en:"I was so embarrassed when I forgot his name!", ro:"/aɪ wɒz soʊ ɪmˈbærəst wɛn aɪ fərˈɡɒt hɪz neɪm/", tr:'Adını unuttuğumda çok utandım!',
+     tip:'Geçmişte duygu anlatma.', prompt:'Geçmişteki bir duygunuzu anlatın'}
   ],
 
   dialogues: [
-    {id:'d1', title:'Hava Hakkında Konuşma', title_en:'Talking About the Weather',
+    {id:'d1', title:'Nasıl Hissediyorsun?', title_en:'How Are You Feeling?',
      lines:[
-       {speaker:'A', gender:'m', en:"Terrible weather today, isn't it?", ro:"/ˈtɛrɪbəl ˈwɛðər təˈdeɪ ɪznt ɪt/", tr:'Bugün berbat bir hava, değil mi?'},
-       {speaker:'B', gender:'f', en:"Awful! It has been raining all week. I'm so tired of it.", ro:"/ˈɔːfəl ɪt hæz biːn ˈreɪnɪŋ ɔːl wiːk aɪm soʊ ˈtaɪərd əv ɪt/", tr:'Berbat! Tüm hafta yağmur yağıyor. Çok sıkıldım.'},
-       {speaker:'A', gender:'m', en:"Did you see the forecast? It should clear up by the weekend.", ro:"/dɪd juː siː ðə ˈfɔːrkæst ɪt ʃʊd klɪər ʌp baɪ ðə ˌwiːkˈɛnd/", tr:'Hava tahminini gördün mü? Hafta sonuna kadar açılması lazım.'},
-       {speaker:'B', gender:'f', en:"I hope so. I would love some sunshine. What do you prefer — hot or cold weather?", ro:"/aɪ hoʊp soʊ aɪ wʊd lʌv sʌm ˈsʌnʃaɪn wɒt duː juː prɪˈfɜːr hɒt ɔːr koʊld ˈwɛðər/", tr:'Umarım. Biraz güneş görmek isterim. Sen ne tercih edersin — sıcak mı soğuk mu hava?'},
-       {speaker:'A', gender:'m', en:"Definitely warm and sunny. I love spring — not too hot, not too cold.", ro:"/ˈdɛfɪnɪtli wɔːrm ænd ˈsʌni aɪ lʌv sprɪŋ nɒt tuː hɒt nɒt tuː koʊld/", tr:'Kesinlikle ılık ve güneşli. İlkbaharı seviyorum — çok sıcak değil, çok soğuk değil.'},
-       {speaker:'B', gender:'f', en:"Same! Right, I must run — I forgot my umbrella!", ro:"/seɪm raɪt aɪ mʌst rʌn aɪ fərˈɡɒt maɪ ʌmˈbrɛlə/", tr:'Aynı fikirdeyim! Peki, koşmalıyım — şemsiyemi unuttum!'}
+       {speaker:'A', gender:'f', en:"Hey, you look worried. Is everything okay?", ro:"/heɪ juː lʊk ˈwʌrid ɪz ˈɛvriθɪŋ oʊˈkeɪ/", tr:'Selam, endişeli görünüyorsun. Her şey yolunda mı?'},
+       {speaker:'B', gender:'m', en:"Not really. I have a job interview tomorrow and I'm really nervous.", ro:"/nɒt ˈrɪəli aɪ hæv ə dʒɒb ˈɪntərvjuː təˈmɒroʊ ænd aɪm ˈrɪəli ˈnɜːrvəs/", tr:'Pek değil. Yarın iş mülakatım var ve gerçekten gerginim.'},
+       {speaker:'A', gender:'f', en:"I understand! Interviews are stressful. But you are well prepared.", ro:"/aɪ ˌʌndərˈstænd ˈɪntərvjuːz ɑːr ˈstrɛsfəl bʌt juː ɑːr wɛl prɪˈpɛrd/", tr:'Anlıyorum! Mülakatlar stresli. Ama iyi hazırlanmışsın.'},
+       {speaker:'B', gender:'m', en:"Thank you. I just feel like I'll forget everything!", ro:"/θæŋk juː aɪ dʒʌst fiːl laɪk aɪl fərˈɡɛt ˈɛvriθɪŋ/", tr:'Teşekkürler. Sadece her şeyi unutacakmış gibi hissediyorum!'},
+       {speaker:'A', gender:'f', en:"That's normal. Take a deep breath and be yourself. I'm proud of you!", ro:"/ðæts ˈnɔːrməl teɪk ə diːp brɛθ ænd biː jɔːrsɛlf aɪm praʊd əv juː/", tr:'Bu normal. Derin bir nefes al ve kendin ol. Seninle gurur duyuyorum!'},
+       {speaker:'B', gender:'m', en:"That really helps. Thank you, I feel better now!", ro:"/ðæt ˈrɪəli hɛlps θæŋk juː aɪ fiːl ˈbɛtər naʊ/", tr:'Bu gerçekten yardımcı oluyor. Teşekkürler, şimdi daha iyi hissediyorum!'}
      ]}
   ],
 
   listening: [
-    {id:'li1', audio:'', transcript:"And now the weather forecast for the UK. This weekend will be mostly cloudy with rain in the north. The south will see some sunshine on Saturday, with temperatures reaching eighteen degrees. Sunday will be cooler with strong winds. Next week looks brighter overall.",
-     tr:'Ve şimdi Birleşik Krallık hava tahmini. Bu hafta sonu kuzey bölgelerinde çoğunlukla bulutlu ve yağmurlu olacak. Güneyde Cumartesi günü güneş görülecek, sıcaklıklar on sekiz dereceye ulaşacak. Pazar daha serin ve rüzgarlı geçecek. Gelecek hafta genel olarak daha aydınlık görünüyor.',
+    {id:'li1', audio:'', transcript:"Emotional intelligence is the ability to understand and manage your own emotions, and to recognise the emotions of others. People with high emotional intelligence tend to be happier, more confident, and better at forming relationships. You can improve your emotional intelligence by practising self-awareness and empathy.",
+     tr:'Duygusal zeka, kendi duygularınızı anlama ve yönetme ile başkalarının duygularını tanıma becerisidir. Yüksek duygusal zekaya sahip insanlar genellikle daha mutlu, özgüvenli ve ilişki kurmada daha başarılıdır. Öz farkındalık ve empati pratiği yaparak duygusal zekanızı geliştirebilirsiniz.',
      questions:[
-       {q:'What will the weather be like in the north this weekend?', opts:['sunny','windy','rainy and cloudy','snowy'], answer:2, tr:'Kuzey bu hafta sonu nasıl olacak?'},
-       {q:'What temperature will the south reach on Saturday?', opts:['15°C','16°C','18°C','20°C'], answer:2, tr:'Güney Cumartesi kaç dereceye ulaşacak?'},
-       {q:'What does next week look like?', opts:['rainy','stormy','brighter','cold'], answer:2, tr:'Gelecek hafta nasıl görünüyor?'}
+       {q:'What is emotional intelligence?', opts:['being smart','understanding emotions','feeling happy','avoiding stress'], answer:1, tr:'Duygusal zeka nedir?'},
+       {q:'How do people with high EI tend to be?', opts:['lonelier','angrier','happier and more confident','more stressed'], answer:2, tr:'Yüksek EQ\'lu insanlar genellikle nasıldır?'},
+       {q:'How can you improve emotional intelligence?', opts:['by studying harder','through self-awareness and empathy','by avoiding emotions','by working alone'], answer:1, tr:'Duygusal zekayı nasıl geliştirebilirsiniz?'}
      ]}
   ]
 };
