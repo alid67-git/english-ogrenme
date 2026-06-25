@@ -1,184 +1,86 @@
-// Ders 6 verisi — tayca-v3
-// =================== VERİ: DERS 6 — Yol Tarifi ===================
+// ders6.js — English Lesson 6: Directions
 const L6 = {
-  tones:[],
-  words:[
-    {id:'w1',th:'ที่ไหน',ro:'thii-nai',tr:'Nerede / Nereye',
-     tip:'"Thii" = yer, "nai" = hangi. Birleşince "nerede" sorusu.',
-     ctx:'Her gün lazım. "X yuu thii-nai" = X nerede?',
-     examples:[
-       {th:'ห้องน้ำอยู่ที่ไหนครับ',ro:'hong-naam yuu thii-nai khrap',tr:'Tuvalet nerede?',bd:[{ro:'hong-naam',tr:'tuvalet',role:'S - Ozne'},{ro:'yuu thii-nai',tr:'nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ร้านอาหารอยู่ที่ไหนครับ',ro:'raan-aa-haan yuu thii-nai khrap',tr:'Restoran nerede?',bd:[{ro:'raan-aa-haan',tr:'restoran',role:'S - Ozne'},{ro:'yuu thii-nai',tr:'nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'สถานีรถไฟอยู่ที่ไหนครับ',ro:'sa-thaa-nii rot-fai yuu thii-nai khrap',tr:'Tren istasyonu nerede?',bd:[{ro:'sa-thaa-nii rot-fai',tr:'tren istasyonu',role:'S - Ozne'},{ro:'yuu thii-nai',tr:'nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ที่นี่คือที่ไหนครับ',ro:'thii-nii khue thii-nai khrap',tr:'Burası neresi?',bd:[{ro:'thii-nii khue',tr:'burası nedir',role:'Soru/Olumsuz'},{ro:'thii-nai',tr:'neresi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w2',th:'ตรงไป',ro:'trong-pai',tr:'Düz git / Düz ilerle',
-     tip:'"Trong" = düz/doğru, "pai" = git. Yön tarifinin temeli.',
-     ctx:'Yol tarifi verirken ilk söylenen kelime.',
-     examples:[
-       {th:'ตรงไปครับ',ro:'trong-pai khrap',tr:'Düz gidin.',bd:[{ro:'trong-pai',tr:'düz git',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ตรงไปแล้วเลี้ยวซ้ายครับ',ro:'trong-pai laeo liaw-saai khrap',tr:'Düz gidip sola dönün.',bd:[{ro:'trong-pai laeo',tr:'düz gidince',role:'V - Yuklem'},{ro:'liaw-saai',tr:'sola dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ตรงไปสักครู่ครับ',ro:'trong-pai sak-khru khrap',tr:'Biraz düz gidin.',bd:[{ro:'trong-pai sak-khru',tr:'biraz düz git',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w3',th:'เลี้ยว',ro:'liaw',tr:'Dönmek',
-     tip:'"Liaw sai" = sola dön, "liaw khwa" = sağa dön.',
-     ctx:'Yol tarifinin en önemli kelimesi.',
-     examples:[
-       {th:'เลี้ยวซ้ายครับ',ro:'liaw-saai khrap',tr:'Sola dönün.',bd:[{ro:'liaw-saai',tr:'sola dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เลี้ยวขวาครับ',ro:'liaw-khwaa khrap',tr:'Sağa dönün.',bd:[{ro:'liaw-khwaa',tr:'sağa dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เลี้ยวซ้ายที่สี่แยกครับ',ro:'liaw-saai thii sii-yaek khrap',tr:'Kavşakta sola dönün.',bd:[{ro:'liaw-saai',tr:'sola dön',role:'V - Yuklem'},{ro:'thii sii-yaek',tr:'kavşakta',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เลี้ยวขวาหลังไฟแดงครับ',ro:'liaw-khwaa lang fai-daeng khrap',tr:'Kırmızı ışıktan sonra sağa.',bd:[{ro:'liaw-khwaa',tr:'sağa dön',role:'V - Yuklem'},{ro:'lang fai-daeng',tr:'kırmızı ışıktan sonra',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w4',th:'ใกล้',ro:'glai',tr:'Yakın',
-     tip:'"Glai" = yakın. "Glai glai" = çok yakın. "Maii glai" = uzak.',
-     ctx:'Mesafe sormak ve anlatmak için.',
-     examples:[
-       {th:'ใกล้ไหมครับ',ro:'glai mai khrap',tr:'Yakın mı?',bd:[{ro:'glai mai',tr:'yakın mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ใกล้มากครับ เดินได้',ro:'glai maak khrap dern dai',tr:'Çok yakın, yürüyebilirsiniz.',bd:[{ro:'glai maak',tr:'çok yakın',role:'V - Yuklem'},{ro:'dern dai',tr:'yürüyebilir',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไม่ไกลครับ',ro:'mai glai khrap',tr:'Uzak değil.',bd:[{ro:'mai glai',tr:'uzak değil',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ใกล้ห้างสรรพสินค้าครับ',ro:'glai haang-sap-pa-sin-khaa khrap',tr:'Alışveriş merkezine yakın.',bd:[{ro:'glai',tr:'yakın',role:'Kelime'},{ro:'haang-sap-pa-sin-khaa',tr:'alışveriş merkezi',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w5',th:'ไกล',ro:'glai',tr:'Uzak',
-     tip:'Dikkat: Yakın ve uzak aynı romanizasyon "glai" ama farklı tonlar!',
-     ctx:'Mesafe belirtirken kullanılır.',
-     examples:[
-       {th:'ไกลไหมครับ',ro:'glai mai khrap',tr:'Uzak mı?',bd:[{ro:'glai mai',tr:'uzak mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไกลมากครับ ต้องนั่งรถ',ro:'glai maak khrap tong nang rot',tr:'Çok uzak, araçla gitmeniz lazım.',bd:[{ro:'glai maak',tr:'çok uzak',role:'V - Yuklem'},{ro:'tong nang rot',tr:'araçla gitmek lazım',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไกลแค่ไหนครับ',ro:'glai khae-nai khrap',tr:'Ne kadar uzak?',bd:[{ro:'glai khae-nai',tr:'ne kadar uzak',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w6',th:'ถนน',ro:'tha-non',tr:'Yol / Cadde',
-     tip:'"Tha-non" = cadde/ana yol. "Soi" = dar sokak.',
-     ctx:'Adres verirken en sık geçen kelime.',
-     examples:[
-       {th:'ถนนนี้ชื่ออะไรครับ',ro:'tha-non-nii chue a-rai khrap',tr:'Bu caddenin adı ne?',bd:[{ro:'tha-non-nii',tr:'bu cadde',role:'S - Ozne'},{ro:'chue a-rai',tr:'adı ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อยู่บนถนนใหญ่ครับ',ro:'yuu bon tha-non yai khrap',tr:'Ana caddede.',bd:[{ro:'yuu bon',tr:'üzerinde',role:'Kelime'},{ro:'tha-non yai',tr:'ana cadde',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เข้าซอยแรกครับ',ro:'khao soi raek khrap',tr:'İlk sokaktan girin.',bd:[{ro:'khao soi raek',tr:'ilk sokaktan gir',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w7',th:'แผนที่',ro:'phaen-thii',tr:'Harita',
-     tip:'"Phaen-thii" = harita. Google Maps her yerde geçerli.',
-     ctx:'Telefonda harita gösterirken bu kelimeyi kullan.',
-     examples:[
-       {th:'ดูแผนที่ได้ไหมครับ',ro:'duu phaen-thii dai mai khrap',tr:'Haritaya bakabilir miyim?',bd:[{ro:'duu phaen-thii',tr:'haritaya bak',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมมีแผนที่ครับ',ro:'pom mii phaen-thii khrap',tr:'Haritam var.',bd:[{ro:'pom mii',tr:'bende var',role:'V - Yuklem'},{ro:'phaen-thii',tr:'harita',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ชี้ให้ดูในแผนที่ได้ไหมครับ',ro:'chii hai duu nai phaen-thii dai mai khrap',tr:'Haritada gösterebilir misiniz?',bd:[{ro:'chii hai duu nai phaen-thii',tr:'haritada göster',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w8',th:'ข้างๆ',ro:'khaang-khaang',tr:'Yanında / Yanı başında',
-     tip:'"Khaang" = yan/taraf. Tekrar edilince "hemen yanında" anlamı güçlenir.',
-     ctx:'Konum tarif ederken referans noktası göstermek için.',
-     examples:[
-       {th:'อยู่ข้างๆ ร้านสะดวกซื้อครับ',ro:'yuu khaang-khaang raan-sa-duak-sue khrap',tr:'Marketin yanında.',bd:[{ro:'yuu khaang-khaang',tr:'hemen yanında',role:'Kelime'},{ro:'raan-sa-duak-sue',tr:'market',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อยู่ข้างหน้าครับ',ro:'yuu khaang-naa khrap',tr:'Önünde.',bd:[{ro:'yuu khaang-naa',tr:'önünde',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อยู่ข้างหลังครับ',ro:'yuu khaang-lang khrap',tr:'Arkasında.',bd:[{ro:'yuu khaang-lang',tr:'arkasında',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อยู่ข้างซ้ายครับ',ro:'yuu khaang-saai khrap',tr:'Sol tarafında.',bd:[{ro:'yuu khaang-saai',tr:'sol tarafta',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w9',th:'เดิน',ro:'dern',tr:'Yürümek',
-     tip:'"Dern" = yürümek. "Dern pai" = yürüyerek git.',
-     ctx:'Yakın mesafelerde "yürüyerek gidebilir misiniz" için.',
-     examples:[
-       {th:'เดินได้ไหมครับ',ro:'dern dai mai khrap',tr:'Yürüyebilir miyim?',bd:[{ro:'dern dai mai',tr:'yürüyebilir miyim',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เดินสิบนาทีครับ',ro:'dern sip naa-thii khrap',tr:'Yürüyerek 10 dakika.',bd:[{ro:'dern sip naa-thii',tr:'yürüyerek 10 dakika',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เดินตรงไปครับ',ro:'dern trong-pai khrap',tr:'Düz yürüyün.',bd:[{ro:'dern trong-pai',tr:'düz yürü',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไกลเกินไปสำหรับการเดินครับ',ro:'glai koern-pai sam-rap gaan-dern khrap',tr:'Yürümek için çok uzak.',bd:[{ro:'glai koern-pai',tr:'çok uzak',role:'V - Yuklem'},{ro:'sam-rap gaan-dern',tr:'yürümek için',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w10',th:'ตรงนี้',ro:'trong-nii',tr:'Tam burası / Şu yer',
-     tip:'"Trong" = tam/doğru, "nii" = burada. Haritada işaret ederken.',
-     ctx:'Konum paylaşırken veya konumu doğrulamak için.',
-     examples:[
-       {th:'ตรงนี้เลยครับ',ro:'trong-nii loey khrap',tr:'Tam burası.',bd:[{ro:'trong-nii loey',tr:'tam burası',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'จอดตรงนี้ได้ไหมครับ',ro:'jot trong-nii dai mai khrap',tr:'Tam buraya park edebilir miyim?',bd:[{ro:'jot trong-nii',tr:'tam buraya park et',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'รับผมตรงนี้ได้ไหมครับ',ro:'rap pom trong-nii dai mai khrap',tr:'Beni tam buradan alabilir misiniz?',bd:[{ro:'rap pom',tr:'beni al',role:'V - Yuklem'},{ro:'trong-nii',tr:'tam buradan',role:'Kelime'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
+  words: [
+    {id:'w1', en:'Where is...?', ro:'/wɛr ɪz/', tr:'...nerede?',
+     tip:'Yer sormak için temel kalıp.', ctx:'Yol tarifi.',
+     examples:[{en:'Excuse me, where is the train station?', ro:'/ɪkˈskjuːz miː wɛr ɪz ðə treɪn ˈsteɪʃən/', tr:'Pardon, tren istasyonu nerede?',
+       bd:[{ro:'Excuse me',tr:'Pardon',role:'courtesy'},{ro:'where is',tr:'nerede',role:'question'},{ro:'the train station',tr:'tren istasyonu',role:'noun'}]}]},
+    {id:'w2', en:'turn left', ro:'/tɜːrn lɛft/', tr:'sola dön',
+     examples:[{en:'Turn left at the traffic lights.', ro:'/tɜːrn lɛft æt ðə ˈtræfɪk laɪts/', tr:'Trafik ışıklarında sola dön.',
+       bd:[{ro:'Turn left',tr:'Sola dön',role:'direction'},{ro:'at the traffic lights',tr:'trafik ışıklarında',role:'location'}]}]},
+    {id:'w3', en:'turn right', ro:'/tɜːrn raɪt/', tr:'sağa dön'},
+    {id:'w4', en:'go straight', ro:'/ɡoʊ streɪt/', tr:'düz git'},
+    {id:'w5', en:'go back', ro:'/ɡoʊ bæk/', tr:'geri dön'},
+    {id:'w6', en:'on the left', ro:'/ɒn ðə lɛft/', tr:'solda',
+     examples:[{en:'The bank is on the left.', ro:'/ðə bæŋk ɪz ɒn ðə lɛft/', tr:'Banka solda.',
+       bd:[{ro:'The bank',tr:'Banka',role:'noun'},{ro:'is on the left',tr:'solda',role:'location'}]}]},
+    {id:'w7', en:'on the right', ro:'/ɒn ðə raɪt/', tr:'sağda'},
+    {id:'w8', en:'next to', ro:'/nɛkst tuː/', tr:'yanında'},
+    {id:'w9', en:'opposite', ro:'/ˈɒpəzɪt/', tr:'karşısında'},
+    {id:'w10', en:'near / far', ro:'/nɪər / fɑːr/', tr:'yakın / uzak'},
+    {id:'w11', en:'street', ro:'/striːt/', tr:'sokak / cadde'},
+    {id:'w12', en:'road', ro:'/roʊd/', tr:'yol'},
+    {id:'w13', en:'corner', ro:'/ˈkɔːrnər/', tr:'köşe',
+     examples:[{en:'Turn left at the corner.', ro:'/tɜːrn lɛft æt ðə ˈkɔːrnər/', tr:'Köşede sola dön.',
+       bd:[{ro:'Turn left',tr:'Sola dön',role:'direction'},{ro:'at the corner',tr:'köşede',role:'location'}]}]},
+    {id:'w14', en:'traffic lights', ro:'/ˈtræfɪk laɪts/', tr:'trafik ışıkları'},
+    {id:'w15', en:'crossroads / intersection', ro:'/ˈkrɒsroʊdz/', tr:'kavşak'},
+    {id:'w16', en:'bridge', ro:'/brɪdʒ/', tr:'köprü'},
+    {id:'w17', en:'park', ro:'/pɑːrk/', tr:'park'},
+    {id:'w18', en:'hospital', ro:'/ˈhɒspɪtəl/', tr:'hastane'},
+    {id:'w19', en:'police station', ro:'/pəˈliːs ˈsteɪʃən/', tr:'polis karakolu'},
+    {id:'w20', en:'How far is it?', ro:'/haʊ fɑːr ɪz ɪt/', tr:'Ne kadar uzak?',
+     examples:[{en:'How far is it to the airport?', ro:'/haʊ fɑːr ɪz ɪt tə ðə ˈɛərpɔːrt/', tr:'Havalimanına ne kadar uzak?',
+       bd:[{ro:'How far',tr:'Ne kadar uzak',role:'question'},{ro:'is it to',tr:'(uzaklık)',role:'verb'},{ro:'the airport',tr:'havalimanı',role:'noun'}]}]},
+    {id:'w21', en:'minute walk', ro:'/ˈmɪnɪt wɔːk/', tr:'dakika yürüme mesafesi',
+     examples:[{en:"It's five minutes' walk.", ro:'/ɪts faɪv ˈmɪnɪts wɔːk/', tr:'Beş dakika yürüme mesafesinde.',
+       bd:[{ro:"It's",tr:'(mesafe)',role:'verb'},{ro:'five minutes',tr:'beş dakika',role:'time'},{ro:'walk',tr:'yürüme',role:'noun'}]}]}
   ],
-  grammar:[
-    {
-      title:'1. Yön İfadeleri: Sola / Sağa / Düz',
-      formula:'LIAW SAI = sola dön | LIAW KHWAA = sağa dön | TRONG PAI = düz git',
-      explain:'Yol tarifinin 3 temel komutu. "Laeo" = ...dan sonra bağlacıyla zincirlenir.',
-      tips:['liaw saai = sola dön','liaw khwaa = sağa dön','trong pai = düz git','klab = geri dön','thii sii-yaek = kavşakta','thii traffik = trafik ışığında'],
-      examples:[
-        {th:'ตรงไปแล้วเลี้ยวซ้ายครับ',ro:'trong-pai laeo liaw-saai khrap',tr:'Düz gidip sola dönün.',bd:[{ro:'trong-pai laeo',tr:'düz gidince',role:'V - Yuklem'},{ro:'liaw-saai',tr:'sola dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'เลี้ยวขวาที่สี่แยกครับ',ro:'liaw-khwaa thii sii-yaek khrap',tr:'Kavşakta sağa dönün.',bd:[{ro:'liaw-khwaa',tr:'sağa dön',role:'V - Yuklem'},{ro:'thii sii-yaek',tr:'kavşakta',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ตรงไปสองร้อยเมตรครับ',ro:'trong-pai song-roi met khrap',tr:'200 metre düz gidin.',bd:[{ro:'trong-pai',tr:'düz git',role:'V - Yuklem'},{ro:'song-roi met',tr:'200 metre',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'เลี้ยวซ้ายแล้วก็เลี้ยวขวาครับ',ro:'liaw-saai laeo-ko liaw-khwaa khrap',tr:'Sola, sonra sağa dönün.',bd:[{ro:'liaw-saai laeo-ko',tr:'soldan sonra',role:'V - Yuklem'},{ro:'liaw-khwaa',tr:'sağa dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'2. Konum Tarifi: yuu + yer referansı',
-      formula:'[YER] + YUU + [REFERANS] + KHAANG = ... yanında/önünde',
-      explain:'"Yuu" = var/bulunuyor. Konum tarif ederken referans noktası + yön ekiyle kullanılır.',
-      tips:['khaang-naa = önünde','khaang-lang = arkasında','khaang-saai = solunda','khaang-khwaa = sağında','khaang-bon = üzerinde','khaang-laang = altında','tit-gap = bitişiğinde'],
-      examples:[
-        {th:'อยู่ข้างหน้าธนาคารครับ',ro:'yuu khaang-naa tha-naa-khaan khrap',tr:'Bankanın önünde.',bd:[{ro:'yuu khaang-naa',tr:'önünde',role:'Kelime'},{ro:'tha-naa-khaan',tr:'banka',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'อยู่ตรงข้ามเซเว่นครับ',ro:'yuu trong-kham Seven khrap',tr:'Seven-Eleven\'ın karşısında.',bd:[{ro:'yuu trong-kham',tr:'karşısında',role:'Kelime'},{ro:'Seven',tr:'7-Eleven',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'อยู่ติดกับโรงแรมครับ',ro:'yuu tit-gap roong-raem khrap',tr:'Otele bitişik.',bd:[{ro:'yuu tit-gap',tr:'bitişiğinde',role:'Kelime'},{ro:'roong-raem',tr:'otel',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'อยู่ชั้นสองครับ',ro:'yuu chan song khrap',tr:'İkinci katta.',bd:[{ro:'yuu chan song',tr:'2. katta',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-  ],
-  speaking:[
-    {task:'Tuvalet sor',th:'ห้องน้ำอยู่ที่ไหนครับ',ro:'hong-naam yuu thii-nai khrap',tr:'Tuvalet nerede?',bd:[{ro:'hong-naam yuu thii-nai',tr:'tuvalet nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Sola dön',th:'เลี้ยวซ้ายครับ',ro:'liaw-saai khrap',tr:'Sola dönün.',bd:[{ro:'liaw-saai',tr:'sola dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Sağa dön',th:'เลี้ยวขวาครับ',ro:'liaw-khwaa khrap',tr:'Sağa dönün.',bd:[{ro:'liaw-khwaa',tr:'sağa dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yakın mı sor',th:'ใกล้ไหมครับ',ro:'glai mai khrap',tr:'Yakın mı?',bd:[{ro:'glai mai',tr:'yakın mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yürüyerek kaç dakika',th:'เดินกี่นาทีครับ',ro:'dern kii-naa-thii khrap',tr:'Yürüyerek kaç dakika?',bd:[{ro:'dern kii-naa-thii',tr:'yürüyerek kaç dakika',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Haritada göster',th:'ชี้ให้ดูในแผนที่ได้ไหมครับ',ro:'chii hai duu nai phaen-thii dai mai khrap',tr:'Haritada gösterebilir misiniz?',bd:[{ro:'chii hai duu nai phaen-thii',tr:'haritada göster',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Düz git sonra sola',th:'ตรงไปแล้วเลี้ยวซ้ายครับ',ro:'trong-pai laeo liaw-saai khrap',tr:'Düz gidip sola dönün.',bd:[{ro:'trong-pai laeo',tr:'düz gidince',role:'V - Yuklem'},{ro:'liaw-saai',tr:'sola dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Tam burası de',th:'ตรงนี้เลยครับ',ro:'trong-nii loey khrap',tr:'Tam burası.',bd:[{ro:'trong-nii loey',tr:'tam burası',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-  ],
-  dialogues:[
-    {title:'🗺️ Otel Arıyor',
-     lines:[
-       {s:'Ali',th:'ขอโทษครับ โรงแรมนี้อยู่ที่ไหนครับ',ro:'khor-thot khrap roong-raem-nii yuu thii-nai khrap',tr:'Özür dilerim, bu otel nerede?',bd:[{ro:'khor-thot',tr:'özür',role:'Kelime'},{ro:'roong-raem-nii yuu thii-nai',tr:'bu otel nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ตรงไปแล้วเลี้ยวขวาที่สี่แยกค่ะ',ro:'trong-pai laeo liaw-khwaa thii sii-yaek kha',tr:'Düz gidin, kavşakta sağa dönün.',bd:[{ro:'trong-pai laeo',tr:'düz gidince',role:'V - Yuklem'},{ro:'liaw-khwaa thii sii-yaek',tr:'kavşakta sağa',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ไกลไหมครับ',ro:'glai mai khrap',tr:'Uzak mı?',bd:[{ro:'glai mai',tr:'uzak mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ไม่ไกลค่ะ เดินห้านาทีค่ะ',ro:'mai glai kha dern haa-naa-thii kha',tr:'Uzak değil, yürüyerek 5 dakika.',bd:[{ro:'mai glai',tr:'uzak değil',role:'Olumsuz'},{ro:'dern haa-naa-thii',tr:'yürüyerek 5 dk',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'📍 Konumumu Anlatıyorum',
-     lines:[
-       {s:'Nada',th:'คุณอยู่ที่ไหนคะ',ro:'khun yuu thii-nai kha',tr:'Neredesiniz?',bd:[{ro:'khun yuu thii-nai',tr:'neredesiniz',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ผมอยู่หน้าเซเว่นครับ บนถนนใหญ่',ro:'pom yuu naa Seven khrap bon tha-non yai',tr:'Seven-Eleven önündeyim, ana caddede.',bd:[{ro:'pom yuu naa Seven',tr:'Seven önündeyim',role:'Kelime'},{ro:'bon tha-non yai',tr:'ana caddede',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'โอเคค่ะ ฉันรู้แล้วค่ะ',ro:'o-kee kha chan ruu laeo kha',tr:'Tamam, biliyorum.',bd:[{ro:'o-kee',tr:'tamam',role:'Kelime'},{ro:'chan ruu laeo',tr:'biliyorum',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ขอบคุณมากครับ',ro:'khob-khun maak khrap',tr:'Çok teşekkürler.',bd:[{ro:'khob-khun maak',tr:'çok teşekkür',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'🏖️ Plaja Tarif',
-     lines:[
-       {s:'Ali',th:'ไปหาดป่าตองยังไงครับ',ro:'pai haat paa-tong yang-ngai khrap',tr:'Patong plajına nasıl gidilir?',bd:[{ro:'pai haat paa-tong',tr:'Patong plajına git',role:'V - Yuklem'},{ro:'yang-ngai',tr:'nasıl',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'นั่งรถสองแถวได้ค่ะ หรือนั่งแท็กซี่',ro:'nang rot-song-thaeo dai kha rue nang taxi',tr:'Songthaew veya taksiyle gidebilirsiniz.',bd:[{ro:'nang rot-song-thaeo',tr:'songthaew bin',role:'Kelime'},{ro:'rue nang taxi',tr:'veya taksiyle',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ราคาเท่าไรครับ',ro:'raa-khaa thao-rai khrap',tr:'Fiyat ne kadar?',bd:[{ro:'raa-khaa thao-rai',tr:'fiyat ne kadar',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'แท็กซี่ประมาณสองร้อยบาทค่ะ',ro:'taxi pra-maan song-roi baht kha',tr:'Taksi yaklaşık 200 Baht.',bd:[{ro:'taxi pra-maan',tr:'taksi yaklaşık',role:'Kelime'},{ro:'song-roi baht',tr:'200 Baht',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'🏪 Market Tarifi',
-     lines:[
-       {s:'Ali',th:'เซเว่นอยู่ที่ไหนครับ',ro:'Seven yuu thii-nai khrap',tr:'Seven-Eleven nerede?',bd:[{ro:'Seven yuu thii-nai',tr:'Seven nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'อยู่ข้างๆ นี้เลยค่ะ',ro:'yuu khaang-khaang nii loey kha',tr:'Hemen yanımızda.',bd:[{ro:'yuu khaang-khaang nii loey',tr:'hemen burada',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ขอบคุณครับ ใกล้มากเลย',ro:'khob-khun khrap glai maak loey',tr:'Teşekkürler, çok yakınmış.',bd:[{ro:'khob-khun',tr:'teşekkür',role:'Kelime'},{ro:'glai maak loey',tr:'çok yakın',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ยินดีค่ะ',ro:'yin-dee kha',tr:'Rica ederim.',bd:[{ro:'yin-dee',tr:'rica ederim',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-  ],
-  listening:[
-    {diff:'easy',th:'เลี้ยวซ้ายครับ',q:'Hangi yön?',opts:['Sola','Sağa','Düz'],c:0},
-    {diff:'easy',th:'ตรงไปครับ',q:'Ne yapılacak?',opts:['Dur','Sola dön','Düz git'],c:2},
-    {diff:'easy',th:'ใกล้มากครับ',q:'Mesafe nasıl?',opts:['Çok uzak','Çok yakın','Orta'],c:1},
-    {diff:'medium',th:'เลี้ยวขวาที่สี่แยกครับ',q:'Nerede dönülecek?',opts:['Işıkta','Kavşakta','Sokakta'],c:1},
-    {diff:'medium',th:'เดินสิบนาทีครับ',q:'Kaç dakika?',opts:['5 dk','10 dk','15 dk'],c:1},
-    {diff:'medium',th:'อยู่ข้างหน้าธนาคารครับ',q:'Banka ile ilişkisi?',opts:['Arkasında','Yanında','Önünde'],c:2},
-    {diff:'medium',th:'ไกลเกินไปสำหรับการเดินครับ',q:'Ne öneriliyor?',opts:['Yürümek','Araç kullanmak','Beklenmek'],c:1},
-    {diff:'hard',th:'ตรงไปแล้วเลี้ยวซ้ายครับ',q:'Doğru sıra?',opts:['Sola dön, düz git','Düz git, sola dön','Düz git, sağa dön'],c:1},
-    {diff:'hard',th:'อยู่ตรงข้ามเซเว่นครับ',q:'Konum?',opts:['Seven yanında','Seven önünde','Seven karşısında'],c:2},
-    {diff:'hard',th:'ชี้ให้ดูในแผนที่ได้ไหมครับ',q:'Ne isteniyor?',opts:['Fiyat','Haritada göstermek','Yürüme süresi'],c:1},
-  ],
-  quiz:[
-    {q:'"thii-nai" ne demek?',opts:['Burası','Nerede','Orası','Nereden'],c:1},
-    {q:'"liaw saai" ne demek?',opts:['Düz git','Sağa dön','Sola dön','Geri dön'],c:2},
-    {q:'Sağa dönmek Tayca?',opts:['trong-pai','liaw-saai','liaw-khwaa','klab'],c:2},
-    {q:'"glai" (yakın tonu) ne demek?',opts:['Uzak','Yakın','Yavaş','Hızlı'],c:1},
-    {q:'"dern" ne demek?',opts:['Koşmak','Uçmak','Yürümek','Gitmek'],c:2},
-    {q:'"khaang-naa" ne demek?',opts:['Arkasında','Yanında','Önünde','Altında'],c:2},
-    {q:'Harita Tayca?',opts:['phaen-thii','phaen-din','rot-fai','sa-thaa-nii'],c:0},
-    {q:'"trong-nii" ne demek?',opts:['Düz git','Tam burası','Karşısı','Buradan'],c:1},
-    {q:'"sii-yaek" ne demek?',opts:['Sokak','Kavşak','Trafik ışığı','Köprü'],c:1},
-    {q:'"tit-gap" ne demek?',opts:['Karşısında','Önünde','Bitişiğinde','Arkasında'],c:2},
-  ],
-};
 
+  tones: [],
+
+  grammar: [
+    {id:'g1', title:'Yön Bildiren İfadeler', title_en:'Giving Directions',
+     explanation:'İngilizce\'de yön tarifi için emir kipi kullanılır.',
+     table:[
+       {pronoun:'Düz git', form:'Go straight on', example:'Go straight on for 200 metres.', tr:'200 metre düz git.'},
+       {pronoun:'Dön', form:'Turn left/right', example:'Turn right at the lights.', tr:'Işıklarda sağa dön.'},
+       {pronoun:'Geç', form:'Go past', example:'Go past the church.', tr:'Kiliseyi geç.'},
+       {pronoun:'Al', form:'Take', example:'Take the second left.', tr:'İkinci soldan dön.'}
+     ],
+     note:'"It\'s on your left/right" — varınca sana göre sol/sağda demek'}
+  ],
+
+  speaking: [
+    {id:'sp1', en:'Excuse me, how do I get to the hospital?', ro:'/ɪkˈskjuːz miː haʊ duː aɪ ɡɛt tə ðə ˈhɒspɪtəl/', tr:'Pardon, hastaneye nasıl gidebilirim?',
+     tip:'Yol tarifi isteme.', prompt:'Yol tarifi isteyin'},
+    {id:'sp2', en:'Go straight on, then turn left at the traffic lights.', ro:'/ɡoʊ streɪt ɒn ðɛn tɜːrn lɛft æt ðə ˈtræfɪk laɪts/', tr:'Düz gidin, sonra trafik ışıklarında sola dönün.',
+     tip:'Yol tarifi verme.', prompt:'Yol tarifi verin'},
+    {id:'sp3', en:"Sorry, I don't know. I'm not from here.", ro:'/ˈsɒri aɪ doʊnt noʊ aɪm nɒt frɒm hɪər/', tr:'Üzgünüm, bilmiyorum. Ben buradan değilim.',
+     tip:'Bilmediğinizde.', prompt:'Bilmediğinizi belirtin'}
+  ],
+
+  dialogues: [
+    {id:'d1', title:'Yol Tarifi', title_en:'Asking for Directions',
+     lines:[
+       {speaker:'A', gender:'m', en:'Excuse me! I am looking for the city centre. Am I going the right way?', ro:'/ɪkˈskjuːz miː aɪ æm ˈlʊkɪŋ fər ðə ˈsɪti ˈsɛntər æm aɪ ˈɡoʊɪŋ ðə raɪt weɪ/', tr:'Pardon! Şehir merkezini arıyorum. Doğru yolda mıyım?'},
+       {speaker:'B', gender:'f', en:"No, I'm afraid not. You need to go back.", ro:'/noʊ aɪm əˈfreɪd nɒt juː niːd tə ɡoʊ bæk/', tr:'Hayır, korkarım değilsiniz. Geri dönmeniz gerekiyor.'},
+       {speaker:'A', gender:'m', en:'Oh! Which way should I go?', ro:'/oʊ wɪtʃ weɪ ʃʊd aɪ ɡoʊ/', tr:'Aman! Hangi tarafa gitmeliyim?'},
+       {speaker:'B', gender:'f', en:'Go back to the traffic lights, then turn left. Go straight on for about five minutes.', ro:'/ɡoʊ bæk tə ðə ˈtræfɪk laɪts ðɛn tɜːrn lɛft ɡoʊ streɪt ɒn fər əˈbaʊt faɪv ˈmɪnɪts/', tr:'Trafik ışıklarına geri dönün, sonra sola dönün. Yaklaşık beş dakika düz gidin.'},
+       {speaker:'A', gender:'m', en:'Is it near the park?', ro:'/ɪz ɪt nɪər ðə pɑːrk/', tr:'Parkın yakınında mı?'},
+       {speaker:'B', gender:'f', en:'Yes! The city centre is opposite the park.', ro:'/jɛs ðə ˈsɪti ˈsɛntər ɪz ˈɒpəzɪt ðə pɑːrk/', tr:'Evet! Şehir merkezi parkın karşısında.'},
+       {speaker:'A', gender:'m', en:'Thank you so much!', ro:'/θæŋk juː soʊ mʌtʃ/', tr:'Çok teşekkür ederim!'}
+     ]}
+  ],
+
+  listening: [
+    {id:'li1', audio:'', transcript:"To get to the museum: go straight on Main Street, take the second turning on the right, go past the supermarket, and the museum is on your left, next to the park.",
+     tr:'Müzeye gitmek için: Ana Cadde\'de düz gidin, ikinci sağdan dönün, süpermarketi geçin, müze solunuzda, parkın yanında.',
+     questions:[
+       {q:'Which turning do you take?', opts:['first right','second right','first left','second left'], answer:1, tr:'Kaçıncı sağdan dönüyorsunuz?'},
+       {q:'What do you go past?', opts:['a school','a park','a supermarket','a hospital'], answer:2, tr:'Neyin yanından geçiyorsunuz?'},
+       {q:'Where is the museum?', opts:['on the right','opposite the park','next to the park','on the corner'], answer:2, tr:'Müze nerede?'}
+     ]}
+  ]
+};
 LESSONS[6] = L6;

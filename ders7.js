@@ -1,187 +1,85 @@
-// Ders 7 verisi — tayca-v3
-// =================== VERİ: DERS 7 — Grab ve Ulaşım ===================
+// ders7.js — English Lesson 7: Transport
 const L7 = {
-  tones:[],
-  words:[
-    {id:'w1',th:'แท็กซี่',ro:'taek-sii',tr:'Taksi',
-     tip:'İngilizce\den. Phuket\'te metre kullanılmaz, önce pazarlık yap.',
-     ctx:'Phuket\'te en çok kullanılan ulaşım. Grab daha güvenli.',
-     examples:[
-       {th:'ขอแท็กซี่ครับ',ro:'khor taek-sii khrap',tr:'Taksi istiyorum.',bd:[{ro:'khor taek-sii',tr:'taksi istiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'แท็กซี่ราคาเท่าไรครับ',ro:'taek-sii raa-khaa thao-rai khrap',tr:'Taksi ücreti ne kadar?',bd:[{ro:'taek-sii',tr:'taksi',role:'S - Ozne'},{ro:'raa-khaa thao-rai',tr:'fiyat ne kadar',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'แท็กซี่ไม่มิเตอร์ครับ',ro:'taek-sii mai mi-toe khrap',tr:'Taksinin metresi yok.',bd:[{ro:'taek-sii mai mi-toe',tr:'takside metre yok',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ช่วยเรียกแท็กซี่ให้หน่อยได้ไหมครับ',ro:'chuay riak taek-sii hai noi dai mai khrap',tr:'Taksi çağırabilir misiniz?',bd:[{ro:'chuay riak taek-sii',tr:'taksi çağır',role:'V - Yuklem'},{ro:'hai noi dai mai',tr:'yapabilir misiniz',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w2',th:'จะไปที่',ro:'ja-pai-thii',tr:'...\'a gitmek istiyorum',
-     tip:'"Ja" = gelecek zaman, "pai" = git, "thii" = yere. Kalıp olarak ezberle.',
-     ctx:'Sürücüye hedefi söylemenin standart yolu.',
-     examples:[
-       {th:'จะไปที่สนามบินครับ',ro:'ja-pai-thii sa-naam-bin khrap',tr:'Havalimanına gitmek istiyorum.',bd:[{ro:'ja-pai-thii',tr:'gitmek istiyorum',role:'V - Yuklem'},{ro:'sa-naam-bin',tr:'havalimanı',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'จะไปที่ห้างโรบินสันครับ',ro:'ja-pai-thii haang Robinson khrap',tr:'Robinson alışveriş merkezine gitmek istiyorum.',bd:[{ro:'ja-pai-thii haang Robinson',tr:'Robinson\'a gitmek',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'จะไปที่ไหนครับ',ro:'ja-pai-thii-nai khrap',tr:'Nereye gideceksiniz?',bd:[{ro:'ja-pai-thii-nai',tr:'nereye gideceksiniz',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'จะไปส่งที่นี่ได้ไหมครับ',ro:'ja-pai-song thii-nii dai mai khrap',tr:'Buraya bırakabilir misiniz?',bd:[{ro:'ja-pai-song thii-nii',tr:'buraya bırak',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w3',th:'จอด',ro:'jot',tr:'Durmak / Park etmek',
-     tip:'"Jot" = dur/park et. "Jot trong-nii" = tam burada dur.',
-     ctx:'Sürücüye dur demek için.',
-     examples:[
-       {th:'จอดตรงนี้ครับ',ro:'jot trong-nii khrap',tr:'Tam burada durun.',bd:[{ro:'jot trong-nii',tr:'tam burada dur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'จอดหน้าร้านได้ไหมครับ',ro:'jot naa-raan dai mai khrap',tr:'Dükkanın önüne park edebilir miyiz?',bd:[{ro:'jot naa-raan',tr:'dükkan önüne dur',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ห้ามจอดครับ',ro:'haam jot khrap',tr:'Park yasak.',bd:[{ro:'haam jot',tr:'park yasak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'จอดรอผมด้วยนะครับ',ro:'jot ror pom duay na khrap',tr:'Beni bekleyerek durun.',bd:[{ro:'jot ror pom',tr:'bekleyerek dur',role:'V - Yuklem'},{ro:'duay na',tr:'lütfen',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w4',th:'เร็ว',ro:'reo',tr:'Hızlı / Çabuk',
-     tip:'"Reo reo" = hızlı hızlı, acele et. "Cha cha" = yavaş yavaş.',
-     ctx:'Acele ederken veya sürücüye hız söylemek için.',
-     examples:[
-       {th:'รีบหน่อยครับ',ro:'rip noi khrap',tr:'Acele edin lütfen.',bd:[{ro:'rip noi',tr:'acele et biraz',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ขับเร็วไปครับ',ro:'khap reo pai khrap',tr:'Çok hızlı gidiyorsunuz.',bd:[{ro:'khap reo pai',tr:'çok hızlı sürüyor',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ช้าลงหน่อยครับ',ro:'chaa long noi khrap',tr:'Biraz yavaşlayın.',bd:[{ro:'chaa long noi',tr:'biraz yavaşla',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไปเร็วๆ ได้ไหมครับ',ro:'pai reo-reo dai mai khrap',tr:'Hızlı gidebilir misiniz?',bd:[{ro:'pai reo-reo',tr:'hızlı git',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w5',th:'ถึงแล้ว',ro:'thueng laeo',tr:'Geldik / Vardık',
-     tip:'"Thueng" = ulaştı/vardı, "laeo" = bitti/oldu.',
-     ctx:'Sürücü bunu söylediğinde inmek zamanı.',
-     examples:[
-       {th:'ถึงแล้วครับ',ro:'thueng laeo khrap',tr:'Geldik.',bd:[{ro:'thueng laeo',tr:'vardık',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ถึงยังครับ',ro:'thueng yang khrap',tr:'Daha gelmedik mi?',bd:[{ro:'thueng yang',tr:'henüz varmadık mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อีกนานไหมครับ',ro:'iik naan mai khrap',tr:'Daha uzun sürer mi?',bd:[{ro:'iik naan mai',tr:'daha uzun sürer mi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ถึงที่หมายแล้วครับ',ro:'thueng thii-maai laeo khrap',tr:'Hedefe vardık.',bd:[{ro:'thueng thii-maai laeo',tr:'hedefe vardık',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w6',th:'สนามบิน',ro:'sa-naam-bin',tr:'Havalimanı',
-     tip:'"Sa-naam" = alan/saha, "bin" = uç. Kelime kelime: "uçuş alanı".',
-     ctx:'Phuket Havalimanı = "sa-naam-bin phu-get".',
-     examples:[
-       {th:'ไปสนามบินครับ',ro:'pai sa-naam-bin khrap',tr:'Havalimanına gidiyorum.',bd:[{ro:'pai sa-naam-bin',tr:'havalimanına git',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'สนามบินอยู่ไกลไหมครับ',ro:'sa-naam-bin yuu glai mai khrap',tr:'Havalimanı uzak mı?',bd:[{ro:'sa-naam-bin',tr:'havalimanı',role:'S - Ozne'},{ro:'yuu glai mai',tr:'uzak mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไปสนามบินกี่บาทครับ',ro:'pai sa-naam-bin kii-baht khrap',tr:'Havalimanına kaç Baht?',bd:[{ro:'pai sa-naam-bin',tr:'havalimanına',role:'V - Yuklem'},{ro:'kii-baht',tr:'kaç Baht',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w7',th:'คิดเงิน',ro:'khit-ngoen',tr:'Ücret hesaplamak / Para istemek',
-     tip:'"Khit" = hesapla/düşün, "ngoen" = para.',
-     ctx:'Sürücü kaç para diyecek, bunu anlaman için.',
-     examples:[
-       {th:'คิดเงินเท่าไรครับ',ro:'khit-ngoen thao-rai khrap',tr:'Ne kadar tutar?',bd:[{ro:'khit-ngoen thao-rai',tr:'ne kadar eder',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คิดเงินสามร้อยบาทครับ',ro:'khit-ngoen sam-roi baht khrap',tr:'300 Baht tutar.',bd:[{ro:'khit-ngoen',tr:'tutar',role:'V - Yuklem'},{ro:'sam-roi baht',tr:'300 Baht',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'แพงเกินไปครับ',ro:'phaeng koern-pai khrap',tr:'Çok pahalı.',bd:[{ro:'phaeng koern-pai',tr:'çok pahalı',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w8',th:'รถ',ro:'rot',tr:'Araç / Araba',
-     tip:'"Rot" = araç genel. "Rot yon" = araba, "rot moto" = motosiklet.',
-     ctx:'Ulaşım konuşmalarında temel kelime.',
-     examples:[
-       {th:'รถติดมากครับ',ro:'rot-tit maak khrap',tr:'Trafik çok yoğun.',bd:[{ro:'rot-tit maak',tr:'trafik çok',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'รถกำลังมาครับ',ro:'rot gam-lang maa khrap',tr:'Araç geliyor.',bd:[{ro:'rot gam-lang maa',tr:'araç geliyor',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'นั่งรถไปครับ',ro:'nang rot pai khrap',tr:'Araçla gidiyorum.',bd:[{ro:'nang rot pai',tr:'araçla git',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'รถของผมจอดอยู่ตรงนั้นครับ',ro:'rot khong pom jot yuu trong-nan khrap',tr:'Arabam şurada park ediyor.',bd:[{ro:'rot khong pom',tr:'arabam',role:'S - Ozne'},{ro:'jot yuu trong-nan',tr:'şurada park ediyor',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w9',th:'แอปเกรบ',ro:'aep Grab',tr:'Grab uygulaması',
-     tip:'Phuket\te en güvenilir ve fiyatlı ulaşım. Standart fiyat.',
-     ctx:'Her yerde geçerli. Sürücüye sadece "Grab" de.',
-     examples:[
-       {th:'ผมสั่งแกร็บครับ',ro:'pom sang Grab khrap',tr:'Grab çağırıyorum.',bd:[{ro:'pom sang Grab',tr:'Grab çağırıyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'รอแกร็บอยู่ครับ',ro:'ror Grab yuu khrap',tr:'Grab bekliyorum.',bd:[{ro:'ror Grab yuu',tr:'Grab bekliyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'แกร็บถูกกว่าแท็กซี่ครับ',ro:'Grab thuuk-kwaa taek-sii khrap',tr:'Grab taksiden daha ucuz.',bd:[{ro:'Grab thuuk-kwaa taek-sii',tr:'Grab daha ucuz',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'รอสักครู่ครับ แกร็บกำลังมา',ro:'ror sak-khru khrap Grab gam-lang maa',tr:'Bir dakika, Grab geliyor.',bd:[{ro:'ror sak-khru',tr:'bir dakika bekle',role:'V - Yuklem'},{ro:'Grab gam-lang maa',tr:'Grab geliyor',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w10',th:'เปลี่ยน',ro:'plian',tr:'Değiştirmek',
-     tip:'"Plian thang" = yol değiştir, "plian rot" = araç değiştir.',
-     ctx:'Güzergah değişikliği veya aktarma.',
-     examples:[
-       {th:'เปลี่ยนเส้นทางได้ไหมครับ',ro:'plian sen-thang dai mai khrap',tr:'Güzergahı değiştirebilir misiniz?',bd:[{ro:'plian sen-thang',tr:'güzergah değiştir',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ต้องเปลี่ยนรถไหมครับ',ro:'tong plian rot mai khrap',tr:'Aktarma yapmam gerekiyor mu?',bd:[{ro:'tong plian rot',tr:'aktarma lazım mı',role:'Soru/Olumsuz'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เปลี่ยนไม่ได้ครับ ติดสัญญา',ro:'plian mai-dai khrap tit san-yaa',tr:'Değiştiremem, anlaşma var.',bd:[{ro:'plian mai-dai',tr:'değiştiremem',role:'Olumsuz'},{ro:'tit san-yaa',tr:'anlaşma var',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
+  words: [
+    {id:'w1', en:'bus', ro:'/bʌs/', tr:'otobüs',
+     examples:[{en:'Which bus goes to the airport?', ro:'/wɪtʃ bʌs ɡoʊz tə ðə ˈɛərpɔːrt/', tr:'Hangi otobüs havalimanına gidiyor?',
+       bd:[{ro:'Which bus',tr:'Hangi otobüs',role:'question'},{ro:'goes to',tr:'gidiyor',role:'verb'},{ro:'the airport',tr:'havalimanı',role:'noun'}]}]},
+    {id:'w2', en:'train', ro:'/treɪn/', tr:'tren'},
+    {id:'w3', en:'underground / subway / tube', ro:'/ˈʌndərɡraʊnd/', tr:'metro'},
+    {id:'w4', en:'taxi / cab', ro:'/ˈtæksi / kæb/', tr:'taksi'},
+    {id:'w5', en:'plane', ro:'/pleɪn/', tr:'uçak'},
+    {id:'w6', en:'ferry', ro:'/ˈfɛri/', tr:'feribot / vapur'},
+    {id:'w7', en:'ticket', ro:'/ˈtɪkɪt/', tr:'bilet',
+     examples:[{en:'A single ticket to London, please.', ro:'/ə ˈsɪŋɡəl ˈtɪkɪt tə ˈlʌndən pliːz/', tr:'Londra\'ya tek gidiş bilet, lütfen.',
+       bd:[{ro:'A single ticket',tr:'Tek gidiş bilet',role:'noun'},{ro:'to London',tr:'Londra\'ya',role:'destination'}]}]},
+    {id:'w8', en:'single / one-way', ro:'/ˈsɪŋɡəl / wʌn weɪ/', tr:'tek gidiş'},
+    {id:'w9', en:'return / round-trip', ro:'/rɪˈtɜːrn/', tr:'gidiş-dönüş'},
+    {id:'w10', en:'platform', ro:'/ˈplætfɔːrm/', tr:'peron'},
+    {id:'w11', en:'departure', ro:'/dɪˈpɑːrtʃər/', tr:'kalkış'},
+    {id:'w12', en:'arrival', ro:'/əˈraɪvəl/', tr:'varış'},
+    {id:'w13', en:'delay', ro:'/dɪˈleɪ/', tr:'gecikme',
+     examples:[{en:"The train is delayed by 20 minutes.", ro:'/ðə treɪn ɪz dɪˈleɪd baɪ ˈtwɛnti ˈmɪnɪts/', tr:'Tren 20 dakika gecikmeli.',
+       bd:[{ro:'The train is delayed',tr:'Tren gecikmeli',role:'verb'},{ro:'by 20 minutes',tr:'20 dakika',role:'time'}]}]},
+    {id:'w14', en:'on time', ro:'/ɒn taɪm/', tr:'zamanında'},
+    {id:'w15', en:'station', ro:'/ˈsteɪʃən/', tr:'istasyon'},
+    {id:'w16', en:'airport', ro:'/ˈɛərpɔːrt/', tr:'havalimanı'},
+    {id:'w17', en:'bus stop', ro:'/bʌs stɒp/', tr:'otobüs durağı'},
+    {id:'w18', en:'get on / get off', ro:'/ɡɛt ɒn / ɡɛt ɒf/', tr:'binmek / inmek',
+     examples:[{en:'Get off at the next stop.', ro:'/ɡɛt ɒf æt ðə nɛkst stɒp/', tr:'Bir sonraki durakta inin.',
+       bd:[{ro:'Get off',tr:'İnin',role:'verb'},{ro:'at the next stop',tr:'bir sonraki durağa',role:'location'}]}]},
+    {id:'w19', en:'change (trains)', ro:'/tʃeɪndʒ/', tr:'aktarma yapmak',
+     examples:[{en:'You need to change at Victoria.', ro:'/juː niːd tə tʃeɪndʒ æt vɪkˈtɔːrɪə/', tr:'Victoria\'da aktarma yapmanız gerekiyor.',
+       bd:[{ro:'You need to change',tr:'Aktarma yapmanız gerekiyor',role:'verb'},{ro:'at Victoria',tr:'Victoria\'da',role:'location'}]}]},
+    {id:'w20', en:'How long does it take?', ro:'/haʊ lɒŋ dəz ɪt teɪk/', tr:'Ne kadar sürer?',
+     examples:[{en:'How long does the journey take?', ro:'/haʊ lɒŋ dəz ðə ˈdʒɜːrni teɪk/', tr:'Yolculuk ne kadar sürer?',
+       bd:[{ro:'How long',tr:'Ne kadar',role:'question'},{ro:'does it take',tr:'sürer',role:'verb'}]}]}
   ],
-  grammar:[
-    {
-      title:'1. Grab / Taksi ile Konuşmak',
-      formula:'JA-PAI-THII + [HEDEF] = ...\'a gitmek istiyorum',
-      explain:'Sürücüyle konuşmanın temel kalıbı. Hedefi söyle, fiyatı sor, inme noktasını belirt.',
-      tips:['ja-pai-thii = ...\'a gitmek istiyorum','jot trong-nii = tam burada dur','thueng laeo = geldik','khit-ngoen thao-rai = kaç para','rip noi = acele et biraz'],
-      examples:[
-        {th:'จะไปที่สนามบินครับ',ro:'ja-pai-thii sa-naam-bin khrap',tr:'Havalimanına gitmek istiyorum.',bd:[{ro:'ja-pai-thii',tr:'gitmek istiyorum',role:'V - Yuklem'},{ro:'sa-naam-bin',tr:'havalimanı',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'คิดเงินเท่าไรครับ',ro:'khit-ngoen thao-rai khrap',tr:'Ne kadar tutar?',bd:[{ro:'khit-ngoen thao-rai',tr:'ne kadar eder',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'จอดตรงนี้ครับ',ro:'jot trong-nii khrap',tr:'Tam burada durun.',bd:[{ro:'jot trong-nii',tr:'tam burada dur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ถึงแล้วครับ ขอบคุณ',ro:'thueng laeo khrap khob-khun',tr:'Geldik, teşekkürler.',bd:[{ro:'thueng laeo',tr:'geldik',role:'V - Yuklem'},{ro:'khob-khun',tr:'teşekkür',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'2. Trafik ve Araç Durumu',
-      formula:'ROT-TIT = trafik var | ROT + DURUM + YUU = araç ... oluyor',
-      explain:'"Rot-tit" = trafik sıkışıklığı. Phuket\'te özellikle high season\'da önemli.',
-      tips:['rot-tit = trafik sıkışık','rot-tit maak = çok yoğun trafik','thang-lueak iik = başka yol var mı','pai thang nai = hangi yoldan gidelim','pra-maan kii naa-thii = yaklaşık kaç dakika'],
-      examples:[
-        {th:'รถติดมากครับ',ro:'rot-tit maak khrap',tr:'Trafik çok yoğun.',bd:[{ro:'rot-tit maak',tr:'trafik çok yoğun',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'มีทางเลือกอื่นไหมครับ',ro:'mii thang-lueak-uen mai khrap',tr:'Başka yol var mı?',bd:[{ro:'mii thang-lueak-uen',tr:'başka yol var mı',role:'Soru/Olumsuz'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ประมาณกี่นาทีครับ',ro:'pra-maan kii-naa-thii khrap',tr:'Yaklaşık kaç dakika?',bd:[{ro:'pra-maan kii-naa-thii',tr:'yaklaşık kaç dakika',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไปทางนี้เร็วกว่าครับ',ro:'pai thang-nii reo-kwaa khrap',tr:'Bu yoldan daha hızlı.',bd:[{ro:'pai thang-nii',tr:'bu yoldan git',role:'V - Yuklem'},{ro:'reo-kwaa',tr:'daha hızlı',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-  ],
-  speaking:[
-    {task:'Havalimanına git',th:'จะไปที่สนามบินครับ',ro:'ja-pai-thii sa-naam-bin khrap',tr:'Havalimanına gitmek istiyorum.',bd:[{ro:'ja-pai-thii sa-naam-bin',tr:'havalimanına gitmek',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Fiyat sor',th:'คิดเงินเท่าไรครับ',ro:'khit-ngoen thao-rai khrap',tr:'Ne kadar tutar?',bd:[{ro:'khit-ngoen thao-rai',tr:'ne kadar eder',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Burada dur',th:'จอดตรงนี้ครับ',ro:'jot trong-nii khrap',tr:'Tam burada durun.',bd:[{ro:'jot trong-nii',tr:'tam burada dur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Acele et',th:'รีบหน่อยครับ',ro:'rip noi khrap',tr:'Acele edin lütfen.',bd:[{ro:'rip noi',tr:'acele et biraz',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yavaşla',th:'ช้าลงหน่อยครับ',ro:'chaa long noi khrap',tr:'Biraz yavaşlayın.',bd:[{ro:'chaa long noi',tr:'biraz yavaşla',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Grab çağır',th:'ผมสั่งแกร็บครับ',ro:'pom sang Grab khrap',tr:'Grab çağırıyorum.',bd:[{ro:'pom sang Grab',tr:'Grab çağırıyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Trafik yoğun',th:'รถติดมากครับ',ro:'rot-tit maak khrap',tr:'Trafik çok yoğun.',bd:[{ro:'rot-tit maak',tr:'çok trafik',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Geldik',th:'ถึงแล้วครับ',ro:'thueng laeo khrap',tr:'Geldik.',bd:[{ro:'thueng laeo',tr:'vardık',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-  ],
-  dialogues:[
-    {title:'🚗 Grab Siparişi',
-     lines:[
-       {s:'Nada',th:'สวัสดีค่ะ ไปที่ไหนคะ',ro:'sa-wat-dee kha pai thii-nai kha',tr:'Merhaba, nereye gidiyorsunuz?',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'pai thii-nai',tr:'nereye',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'จะไปที่สนามบินครับ',ro:'ja-pai-thii sa-naam-bin khrap',tr:'Havalimanına gitmek istiyorum.',bd:[{ro:'ja-pai-thii sa-naam-bin',tr:'havalimanına gitmek',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'โอเคค่ะ ประมาณสี่สิบนาทีค่ะ',ro:'o-kee kha pra-maan sii-sip naa-thii kha',tr:'Tamam, yaklaşık 40 dakika.',bd:[{ro:'o-kee',tr:'tamam',role:'Kelime'},{ro:'pra-maan sii-sip naa-thii',tr:'yaklaşık 40 dakika',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'รถติดไหมครับ',ro:'rot-tit mai khrap',tr:'Trafik var mı?',bd:[{ro:'rot-tit mai',tr:'trafik var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'นิดหน่อยค่ะ แต่ไม่มากค่ะ',ro:'nit-noi kha tae mai maak kha',tr:'Biraz var, ama fazla değil.',bd:[{ro:'nit-noi',tr:'biraz var',role:'Kelime'},{ro:'tae mai maak',tr:'ama fazla değil',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'💸 Fiyat Pazarlığı',
-     lines:[
-       {s:'Ali',th:'ไปป่าตองครับ คิดเงินเท่าไรครับ',ro:'pai paa-tong khrap khit-ngoen thao-rai khrap',tr:'Patong\'a gidiyorum, ne kadar?',bd:[{ro:'pai paa-tong',tr:'Patong\'a git',role:'V - Yuklem'},{ro:'khit-ngoen thao-rai',tr:'ne kadar',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'สี่ร้อยบาทค่ะ',ro:'sii-roi baht kha',tr:'400 Baht.',bd:[{ro:'sii-roi baht',tr:'400 Baht',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'แพงไปครับ สามร้อยได้ไหมครับ',ro:'phaeng pai khrap sam-roi dai mai khrap',tr:'Çok pahalı, 300 olur mu?',bd:[{ro:'phaeng pai',tr:'çok pahalı',role:'V - Yuklem'},{ro:'sam-roi dai mai',tr:'300 olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'สามร้อยห้าสิบได้ค่ะ',ro:'sam-roi-haa-sip dai kha',tr:'350 olur.',bd:[{ro:'sam-roi-haa-sip dai',tr:'350 olur',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'โอเคครับ ไปเลย',ro:'o-kee khrap pai loey',tr:'Tamam, gidelim.',bd:[{ro:'o-kee pai loey',tr:'tamam gidelim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'⏰ Yavaşla / Dur',
-     lines:[
-       {s:'Ali',th:'ช้าลงหน่อยครับ ขับเร็วไปครับ',ro:'chaa long noi khrap khap reo pai khrap',tr:'Biraz yavaşlayın, çok hızlı gidiyorsunuz.',bd:[{ro:'chaa long noi',tr:'biraz yavaşla',role:'V - Yuklem'},{ro:'khap reo pai',tr:'çok hızlı',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'จอดตรงนี้ได้เลยครับ',ro:'jot trong-nii dai loey khrap',tr:'Tam burada durabilirsiniz.',bd:[{ro:'jot trong-nii dai loey',tr:'tam burada dur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ถึงแล้วค่ะ สองร้อยห้าสิบบาทค่ะ',ro:'thueng laeo kha song-roi-haa-sip baht kha',tr:'Geldik, 250 Baht.',bd:[{ro:'thueng laeo',tr:'geldik',role:'Kelime'},{ro:'song-roi-haa-sip baht',tr:'250 Baht',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'📱 Grab Konumu',
-     lines:[
-       {s:'Nada',th:'คุณอยู่ที่ไหนครับ หาไม่เจอค่ะ',ro:'khun yuu thii-nai khrap haa mai joe kha',tr:'Neredesiniz, bulamıyorum.',bd:[{ro:'khun yuu thii-nai',tr:'neredesiniz',role:'Soru/Olumsuz'},{ro:'haa mai joe',tr:'bulamıyorum',role:'Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ผมอยู่หน้าเซเว่นครับ เสื้อสีฟ้าครับ',ro:'pom yuu naa Seven khrap suea sii-faa khrap',tr:'Seven önündeyim, mavi gömlek giyiyorum.',bd:[{ro:'pom yuu naa Seven',tr:'Seven önündeyim',role:'Kelime'},{ro:'suea sii-faa',tr:'mavi gömlek',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'โอเคค่ะ กำลังไปค่ะ',ro:'o-kee kha gam-lang pai kha',tr:'Tamam, geliyorum.',bd:[{ro:'o-kee',tr:'tamam',role:'Kelime'},{ro:'gam-lang pai',tr:'geliyorum',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ขอบคุณครับ รอครับ',ro:'khob-khun khrap ror khrap',tr:'Teşekkürler, bekliyorum.',bd:[{ro:'khob-khun',tr:'teşekkür',role:'Kelime'},{ro:'ror',tr:'bekliyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-  ],
-  listening:[
-    {diff:'easy',th:'จะไปที่สนามบินครับ',q:'Nereye gidiliyor?',opts:['Havalimanı','Otel','Restoran'],c:0},
-    {diff:'easy',th:'จอดตรงนี้ครับ',q:'Ne isteniyor?',opts:['Hızlan','Tam burada dur','Dön'],c:1},
-    {diff:'easy',th:'ถึงแล้วครับ',q:'Durum ne?',opts:['Yola çıkıldı','Geldik','Bekleniliyor'],c:1},
-    {diff:'medium',th:'คิดเงินเท่าไรครับ',q:'Ne soruluyor?',opts:['Nereye gidilecek','Ne kadar tutar','Kaç dakika'],c:1},
-    {diff:'medium',th:'รถติดมากครับ',q:'Durum ne?',opts:['Yol boş','Trafik yoğun','Araç bozuk'],c:1},
-    {diff:'medium',th:'ช้าลงหน่อยครับ',q:'Ne isteniyor?',opts:['Hızlan','Dur','Yavaşla'],c:2},
-    {diff:'medium',th:'รีบหน่อยครับ',q:'Ne isteniyor?',opts:['Yavaşla','Acele et','Dur'],c:1},
-    {diff:'hard',th:'ประมาณสี่สิบนาทีครับ',q:'Kaç dakika?',opts:['14 dakika','40 dakika','44 dakika'],c:1},
-    {diff:'hard',th:'ไปทางนี้เร็วกว่าครับ',q:'Öneri ne?',opts:['Bu yol daha hızlı','Bu yol daha uzun','Bu yol kapalı'],c:0},
-    {diff:'hard',th:'มีทางเลือกอื่นไหมครับ',q:'Ne soruluyor?',opts:['Fiyat indirim','Başka yol','Daha hızlı gidiş'],c:1},
-  ],
-  quiz:[
-    {q:'"ja-pai-thii" ne demek?',opts:['Geldim','Gitmek istiyorum','Gidiyorum','Gittim'],c:1},
-    {q:'"jot" ne demek?',opts:['Git','Dön','Dur/Park et','Bekle'],c:2},
-    {q:'"thueng laeo" ne demek?',opts:['Yola çıktık','Geldik/Vardık','Bekliyoruz','Dönüyoruz'],c:1},
-    {q:'"rot-tit" ne demek?',opts:['Araba kiralamak','Trafik sıkışıklığı','Park yasak','Hız sınırı'],c:1},
-    {q:'"rip noi" ne demek?',opts:['Yavaşla biraz','Acele et biraz','Bekle biraz','Dur biraz'],c:1},
-    {q:'Havalimanı Tayca?',opts:['rot-fai','sa-naam-bin','tha-rua','sa-thaa-nii'],c:1},
-    {q:'"khit-ngoen" ne demek?',opts:['Para öde','Para kazan','Ücret hesapla','Para ver'],c:2},
-    {q:'"chaa long" ne demek?',opts:['Hızlan','Yavaşla','Dur','Dön'],c:1},
-    {q:'Grab\'i Tayca nasıl söylersin?',opts:['rot-song-thaeo','taxi','aep Grab','Song-thaeo'],c:2},
-    {q:'"pra-maan" ne demek?',opts:['Kesinlikle','Yaklaşık/Tahminen','Hiç','Çok'],c:1},
-  ],
-};
 
+  tones: [],
+
+  grammar: [
+    {id:'g1', title:'Ulaşım Sorguları', title_en:'Transport Questions',
+     explanation:'Ulaşım konusunda sık kullanılan soru kalıpları.',
+     table:[
+       {pronoun:'Gidiş', form:'How do I get to...?', example:'How do I get to Oxford?', tr:'Oxford\'a nasıl gidebilirim?'},
+       {pronoun:'Süre', form:'How long does it take?', example:'How long does it take by train?', tr:'Trenle ne kadar sürer?'},
+       {pronoun:'Sıklık', form:'How often does...run?', example:'How often does the bus run?', tr:'Otobüs ne sıklıkla çalışır?'},
+       {pronoun:'Ücret', form:'How much is a ticket?', example:'How much is a ticket to Bath?', tr:'Bath\'a bilet ne kadar?'}
+     ],
+     note:'"By bus/train/car/plane" — ulaşım araçlarından önce "by" kullanılır, "on foot" hariç'}
+  ],
+
+  speaking: [
+    {id:'sp1', en:'A return ticket to Edinburgh, please.', ro:'/ə rɪˈtɜːrn ˈtɪkɪt tə ˈɛdɪnbrə pliːz/', tr:'Edinburgh\'a gidiş-dönüş bilet, lütfen.',
+     tip:'Bilet satın alma.', prompt:'Bilet isteyin'},
+    {id:'sp2', en:'Which platform does the Manchester train leave from?', ro:'/wɪtʃ ˈplætfɔːrm dəz ðə ˈmæntʃɪstər treɪn liːv frɒm/', tr:'Manchester treni hangi perondan kalkıyor?',
+     tip:'Peron sormak.', prompt:'Peron sorun'},
+    {id:'sp3', en:'Is this the bus to the city centre?', ro:'/ɪz ðɪs ðə bʌs tə ðə ˈsɪti ˈsɛntər/', tr:'Bu otobüs şehir merkezine gidiyor mu?',
+     tip:'Doğru araç kontrolü.', prompt:'Doğru aracı kontrol edin'},
+    {id:'sp4', en:'Excuse me, do I need to change trains?', ro:'/ɪkˈskjuːz miː duː aɪ niːd tə tʃeɪndʒ treɪnz/', tr:'Pardon, aktarma yapmam gerekiyor mu?',
+     tip:'Aktarma sorma.', prompt:'Aktarma sorun'}
+  ],
+
+  dialogues: [
+    {id:'d1', title:'Bilet Gişesinde', title_en:'At the Ticket Office',
+     lines:[
+       {speaker:'A', gender:'m', en:'Good morning! Can I help you?', ro:'/ɡʊd ˈmɔːrnɪŋ kæn aɪ hɛlp juː/', tr:'Günaydın! Yardımcı olabilir miyim?'},
+       {speaker:'B', gender:'f', en:"Yes, please. I'd like two return tickets to Cambridge.", ro:'/jɛs pliːz aɪd laɪk tuː rɪˈtɜːrn ˈtɪkɪts tə ˈkeɪmbrɪdʒ/', tr:'Evet, lütfen. Cambridge\'e iki gidiş-dönüş bilet istiyorum.'},
+       {speaker:'A', gender:'m', en:'When are you travelling?', ro:'/wɛn ɑːr juː ˈtrævəlɪŋ/', tr:'Ne zaman seyahat ediyorsunuz?'},
+       {speaker:'B', gender:'f', en:'This Saturday, returning Sunday evening.', ro:'/ðɪs ˈsætərdeɪ rɪˈtɜːrnɪŋ ˈsʌndeɪ ˈiːvnɪŋ/', tr:'Bu Cumartesi, Pazar akşamı dönüşlü.'},
+       {speaker:'A', gender:'m', en:"That'll be fifty-four pounds. Which platform? Platform six, departing at nine fifteen.", ro:'/ðætl biː ˈfɪfti fɔːr paʊndz wɪtʃ ˈplætfɔːrm ˈplætfɔːrm sɪks dɪˈpɑːrtɪŋ æt naɪn ˈfɪftiːn/', tr:'Elli dört sterlin olacak. Hangi peron? Altıncı peron, dokuz on beşte kalkıyor.'},
+       {speaker:'B', gender:'f', en:'Perfect. Here is my card.', ro:'/ˈpɜːrfɪkt hɪr ɪz maɪ kɑːrd/', tr:'Mükemmel. İşte kartım.'}
+     ]}
+  ],
+
+  listening: [
+    {id:'li1', audio:'', transcript:"This is a platform announcement. The nine forty-five train to Bristol will depart from platform three. This train is running approximately ten minutes late. We apologise for any inconvenience.",
+     tr:'Platform duyurusu. Bristol\'a giden dokuz kırk beşlik tren üçüncü peronda hareket edecek. Bu tren yaklaşık on dakika gecikmeli. Rahatsızlık için özür dileriz.',
+     questions:[
+       {q:'Where is the train going?', opts:['London','Manchester','Bristol','Oxford'], answer:2, tr:'Tren nereye gidiyor?'},
+       {q:'What platform?', opts:['1','2','3','4'], answer:2, tr:'Kaçıncı peron?'},
+       {q:'How late is it?', opts:['5 minutes','10 minutes','15 minutes','20 minutes'], answer:1, tr:'Ne kadar gecikmeli?'}
+     ]}
+  ]
+};
 LESSONS[7] = L7;

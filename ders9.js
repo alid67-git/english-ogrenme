@@ -1,187 +1,82 @@
-// Ders 9 verisi — tayca-v3
-// =================== VERİ: DERS 9 — Motorsiklet ve Trafik ===================
+// ders9.js — English Lesson 9: Work & Business
 const L9 = {
-  tones:[],
-  words:[
-    {id:'w1',th:'มอเตอร์ไซค์',ro:'mot-toe-sai',tr:'Motorsiklet',
-     tip:'İngilizce "motorcycle"dan. Phuket\te en yaygın ulaşım.',
-     ctx:'Phuket\'te her yerde kiralık motorsiklet var.',
-     examples:[
-       {th:'เช่ามอเตอร์ไซค์ได้ที่ไหนครับ',ro:'chao mot-toe-sai dai thii-nai khrap',tr:'Motorsiklet nerede kiralayabilirim?',bd:[{ro:'chao mot-toe-sai',tr:'motorsiklet kirala',role:'V - Yuklem'},{ro:'dai thii-nai',tr:'nerede yapabilirim',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'มอเตอร์ไซค์วันละเท่าไรครับ',ro:'mot-toe-sai wan-la thao-rai khrap',tr:'Motorsiklet günlük ne kadar?',bd:[{ro:'mot-toe-sai',tr:'motorsiklet',role:'S - Ozne'},{ro:'wan-la thao-rai',tr:'günlük ne kadar',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'มอเตอร์ไซค์เสียครับ',ro:'mot-toe-sai sia khrap',tr:'Motorsiklet bozuldu.',bd:[{ro:'mot-toe-sai sia',tr:'motorsiklet bozuldu',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ขี่มอเตอร์ไซค์เป็นไหมครับ',ro:'khii mot-toe-sai pen mai khrap',tr:'Motorsiklet kullanabiliyor musunuz?',bd:[{ro:'khii mot-toe-sai pen mai',tr:'motorsiklet kullanabilir misiniz',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w2',th:'เช่า',ro:'chao',tr:'Kiralamak',
-     tip:'"Chao" = kiralamak. "Chao rot" = araba kirala, "chao hong" = oda kirala.',
-     ctx:'Araç, oda, bisiklet kiralama için.',
-     examples:[
-       {th:'ขอเช่ามอเตอร์ไซค์ครับ',ro:'khor chao mot-toe-sai khrap',tr:'Motorsiklet kiralamak istiyorum.',bd:[{ro:'khor chao mot-toe-sai',tr:'motorsiklet kiralamak istiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เช่าวันเดียวหรือหลายวันครับ',ro:'chao wan-diao rue laai-wan khrap',tr:'Bir gün mü yoksa birkaç gün mü?',bd:[{ro:'chao wan-diao',tr:'bir günlük',role:'Kelime'},{ro:'rue laai-wan',tr:'yoksa birkaç gün',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เช่าราคาถูกที่สุดตัวไหนครับ',ro:'chao raa-khaa thuuk-thii-sut tua-nai khrap',tr:'En ucuz hangisi?',bd:[{ro:'chao raa-khaa thuuk-thii-sut',tr:'en ucuz kiralık',role:'Kelime'},{ro:'tua-nai',tr:'hangisi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w3',th:'หมวกกันน็อก',ro:'muak-gan-nok',tr:'Kask / Baret',
-     tip:'"Muak" = şapka, "gan-nok" = koruma. Phuket\te kask takmak zorunlu.',
-     ctx:'Trafik polisi kask kontrolü yapıyor. Zorunlu!',
-     examples:[
-       {th:'มีหมวกกันน็อกไหมครับ',ro:'mii muak-gan-nok mai khrap',tr:'Kask var mı?',bd:[{ro:'mii muak-gan-nok mai',tr:'kask var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ใส่หมวกกันน็อกด้วยครับ',ro:'sai muak-gan-nok duay khrap',tr:'Kask takın lütfen.',bd:[{ro:'sai muak-gan-nok duay',tr:'kask tak lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'หมวกกันน็อกบังคับครับ',ro:'muak-gan-nok bang-khap khrap',tr:'Kask zorunlu.',bd:[{ro:'muak-gan-nok bang-khap',tr:'kask zorunlu',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'หมวกกันน็อกขนาดไหนครับ',ro:'muak-gan-nok kha-nat nai khrap',tr:'Hangi beden kask?',bd:[{ro:'muak-gan-nok kha-nat nai',tr:'hangi beden kask',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w4',th:'น้ำมัน',ro:'naam-man',tr:'Benzin / Yakıt',
-     tip:'"Naam-man" = yağ/benzin. "Boem naam-man" = benzin doldur.',
-     ctx:'Benzin istasyonu = "bam-nam-man".',
-     examples:[
-       {th:'น้ำมันหมดครับ',ro:'naam-man mot khrap',tr:'Benzin bitti.',bd:[{ro:'naam-man mot',tr:'benzin bitti',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เติมน้ำมันที่ไหนครับ',ro:'toem naam-man thii-nai khrap',tr:'Nerede benzin doldurulur?',bd:[{ro:'toem naam-man thii-nai',tr:'nerede benzin doldurulur',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เติมน้ำมัน 95 ครับ',ro:'toem naam-man kao-haa khrap',tr:'95 oktan benzin doldurun.',bd:[{ro:'toem naam-man kao-haa',tr:'95 oktan doldur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ปั๊มน้ำมันอยู่ที่ไหนครับ',ro:'pam naam-man yuu thii-nai khrap',tr:'Benzin istasyonu nerede?',bd:[{ro:'pam naam-man yuu thii-nai',tr:'benzin istasyonu nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w5',th:'ไฟแดง',ro:'fai-daeng',tr:'Kırmızı ışık / Trafik ışığı',
-     tip:'"Fai" = ışık, "daeng" = kırmızı. "Fai kiao" = yeşil ışık.',
-     ctx:'Yol tarifinde referans noktası olarak çok kullanılır.',
-     examples:[
-       {th:'ไฟแดงอยู่ข้างหน้าครับ',ro:'fai-daeng yuu khaang-naa khrap',tr:'Kırmızı ışık önünüzde.',bd:[{ro:'fai-daeng yuu khaang-naa',tr:'kırmızı ışık önde',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เลี้ยวหลังไฟแดงครับ',ro:'liaw lang fai-daeng khrap',tr:'Kırmızı ışıktan sonra dönün.',bd:[{ro:'liaw lang fai-daeng',tr:'ışıktan sonra dön',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'จอดที่ไฟแดงครับ',ro:'jot thii fai-daeng khrap',tr:'Kırmızı ışıkta durun.',bd:[{ro:'jot thii fai-daeng',tr:'kırmızı ışıkta dur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w6',th:'ประกัน',ro:'pra-gan',tr:'Sigorta',
-     tip:'"Pra-gan" = sigorta. Araç kiralama ve trafik kazası için.',
-     ctx:'Motorsiklet kiralamadan önce sigorta sor!',
-     examples:[
-       {th:'มีประกันไหมครับ',ro:'mii pra-gan mai khrap',tr:'Sigorta var mı?',bd:[{ro:'mii pra-gan mai',tr:'sigorta var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ประกันรวมอยู่ในราคาไหมครับ',ro:'pra-gan ruam yuu nai raa-khaa mai khrap',tr:'Sigorta fiyata dahil mi?',bd:[{ro:'pra-gan ruam yuu nai raa-khaa',tr:'sigorta dahil mi',role:'Soru/Olumsuz'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ประกันไม่ครอบคลุมครับ',ro:'pra-gan mai krop-khlum khrap',tr:'Sigorta kapsamıyor.',bd:[{ro:'pra-gan mai krop-khlum',tr:'sigorta kapsamıyor',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w7',th:'ยาง',ro:'yaang',tr:'Lastik (Araç)',
-     tip:'"Yaang" = lastik/kauçuk. "Yaang pang" = lastik patladı.',
-     ctx:'Phuket yollarında lastik patlaması sık olur.',
-     examples:[
-       {th:'ยางแบนครับ',ro:'yaang baen khrap',tr:'Lastik patlak.',bd:[{ro:'yaang baen',tr:'lastik patlak',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ร้านซ่อมยางอยู่ที่ไหนครับ',ro:'raan-som-yaang yuu thii-nai khrap',tr:'Lastik tamircisi nerede?',bd:[{ro:'raan-som-yaang yuu thii-nai',tr:'lastik tamircisi nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ยางหน้าแบนครับ',ro:'yaang-naa baen khrap',tr:'Ön lastik patlak.',bd:[{ro:'yaang-naa baen',tr:'ön lastik patlak',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เปลี่ยนยางได้ไหมครับ',ro:'plian yaang dai mai khrap',tr:'Lastik değiştirebilir misiniz?',bd:[{ro:'plian yaang dai mai',tr:'lastik değiştirebilir mi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w8',th:'ตำรวจ',ro:'tam-ruat',tr:'Polis',
-     tip:'"Tam-ruat" = polis. "Tam-ruat jra-jorn" = trafik polisi.',
-     ctx:'Trafik kontrolünde veya kaza durumunda.',
-     examples:[
-       {th:'ตำรวจจราจรครับ',ro:'tam-ruat jra-jorn khrap',tr:'Trafik polisi.',bd:[{ro:'tam-ruat jra-jorn',tr:'trafik polisi',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ตำรวจโบกรถครับ',ro:'tam-ruat bok rot khrap',tr:'Polis aracı durduruyor.',bd:[{ro:'tam-ruat bok rot',tr:'polis durduruyor',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'โดนตำรวจจับครับ',ro:'don tam-ruat jap khrap',tr:'Polis tarafından durduruldum.',bd:[{ro:'don tam-ruat jap',tr:'polis tarafından durdurulduk',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เรียกตำรวจด้วยครับ',ro:'riak tam-ruat duay khrap',tr:'Polisi çağırın lütfen.',bd:[{ro:'riak tam-ruat duay',tr:'polisi çağır lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w9',th:'อุบัติเหตุ',ro:'u-bat-ti-het',tr:'Kaza',
-     tip:'"U-bat-ti-het" = kaza. Uzun ama önemli. Kısaltma: "u-bat".',
-     ctx:'Trafik kazası durumunda acil kelime.',
-     examples:[
-       {th:'มีอุบัติเหตุครับ',ro:'mii u-bat-ti-het khrap',tr:'Kaza var.',bd:[{ro:'mii u-bat-ti-het',tr:'kaza var',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'โทรเรียกตำรวจครับ',ro:'tho-riak tam-ruat khrap',tr:'Polisi arayın.',bd:[{ro:'tho-riak tam-ruat',tr:'polisi ara',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมโดนชนครับ',ro:'pom don-chon khrap',tr:'Bana çarptılar.',bd:[{ro:'pom don-chon',tr:'bana çarptı',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไม่มีใครบาดเจ็บครับ',ro:'mai-mii khrai baat-jep khrap',tr:'Kimse yaralanmadı.',bd:[{ro:'mai-mii khrai baat-jep',tr:'kimse yaralanmadı',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w10',th:'ใบขับขี่',ro:'bai-khap-khii',tr:'Sürücü Ehliyeti',
-     tip:'"Bai" = belge/kağıt, "khap-khii" = sürme. Uluslararası ehliyet lazım.',
-     ctx:'Phuket\'te yabancılar için uluslararası ehliyet zorunlu.',
-     examples:[
-       {th:'มีใบขับขี่ไหมครับ',ro:'mii bai-khap-khii mai khrap',tr:'Ehliyetiniz var mı?',bd:[{ro:'mii bai-khap-khii mai',tr:'ehliyet var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ใบขับขี่สากลครับ',ro:'bai-khap-khii saa-gon khrap',tr:'Uluslararası ehliyet.',bd:[{ro:'bai-khap-khii saa-gon',tr:'uluslararası ehliyet',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ขอดูใบขับขี่ครับ',ro:'khor duu bai-khap-khii khrap',tr:'Ehliyetinizi görebilir miyim?',bd:[{ro:'khor duu bai-khap-khii',tr:'ehliyet göster',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ใบขับขี่หมดอายุครับ',ro:'bai-khap-khii mot aa-yu khrap',tr:'Ehliyetin süresi dolmuş.',bd:[{ro:'bai-khap-khii mot aa-yu',tr:'ehliyet süresi dolmuş',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
+  words: [
+    {id:'w1', en:'job / work', ro:'/dʒɒb / wɜːrk/', tr:'iş',
+     examples:[{en:'What do you do for work?', ro:'/wɒt duː juː duː fər wɜːrk/', tr:'Ne iş yapıyorsunuz?',
+       bd:[{ro:'What do you do',tr:'Ne yapıyorsunuz',role:'question'},{ro:'for work',tr:'iş olarak',role:'phrase'}]}]},
+    {id:'w2', en:'company / firm', ro:'/ˈkʌmpəni / fɜːrm/', tr:'şirket / firma'},
+    {id:'w3', en:'office', ro:'/ˈɒfɪs/', tr:'ofis'},
+    {id:'w4', en:'meeting', ro:'/ˈmiːtɪŋ/', tr:'toplantı',
+     examples:[{en:'I have a meeting at three o\'clock.', ro:'/aɪ hæv ə ˈmiːtɪŋ æt θriː əˈklɒk/', tr:'Saat üçte toplantım var.',
+       bd:[{ro:'I have a meeting',tr:'toplantım var',role:'noun'},{ro:'at three o\'clock',tr:'saat üçte',role:'time'}]}]},
+    {id:'w5', en:'colleague', ro:'/ˈkɒliːɡ/', tr:'iş arkadaşı'},
+    {id:'w6', en:'manager / boss', ro:'/ˈmænɪdʒər / bɒs/', tr:'müdür / patron'},
+    {id:'w7', en:'employee', ro:'/ɪmˈplɔɪiː/', tr:'çalışan'},
+    {id:'w8', en:'deadline', ro:'/ˈdɛdlaɪn/', tr:'son teslim tarihi',
+     examples:[{en:'The deadline is this Friday.', ro:'/ðə ˈdɛdlaɪn ɪz ðɪs ˈfraɪdeɪ/', tr:'Son teslim tarihi bu Cuma.',
+       bd:[{ro:'The deadline',tr:'Son teslim tarihi',role:'noun'},{ro:'is this Friday',tr:'bu Cuma',role:'time'}]}]},
+    {id:'w9', en:'project', ro:'/ˈprɒdʒɛkt/', tr:'proje'},
+    {id:'w10', en:'report', ro:'/rɪˈpɔːrt/', tr:'rapor'},
+    {id:'w11', en:'email', ro:'/ˈiːmeɪl/', tr:'e-posta'},
+    {id:'w12', en:'presentation', ro:'/ˌprɛzənˈteɪʃən/', tr:'sunum'},
+    {id:'w13', en:'salary / wage', ro:'/ˈsæləri / weɪdʒ/', tr:'maaş'},
+    {id:'w14', en:'apply for a job', ro:'/əˈplaɪ fər ə dʒɒb/', tr:'iş başvurusu yapmak',
+     examples:[{en:'I am applying for a marketing position.', ro:'/aɪ æm əˈplaɪɪŋ fər ə ˈmɑːrkɪtɪŋ pəˈzɪʃən/', tr:'Pazarlama pozisyonuna başvuruyorum.',
+       bd:[{ro:'I am applying for',tr:'Başvuruyorum',role:'verb'},{ro:'a marketing position',tr:'pazarlama pozisyonu',role:'noun'}]}]},
+    {id:'w15', en:'interview', ro:'/ˈɪntərvjuː/', tr:'iş görüşmesi / mülakat'},
+    {id:'w16', en:'CV / resume', ro:'/ˌsiːˈviː / ˈrɛzjʊmeɪ/', tr:'özgeçmiş'},
+    {id:'w17', en:'promotion', ro:'/prəˈmoʊʃən/', tr:'terfi'},
+    {id:'w18', en:'overtime', ro:'/ˈoʊvərtaɪm/', tr:'fazla mesai'},
+    {id:'w19', en:'work from home', ro:'/wɜːrk frɒm hoʊm/', tr:'evden çalışmak'},
+    {id:'w20', en:"I'll send you an email.", ro:'/aɪl sɛnd juː ən ˈiːmeɪl/', tr:'Size bir e-posta göndereceğim.',
+     examples:[{en:"I'll send you the report by email.", ro:'/aɪl sɛnd juː ðə rɪˈpɔːrt baɪ ˈiːmeɪl/', tr:'Size raporu e-posta ile göndereceğim.',
+       bd:[{ro:"I'll send",tr:'Göndereceğim',role:'verb'},{ro:'you the report',tr:'size raporu',role:'object'},{ro:'by email',tr:'e-posta ile',role:'method'}]}]}
   ],
-  grammar:[
-    {
-      title:'1. Motorsiklet Kiralama Diyaloğu',
-      formula:'KHOR CHAO + [ARAÇ] + [SÜRE] = ... kiralamak istiyorum',
-      explain:'Araç kiralama için standart kalıplar. Fiyat, sigorta, kask mutlaka sor.',
-      tips:['chao = kirala','wan-la = günlük','deuan-la = aylık','ruam pra-gan = sigorta dahil mi','baet pasaport = pasaport bırak (depozit)','khuern rot = araç teslim al'],
-      examples:[
-        {th:'ขอเช่ามอเตอร์ไซค์หนึ่งวันครับ',ro:'khor chao mot-toe-sai nueng wan khrap',tr:'Bir günlük motorsiklet kiralamak istiyorum.',bd:[{ro:'khor chao mot-toe-sai',tr:'motorsiklet kiralamak',role:'V - Yuklem'},{ro:'nueng wan',tr:'bir gün',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ราคาวันละเท่าไรครับ',ro:'raa-khaa wan-la thao-rai khrap',tr:'Günlük fiyat ne kadar?',bd:[{ro:'raa-khaa wan-la thao-rai',tr:'günlük fiyat ne kadar',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ประกันรวมไหมครับ',ro:'pra-gan ruam mai khrap',tr:'Sigorta dahil mi?',bd:[{ro:'pra-gan ruam mai',tr:'sigorta dahil mi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'มีหมวกกันน็อกให้ไหมครับ',ro:'mii muak-gan-nok hai mai khrap',tr:'Kask veriliyor mu?',bd:[{ro:'mii muak-gan-nok hai mai',tr:'kask veriliyor mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'2. Trafik Durumları ve Kaza',
-      formula:'YAANG BAEN = lastik patlak | MII U-BAT-TI-HET = kaza var',
-      explain:'Trafik sorunlarında kullanılacak acil kelimeler. Phuket\'te özellikle yağmurlu sezonda dikkat.',
-      tips:['yaang baen = lastik patlak','naam-man mot = benzin bitti','rot sia = araç bozuldu','don-chon = çarpma','tho 191 = Phuket polis acil','tho 1669 = ambulans'],
-      examples:[
-        {th:'ยางแบนครับ ช่วยด้วยครับ',ro:'yaang baen khrap chuay duay khrap',tr:'Lastik patlak, yardım edin.',bd:[{ro:'yaang baen',tr:'lastik patlak',role:'V - Yuklem'},{ro:'chuay duay',tr:'yardım edin',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'มีอุบัติเหตุครับ โทรเรียกตำรวจด้วย',ro:'mii u-bat-ti-het khrap tho-riak tam-ruat duay',tr:'Kaza var, polisi çağırın.',bd:[{ro:'mii u-bat-ti-het',tr:'kaza var',role:'V - Yuklem'},{ro:'tho-riak tam-ruat duay',tr:'polisi çağır lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมโดนชนครับ ไม่ได้เป็นฝ่ายผิด',ro:'pom don-chon khrap mai-dai pen faai-phit',tr:'Bana çarptılar, benim suçum değil.',bd:[{ro:'pom don-chon',tr:'bana çarptı',role:'V - Yuklem'},{ro:'mai-dai pen faai-phit',tr:'benim suçum değil',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ขอเรียกประกันได้ไหมครับ',ro:'khor riak pra-gan dai mai khrap',tr:'Sigortayı arayabilir miyim?',bd:[{ro:'khor riak pra-gan',tr:'sigorta ara',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-  ],
-  speaking:[
-    {task:'Motorsiklet kirala',th:'ขอเช่ามอเตอร์ไซค์ครับ',ro:'khor chao mot-toe-sai khrap',tr:'Motorsiklet kiralamak istiyorum.',bd:[{ro:'khor chao mot-toe-sai',tr:'motorsiklet kiralamak',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Günlük fiyat sor',th:'ราคาวันละเท่าไรครับ',ro:'raa-khaa wan-la thao-rai khrap',tr:'Günlük fiyat ne kadar?',bd:[{ro:'raa-khaa wan-la thao-rai',tr:'günlük fiyat',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Kask var mı sor',th:'มีหมวกกันน็อกไหมครับ',ro:'mii muak-gan-nok mai khrap',tr:'Kask var mı?',bd:[{ro:'mii muak-gan-nok mai',tr:'kask var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Benzin bitti',th:'น้ำมันหมดครับ',ro:'naam-man mot khrap',tr:'Benzin bitti.',bd:[{ro:'naam-man mot',tr:'benzin bitti',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Lastik patlak',th:'ยางแบนครับ',ro:'yaang baen khrap',tr:'Lastik patlak.',bd:[{ro:'yaang baen',tr:'lastik patlak',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Kaza var bildir',th:'มีอุบัติเหตุครับ',ro:'mii u-bat-ti-het khrap',tr:'Kaza var.',bd:[{ro:'mii u-bat-ti-het',tr:'kaza var',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Sigorta dahil mi sor',th:'ประกันรวมไหมครับ',ro:'pra-gan ruam mai khrap',tr:'Sigorta dahil mi?',bd:[{ro:'pra-gan ruam mai',tr:'sigorta dahil mi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Polisi çağır',th:'เรียกตำรวจด้วยครับ',ro:'riak tam-ruat duay khrap',tr:'Polisi çağırın lütfen.',bd:[{ro:'riak tam-ruat duay',tr:'polisi çağır lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-  ],
-  dialogues:[
-    {title:'🏍️ Motorsiklet Kiralama',
-     lines:[
-       {s:'Ali',th:'ขอเช่ามอเตอร์ไซค์หนึ่งวันครับ',ro:'khor chao mot-toe-sai nueng wan khrap',tr:'Bir günlük motorsiklet kiralamak istiyorum.',bd:[{ro:'khor chao mot-toe-sai nueng wan',tr:'bir günlük motorsiklet',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ราคาสองร้อยบาทต่อวันค่ะ มีประกันด้วยค่ะ',ro:'raa-khaa song-roi baht tor wan kha mii pra-gan duay kha',tr:'Günlük 200 Baht, sigorta dahil.',bd:[{ro:'raa-khaa song-roi baht tor wan',tr:'günlük 200 Baht',role:'Kelime'},{ro:'mii pra-gan duay',tr:'sigorta dahil',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'มีหมวกกันน็อกให้ไหมครับ',ro:'mii muak-gan-nok hai mai khrap',tr:'Kask veriliyor mu?',bd:[{ro:'mii muak-gan-nok hai mai',tr:'kask veriliyor mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'มีค่ะ แต่ต้องวางมัดจำห้าร้อยบาทนะคะ',ro:'mii kha tae tong waang mat-jam haa-roi baht na kha',tr:'Var, ama 500 Baht depozito gerekiyor.',bd:[{ro:'mii',tr:'var',role:'Kelime'},{ro:'tae tong waang mat-jam haa-roi baht',tr:'500 Baht depozito',role:'Kelime'},{ro:'na kha',tr:'onay eki',role:'Kibar'}]},
-       {s:'Ali',th:'โอเคครับ เอาเลยครับ',ro:'o-kee khrap ao loey khrap',tr:'Tamam, alıyorum.',bd:[{ro:'o-kee ao loey',tr:'tamam alıyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'⛽ Benzin İstasyonu',
-     lines:[
-       {s:'Ali',th:'เติมน้ำมัน 95 เต็มถังครับ',ro:'toem naam-man kao-haa tem-thang khrap',tr:'95 oktan, depo dolsun.',bd:[{ro:'toem naam-man kao-haa',tr:'95 oktan doldur',role:'V - Yuklem'},{ro:'tem-thang',tr:'depo dolu',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'จ่ายเงินสดหรือบัตรคะ',ro:'jai ngoen-sot rue bat kha',tr:'Nakit mi kart mı?',bd:[{ro:'jai ngoen-sot rue bat',tr:'nakit mi kart mı',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'เงินสดครับ',ro:'ngoen-sot khrap',tr:'Nakit.',bd:[{ro:'ngoen-sot',tr:'nakit',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'รวมเป็นสองร้อยสิบบาทค่ะ',ro:'ruam pen song-roi-sip baht kha',tr:'Toplam 210 Baht.',bd:[{ro:'ruam pen song-roi-sip baht',tr:'toplam 210 Baht',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'🚨 Trafik Kazası',
-     lines:[
-       {s:'Ali',th:'ขอโทษครับ ผมโดนชนครับ',ro:'khor-thot khrap pom don-chon khrap',tr:'Özür dilerim, bana çarptı.',bd:[{ro:'khor-thot',tr:'özür',role:'Kelime'},{ro:'pom don-chon',tr:'bana çarptı',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'บาดเจ็บไหมคะ',ro:'baat-jep mai kha',tr:'Yaralandınız mı?',bd:[{ro:'baat-jep mai',tr:'yaralandı mı',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ไม่มากครับ แต่ต้องเรียกตำรวจครับ',ro:'mai maak khrap tae tong riak tam-ruat khrap',tr:'Fazla değil, ama polisi çağırmam lazım.',bd:[{ro:'mai maak',tr:'fazla değil',role:'Olumsuz'},{ro:'tae tong riak tam-ruat',tr:'ama polis lazım',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'โทร 191 เลยค่ะ',ro:'tho 191 loey kha',tr:'191\'i hemen arayın.',bd:[{ro:'tho 191 loey',tr:'191 hemen ara',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'🔧 Lastik Tamiri',
-     lines:[
-       {s:'Ali',th:'ยางแบนครับ ช่วยด้วยครับ',ro:'yaang baen khrap chuay duay khrap',tr:'Lastik patlak, yardım eder misiniz?',bd:[{ro:'yaang baen',tr:'lastik patlak',role:'V - Yuklem'},{ro:'chuay duay',tr:'yardım et lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ร้านซ่อมยางอยู่ใกล้ๆ ค่ะ',ro:'raan-som-yaang yuu glai-glai kha',tr:'Lastik tamircisi yakında.',bd:[{ro:'raan-som-yaang yuu glai-glai',tr:'tamirci yakında',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'เดินได้ไหมครับ',ro:'dern dai mai khrap',tr:'Yürüyerek gidebilir miyim?',bd:[{ro:'dern dai mai',tr:'yürüyebilir miyim',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ได้ค่ะ เดินห้านาทีค่ะ',ro:'dai kha dern haa-naa-thii kha',tr:'Evet, yürüyerek 5 dakika.',bd:[{ro:'dai',tr:'evet',role:'Kelime'},{ro:'dern haa-naa-thii',tr:'yürüyerek 5 dakika',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-  ],
-  listening:[
-    {diff:'easy',th:'ยางแบนครับ',q:'Sorun ne?',opts:['Benzin bitti','Lastik patlak','Araç bozuldu'],c:1},
-    {diff:'easy',th:'น้ำมันหมดครับ',q:'Sorun ne?',opts:['Lastik bitti','Benzin bitti','Sigorta bitti'],c:1},
-    {diff:'easy',th:'มีหมวกกันน็อกไหมครับ',q:'Ne soruluyor?',opts:['Sigorta','Kask','Ehliyet'],c:1},
-    {diff:'medium',th:'ราคาวันละเท่าไรครับ',q:'Ne soruluyor?',opts:['Aylık fiyat','Günlük fiyat','Toplam fiyat'],c:1},
-    {diff:'medium',th:'ประกันรวมไหมครับ',q:'Ne soruluyor?',opts:['Sigorta dahil mi','Sigorta kaç para','Sigorta nerede'],c:0},
-    {diff:'medium',th:'โดนตำรวจจับครับ',q:'Ne oldu?',opts:['Polis yardım etti','Polis tarafından durduruldu','Polisi aradı'],c:1},
-    {diff:'medium',th:'เติมน้ำมัน 95 เต็มถังครับ',q:'Ne isteniyor?',opts:['95 litre benzin','Depo dolusu 95 oktan','95 Baht değer'],c:1},
-    {diff:'hard',th:'ต้องวางมัดจำห้าร้อยบาทนะคะ',q:'Ne gerekiyor?',opts:['500 Baht ödeme','500 Baht depozito','500 Baht sigorta'],c:1},
-    {diff:'hard',th:'ผมโดนชนครับ ไม่ได้เป็นฝ่ายผิด',q:'Ne söyleniyor?',opts:['Kazam oldu, suçluyum','Bana çarptılar, suçum değil','Kazayı gördüm'],c:1},
-    {diff:'hard',th:'ใบขับขี่สากลครับ',q:'Ne gösterildi?',opts:['Thai ehliyeti','Uluslararası ehliyet','Pasaport'],c:1},
-  ],
-  quiz:[
-    {q:'"chao" ne demek?',opts:['Satın almak','Kiralamak','Satmak','Vermek'],c:1},
-    {q:'"muak-gan-nok" ne demek?',opts:['Gözlük','Kask/Baret','Eldiven','Ayakkabı'],c:1},
-    {q:'"yaang baen" ne demek?',opts:['Araba bozuldu','Benzin bitti','Lastik patlak','Yol kapalı'],c:2},
-    {q:'"naam-man" ne demek?',opts:['Su','Benzin/Yakıt','Yağmur','Buz'],c:1},
-    {q:'"pra-gan" ne demek?',opts:['Pasaport','Ehliyet','Sigorta','Depozito'],c:2},
-    {q:'"tam-ruat" ne demek?',opts:['Doktor','Polis','İtfaiye','Yardımcı'],c:1},
-    {q:'"u-bat-ti-het" ne demek?',opts:['Trafik sıkışıklığı','Benzin istasyonu','Kaza','Lastik tamiri'],c:2},
-    {q:'"bai-khap-khii" ne demek?',opts:['Sigorta','Pasaport','Ehliyet','Kimlik'],c:2},
-    {q:'Phuket trafik polis acil hattı?',opts:['191','1669','199','1155'],c:0},
-    {q:'"wan-la" ne demek?',opts:['Aylık','Haftalık','Günlük','Saatlik'],c:2},
-  ],
-};
 
+  tones: [],
+
+  grammar: [
+    {id:'g1', title:'Gelecek Zaman — will / going to', title_en:'Future Tense',
+     explanation:'"will" anlık karar veya tahmin; "going to" önceden planlanan şeyler için kullanılır.',
+     table:[
+       {pronoun:'will (karar)', form:"I'll + verb", example:"I'll call you tomorrow.", tr:'Yarın seni ararım.'},
+       {pronoun:'going to (plan)', form:'am/is/are going to', example:'I am going to send the report.', tr:'Raporu göndereceğim.'},
+       {pronoun:'Olumsuz', form:"won't / not going to", example:"I won't be late.", tr:'Geç kalmayacağım.'},
+       {pronoun:'Soru', form:'Will...? / Are...going to?', example:'Will you be at the meeting?', tr:'Toplantıda olacak mısın?'}
+     ],
+     note:'"Can you...?" ve "Could you...?" iş ortamında sık kullanılan kibar istek kalıplarıdır'}
+  ],
+
+  speaking: [
+    {id:'sp1', en:'I work as a software engineer at a tech company.', ro:'/aɪ wɜːrk æz ə ˈsɒftweər ˌɛndʒɪˈnɪər æt ə tɛk ˈkʌmpəni/', tr:'Bir teknoloji şirketinde yazılım mühendisi olarak çalışıyorum.',
+     tip:'İşinizi tanıtma.', prompt:'Mesleğinizi tanıtın'},
+    {id:'sp2', en:'Could you send me the report by Friday, please?', ro:'/kʊd juː sɛnd miː ðə rɪˈpɔːrt baɪ ˈfraɪdeɪ pliːz/', tr:'Raporu Cuma\'ya kadar gönderebilir misiniz, lütfen?',
+     tip:'Kibar istek.', prompt:'Kibar bir istek yapın'},
+    {id:'sp3', en:"I'm afraid I can't make the meeting. Can we reschedule?", ro:'/aɪm əˈfreɪd aɪ kɑːnt meɪk ðə ˈmiːtɪŋ kæn wiː ˌriːˈʃɛdjuːl/', tr:'Toplantıya katılamayacağım. Erteleyebilir miyiz?',
+     tip:'Toplantı erteleme.', prompt:'Toplantı erteleyin'}
+  ],
+
+  dialogues: [
+    {id:'d1', title:'İş Görüşmesi', title_en:'Job Interview',
+     lines:[
+       {speaker:'A', gender:'f', en:'Good morning! Please sit down. Tell me about yourself.', ro:'/ɡʊd ˈmɔːrnɪŋ pliːz sɪt daʊn tɛl miː əˈbaʊt jɔːrsɛlf/', tr:'Günaydın! Lütfen oturun. Kendinizden bahsedin.'},
+       {speaker:'B', gender:'m', en:"Good morning. I'm Ali. I have five years' experience in marketing.", ro:'/ɡʊd ˈmɔːrnɪŋ aɪm æli aɪ hæv faɪv jɪərz ɪkˈspɪərɪəns ɪn ˈmɑːrkɪtɪŋ/', tr:'Günaydın. Ben Ali. Pazarlamada beş yıl deneyimim var.'},
+       {speaker:'A', gender:'f', en:'Why do you want to work for our company?', ro:'/waɪ duː juː wɒnt tə wɜːrk fər aʊər ˈkʌmpəni/', tr:'Neden şirketimizde çalışmak istiyorsunuz?'},
+       {speaker:'B', gender:'m', en:"Your company has an excellent reputation. I believe I can contribute to your team's success.", ro:'/jɔːr ˈkʌmpəni hæz ən ˈɛksələnt ˌrɛpjʊˈteɪʃən aɪ bɪˈliːv aɪ kæn kənˈtrɪbjuːt tə jɔːr tiːmz səkˈsɛs/', tr:'Şirketinizin mükemmel bir itibarı var. Ekibinizin başarısına katkıda bulunabileceğime inanıyorum.'},
+       {speaker:'A', gender:'f', en:'What is your greatest strength?', ro:'/wɒt ɪz jɔːr ˈɡreɪtɪst strɛŋθ/', tr:'En büyük güçlü yönünüz nedir?'},
+       {speaker:'B', gender:'m', en:'I am very organised and I work well under pressure.', ro:'/aɪ æm ˈvɛri ˈɔːrɡənaɪzd ænd aɪ wɜːrk wɛl ˈʌndər ˈprɛʃər/', tr:'Çok düzenli biriyim ve baskı altında iyi çalışırım.'},
+       {speaker:'A', gender:'f', en:'Excellent. We will contact you by Friday.', ro:'/ˈɛksələnt wiː wɪl ˈkɒntækt juː baɪ ˈfraɪdeɪ/', tr:'Mükemmel. Cuma\'ya kadar sizinle iletişime geçeceğiz.'}
+     ]}
+  ],
+
+  listening: [
+    {id:'li1', audio:'', transcript:"This is a reminder about tomorrow's all-staff meeting at ten am in the main conference room. Please bring your Q3 reports. The meeting will last approximately one hour. Lunch will be provided afterwards.",
+     tr:'Yarın saat 10:00\'da ana toplantı odasında tüm personel toplantısı hatırlatması. Lütfen 3. çeyrek raporlarınızı getirin. Toplantı yaklaşık bir saat sürecek. Ardından öğle yemeği ikram edilecek.',
+     questions:[
+       {q:'What time is the meeting?', opts:['9am','10am','11am','12pm'], answer:1, tr:'Toplantı saat kaçta?'},
+       {q:'What should staff bring?', opts:['ID cards','Q3 reports','laptops','contracts'], answer:1, tr:'Personel ne getirmeli?'},
+       {q:'How long is the meeting?', opts:['30 min','45 min','1 hour','2 hours'], answer:2, tr:'Toplantı ne kadar sürecek?'}
+     ]}
+  ]
+};
 LESSONS[9] = L9;

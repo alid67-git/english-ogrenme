@@ -1,193 +1,96 @@
-// Ders 4 verisi — tayca-v3
-// =================== VERİ: DERS 4 — Restoran ===================
+// ders4.js — English Lesson 4: Restaurant & Food
 const L4 = {
-  tones:[],
-  words:[
-    {id:'w1',th:'ร้านอาหาร',ro:'raan-aa-haan',tr:'Restoran',
-     tip:'"Raan" = dükkan/yer, "aa-haan" = yemek.',
-     ctx:'Phuket\'te her yerde var. "Raan aa-haan Thai" = Thai yemek yeri.',
-     examples:[
-       {th:'ร้านอาหารอยู่ที่ไหนครับ',ro:'raan-aa-haan yuu thii-nai khrap',tr:'Restoran nerede?',bd:[{ro:'raan-aa-haan',tr:'restoran',role:'S - Ozne'},{ro:'yuu thii-nai',tr:'nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ร้านอาหารไทยอร่อยมากครับ',ro:'raan-aa-haan thai a-roi maak khrap',tr:'Thai restoranı çok lezzetli.',bd:[{ro:'raan-aa-haan thai',tr:'Thai restoranı',role:'S - Ozne'},{ro:'a-roi maak',tr:'çok lezzetli',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ร้านนี้แพงไหมครับ',ro:'raan-nii phaeng mai khrap',tr:'Bu yer pahalı mı?',bd:[{ro:'raan-nii',tr:'bu yer',role:'S - Ozne'},{ro:'phaeng mai',tr:'pahalı mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ขอโต๊ะสองคนครับ',ro:'khor-toh song-khon khrap',tr:'İki kişilik masa istiyorum.',bd:[{ro:'khor-toh',tr:'masa istiyorum',role:'V - Yuklem'},{ro:'song-khon',tr:'iki kişi',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w2',th:'อาหาร',ro:'aa-haan',tr:'Yemek / Gıda',
-     tip:'"Aa-haan" = yiyecek genel anlamda.',
-     ctx:'"Aa-haan Thai" = Thai yemeği. "Aa-haan farang" = Batı yemeği.',
-     examples:[
-       {th:'อาหารอร่อยมากครับ',ro:'aa-haan a-roi maak khrap',tr:'Yemek çok lezzetli.',bd:[{ro:'aa-haan',tr:'yemek',role:'S - Ozne'},{ro:'a-roi maak',tr:'çok lezzetli',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อาหารนี้คืออะไรครับ',ro:'aa-haan-nii khue a-rai khrap',tr:'Bu yemek ne?',bd:[{ro:'aa-haan-nii',tr:'bu yemek',role:'S - Ozne'},{ro:'khue a-rai',tr:'nedir',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อาหารไทยเผ็ดมากครับ',ro:'aa-haan thai phet maak khrap',tr:'Thai yemeği çok acı.',bd:[{ro:'aa-haan thai',tr:'Thai yemeği',role:'S - Ozne'},{ro:'phet maak',tr:'çok acı',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'มีอาหารมังสวิรัติไหมครับ',ro:'mii aa-haan mang-sa-wi-rat mai khrap',tr:'Vejetaryen yemek var mı?',bd:[{ro:'mii',tr:'var mı',role:'V - Yuklem'},{ro:'aa-haan mang-sa-wi-rat',tr:'vejetaryen yemek',role:'O - Nesne'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w3',th:'เมนู',ro:'me-nuu',tr:'Menü',
-     tip:'İngilizce\den alıntı. Telaffuz: me-NUU.',
-     ctx:'Her restorantta ilk söyleyeceğin kelime.',
-     examples:[
-       {th:'ขอเมนูหน่อยครับ',ro:'khor me-nuu noi khrap',tr:'Menüyü alabilir miyim?',bd:[{ro:'khor',tr:'istiyorum',role:'V - Yuklem'},{ro:'me-nuu',tr:'menü',role:'O - Nesne'},{ro:'noi',tr:'biraz/lütfen',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เมนูภาษาอังกฤษมีไหมครับ',ro:'me-nuu phaa-saa ang-krit mii mai khrap',tr:'İngilizce menü var mı?',bd:[{ro:'me-nuu phaa-saa ang-krit',tr:'İngilizce menü',role:'S - Ozne'},{ro:'mii mai',tr:'var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อาหารนี้อยู่ในเมนูไหมครับ',ro:'aa-haan-nii yuu nai me-nuu mai khrap',tr:'Bu yemek menüde var mı?',bd:[{ro:'aa-haan-nii',tr:'bu yemek',role:'S - Ozne'},{ro:'yuu nai me-nuu mai',tr:'menüde var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w4',th:'สั่ง',ro:'sang',tr:'Sipariş vermek',
-     tip:'"Sang" = sipariş etmek, istemek. "Sang aa-haan" = yemek sipariş etmek.',
-     ctx:'Garsona siparişini vermek için kullanırsın.',
-     examples:[
-       {th:'ขอสั่งได้เลยครับ',ro:'khor sang dai loey khrap',tr:'Sipariş verebilir miyim?',bd:[{ro:'khor sang',tr:'sipariş vermek istiyorum',role:'V - Yuklem'},{ro:'dai loey',tr:'hemen olabilir',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมสั่งข้าวผัดครับ',ro:'pom sang khao-phat khrap',tr:'Fried rice ısmarlıyorum.',bd:[{ro:'pom sang',tr:'ısmarlıyorum',role:'V - Yuklem'},{ro:'khao-phat',tr:'fried rice',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'สั่งอะไรดีครับ',ro:'sang a-rai dee khrap',tr:'Ne sipariş etsem iyi olur?',bd:[{ro:'sang a-rai dee',tr:'ne sipariş etsem',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ขอสั่งอีกจานครับ',ro:'khor sang iik jaan khrap',tr:'Bir tabak daha ısmarlayabilir miyim?',bd:[{ro:'khor sang iik jaan',tr:'bir tabak daha',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w5',th:'เผ็ด',ro:'phet',tr:'Acı / Baharatlı',
-     tip:'"Phet" = acı. "Mai phet" = acısız. "Phet nit-noi" = az acılı.',
-     ctx:'Phuket\'te en önemli kelime! Acı sevmiyorsan hemen söyle.',
-     examples:[
-       {th:'ไม่เผ็ดครับ',ro:'mai phet khrap',tr:'Acısız lütfen.',bd:[{ro:'mai phet',tr:'acısız',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เผ็ดนิดหน่อยได้ครับ',ro:'phet nit-noi dai khrap',tr:'Az acılı olabilir.',bd:[{ro:'phet nit-noi',tr:'az acılı',role:'Kelime'},{ro:'dai',tr:'olabilir',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เผ็ดมากเกินไปครับ',ro:'phet maak koern pai khrap',tr:'Çok fazla acı.',bd:[{ro:'phet maak koern pai',tr:'çok fazla acı',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณชอบกินเผ็ดไหมครับ',ro:'khun chop kin phet mai khrap',tr:'Acılı yemek sever misiniz?',bd:[{ro:'khun chop kin phet',tr:'acılı seviniyor musunuz',role:'Soru/Olumsuz'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w6',th:'อร่อย',ro:'a-roi',tr:'Lezzetli',
-     tip:'"A-roi" = lezzetli. "A-roi maak" = çok lezzetli. Thailılar bunu çok duyduklarında mutlu olur.',
-     ctx:'Yemeği beğendiğinde söyle — sosyal açıdan çok önemli.',
-     examples:[
-       {th:'อร่อยมากครับ',ro:'a-roi maak khrap',tr:'Çok lezzetli.',bd:[{ro:'a-roi maak',tr:'çok lezzetli',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อร่อยที่สุดครับ',ro:'a-roi thii-sut khrap',tr:'En lezzetli.',bd:[{ro:'a-roi thii-sut',tr:'en lezzetli',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'อาหารนี้อร่อยไหมครับ',ro:'aa-haan-nii a-roi mai khrap',tr:'Bu yemek lezzetli mi?',bd:[{ro:'aa-haan-nii',tr:'bu yemek',role:'S - Ozne'},{ro:'a-roi mai',tr:'lezzetli mi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไม่อร่อยเลยครับ',ro:'mai a-roi loey khrap',tr:'Hiç lezzetli değil.',bd:[{ro:'mai a-roi loey',tr:'hiç lezzetli değil',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w7',th:'เช็คบิล',ro:'chek-bin',tr:'Hesap / Hesap iste',
-     tip:'İngilizce "check bill"dan. "Khor chek-bin" = hesabı getirir misiniz.',
-     ctx:'Restorantan ayrılırken kullanırsın.',
-     examples:[
-       {th:'เช็คบิลด้วยครับ',ro:'chek-bin duay khrap',tr:'Hesabı getirir misiniz?',bd:[{ro:'chek-bin',tr:'hesap',role:'O - Nesne'},{ro:'duay',tr:'lütfen/de',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'รวมกันหรือแยกครับ',ro:'ruam-gan rue yaek khrap',tr:'Birlikte mi yoksa ayrı mı?',bd:[{ro:'ruam-gan',tr:'birlikte',role:'Kelime'},{ro:'rue yaek',tr:'yoksa ayrı',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'รับบัตรเครดิตไหมครับ',ro:'rap bat-khre-dit mai khrap',tr:'Kredi kartı kabul ediyor musunuz?',bd:[{ro:'rap bat-khre-dit',tr:'kredi kartı kabul',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'มีพร้อมเพย์ไหมครับ',ro:'mii PromPay mai khrap',tr:'PromPay var mı?',bd:[{ro:'mii PromPay mai',tr:'PromPay var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w8',th:'น้ำ',ro:'naam',tr:'Su',
-     tip:'"Naam" = su/sıvı. "Naam plaao" = sade su. "Naam khaeng" = buz.',
-     ctx:'Restorantta ilk isteyeceğin şey.',
-     examples:[
-       {th:'ขอน้ำเปล่าครับ',ro:'khor naam-plaao khrap',tr:'Sade su istiyorum.',bd:[{ro:'khor',tr:'istiyorum',role:'V - Yuklem'},{ro:'naam-plaao',tr:'sade su',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'น้ำเย็นครับ',ro:'naam-yen khrap',tr:'Soğuk su.',bd:[{ro:'naam-yen',tr:'soğuk su',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไม่เอาน้ำแข็งครับ',ro:'mai-ao naam-khaeng khrap',tr:'Buz istemiyorum.',bd:[{ro:'mai-ao',tr:'istemiyorum',role:'Olumsuz'},{ro:'naam-khaeng',tr:'buz',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ขอน้ำอีกแก้วครับ',ro:'khor naam iik kaeo khrap',tr:'Bir bardak su daha istiyorum.',bd:[{ro:'khor naam iik kaeo',tr:'bir bardak su daha',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w9',th:'ข้าวผัด',ro:'khao-phat',tr:'Kızarmış Pilav (Fried Rice)',
-     tip:'"Khao" = pirinç/pilav, "phat" = kavur/kızart. Tayca en temel yemek.',
-     ctx:'Phuket\'te her yerde var, ucuz ve doyurucu.',
-     examples:[
-       {th:'ข้าวผัดหมูครับ',ro:'khao-phat muu khrap',tr:'Domuzlu fried rice.',bd:[{ro:'khao-phat',tr:'fried rice',role:'Kelime'},{ro:'muu',tr:'domuz',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ข้าวผัดไก่ครับ',ro:'khao-phat gai khrap',tr:'Tavuklu fried rice.',bd:[{ro:'khao-phat gai',tr:'tavuklu fried rice',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ข้าวผัดทะเลครับ',ro:'khao-phat tha-lee khrap',tr:'Deniz ürünlü fried rice.',bd:[{ro:'khao-phat tha-lee',tr:'deniz ürünlü fried rice',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไม่ใส่ไข่ครับ',ro:'mai sai khai khrap',tr:'Yumurta koyma.',bd:[{ro:'mai sai',tr:'koyma',role:'Olumsuz'},{ro:'khai',tr:'yumurta',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w10',th:'ผัดไทย',ro:'phat-thai',tr:'Pad Thai',
-     tip:'Tayland\'ın en ünlü yemeği. Pirinç noodleli. Turistler için bile.',
-     ctx:'Adını bilmek ve sipariş vermek yeterli.',
-     examples:[
-       {th:'ผัดไทยหนึ่งจานครับ',ro:'phat-thai nueng jaan khrap',tr:'Bir tabak Pad Thai.',bd:[{ro:'phat-thai',tr:'Pad Thai',role:'Kelime'},{ro:'nueng jaan',tr:'bir tabak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผัดไทยไม่ใส่กุ้งครับ',ro:'phat-thai mai sai kung khrap',tr:'Karidessiz Pad Thai.',bd:[{ro:'phat-thai',tr:'Pad Thai',role:'Kelime'},{ro:'mai sai kung',tr:'karidessiz',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผัดไทยอร่อยมากครับ',ro:'phat-thai a-roi maak khrap',tr:'Pad Thai çok lezzetli.',bd:[{ro:'phat-thai a-roi maak',tr:'Pad Thai çok lezzetli',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
+  words: [
+    {id:'w1', en:'A table for two, please.', ro:'/ə ˈteɪbəl fər tuː pliːz/', tr:'İki kişilik masa, lütfen.',
+     tip:'Restoranda masa istemek.', ctx:'Restorana girişte.',
+     examples:[{en:'Good evening. A table for two, please.', ro:'/ɡʊd ˈiːvnɪŋ ə ˈteɪbəl fər tuː pliːz/', tr:'İyi akşamlar. İki kişilik masa, lütfen.',
+       bd:[{ro:'A table for two',tr:'iki kişilik masa',role:'noun'},{ro:'please',tr:'lütfen',role:'courtesy'}]}]},
+    {id:'w2', en:'menu', ro:'/ˈmɛnjuː/', tr:'menü',
+     examples:[{en:'Can I see the menu, please?', ro:'/kæn aɪ siː ðə ˈmɛnjuː pliːz/', tr:'Menüyü görebilir miyim, lütfen?',
+       bd:[{ro:'Can I see',tr:'Görebilir miyim',role:'modal'},{ro:'the menu',tr:'menüyü',role:'noun'}]}]},
+    {id:'w3', en:'order', ro:'/ˈɔːrdər/', tr:'sipariş (vermek)',
+     examples:[{en:'Are you ready to order?', ro:'/ɑːr juː ˈrɛdi tə ˈɔːrdər/', tr:'Sipariş vermeye hazır mısınız?',
+       bd:[{ro:'Are you ready',tr:'Hazır mısınız',role:'question'},{ro:'to order',tr:'sipariş vermek',role:'verb'}]}]},
+    {id:'w4', en:"I'd like...", ro:'/aɪd laɪk/', tr:'...istiyorum / ...alabilir miyim',
+     tip:'Sipariş verirken nazik ifade.', ctx:'Restoran, kafe, dükkan.',
+     examples:[{en:"I'd like a coffee, please.", ro:'/aɪd laɪk ə ˈkɒfi pliːz/', tr:'Bir kahve istiyorum, lütfen.',
+       bd:[{ro:"I'd like",tr:'İstiyorum',role:'modal'},{ro:'a coffee',tr:'bir kahve',role:'noun'}]}]},
+    {id:'w5', en:'starter / appetizer', ro:'/ˈstɑːrtər / ˈæpɪtaɪzər/', tr:'başlangıç yemeği'},
+    {id:'w6', en:'main course', ro:'/meɪn kɔːrs/', tr:'ana yemek'},
+    {id:'w7', en:'dessert', ro:'/dɪˈzɜːrt/', tr:'tatlı'},
+    {id:'w8', en:'drink', ro:'/drɪŋk/', tr:'içecek'},
+    {id:'w9', en:'water', ro:'/ˈwɔːtər/', tr:'su'},
+    {id:'w10', en:'coffee', ro:'/ˈkɒfi/', tr:'kahve'},
+    {id:'w11', en:'tea', ro:'/tiː/', tr:'çay'},
+    {id:'w12', en:'juice', ro:'/dʒuːs/', tr:'meyve suyu'},
+    {id:'w13', en:'bread', ro:'/brɛd/', tr:'ekmek'},
+    {id:'w14', en:'soup', ro:'/suːp/', tr:'çorba'},
+    {id:'w15', en:'salad', ro:'/ˈsæləd/', tr:'salata'},
+    {id:'w16', en:'chicken', ro:'/ˈtʃɪkɪn/', tr:'tavuk'},
+    {id:'w17', en:'beef', ro:'/biːf/', tr:'sığır eti'},
+    {id:'w18', en:'fish', ro:'/fɪʃ/', tr:'balık'},
+    {id:'w19', en:'vegetarian', ro:'/ˌvɛdʒɪˈtɛərɪən/', tr:'vejetaryen',
+     examples:[{en:'Do you have vegetarian options?', ro:'/duː juː hæv ˌvɛdʒɪˈtɛərɪən ˈɒpʃənz/', tr:'Vejetaryen seçeneğiniz var mı?',
+       bd:[{ro:'Do you have',tr:'Var mı',role:'question'},{ro:'vegetarian options',tr:'vejetaryen seçenek',role:'noun'}]}]},
+    {id:'w20', en:'delicious', ro:'/dɪˈlɪʃəs/', tr:'lezzetli / nefis'},
+    {id:'w21', en:'bill', ro:'/bɪl/', tr:'hesap'},
+    {id:'w22', en:'tip', ro:'/tɪp/', tr:'bahşiş'},
+    {id:'w23', en:'reservation', ro:'/ˌrɛzərˈveɪʃən/', tr:'rezervasyon',
+     examples:[{en:'I have a reservation for two.', ro:'/aɪ hæv ə ˌrɛzərˈveɪʃən fər tuː/', tr:'İki kişilik rezervasyonum var.',
+       bd:[{ro:'I have',tr:'var',role:'verb'},{ro:'a reservation',tr:'rezervasyon',role:'noun'},{ro:'for two',tr:'iki kişilik',role:'quantity'}]}]},
+    {id:'w24', en:'allergic', ro:'/əˈlɜːrdʒɪk/', tr:'alerjik',
+     examples:[{en:'I am allergic to nuts.', ro:'/aɪ æm əˈlɜːrdʒɪk tə nʌts/', tr:'Kuruyemişe alerjim var.',
+       bd:[{ro:'I am allergic',tr:'Alerjim var',role:'adjective'},{ro:'to nuts',tr:'kuruyemişe',role:'noun'}]}]},
+    {id:'w25', en:'enjoy your meal', ro:'/ɪnˈdʒɔɪ jɔːr miːl/', tr:'Afiyet olsun'}
   ],
 
-  grammar:[
-    {
-      title:'1. Sipariş Vermek: khor + yemek + miktar',
-      formula:'KHOR + [YİYECEK/İÇECEK] + [MİKTAR] + KHRAP',
-      explain:'"Khor" = istiyorum/alabilir miyim. Restorantta her şeyi bu kalıpla ister, kibarca talep edersin. "Noi" eklemek daha nazik yapar.',
-      tips:['"khor" + şey = istiyorum','"noi" = biraz/lütfen (eklenirse daha kibar)','"iik" = bir tane daha','jaan = tabak, kaeo = bardak, kuay = şişe'],
-      examples:[
-        {th:'ขอเมนูหน่อยครับ',ro:'khor me-nuu noi khrap',tr:'Menüyü alabilir miyim?',bd:[{ro:'khor',tr:'istiyorum',role:'V - Yuklem'},{ro:'me-nuu',tr:'menü',role:'O - Nesne'},{ro:'noi',tr:'lütfen',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ขอน้ำเปล่าครับ',ro:'khor naam-plaao khrap',tr:'Sade su istiyorum.',bd:[{ro:'khor',tr:'istiyorum',role:'V - Yuklem'},{ro:'naam-plaao',tr:'sade su',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ขอข้าวผัดสองจานครับ',ro:'khor khao-phat song jaan khrap',tr:'İki tabak fried rice istiyorum.',bd:[{ro:'khor',tr:'istiyorum',role:'V - Yuklem'},{ro:'khao-phat',tr:'fried rice',role:'O - Nesne'},{ro:'song jaan',tr:'iki tabak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ขอน้ำอีกแก้วครับ',ro:'khor naam iik kaeo khrap',tr:'Bir bardak su daha.',bd:[{ro:'khor naam',tr:'su istiyorum',role:'V - Yuklem'},{ro:'iik kaeo',tr:'bir bardak daha',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'เช็คบิลด้วยครับ',ro:'chek-bin duay khrap',tr:'Hesabı getirir misiniz?',bd:[{ro:'chek-bin',tr:'hesap',role:'O - Nesne'},{ro:'duay',tr:'de/lütfen',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'2. Tercih Belirtmek: mai + phet / mai sai + malzeme',
-      formula:'MAI PHET = acısız | MAI SAI + [MALZEME] = ...siz',
-      explain:'"Mai" = değil/yok. Yemek siparişinde neyi istemediğini belirtmek için kullanılır. Çok pratik!',
-      tips:['mai phet = acısız','mai sai phat-cha-rote = MSG\'siz','mai sai khai = yumurtasız','mai sai phak = sebzesiz','phet nit-noi = az acılı'],
-      examples:[
-        {th:'ไม่เผ็ดครับ',ro:'mai phet khrap',tr:'Acısız lütfen.',bd:[{ro:'mai phet',tr:'acısız',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่ใส่กุ้งครับ',ro:'mai sai kung khrap',tr:'Karidessiz.',bd:[{ro:'mai sai',tr:'koymadan',role:'Olumsuz'},{ro:'kung',tr:'karides',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่ใส่ผักครับ',ro:'mai sai phak khrap',tr:'Sebzesiz.',bd:[{ro:'mai sai',tr:'koymadan',role:'Olumsuz'},{ro:'phak',tr:'sebze',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่เอาน้ำแข็งครับ',ro:'mai ao naam-khaeng khrap',tr:'Buz istemiyorum.',bd:[{ro:'mai ao',tr:'istemiyorum',role:'Olumsuz'},{ro:'naam-khaeng',tr:'buz',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
+  tones: [],
+
+  grammar: [
+    {id:'g1', title:'Sipariş Verme Kalıpları', title_en:'Ordering Phrases',
+     explanation:'Restoranda sopariş verirken kullanılan nazik kalıplar.',
+     table:[
+       {pronoun:'Nazik istek', form:"I'd like / I'll have", example:"I'd like the soup.", tr:'Çorba istiyorum.'},
+       {pronoun:'Soru', form:'Can I have...?', example:'Can I have the menu?', tr:'Menüyü alabilir miyim?'},
+       {pronoun:'Seçim', form:'I'll take...', example:"I'll take the fish.", tr:'Balığı alıyorum.'},
+       {pronoun:'Tavsiye', form:'What do you recommend?', example:'What do you recommend?', tr:'Ne tavsiye edersiniz?'}
+     ],
+     note:'"Would you like..." = Arz etmek; "I would like..." = İstemek'}
   ],
 
-  speaking:[
-    {task:'Masa iste (2 kişi)',th:'ขอโต๊ะสองคนครับ',ro:'khor-toh song-khon khrap',tr:'İki kişilik masa istiyorum.',bd:[{ro:'khor-toh',tr:'masa istiyorum',role:'V - Yuklem'},{ro:'song-khon',tr:'iki kişi',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Menü iste',th:'ขอเมนูหน่อยครับ',ro:'khor me-nuu noi khrap',tr:'Menüyü alabilir miyim?',bd:[{ro:'khor me-nuu noi',tr:'menüyü lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Su ısmarla',th:'ขอน้ำเปล่าครับ',ro:'khor naam-plaao khrap',tr:'Sade su istiyorum.',bd:[{ro:'khor naam-plaao',tr:'sade su istiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Acısız söyle',th:'ไม่เผ็ดครับ',ro:'mai phet khrap',tr:'Acısız lütfen.',bd:[{ro:'mai phet',tr:'acısız',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Fried rice ısmarla',th:'ขอข้าวผัดไก่ครับ',ro:'khor khao-phat gai khrap',tr:'Tavuklu fried rice istiyorum.',bd:[{ro:'khor khao-phat gai',tr:'tavuklu fried rice',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yemeği övme',th:'อร่อยมากครับ',ro:'a-roi maak khrap',tr:'Çok lezzetli.',bd:[{ro:'a-roi maak',tr:'çok lezzetli',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Hesap iste',th:'เช็คบิลด้วยครับ',ro:'chek-bin duay khrap',tr:'Hesabı getirir misiniz?',bd:[{ro:'chek-bin duay',tr:'hesabı lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Pad Thai ısmarla (karidessiz)',th:'ผัดไทยไม่ใส่กุ้งครับ',ro:'phat-thai mai sai kung khrap',tr:'Karidessiz Pad Thai.',bd:[{ro:'phat-thai',tr:'Pad Thai',role:'Kelime'},{ro:'mai sai kung',tr:'karidessiz',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+  speaking: [
+    {id:'sp1', en:'A table for three, please.', ro:'/ə ˈteɪbəl fər θriː pliːz/', tr:'Üç kişilik masa, lütfen.',
+     tip:'Masa isteme.', prompt:'Masa isteyin'},
+    {id:'sp2', en:"I'd like the chicken soup, please.", ro:'/aɪd laɪk ðə ˈtʃɪkɪn suːp pliːz/', tr:'Tavuk çorbası istiyorum, lütfen.',
+     tip:'Yemek sipariş etme.', prompt:'Yemek sipariş edin'},
+    {id:'sp3', en:'Can I have the bill, please?', ro:'/kæn aɪ hæv ðə bɪl pliːz/', tr:'Hesabı alabilir miyim, lütfen?',
+     tip:'Hesap isteme.', prompt:'Hesap isteyin'},
+    {id:'sp4', en:'This is delicious! Compliments to the chef.', ro:'/ðɪs ɪz dɪˈlɪʃəs ˈkɒmplɪmənts tə ðə ʃɛf/', tr:'Bu çok lezzetli! Aşçıya saygılar.',
+     tip:'Yemeği övme.', prompt:'Yemeği övün'}
   ],
 
-  dialogues:[
-    {title:'🍽️ Restorana Giriş',
+  dialogues: [
+    {id:'d1', title:'Restoran Konuşması', title_en:'At the Restaurant',
      lines:[
-       {s:'Ali',th:'สวัสดีครับ มีโต๊ะว่างไหมครับ',ro:'sa-wat-dee khrap mii toh-waang mai khrap',tr:'Merhaba, boş masa var mı?',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'mii toh-waang mai',tr:'boş masa var mı',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'มีค่ะ กี่คนคะ',ro:'mii kha kii-khon kha',tr:'Var, kaç kişisiniz?',bd:[{ro:'mii',tr:'var',role:'Kelime'},{ro:'kii-khon',tr:'kaç kişi',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'สองคนครับ',ro:'song-khon khrap',tr:'İki kişi.',bd:[{ro:'song-khon',tr:'iki kişi',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ตามมาเลยค่ะ',ro:'taam-maa loey kha',tr:'Buyurun gelin.',bd:[{ro:'taam-maa loey',tr:'buyurun gelin',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'📋 Sipariş Verme',
-     lines:[
-       {s:'Nada',th:'สั่งอะไรดีคะ',ro:'sang a-rai dee kha',tr:'Ne sipariş edersiniz?',bd:[{ro:'sang a-rai dee',tr:'ne istersiniz',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ขอผัดไทยหนึ่งจาน ไม่เผ็ดครับ',ro:'khor phat-thai nueng-jaan mai-phet khrap',tr:'Bir Pad Thai, acısız.',bd:[{ro:'khor phat-thai nueng-jaan',tr:'bir Pad Thai',role:'V - Yuklem'},{ro:'mai-phet',tr:'acısız',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'เอาน้ำอะไรคะ',ro:'ao naam a-rai kha',tr:'Ne içmek istersiniz?',bd:[{ro:'ao naam a-rai',tr:'ne içeceksiniz',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ขอน้ำเปล่าครับ ไม่เอาน้ำแข็งครับ',ro:'khor naam-plaao khrap mai-ao naam-khaeng khrap',tr:'Sade su, buzsuz.',bd:[{ro:'khor naam-plaao',tr:'sade su',role:'V - Yuklem'},{ro:'mai-ao naam-khaeng',tr:'buzsuz',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'😋 Yemek Sonrası',
-     lines:[
-       {s:'Nada',th:'เป็นยังไงบ้างคะ',ro:'pen yang-ngai baang kha',tr:'Nasıldı?',bd:[{ro:'pen yang-ngai',tr:'nasıldı',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'อร่อยมากครับ ขอบคุณครับ',ro:'a-roi maak khrap khob-khun khrap',tr:'Çok lezzetliydi, teşekkürler.',bd:[{ro:'a-roi maak',tr:'çok lezzetli',role:'V - Yuklem'},{ro:'khob-khun',tr:'teşekkürler',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'เช็คบิลด้วยครับ',ro:'chek-bin duay khrap',tr:'Hesabı alabilir miyim?',bd:[{ro:'chek-bin duay',tr:'hesabı lütfen',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'รับบัตรเครดิตได้ค่ะ',ro:'rap bat-khre-dit dai kha',tr:'Kredi kartı kabul ediyoruz.',bd:[{ro:'rap bat-khre-dit dai',tr:'kredi kartı kabul',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'🌶️ Özel İstek',
-     lines:[
-       {s:'Ali',th:'ขอข้าวผัดทะเลครับ',ro:'khor khao-phat tha-lee khrap',tr:'Deniz ürünlü fried rice istiyorum.',bd:[{ro:'khor khao-phat tha-lee',tr:'deniz ürünlü fried rice',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'เผ็ดไหมคะ',ro:'phet mai kha',tr:'Acılı mı?',bd:[{ro:'phet mai',tr:'acılı mı',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ไม่เผ็ดครับ แล้วก็ไม่ใส่กุ้งด้วยครับ',ro:'mai-phet khrap laeo-ko mai-sai-kung duay khrap',tr:'Acısız, ayrıca karidessiz de.',bd:[{ro:'mai-phet',tr:'acısız',role:'Olumsuz'},{ro:'laeo-ko mai-sai-kung',tr:'ayrıca karidessiz',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ได้เลยค่ะ',ro:'dai loey kha',tr:'Tabii ki.',bd:[{ro:'dai loey',tr:'tabii ki olur',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
+       {speaker:'A', gender:'f', en:'Good evening! Do you have a reservation?', ro:'/ɡʊd ˈiːvnɪŋ duː juː hæv ə ˌrɛzərˈveɪʃən/', tr:'İyi akşamlar! Rezervasyonunuz var mı?'},
+       {speaker:'B', gender:'m', en:'Yes, I have a reservation for two. The name is Smith.', ro:'/jɛs aɪ hæv ə ˌrɛzərˈveɪʃən fər tuː ðə neɪm ɪz smɪθ/', tr:'Evet, iki kişilik rezervasyonum var. İsim Smith.'},
+       {speaker:'A', gender:'f', en:'Of course. Please follow me. Here is your table.', ro:'/əv kɔːrs pliːz ˈfɒloʊ miː hɪr ɪz jɔːr ˈteɪbəl/', tr:'Tabii ki. Lütfen beni takip edin. İşte masanız.'},
+       {speaker:'B', gender:'m', en:'Thank you. Can I see the menu?', ro:'/θæŋk juː kæn aɪ siː ðə ˈmɛnjuː/', tr:'Teşekkür ederim. Menüyü görebilir miyim?'},
+       {speaker:'A', gender:'f', en:'Of course! What would you like to drink?', ro:'/əv kɔːrs wɒt wʊd juː laɪk tə drɪŋk/', tr:'Tabii! Ne içmek istersiniz?'},
+       {speaker:'B', gender:'m', en:"I'd like water and a coffee, please.", ro:'/aɪd laɪk ˈwɔːtər ænd ə ˈkɒfi pliːz/', tr:'Su ve kahve istiyorum, lütfen.'},
+       {speaker:'A', gender:'f', en:'Are you ready to order?', ro:'/ɑːr juː ˈrɛdi tə ˈɔːrdər/', tr:'Sipariş vermeye hazır mısınız?'},
+       {speaker:'B', gender:'m', en:"Yes. I'd like the chicken and salad, please.", ro:'/jɛs aɪd laɪk ðə ˈtʃɪkɪn ænd ˈsæləd pliːz/', tr:'Evet. Tavuk ve salata istiyorum, lütfen.'}
+     ]}
   ],
 
-  listening:[
-    {diff:'easy',th:'ขอเมนูหน่อยครับ',q:'Ne isteniyor?',opts:['Hesap','Menü','Su'],c:1},
-    {diff:'easy',th:'ไม่เผ็ดครับ',q:'Ne söyleniyor?',opts:['Az acılı','Acılı','Acısız'],c:2},
-    {diff:'easy',th:'อร่อยมากครับ',q:'Yemek nasıl?',opts:['Çok acılı','Çok lezzetli','Çok pahalı'],c:1},
-    {diff:'medium',th:'ขอโต๊ะสองคนครับ',q:'Kaç kişilik masa?',opts:['1 kişi','2 kişi','3 kişi'],c:1},
-    {diff:'medium',th:'เช็คบิลด้วยครับ',q:'Ne isteniyor?',opts:['Yemek sipariş','Hesap','Menü'],c:1},
-    {diff:'medium',th:'ไม่ใส่กุ้งครับ',q:'Neyin olmadığı isteniyor?',opts:['Yumurta','Karides','Sebze'],c:1},
-    {diff:'medium',th:'รับบัตรเครดิตไหมครับ',q:'Ne soruluyor?',opts:['Fiyat','Kredi kartı','PromPay'],c:1},
-    {diff:'hard',th:'ขอข้าวผัดไก่สองจานครับ',q:'Ne kaç tabak?',opts:['Pad Thai 2 tabak','Tavuklu fried rice 2 tabak','Deniz ürünlü 2 tabak'],c:1},
-    {diff:'hard',th:'ไม่เผ็ดแล้วก็ไม่ใส่กุ้งด้วยครับ',q:'Kaç istek var?',opts:['1','2','3'],c:1},
-    {diff:'hard',th:'มีอาหารมังสวิรัติไหมครับ',q:'Ne soruluyor?',opts:['Helal yemek','Vejetaryen yemek','Glutensiz yemek'],c:1},
-  ],
-
-  quiz:[
-    {q:'"a-roi" ne demek?',opts:['Acılı','Lezzetli','Pahalı','Taze'],c:1},
-    {q:'"mai phet" ne demek?',opts:['Çok acılı','Az acılı','Acısız','Baharatlı'],c:2},
-    {q:'Hesap istemek için ne söylenir?',opts:['khor me-nuu','chek-bin duay','khor naam','sang a-rai'],c:1},
-    {q:'"khao-phat" ne?',opts:['Pad Thai','Fried Rice','Tom Yum','Som Tam'],c:1},
-    {q:'"khor" ne demek?',opts:['Vermek','İstemek/almak','Götürmek','Beklemek'],c:1},
-    {q:'"naam-plaao" ne?',opts:['Soğuk su','Sıcak su','Sade su','Meyve suyu'],c:2},
-    {q:'"mai sai" + malzeme ne anlama gelir?',opts:['... ekle','...siz (koyma)','... çok','... az'],c:1},
-    {q:'"phat-thai" nedir?',opts:['Bir içecek','Tayland\'ın ünlü noodle yemeği','Bir çorba','Bir tatlı'],c:1},
-    {q:'Restoran Tayca?',opts:['raan-khaa','raan-aa-haan','raan-ya','raan-num'],c:1},
-    {q:'Kredi kartı kabul ediliyor mu? Tayca?',opts:['mii naam mai','chek-bin duay','rap bat-khre-dit mai','sang a-rai dee'],c:2},
-  ],
+  listening: [
+    {id:'li1', audio:'', transcript:"Today's specials are grilled salmon with vegetables for fourteen pounds, and a vegetarian pasta for ten pounds. Dessert is chocolate cake for five pounds.",
+     tr:'Bugünün özel yemekleri: sebzeli ızgara somon on dört sterlin, vejetaryen makarna on sterlin. Tatlı: çikolatalı kek beş sterlin.',
+     questions:[
+       {q:'How much is the salmon?', opts:['£10','£12','£14','£16'], answer:2, tr:'Somon ne kadar?'},
+       {q:'What vegetarian option is available?', opts:['soup','salad','pasta','pizza'], answer:2, tr:'Hangi vejetaryen seçenek var?'},
+       {q:'What is the dessert?', opts:['ice cream','cheesecake','apple pie','chocolate cake'], answer:3, tr:'Tatlı ne?'}
+     ]}
+  ]
 };
-
 LESSONS[4] = L4;

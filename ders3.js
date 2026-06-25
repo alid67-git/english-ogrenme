@@ -1,212 +1,108 @@
-// Ders 3 verisi — tayca-v3
-// =================== VERİ: DERS 3 — Tarih ve Saat ===================
+// ders3.js — English Lesson 3: Time & Date
 const L3 = {
-  tones:[],
-  words:[
-    {id:'w1',th:'วันนี้',ro:'wan-nii',tr:'Bugün',
-     tip:'"Wan" = gün, "nii" = bu. İki kelime birleşir.',
-     ctx:'En çok kullanılan zaman ifadesi. Her gün lazım.',
-     examples:[
-       {th:'วันนี้อากาศดีครับ',ro:'wan-nii aa-gaat dee khrap',tr:'Bugün hava güzel.',bd:[{ro:'wan-nii',tr:'bugün',role:'S - Ozne'},{ro:'aa-gaat dee',tr:'hava güzel',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันนี้คุณว่างไหมครับ',ro:'wan-nii khun waang mai khrap',tr:'Bugün müsait misiniz?',bd:[{ro:'wan-nii',tr:'bugün',role:'Kelime'},{ro:'khun waang mai',tr:'müsait misiniz',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันนี้ผมไม่ว่างครับ',ro:'wan-nii pom mai waang khrap',tr:'Bugün müsait değilim.',bd:[{ro:'wan-nii',tr:'bugün',role:'Kelime'},{ro:'pom mai waang',tr:'müsait değilim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันนี้วันที่เท่าไรครับ',ro:'wan-nii wan-thii thao-rai khrap',tr:'Bugün ayın kaçı?',bd:[{ro:'wan-nii',tr:'bugün',role:'Kelime'},{ro:'wan-thii thao-rai',tr:'kaçıncı günü',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันนี้วันจันทร์ครับ',ro:'wan-nii wan-jan khrap',tr:'Bugün Pazartesi.',bd:[{ro:'wan-nii',tr:'bugün',role:'Kelime'},{ro:'wan-jan',tr:'Pazartesi',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w2',th:'พรุ่งนี้',ro:'proong-nii',tr:'Yarın',
-     tip:'"Proong" yarın anlamına gelir. "Nii" = bu/şu.',
-     ctx:'Randevu ve plan yaparken sık kullanılır.',
-     examples:[
-       {th:'พรุ่งนี้ผมไปครับ',ro:'proong-nii pom pai khrap',tr:'Yarın gidiyorum.',bd:[{ro:'proong-nii',tr:'yarın',role:'Kelime'},{ro:'pom pai',tr:'gidiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'พรุ่งนี้คุณว่างไหมครับ',ro:'proong-nii khun waang mai khrap',tr:'Yarın müsait misiniz?',bd:[{ro:'proong-nii',tr:'yarın',role:'Kelime'},{ro:'khun waang mai',tr:'müsait misiniz',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'พรุ่งนี้เจอกันนะครับ',ro:'proong-nii joe-gan na khrap',tr:'Yarın görüşürüz.',bd:[{ro:'proong-nii',tr:'yarın',role:'Kelime'},{ro:'joe-gan na',tr:'görüşürüz',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ไม่ใช่พรุ่งนี้ครับ มะรืนนี้',ro:'mai-chai proong-nii khrap ma-ruen-nii',tr:'Yarın değil, öbür gün.',bd:[{ro:'mai-chai proong-nii',tr:'yarın değil',role:'Olumsuz'},{ro:'ma-ruen-nii',tr:'öbür gün',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w3',th:'เมื่อวาน',ro:'meua-waan',tr:'Dün',
-     tip:'"Meua" = geçmiş zaman, "waan" = dün.',
-     ctx:'Geçmiş olayları anlatırken.',
-     examples:[
-       {th:'เมื่อวานผมไปภูเก็ตครับ',ro:'meua-waan pom pai phu-get khrap',tr:'Dün Phukete gittim.',bd:[{ro:'meua-waan',tr:'dün',role:'Kelime'},{ro:'pom pai phu-get',tr:'Phukete gittim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เมื่อวานอากาศดีมากครับ',ro:'meua-waan aa-gaat dee maak khrap',tr:'Dün hava çok güzeldi.',bd:[{ro:'meua-waan',tr:'dün',role:'Kelime'},{ro:'aa-gaat dee maak',tr:'hava çok güzeldi',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เมื่อวานคุณทำอะไรครับ',ro:'meua-waan khun tham a-rai khrap',tr:'Dün ne yaptınız?',bd:[{ro:'meua-waan',tr:'dün',role:'Kelime'},{ro:'khun tham a-rai',tr:'ne yaptınız',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เมื่อวานผมไม่สบายครับ',ro:'meua-waan pom mai sa-bai khrap',tr:'Dün hasta/rahatsızdım.',bd:[{ro:'meua-waan',tr:'dün',role:'Kelime'},{ro:'pom mai sa-bai',tr:'iyi hissetmiyordum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w4',th:'กี่โมง',ro:'kii-mong',tr:'Saat kaç?',
-     tip:'"Kii" = kaç, "mong" = saat. Birlikte "kaç saat" demek.',
-     ctx:'Saat sormak için temel kalıp. Cevap: "sam mong" gibi.',
-     examples:[
-       {th:'กี่โมงแล้วครับ',ro:'kii-mong laeo khrap',tr:'Saat kaç oldu?',bd:[{ro:'kii-mong',tr:'saat kaç',role:'Soru/Olumsuz'},{ro:'laeo',tr:'oldu',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'นัดกี่โมงครับ',ro:'nat kii-mong khrap',tr:'Randevu saat kaçta?',bd:[{ro:'nat',tr:'randevu',role:'Kelime'},{ro:'kii-mong',tr:'saat kaçta',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เจอกันกี่โมงครับ',ro:'joe-gan kii-mong khrap',tr:'Saat kaçta buluşalım?',bd:[{ro:'joe-gan',tr:'buluşalım',role:'V - Yuklem'},{ro:'kii-mong',tr:'saat kaçta',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ร้านเปิดกี่โมงครับ',ro:'raan poet kii-mong khrap',tr:'Dükkan saat kaçta açılıyor?',bd:[{ro:'raan poet',tr:'dükkan açılıyor',role:'V - Yuklem'},{ro:'kii-mong',tr:'saat kaçta',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w5',th:'โมง',ro:'mong',tr:'Saat (birim)',
-     tip:'"Song mong" = saat 2. Sabah için "chao", öğleden sonra için "bai" ekle.',
-     ctx:'Saati söylerken sayıdan sonra gelir.',
-     examples:[
-       {th:'สามโมงครับ',ro:'sam mong khrap',tr:'Saat 3.',bd:[{ro:'sam mong',tr:'saat 3',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'บ่ายสองโมงครับ',ro:'bai song mong khrap',tr:'Öğleden sonra saat 2 (14:00).',bd:[{ro:'bai',tr:'öğleden sonra',role:'Kelime'},{ro:'song mong',tr:'saat 2',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เช้าเก้าโมงครับ',ro:'chao kao mong khrap',tr:'Sabah saat 9.',bd:[{ro:'chao',tr:'sabah',role:'Kelime'},{ro:'kao mong',tr:'saat 9',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เที่ยงครึ่งครับ',ro:'thiang khrueng khrap',tr:'Saat 12:30.',bd:[{ro:'thiang',tr:'öğlen/12',role:'Kelime'},{ro:'khrueng',tr:'buçuk',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'หกโมงเย็นครับ',ro:'hok mong yen khrap',tr:'Akşam saat 6 (18:00).',bd:[{ro:'hok mong',tr:'saat 6',role:'Kelime'},{ro:'yen',tr:'akşam',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w6',th:'วัน',ro:'wan',tr:'Gün / Haftanın günleri',
-     tip:'Günler: wan-jan(Ptesi), wan-ang-khan(Salı), wan-phut(Çarş), wan-pha-ruehat(Perş), wan-suk(Cum), wan-sao(Cts), wan-aa-thit(Paz)',
-     ctx:'Randevu ve plan yaparken hangi gün sorusu.',
-     examples:[
-       {th:'วันจันทร์ครับ',ro:'wan-jan khrap',tr:'Pazartesi.',bd:[{ro:'wan-jan',tr:'Pazartesi',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันศุกร์ครับ',ro:'wan-suk khrap',tr:'Cuma.',bd:[{ro:'wan-suk',tr:'Cuma',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันเสาร์ครับ',ro:'wan-sao khrap',tr:'Cumartesi.',bd:[{ro:'wan-sao',tr:'Cumartesi',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันอาทิตย์ครับ',ro:'wan-aa-thit khrap',tr:'Pazar.',bd:[{ro:'wan-aa-thit',tr:'Pazar',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'วันไหนดีครับ',ro:'wan-nai dee khrap',tr:'Hangi gün uygun?',bd:[{ro:'wan-nai',tr:'hangi gün',role:'Soru/Olumsuz'},{ro:'dee',tr:'iyi/uygun',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w7',th:'นัด',ro:'nat',tr:'Randevu / Buluşma',
-     tip:'"Nat" = randevu. "Nat joe" = buluşmak için randevu.',
-     ctx:'Phuket\'te iş ve sosyal randevularda çok kullanılır.',
-     examples:[
-       {th:'มีนัดครับ',ro:'mii nat khrap',tr:'Randevum var.',bd:[{ro:'mii nat',tr:'randevum var',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'นัดกี่โมงครับ',ro:'nat kii-mong khrap',tr:'Randevu saat kaçta?',bd:[{ro:'nat',tr:'randevu',role:'Kelime'},{ro:'kii-mong',tr:'saat kaçta',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ขอนัดหมายครับ',ro:'khor nat-maai khrap',tr:'Randevu almak istiyorum.',bd:[{ro:'khor',tr:'istiyorum',role:'V - Yuklem'},{ro:'nat-maai',tr:'randevu',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เลื่อนนัดได้ไหมครับ',ro:'lueang nat dai mai khrap',tr:'Randevuyu erteleyebilir miyiz?',bd:[{ro:'lueang nat',tr:'randevuyu ertele-',role:'V - Yuklem'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ยกเลิกนัดครับ',ro:'yok-loek nat khrap',tr:'Randevuyu iptal ediyorum.',bd:[{ro:'yok-loek',tr:'iptal et-',role:'V - Yuklem'},{ro:'nat',tr:'randevu',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w8',th:'เดือน',ro:'duan',tr:'Ay (takvim)',
-     tip:'Thai ay isimleri uzundur ama son ekleri "-yon" veya "-kom" ile biter.',
-     ctx:'Tarih söylerken: [gün] + [ay] + [yıl] sırası.',
-     examples:[
-       {th:'เดือนนี้ครับ',ro:'duan-nii khrap',tr:'Bu ay.',bd:[{ro:'duan-nii',tr:'bu ay',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เดือนหน้าครับ',ro:'duan-na khrap',tr:'Gelecek ay.',bd:[{ro:'duan-na',tr:'gelecek ay',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เดือนที่แล้วครับ',ro:'duan-thii-laeo khrap',tr:'Geçen ay.',bd:[{ro:'duan-thii-laeo',tr:'geçen ay',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เดือนมกราคมครับ',ro:'duan mok-ga-raa-khom khrap',tr:'Ocak ayı.',bd:[{ro:'duan',tr:'ay',role:'Kelime'},{ro:'mok-ga-raa-khom',tr:'Ocak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w9',th:'ปี',ro:'pii',tr:'Yıl',
-     tip:'Thai takvimi Budist: 2024 = 2567 BE. Ama konuşmada Gregoryen de kullanılır.',
-     ctx:'"Pii nii" = bu yıl, "pii na" = gelecek yıl.',
-     examples:[
-       {th:'ปีนี้ครับ',ro:'pii-nii khrap',tr:'Bu yıl.',bd:[{ro:'pii-nii',tr:'bu yıl',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ปีหน้าครับ',ro:'pii-na khrap',tr:'Gelecek yıl.',bd:[{ro:'pii-na',tr:'gelecek yıl',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมอยู่ภูเก็ตสี่ปีแล้วครับ',ro:'pom yuu phu-get sii pii laeo khrap',tr:'4 yıldır Phuket\'teyim.',bd:[{ro:'pom yuu phu-get',tr:'Phuket\'teyim',role:'V - Yuklem'},{ro:'sii pii laeo',tr:'4 yıldır',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เกิดปีไหนครับ',ro:'koet pii-nai khrap',tr:'Hangi yılda doğdunuz?',bd:[{ro:'koet',tr:'doğmak',role:'V - Yuklem'},{ro:'pii-nai',tr:'hangi yılda',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {id:'w10',th:'ตอน',ro:'ton',tr:'Zaman dilimi / O sırada',
-     tip:'"Ton chao" = sabah vakti, "ton yen" = akşam vakti, "ton glaang-wan" = öğlen.',
-     ctx:'Günün bölümlerini belirtmek için kullanılır.',
-     examples:[
-       {th:'ตอนเช้าครับ',ro:'ton-chao khrap',tr:'Sabah vakti.',bd:[{ro:'ton-chao',tr:'sabah vakti',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ตอนเย็นครับ',ro:'ton-yen khrap',tr:'Akşam vakti.',bd:[{ro:'ton-yen',tr:'akşam vakti',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ตอนกลางวันครับ',ro:'ton-glaang-wan khrap',tr:'Öğlen vakti.',bd:[{ro:'ton-glaang-wan',tr:'öğlen vakti',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ตอนนั้นผมไม่อยู่ครับ',ro:'ton-nan pom mai yuu khrap',tr:'O sırada yoktum.',bd:[{ro:'ton-nan',tr:'o sırada',role:'Kelime'},{ro:'pom mai yuu',tr:'yoktum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ตอนนี้กี่โมงครับ',ro:'ton-nii kii-mong khrap',tr:'Şu an saat kaç?',bd:[{ro:'ton-nii',tr:'şu an',role:'Kelime'},{ro:'kii-mong',tr:'saat kaç',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
+  words: [
+    {id:'w1', en:'What time is it?', ro:'/wɒt taɪm ɪz ɪt/', tr:'Saat kaç?',
+     tip:'Saat sormak için.', ctx:'Günlük konuşma.',
+     examples:[{en:'Excuse me, what time is it?', ro:'/ɪkˈskjuːz miː wɒt taɪm ɪz ɪt/', tr:'Pardon, saat kaç?',
+       bd:[{ro:'Excuse me',tr:'Pardon',role:'courtesy'},{ro:'what time is it',tr:'saat kaç',role:'question'}]}]},
+    {id:'w2', en:"It's three o'clock.", ro:'/ɪts θriː əˈklɒk/', tr:'Saat üç.',
+     examples:[{en:"It's three o'clock in the afternoon.", ro:'/ɪts θriː əˈklɒk ɪn ðə ˌæftəˈnuːn/', tr:'Öğleden sonra saat üç.',
+       bd:[{ro:"It's three o'clock",tr:'Saat üç',role:'time'},{ro:'in the afternoon',tr:'öğleden sonra',role:'time'}]}]},
+    {id:'w3', en:'morning', ro:'/ˈmɔːrnɪŋ/', tr:'sabah'},
+    {id:'w4', en:'afternoon', ro:'/ˌæftərˈnuːn/', tr:'öğleden sonra'},
+    {id:'w5', en:'evening', ro:'/ˈiːvnɪŋ/', tr:'akşam'},
+    {id:'w6', en:'night', ro:'/naɪt/', tr:'gece'},
+    {id:'w7', en:'today', ro:'/təˈdeɪ/', tr:'bugün',
+     examples:[{en:'What day is today?', ro:'/wɒt deɪ ɪz təˈdeɪ/', tr:'Bugün hangi gün?',
+       bd:[{ro:'What day',tr:'Hangi gün',role:'question'},{ro:'is today',tr:'bugün',role:'verb'}]}]},
+    {id:'w8', en:'tomorrow', ro:'/təˈmɒroʊ/', tr:'yarın'},
+    {id:'w9', en:'yesterday', ro:'/ˈjɛstərdeɪ/', tr:'dün'},
+    {id:'w10', en:'Monday', ro:'/ˈmʌndeɪ/', tr:'Pazartesi'},
+    {id:'w11', en:'Tuesday', ro:'/ˈtjuːzdeɪ/', tr:'Salı'},
+    {id:'w12', en:'Wednesday', ro:'/ˈwɛnzdeɪ/', tr:'Çarşamba'},
+    {id:'w13', en:'Thursday', ro:'/ˈθɜːrzdeɪ/', tr:'Perşembe'},
+    {id:'w14', en:'Friday', ro:'/ˈfraɪdeɪ/', tr:'Cuma'},
+    {id:'w15', en:'Saturday', ro:'/ˈsætərdeɪ/', tr:'Cumartesi'},
+    {id:'w16', en:'Sunday', ro:'/ˈsʌndeɪ/', tr:'Pazar'},
+    {id:'w17', en:'January', ro:'/ˈdʒænjuɛri/', tr:'Ocak'},
+    {id:'w18', en:'February', ro:'/ˈfɛbruɛri/', tr:'Şubat'},
+    {id:'w19', en:'March', ro:'/mɑːrtʃ/', tr:'Mart'},
+    {id:'w20', en:'April', ro:'/ˈeɪprəl/', tr:'Nisan'},
+    {id:'w21', en:'May', ro:'/meɪ/', tr:'Mayıs'},
+    {id:'w22', en:'June', ro:'/dʒuːn/', tr:'Haziran'},
+    {id:'w23', en:'July', ro:'/dʒʊˈlaɪ/', tr:'Temmuz'},
+    {id:'w24', en:'August', ro:'/ˈɔːɡəst/', tr:'Ağustos'},
+    {id:'w25', en:'September', ro:'/sɛpˈtɛmbər/', tr:'Eylül'},
+    {id:'w26', en:'October', ro:'/ɒkˈtoʊbər/', tr:'Ekim'},
+    {id:'w27', en:'November', ro:'/noʊˈvɛmbər/', tr:'Kasım'},
+    {id:'w28', en:'December', ro:'/dɪˈsɛmbər/', tr:'Aralık'},
+    {id:'w29', en:'year', ro:'/jɪər/', tr:'yıl'},
+    {id:'w30', en:'month', ro:'/mʌnθ/', tr:'ay'},
+    {id:'w31', en:'week', ro:'/wiːk/', tr:'hafta'},
+    {id:'w32', en:'day', ro:'/deɪ/', tr:'gün'},
+    {id:'w33', en:'hour', ro:'/aʊər/', tr:'saat (birim)'},
+    {id:'w34', en:'minute', ro:'/ˈmɪnɪt/', tr:'dakika'},
+    {id:'w35', en:'now', ro:'/naʊ/', tr:'şimdi'},
+    {id:'w36', en:'later', ro:'/ˈleɪtər/', tr:'sonra'},
+    {id:'w37', en:'early', ro:'/ˈɜːrli/', tr:'erken'},
+    {id:'w38', en:'late', ro:'/leɪt/', tr:'geç',
+     examples:[{en:'Sorry, I am late.', ro:'/ˈsɒri aɪ æm leɪt/', tr:'Özür dilerim, geç kaldım.',
+       bd:[{ro:'Sorry',tr:'Özür dilerim',role:'courtesy'},{ro:'I am late',tr:'geç kaldım',role:'verb'}]}]}
   ],
 
-  grammar:[
-    {
-      title:'1. Thai Saat Sistemi: Günün 4 Bölümü',
-      formula:'[BÖLÜM] + [SAYI] + MONG | Örnek: bai sam mong = 15:00',
-      explain:'Thai saati 24 saati 4 bölüme ayırır: chao (06:00-12:00), bai (13:00-18:00), yen (18:00-19:00), thum (19:00-24:00). 12:00 = thiang.',
-      tips:['chao = sabah (06-12 arası)','bai = öğleden sonra (13-18)','yen/kham = akşam (18-19)','thum = gece (19-24)','thiang = 12:00 öğlen','thiang-khueng = 00:00 gece yarısı'],
-      examples:[
-        {th:'เช้าเก้าโมงครับ',ro:'chao kao mong khrap',tr:'Sabah 9 (09:00).',bd:[{ro:'chao',tr:'sabah',role:'Kelime'},{ro:'kao mong',tr:'saat 9',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'บ่ายสามโมงครับ',ro:'bai sam mong khrap',tr:'Öğleden sonra 3 (15:00).',bd:[{ro:'bai',tr:'öğleden sonra',role:'Kelime'},{ro:'sam mong',tr:'saat 3',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'หกโมงเย็นครับ',ro:'hok mong yen khrap',tr:'Akşam 6 (18:00).',bd:[{ro:'hok mong',tr:'saat 6',role:'Kelime'},{ro:'yen',tr:'akşam',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'สองทุ่มครับ',ro:'song thum khrap',tr:'Gece 8 (20:00).',bd:[{ro:'song thum',tr:'2. gece saati = 20:00',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'เที่ยงครึ่งครับ',ro:'thiang khrueng khrap',tr:'Saat 12:30.',bd:[{ro:'thiang',tr:'12:00',role:'Kelime'},{ro:'khrueng',tr:'buçuk (+30 dk)',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'2. Tarih Söylemek: [gün]-[ay]-[yıl]',
-      formula:'WAN-THII [SAYI] + [AY] + [YIL]',
-      explain:'Thai tarihinde sıra: gün numarası + ay adı + yıl. Thai takvimi Gregoryen + 543 yıl. Ama yabancılarla Gregoryen kullanılır.',
-      tips:['wan-thii = kaçı (tarih için)','Thai ayları uzun ama kısaltmaları var','Pazar = aa-thit, Pazartesi = jan, Salı = ang-khan','Resmi yazışmalarda BE (Budist Era) kullanılır'],
-      examples:[
-        {th:'วันที่สิบห้าครับ',ro:'wan-thii sip-haa khrap',tr:'Ayın 15\'i.',bd:[{ro:'wan-thii',tr:'ayın kaçı',role:'Kelime'},{ro:'sip-haa',tr:'15',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'วันจันทร์ที่สิบครับ',ro:'wan-jan thii sip khrap',tr:'10\'uncu Pazartesi.',bd:[{ro:'wan-jan',tr:'Pazartesi',role:'Kelime'},{ro:'thii sip',tr:'10\'u',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'วันเกิดคุณวันไหนครับ',ro:'wan-koet khun wan-nai khrap',tr:'Doğum gününüz ne zaman?',bd:[{ro:'wan-koet',tr:'doğum günü',role:'Kelime'},{ro:'khun wan-nai',tr:'sizin ne zaman',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'เดือนมิถุนายนครับ',ro:'duan mi-thu-naa-yon khrap',tr:'Haziran ayı.',bd:[{ro:'duan',tr:'ay',role:'Kelime'},{ro:'mi-thu-naa-yon',tr:'Haziran',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'3. Zaman Zarfları: Önce / Sonra / Şimdi',
-      formula:'[ZAMAN] + Fiil veya Fiil + [ZAMAN]',
-      explain:'Thaide geçmiş/gelecek için özel zarflar kullanılır. Fiil değişmez, sadece zaman zarfı eklenir.',
-      tips:['laeo = bitti/geçti (fiilden sonra)','ja = yapacak (fiilden önce)','gam-lang = şu an yapıyor','koey = daha önce yapmıştı','yang = henüz yapmadı'],
-      examples:[
-        {th:'ผมกินข้าวแล้วครับ',ro:'pom kin-kao laeo khrap',tr:'Yemeğimi yedim.',bd:[{ro:'pom kin-kao',tr:'yemek yedim',role:'V - Yuklem'},{ro:'laeo',tr:'bitti',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมจะไปพรุ่งนี้ครับ',ro:'pom ja pai proong-nii khrap',tr:'Yarın gideceğim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ja pai',tr:'gideceğim',role:'V - Yuklem'},{ro:'proong-nii',tr:'yarın',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมกำลังทำงานครับ',ro:'pom gam-lang tham-ngaan khrap',tr:'Şu an çalışıyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'gam-lang tham-ngaan',tr:'çalışıyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมยังไม่กินข้าวครับ',ro:'pom yang mai kin-kao khrap',tr:'Henüz yemedim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yang mai kin-kao',tr:'henüz yemedim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
+  tones: [],
+
+  grammar: [
+    {id:'g1', title:'Saat İfade Etme', title_en:'Telling the Time',
+     explanation:'İngilizce\'de saat ifade etmenin iki yolu vardır.',
+     table:[
+       {pronoun:'Tam saat', form:"o'clock", example:"It's five o'clock.", tr:'Saat beş.'},
+       {pronoun:'Geçiyor', form:'past', example:"It's ten past three.", tr:'Üçü on geçiyor.'},
+       {pronoun:'Var', form:'to', example:"It's ten to four.", tr:'Dörde on var.'},
+       {pronoun:'Buçuk', form:'half past', example:"It's half past two.", tr:'İki buçuk.'},
+       {pronoun:'Çeyrek', form:'quarter', example:"It's quarter past one.", tr:'Biri çeyrek geçiyor.'}
+     ],
+     note:'AM = gece yarısından öğlene; PM = öğleden gece yarısına'},
+    {id:'g2', title:'Tarih Söyleme', title_en:'Saying Dates',
+     explanation:'Amerikan İngilizcesi: month/day/year. İngiliz İngilizcesi: day/month/year.',
+     table:[
+       {pronoun:'ABD', form:'Month Day, Year', example:'June 25, 2026', tr:'25 Haziran 2026'},
+       {pronoun:'İngiltere', form:'Day Month Year', example:'25 June 2026', tr:'25 Haziran 2026'},
+       {pronoun:'Soru', form:'What date?', example:'What is the date today?', tr:'Bugün tarihi ne?'}
+     ],
+     note:'Günler sıra sayısı olarak okunur: 1st, 2nd, 3rd, 4th...'}
   ],
 
-  speaking:[
-    {task:'Bugünün gününü söyle',th:'วันนี้วันจันทร์ครับ',ro:'wan-nii wan-jan khrap',tr:'Bugün Pazartesi.',bd:[{ro:'wan-nii',tr:'bugün',role:'Kelime'},{ro:'wan-jan',tr:'Pazartesi',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Saat sor',th:'กี่โมงแล้วครับ',ro:'kii-mong laeo khrap',tr:'Saat kaç oldu?',bd:[{ro:'kii-mong laeo',tr:'saat kaç oldu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Sabah 9\'u söyle',th:'เช้าเก้าโมงครับ',ro:'chao kao mong khrap',tr:'Sabah saat 9.',bd:[{ro:'chao',tr:'sabah',role:'Kelime'},{ro:'kao mong',tr:'saat 9',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Öğleden sonra 3\'ü söyle',th:'บ่ายสามโมงครับ',ro:'bai sam mong khrap',tr:'Öğleden sonra saat 3.',bd:[{ro:'bai',tr:'öğleden sonra',role:'Kelime'},{ro:'sam mong',tr:'saat 3',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yarın buluşmayı teklif et',th:'พรุ่งนี้เจอกันนะครับ',ro:'proong-nii joe-gan na khrap',tr:'Yarın görüşürüz.',bd:[{ro:'proong-nii',tr:'yarın',role:'Kelime'},{ro:'joe-gan na',tr:'görüşürüz',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Randevu iste',th:'ขอนัดหมายครับ',ro:'khor nat-maai khrap',tr:'Randevu almak istiyorum.',bd:[{ro:'khor nat-maai',tr:'randevu istiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Saat 14:00\'ü söyle',th:'บ่ายสองโมงครับ',ro:'bai song mong khrap',tr:'Öğleden sonra saat 2.',bd:[{ro:'bai song mong',tr:'14:00',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Hangi gün sor',th:'วันไหนดีครับ',ro:'wan-nai dee khrap',tr:'Hangi gün uygun?',bd:[{ro:'wan-nai dee',tr:'hangi gün uygun',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+  speaking: [
+    {id:'sp1', en:'What time is it, please?', ro:'/wɒt taɪm ɪz ɪt pliːz/', tr:'Saat kaç, lütfen?',
+     tip:'Saat sorma.', prompt:'Saat sorun'},
+    {id:'sp2', en:"It's half past seven in the morning.", ro:'/ɪts hɑːf pɑːst ˈsɛvən ɪn ðə ˈmɔːrnɪŋ/', tr:'Sabah yedi buçuk.',
+     tip:'Saat ifade etme.', prompt:'Saat söyleyin'},
+    {id:'sp3', en:'What day is it today?', ro:'/wɒt deɪ ɪz ɪt təˈdeɪ/', tr:'Bugün ne günü?',
+     tip:'Gün sorma.', prompt:'Günü sorun'},
+    {id:'sp4', en:'My birthday is on the fifteenth of March.', ro:'/maɪ ˈbɜːrθdeɪ ɪz ɒn ðə ˈfɪftiːnθ əv mɑːrtʃ/', tr:'Doğum günüm 15 Mart\'ta.',
+     tip:'Tarih ifade etme.', prompt:'Tarih söyleyin'}
   ],
 
-  dialogues:[
-    {title:'⏰ Saat Sorma',
+  dialogues: [
+    {id:'d1', title:'Saat Sorma', title_en:'Asking for the Time',
      lines:[
-       {s:'Ali',th:'ขอโทษครับ กี่โมงแล้วครับ',ro:'khor-thot khrap kii-mong laeo khrap',tr:'Özür dilerim, saat kaç oldu?',bd:[{ro:'khor-thot',tr:'özür',role:'Kelime'},{ro:'kii-mong laeo',tr:'saat kaç',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'บ่ายสามโมงค่ะ',ro:'bai sam mong kha',tr:'Öğleden sonra saat 3.',bd:[{ro:'bai sam mong',tr:'15:00',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'ขอบคุณครับ',ro:'khob-khun khrap',tr:'Teşekkürler.',bd:[{ro:'khob-khun khrap',tr:'Teşekkürler',role:'Kelime'}]},
-     ]},
-    {title:'📅 Randevu Alma',
-     lines:[
-       {s:'Ali',th:'ขอนัดหมายครับ',ro:'khor nat-maai khrap',tr:'Randevu almak istiyorum.',bd:[{ro:'khor nat-maai',tr:'randevu istiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'วันไหนดีคะ',ro:'wan-nai dee kha',tr:'Hangi gün uygun?',bd:[{ro:'wan-nai dee',tr:'hangi gün uygun',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'วันศุกร์ได้ไหมครับ',ro:'wan-suk dai mai khrap',tr:'Cuma olur mu?',bd:[{ro:'wan-suk',tr:'Cuma',role:'Kelime'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ได้ค่ะ กี่โมงคะ',ro:'dai kha kii-mong kha',tr:'Olur, saat kaçta?',bd:[{ro:'dai',tr:'olur',role:'Kelime'},{ro:'kii-mong',tr:'saat kaçta',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'บ่ายสองโมงครับ',ro:'bai song mong khrap',tr:'Öğleden sonra 2 (14:00).',bd:[{ro:'bai song mong',tr:'14:00',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'🗓️ Haftalık Plan',
-     lines:[
-       {s:'Nada',th:'วันนี้คุณทำอะไรคะ',ro:'wan-nii khun tham a-rai kha',tr:'Bugün ne yapıyorsunuz?',bd:[{ro:'wan-nii',tr:'bugün',role:'Kelime'},{ro:'khun tham a-rai',tr:'ne yapıyorsunuz',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'วันนี้ผมทำงานครับ พรุ่งนี้ว่างครับ',ro:'wan-nii pom tham-ngaan khrap proong-nii waang khrap',tr:'Bugün çalışıyorum, yarın boşum.',bd:[{ro:'wan-nii pom tham-ngaan',tr:'bugün çalışıyorum',role:'Kelime'},{ro:'proong-nii waang',tr:'yarın boşum',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'แล้วพรุ่งนี้เจอกันนะคะ',ro:'laeo proong-nii joe-gan na kha',tr:'O zaman yarın görüşürüz.',bd:[{ro:'laeo proong-nii',tr:'o zaman yarın',role:'Kelime'},{ro:'joe-gan na',tr:'görüşürüz',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'โอเคครับ ตอนเช้าเก้าโมงนะครับ',ro:'o-kee khrap ton-chao kao mong na khrap',tr:'Tamam, sabah saat 9\'da.',bd:[{ro:'o-kee',tr:'tamam',role:'Kelime'},{ro:'ton-chao kao mong',tr:'sabah saat 9',role:'Kelime'},{ro:'na khrap',tr:'onay eki',role:'Kibar'}]},
-     ]},
-    {title:'🔄 Randevu Erteleme',
-     lines:[
-       {s:'Ali',th:'ขอโทษครับ เลื่อนนัดได้ไหมครับ',ro:'khor-thot khrap lueang nat dai mai khrap',tr:'Özür dilerim, randevuyu erteleyebilir miyiz?',bd:[{ro:'khor-thot',tr:'özür',role:'Kelime'},{ro:'lueang nat dai mai',tr:'erteleyebilir miyiz',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ได้ค่ะ เลื่อนไปวันไหนคะ',ro:'dai kha lueang pai wan-nai kha',tr:'Olur, hangi güne erteleyelim?',bd:[{ro:'dai',tr:'olur',role:'Kelime'},{ro:'lueang pai wan-nai',tr:'hangi güne',role:'Soru/Olumsuz'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Ali',th:'วันจันทร์หน้าได้ไหมครับ',ro:'wan-jan na dai mai khrap',tr:'Önümüzdeki Pazartesi olur mu?',bd:[{ro:'wan-jan na',tr:'önümüzdeki Pazartesi',role:'Kelime'},{ro:'dai mai',tr:'olur mu',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Nada',th:'ได้เลยค่ะ',ro:'dai loey kha',tr:'Tabii ki olur.',bd:[{ro:'dai loey',tr:'tabii ki olur',role:'Kelime'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-     ]},
+       {speaker:'A', gender:'m', en:'Excuse me! Do you have the time?', ro:'/ɪkˈskjuːz miː duː juː hæv ðə taɪm/', tr:'Pardon! Saatiniz var mı?'},
+       {speaker:'B', gender:'f', en:"Yes, it's quarter past two.", ro:'/jɛs ɪts ˈkwɔːrtər pɑːst tuː/', tr:'Evet, ikiyi çeyrek geçiyor.'},
+       {speaker:'A', gender:'m', en:'Thank you! Am I late for the meeting?', ro:'/θæŋk juː æm aɪ leɪt fər ðə ˈmiːtɪŋ/', tr:'Teşekkür ederim! Toplantıya geç mi kaldım?'},
+       {speaker:'B', gender:'f', en:'The meeting is at three. You have forty-five minutes.', ro:'/ðə ˈmiːtɪŋ ɪz æt θriː juː hæv ˈfɔːrti faɪv ˈmɪnɪts/', tr:'Toplantı saat üçte. Kırk beş dakikan var.'},
+       {speaker:'A', gender:'m', en:"Great, I'm not late. Thank you!", ro:'/ɡreɪt aɪm nɒt leɪt θæŋk juː/', tr:'Harika, geç kalmadım. Teşekkürler!'}
+     ]}
   ],
 
-  listening:[
-    {diff:'easy',th:'วันนี้วันจันทร์ครับ',q:'Bugün hangi gün?',opts:['Pazartesi','Salı','Çarşamba'],c:0},
-    {diff:'easy',th:'บ่ายสามโมงครับ',q:'Saat kaç?',opts:['03:00','13:00','15:00'],c:2},
-    {diff:'easy',th:'พรุ่งนี้ครับ',q:'Ne zaman?',opts:['Dün','Bugün','Yarın'],c:2},
-    {diff:'medium',th:'เช้าเก้าโมงครับ',q:'Saat kaç?',opts:['07:00','09:00','19:00'],c:1},
-    {diff:'medium',th:'วันศุกร์ได้ไหมครับ',q:'Hangi gün soruluyor?',opts:['Perşembe','Cuma','Cumartesi'],c:1},
-    {diff:'medium',th:'ขอนัดหมายครับ',q:'Ne isteniyor?',opts:['Fiyat sorma','Randevu alma','Yer tarifi'],c:1},
-    {diff:'medium',th:'เลื่อนนัดได้ไหมครับ',q:'Ne soruluyor?',opts:['Randevu iptal','Randevu erteleme','Yeni randevu'],c:1},
-    {diff:'hard',th:'บ่ายสองโมงครับ',q:'Bu saat 24 saat formatında kaç?',opts:['02:00','12:00','14:00'],c:2},
-    {diff:'hard',th:'วันจันทร์หน้าได้ไหมครับ',q:'Ne zaman?',opts:['Bu Pazartesi','Gelecek Pazartesi','Geçen Pazartesi'],c:1},
-    {diff:'hard',th:'ผมกำลังทำงานครับ',q:'Ne yapıyor?',opts:['İş bitti','Şu an çalışıyor','Çalışmak istiyor'],c:1},
-  ],
-
-  quiz:[
-    {q:'"wan-nii" ne demek?',opts:['Dün','Bugün','Yarın','Geçen hafta'],c:1},
-    {q:'Thai saat sisteminde "bai" hangi aralık?',opts:['06-12','13-18','18-19','19-24'],c:1},
-    {q:'14:00 Tayca nasıl söylenir?',opts:['chao sii mong','bai song mong','hok mong yen','song thum'],c:1},
-    {q:'"proong-nii" ne demek?',opts:['Dün','Bugün','Yarın','Öbür gün'],c:2},
-    {q:'Cuma Tayca?',opts:['wan-jan','wan-suk','wan-sao','wan-aa-thit'],c:1},
-    {q:'"nat" ne demek?',opts:['Gün','Saat','Randevu','Hafta'],c:2},
-    {q:'"kii-mong" ne sorar?',opts:['Hangi gün','Saat kaç','Kaç kişi','Ne kadar'],c:1},
-    {q:'"lueang nat" ne demek?',opts:['Randevu al','Randevu iptal','Randevu ertele','Randevu onayla'],c:2},
-    {q:'"meua-waan" ne demek?',opts:['Yarın','Bugün','Dün','Geçen hafta'],c:2},
-    {q:'Pazartesi Tayca?',opts:['wan-suk','wan-aa-thit','wan-jan','wan-sao'],c:2},
-  ],
+  listening: [
+    {id:'li1', audio:'', transcript:"The train to London departs at nine forty-five. That's platform three. Next departure is Monday, the twenty-second of June.",
+     tr:'Londra treni dokuz kırk beşte kalkıyor. Platform üç. Bir sonraki sefer 22 Haziran Pazartesi.',
+     questions:[
+       {q:'What time does the train depart?', opts:['9:15','9:45','10:45','9:05'], answer:1, tr:'Tren saat kaçta kalkıyor?'},
+       {q:'Which platform?', opts:['1','2','3','4'], answer:2, tr:'Kaçıncı platform?'},
+       {q:'What day is the next departure?', opts:['Sunday','Saturday','Tuesday','Monday'], answer:3, tr:'Sonraki sefer hangi gün?'}
+     ]}
+  ]
 };
-
 LESSONS[3] = L3;

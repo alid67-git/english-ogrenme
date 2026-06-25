@@ -1,422 +1,220 @@
-// Ders 1 verisi — tayca-v3
-// =================== VERİ: DERS 1 (L1+L2 birleşik) ===================
+// ders1.js — English Lesson 1: Greetings & Introductions
 const L1 = {
-  words:[
-    {id:'w1',th:'สวัสดีครับ',ro:'sa-wat-dee-khrap',tr:'Merhaba',
-     tip:'Sondaki -p sesi agizda yutulur, disar cikmiyor.',
-     ctx:'Erkek olarak sen hep bu formu kullan. Her durumda gecerli.',
+  words: [
+    {id:'w1', en:'Hello', ro:'/həˈloʊ/', tr:'Merhaba',
+     tip:'En yaygın İngilizce selamlama.', ctx:'Her ortamda kullanılabilir.',
      examples:[
-      {th:'คุณชื่ออะไร',ro:'khun-chue-a-rai',tr:'adin ne?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'}]},
-      {th:'ยินดีที่ได้รู้จัก',ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'}]},
-      {th:'สบายดีไหม',ro:'sa-bai-dee-mai',tr:'nasilsin?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'}]},
-      {th:'ผมชื่อทอม',ro:'pom-chue-Tom',tr:'benim adim Tom.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Tom',tr:'Tom',role:'O - Nesne'}]},
-      {th:'คุณมาจากไหน',ro:'khun-maa-jaak-nai',tr:'nerelisin?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'maa-jaak',tr:'geliyorsun',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'}]},
-      {th:'ยินดีต้อนรับค่ะ',ro:'yin-dee-ton-rap-kha',tr:'hos geldiniz.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'ton-rap',tr:'selamlamak',role:'O - Nesne'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-      {th:'ขอโทษที่รอครับ',ro:'khor-thot-tii-ror-khrap',tr:'beklettigim icin ozur.',bd:[{ro:'khor-thot',tr:'ozur dile',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'ror',tr:'bekle',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'วันนี้เป็นยังไร',ro:'wan-nii-pen-yang-rai',tr:'bugun nasil?',bd:[{ro:'wan-nii',tr:'bugun',role:'S - Ozne'},{ro:'pen-yang-rai',tr:'nasil',role:'V - Yuklem'}]},
-      {th:'เชิญเข้ามาครับ',ro:'choern-khao-maa-khrap',tr:'buyurun iceri.',bd:[{ro:'choern-khao',tr:'gir',role:'V - Yuklem'},{ro:'maa',tr:'gel',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณที่มาครับ',ro:'khob-khun-tii-maa-khrap',tr:'geldiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {en:'Hello, how are you?', ro:'/həˈloʊ haʊ ɑːr juː/', tr:'Merhaba, nasılsın?',
+        bd:[{ro:'Hello',tr:'Merhaba',role:'greeting'},{ro:'how',tr:'nasıl',role:'question'},{ro:'are you',tr:'sın',role:'verb'}]}
      ]},
-    {id:'w3',th:'ขอบคุณ',ro:'khob-khun',tr:'Teşekkür ederim',
-     tip:'KHOBp kisaltilir; KHUN uzun ve yumusak.',
-     ctx:'Tek basina kisa. Hep krap/kha ekle. Guclendir: khob-khun-MAAK.',
+    {id:'w2', en:'Hi', ro:'/haɪ/', tr:'Selam',
+     tip:'Samimi ve kısa selamlama.', ctx:'Arkadaşlar arasında kullanılır.',
      examples:[
-      {th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณมากครับ',ro:'khob-khun-maak-khrap',tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'maak',tr:'cok',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณมากๆ ครับ',ro:'khob-khun-maak-maak-khrap',tr:'Cok cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'maak-maak',tr:'cok cok',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณสำหรับอาหารครับ',ro:'khob-khun-sam-rap-a-han-khrap',tr:'Yemek icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'sam-rap',tr:'icin',role:'Edat'},{ro:'a-han',tr:'yemek',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณที่ช่วยครับ',ro:'khob-khun-tii-chuay-khrap',tr:'Yardimin icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii-chuay',tr:'yardimi icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณที่รอครับ',ro:'khob-khun-tii-ror-khrap',tr:'Beklemek icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii-ror',tr:'beklemeyi icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณสำหรับทุกอย่างครับ',ro:'khob-khun-sam-rap-thuk-yang-khrap',tr:'Her sey icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'sam-rap-thuk-yang',tr:'her sey icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณที่มาครับ',ro:'khob-khun-tii-maa-khrap',tr:'Geldiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'maa',tr:'gel',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณที่สอนครับ',ro:'khob-khun-tii-son-khrap',tr:'Ogrettiginiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'tii-son',tr:'ogrettiginiz icin',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณล่วงหน้าครับ',ro:'khob-khun-luang-na-khrap',tr:'Onceden tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'luang-na',tr:'onceden',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {en:'Hi there!', ro:'/haɪ ðɛr/', tr:'Selam sana!',
+        bd:[{ro:'Hi',tr:'Selam',role:'greeting'},{ro:'there',tr:'(pekiştirme)',role:'filler'}]}
      ]},
-    {id:'w4',th:'ยินดีที่ได้รู้จัก',ro:'yin-dee-tii-dai-ruu-jak',tr:'Tanıştığıma memnun',
-     tip:'YIN yuksek ton; DEE orta; ruu-jak hizli soylenecek.',
-     ctx:'Selamlasmadan hemen sonra ilk tanismada soylenir.',
+    {id:'w3', en:'Good morning', ro:'/ɡʊd ˈmɔːrnɪŋ/', tr:'Günaydın',
+     tip:'Sabah selamlama ifadesi.', ctx:'Sabah 12\'ye kadar kullanılır.',
      examples:[
-      {th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ยินดีที่ได้รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'chen-kan',tr:'ayni sekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ผมยินดีที่ได้รู้จักคุณมากครับ',ro:'pom-yin-dee-tii-dai-ruu-jak-khun-maak-khrap',tr:'Seninle tanismak cok guzeldi.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak-khun-maak',tr:'seninle tanismaktan cok',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanisma firsati buldum, memnunum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ยินดีที่ได้รู้จัก',ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'}]},
-      {th:'ผมชื่อทอม ยินดีที่ได้รู้จักครับ',ro:'pom-chue-Tom yin-dee-tii-dai-ruu-jak-khrap',tr:'Adim Tom, memnun oldum.',bd:[{ro:'pom chue Tom',tr:'adim Tom',role:'S - Ozne'},{ro:'yin-dee-tii-dai-ruu-jak',tr:'tanistigima memnun',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {en:'Good morning, everyone!', ro:'/ɡʊd ˈmɔːrnɪŋ ˈɛvriwʌn/', tr:'Günaydın, herkese!',
+        bd:[{ro:'Good morning',tr:'Günaydın',role:'greeting'},{ro:'everyone',tr:'herkes',role:'subject'}]}
      ]},
-    {id:'w5',th:'ไม่เป็นไร',ro:'mai-pen-rai',tr:'Sorun değil',
-     tip:'MAI yuksek ton; PEN orta; RAI yuksek. Uc farkli ton birada!',
-     ctx:'Ozur dilenince veya sikinti olunca. No worries gibi rahatca kullanilir.',
+    {id:'w4', en:'Good afternoon', ro:'/ɡʊd ˌæftərˈnuːn/', tr:'İyi günler (öğleden sonra)',
+     tip:'Öğleden sonra selamlama.', ctx:'12:00-18:00 arası kullanılır.',
      examples:[
-      {th:'ไม่เป็นไรครับ',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/degil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir sey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ไม่เป็นไร ไม่ต้องเป็นห่วงครับ',ro:'mai-pen-rai mai-tong-pen-huang-khrap',tr:'Sorun degil, endiselenme.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'mai-tong-pen-huang',tr:'endiselenme',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ไม่เป็นไร มันเกิดขึ้นได้',ro:'mai-pen-rai man-koet-kheun-dai',tr:'Sorun degil, olur boyle.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'man-koet-kheun-dai',tr:'olabilir',role:'Kelime'}]},
-      {th:'โอเคครับ ไม่เป็นไร',ro:'o-kee-khrap mai-pen-rai',tr:'Tamam, bir sey degil.',bd:[{ro:'o-kee',tr:'tamam',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'},{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'}]},
-      {th:'ไม่เป็นไรครับ เกิดขึ้นกับทุกคน',ro:'mai-pen-rai-khrap koet-kheun-kap-thuk-khon',tr:'Sorun degil, herkese olur.',bd:[{ro:'mai-pen-rai-khrap',tr:'sorun degil',role:'Kelime'},{ro:'koet-kheun-kap-thuk-khon',tr:'herkese olur',role:'Kelime'}]},
-      {th:'ไม่เป็นไรครับ ผมเข้าใจ',ro:'mai-pen-rai-khrap pom-khao-jai',tr:'Sorun degil, anliyorum.',bd:[{ro:'mai-pen-rai-khrap',tr:'sorun degil',role:'Kelime'},{ro:'pom khao-jai',tr:'anliyorum',role:'Kelime'}]},
+       {en:'Good afternoon, sir.', ro:'/ɡʊd ˌæftərˈnuːn sɜːr/', tr:'İyi günler, efendim.',
+        bd:[{ro:'Good afternoon',tr:'İyi günler',role:'greeting'},{ro:'sir',tr:'efendim',role:'honorific'}]}
      ]},
-    {id:'w6',th:'ครับ',ro:'khrap',tr:'Kibar eki',
-     tip:'-p sesi agizda yutulur. Hizli konusmada KHAP da duyarsın.',
-     ctx:'Her cumle sonuna ekle. Phuket\'te bu eki kullanmayan yabanci kaba gorunur.',
+    {id:'w5', en:'Good evening', ro:'/ɡʊd ˈiːvnɪŋ/', tr:'İyi akşamlar',
+     tip:'Akşam selamlama ifadesi.', ctx:'18:00\'dan sonra kullanılır.',
      examples:[
-      {th:'ใช่ครับ',ro:'chai-khrap',tr:'Evet.',bd:[{ro:'chai',tr:'evet',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ไม่ครับ',ro:'mai-khrap',tr:'Hayir.',bd:[{ro:'mai',tr:'hayir',role:'Olumsuz'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'โอเคครับ',ro:'o-kee-khrap',tr:'Tamam.',bd:[{ro:'o-kee',tr:'tamam',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ได้ครับ',ro:'dai-khrap',tr:'Olur.',bd:[{ro:'dai',tr:'olur',role:'Modal'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'เข้าใจครับ',ro:'khao-jai-khrap',tr:'Anliyorum.',bd:[{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ทราบแล้วครับ',ro:'saap-laeo-khrap',tr:'Anlasildi.',bd:[{ro:'saap',tr:'anlamak',role:'V - Yuklem'},{ro:'laeo',tr:'bitti',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'รอสักครู่ครับ',ro:'ror-sak-khru-khrap',tr:'Bir dakika bekle.',bd:[{ro:'ror',tr:'bekle',role:'V - Yuklem'},{ro:'sak-khru',tr:'biraz',role:'Zaman'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอโทษครับ',ro:'khor-thot-khrap',tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dile',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ไม่เป็นไรครับ',ro:'mai-pen-rai-khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok/degil',role:'Olumsuz'},{ro:'pen-rai',tr:'bir sey',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-      {th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii',tr:'sebebi gosteren',role:'Edat'},{ro:'dai',tr:'basarili/tamamlanan',role:'Aspect'},{ro:'ruu-jak',tr:'tanismak',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
+       {en:'Good evening! Welcome.', ro:'/ɡʊd ˈiːvnɪŋ ˈwɛlkəm/', tr:'İyi akşamlar! Hoş geldiniz.',
+        bd:[{ro:'Good evening',tr:'İyi akşamlar',role:'greeting'},{ro:'Welcome',tr:'Hoş geldiniz',role:'welcome'}]}
      ]},
-    // --- L2 kelimeleri ---
-    {id:'w8',th:'ผม',ro:'pom',tr:'Ben',
-     tip:'Erkek zamiri. Kadin icin "chan" kullanilir.',
-     ctx:'Her cumleye pom ile baslamayı aliskanlık yap.',
+    {id:'w6', en:'Good night', ro:'/ɡʊd naɪt/', tr:'İyi geceler',
+     tip:'Geceye girerken ya da ayrılırken söylenir.', ctx:'Genellikle vedalaşırken.',
      examples:[
-       {th:'ผมชื่อทอมครับ',ro:'pom chue Tom khrap',tr:'Benim adim Tom.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Tom',tr:'Tom',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมมาจากตุรกีครับ',ro:'pom maa jaak Tuerkiye khrap',tr:'Ben Turkiyeden geliyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'Tuerkiye',tr:'Turkiye',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมอยู่ภูเก็ตครับ',ro:'pom yuu Phuket khrap',tr:'Ben Phuket te yasiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorum',role:'V - Yuklem'},{ro:'Phuket',tr:'Phuket',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมเป็นคนตุรกีครับ',ro:'pom pen kon Tuerk khrap',tr:'Ben Turk um.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'pen',tr:'im/yim',role:'V - Yuklem'},{ro:'kon Tuerk',tr:'Turk',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมอายุ 35 ปีครับ',ro:'pom ayu 35 pii khrap',tr:'Ben 35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'35 pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมทำงานที่ภูเก็ตครับ',ro:'pom tham ngaan thii Phuket khrap',tr:'Phuket te calisiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'tham ngaan',tr:'calisiyorum',role:'V - Yuklem'},{ro:'thii Phuket',tr:'Phuket te',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมพักอยู่ที่นี่ครับ',ro:'pom phak yuu thii nii khrap',tr:'Burada kaliyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'phak yuu',tr:'kaliyorum',role:'V - Yuklem'},{ro:'thii nii',tr:'burada',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {en:'Good night, sleep well.', ro:'/ɡʊd naɪt sliːp wɛl/', tr:'İyi geceler, iyi uyu.',
+        bd:[{ro:'Good night',tr:'İyi geceler',role:'farewell'},{ro:'sleep well',tr:'iyi uyu',role:'wish'}]}
      ]},
-    {id:'w9',th:'คุณ',ro:'khun',tr:'Sen / Siz (kibar)',
-     tip:'"Khun" hem "sen" hem "bay/bayan" anlamina gelir.',
-     ctx:'Yabancilara hep "khun" kullan — her zaman kibar.',
+    {id:'w7', en:'Goodbye', ro:'/ɡʊdˈbaɪ/', tr:'Hoşça kal / Güle güle',
+     tip:'Vedalaşma ifadesi.', ctx:'Resmi ve samimi ortamlarda kullanılır.',
      examples:[
-       {th:'คุณชื่ออะไรครับ',ro:'khun chue a-rai khrap',tr:'Adiniz ne?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'chue',tr:'adiniz',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณมาจากไหนครับ',ro:'khun maa jaak nai khrap',tr:'Nereden geliyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorsunuz',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณอยู่ที่ไหนครับ',ro:'khun yuu thii nai khrap',tr:'Nerede yasiyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorsunuz',role:'V - Yuklem'},{ro:'thii nai',tr:'nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณทำงานอะไรครับ',ro:'khun tham ngaan a-rai khrap',tr:'Ne is yapiyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'tham ngaan',tr:'is yapiyorsunuz',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณอายุเท่าไรครับ',ro:'khun ayu thao-rai khrap',tr:'Kac yasindasiniz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'ayu',tr:'yasindasiniz',role:'V - Yuklem'},{ro:'thao-rai',tr:'kac',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {en:'Goodbye, see you tomorrow.', ro:'/ɡʊdˈbaɪ siː juː təˈmɒroʊ/', tr:'Hoşça kal, yarın görüşürüz.',
+        bd:[{ro:'Goodbye',tr:'Hoşça kal',role:'farewell'},{ro:'see you',tr:'görüşürüz',role:'phrase'},{ro:'tomorrow',tr:'yarın',role:'time'}]}
      ]},
-    {id:'w10',th:'ชื่อ',ro:'chue',tr:'Ad / İsim',
-     tip:'"Pom chue..." = "Benim adim..."',
-     ctx:'Tanitirken ilk ogrenecegin kalip.',
+    {id:'w8', en:'Bye', ro:'/baɪ/', tr:'Güle güle / Bay bay',
+     tip:'Kısa ve samimi veda.', ctx:'Arkadaşlar ve tanıdıklar arasında.',
      examples:[
-       {th:'ผมชื่อทอมครับ',ro:'pom chue Tom khrap',tr:'Benim adim Tom.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Tom',tr:'Tom',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณชื่ออะไรครับ',ro:'khun chue a-rai khrap',tr:'Adiniz ne?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'chue',tr:'adiniz',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เขาชื่อลูซี่ค่ะ',ro:'khao chue Lucy kha',tr:'Onun adi Lucy.',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Lucy',tr:'Lucy',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ชื่อเล่นคืออะไรครับ',ro:'chue len khue a-rai khrap',tr:'Lakapiniz ne?',bd:[{ro:'chue len',tr:'lakap',role:'S - Ozne'},{ro:'khue',tr:'dir',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {en:'Bye! Take care.', ro:'/baɪ teɪk kɛr/', tr:'Bay bay! Kendine iyi bak.',
+        bd:[{ro:'Bye',tr:'Bay bay',role:'farewell'},{ro:'Take care',tr:'Kendine iyi bak',role:'wish'}]}
      ]},
-    {id:'w11',th:'มาจาก',ro:'maa jaak',tr:'Gelmek / -den gelmek',
-     tip:'"Maa" = gelmek, "jaak" = den. Beraber kullanilir.',
-     ctx:'Nereli oldugunu sorarken veya soylerken kullanilir.',
+    {id:'w9', en:'My name is...', ro:'/maɪ neɪm ɪz/', tr:'Benim adım...',
+     tip:'Kendini tanıtırken kullanılır.', ctx:'Tanışma anında ilk cümle.',
      examples:[
-       {th:'ผมมาจากตุรกีครับ',ro:'pom maa jaak Tuerkiye khrap',tr:'Turkiyeden geliyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'Tuerkiye',tr:'Turkiye',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณมาจากไหนครับ',ro:'khun maa jaak nai khrap',tr:'Nereden geliyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorsunuz',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เขามาจากเชียงใหม่ค่ะ',ro:'khao maa jaak Chiang Mai kha',tr:'O Chiang Mai den geliyor.',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyor',role:'V - Yuklem'},{ro:'Chiang Mai',tr:'Chiang Mai',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เพื่อนผมมาจากอังกฤษครับ',ro:'phuean pom maa jaak Angkrit khrap',tr:'Arkadasim Ingiltere den geliyor.',bd:[{ro:'phuean pom',tr:'arkadasim',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyor',role:'V - Yuklem'},{ro:'Angkrit',tr:'Ingiltere',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {en:'My name is Ali. Nice to meet you.', ro:'/maɪ neɪm ɪz æli naɪs tə miːt juː/', tr:'Benim adım Ali. Tanıştığıma memnun oldum.',
+        bd:[{ro:'My name is',tr:'Benim adım',role:'intro'},{ro:'Nice to meet you',tr:'Tanıştığıma memnun oldum',role:'phrase'}]}
      ]},
-    {id:'w12',th:'ทำงาน',ro:'tham ngaan',tr:'Çalışmak / İş yapmak',
-     tip:'"Tham" = yapmak, "ngaan" = is. Meslek sorarken.',
-     ctx:'Phuket te en sik sorulan sorulardan biri.',
+    {id:'w10', en:'What is your name?', ro:'/wɒt ɪz jɔːr neɪm/', tr:'Adın ne?',
+     tip:'Birinin adını sormak için kullanılır.', ctx:'Tanışma konuşmalarında.',
      examples:[
-       {th:'คุณทำงานอะไรครับ',ro:'khun tham ngaan a-rai khrap',tr:'Ne is yapiyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'tham ngaan',tr:'is yapiyorsunuz',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมทำงานที่โรงแรมครับ',ro:'pom tham ngaan thii hotel khrap',tr:'Otelde calisiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'tham ngaan',tr:'calisiyorum',role:'V - Yuklem'},{ro:'thii hotel',tr:'otelde',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมไม่ทำงานวันนี้ครับ',ro:'pom mai tham ngaan wan nii khrap',tr:'Bugün calismiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'mai tham ngaan',tr:'calismiyorum',role:'V - Yuklem'},{ro:'wan nii',tr:'bugün',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณทำงานที่ไหนครับ',ro:'khun tham ngaan thii nai khrap',tr:'Nerede calisiyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'tham ngaan',tr:'calisiyorsunuz',role:'V - Yuklem'},{ro:'thii nai',tr:'nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมทำงานเป็นผู้จัดการครับ',ro:'pom tham ngaan pen phu-jaet-kaan khrap',tr:'Yonetici olarak calisiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'tham ngaan pen',tr:'olarak calisiyorum',role:'V - Yuklem'},{ro:'phu-jaet-kaan',tr:'yonetici',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {en:'Hello! What is your name?', ro:'/həˈloʊ wɒt ɪz jɔːr neɪm/', tr:'Merhaba! Adın ne?',
+        bd:[{ro:'What',tr:'Ne',role:'question'},{ro:'is',tr:'(yardımcı fiil)',role:'verb'},{ro:'your name',tr:'senin adın',role:'subject'}]}
      ]},
-    {id:'w13',th:'อยู่',ro:'yuu',tr:'Olmak / Yaşamak (yer)',
-     tip:'Yer belirtirken kullanilir. "Ben buradayim" = "pom yuu thii nii"',
-     ctx:'Adres ve konum sorarken cok kullanilir.',
+    {id:'w11', en:'How are you?', ro:'/haʊ ɑːr juː/', tr:'Nasılsın?',
+     tip:'Hal hatır sormak için kullanılır.', ctx:'Selamlaşmanın hemen ardından.',
      examples:[
-       {th:'ผมอยู่ภูเก็ตครับ',ro:'pom yuu Phuket khrap',tr:'Phuket te yasiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorum',role:'V - Yuklem'},{ro:'Phuket',tr:'Phuket',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณอยู่ที่ไหนครับ',ro:'khun yuu thii nai khrap',tr:'Nerede yasiyorsunuz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorsunuz',role:'V - Yuklem'},{ro:'thii nai',tr:'nerede',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมอยู่ที่นี่มาสามปีแล้วครับ',ro:'pom yuu thii nii maa saam pii laeo khrap',tr:'Uc yildir buradayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorum',role:'V - Yuklem'},{ro:'thii nii',tr:'burada',role:'O - Nesne'},{ro:'maa saam pii laeo',tr:'uc yildir',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เขาอยู่ที่บ้านค่ะ',ro:'khao yuu thii baan kha',tr:'O evde.',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorum',role:'V - Yuklem'},{ro:'thii baan',tr:'evde',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {en:'Hi! How are you today?', ro:'/haɪ haʊ ɑːr juː təˈdeɪ/', tr:'Selam! Bugün nasılsın?',
+        bd:[{ro:'How',tr:'Nasıl',role:'question'},{ro:'are you',tr:'sın',role:'verb'},{ro:'today',tr:'bugün',role:'time'}]}
      ]},
-    {id:'w14',th:'อายุ',ro:'ayu',tr:'Yaş',
-     tip:'"Pom ayu [sayi] pii" = "Ben [sayi] yasindayim"',
-     ctx:'"Pii" = yil. Yas sorarken "thao-rai" = ne kadar.',
+    {id:'w12', en:"I'm fine, thank you.", ro:'/aɪm faɪn θæŋk juː/', tr:'İyiyim, teşekkür ederim.',
+     tip:'How are you sorusunun standart cevabı.', ctx:'Günlük konuşmalarda.',
      examples:[
-       {th:'ผมอายุ 35 ปีครับ',ro:'pom ayu 35 pii khrap',tr:'35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'35 pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณอายุเท่าไรครับ',ro:'khun ayu thao-rai khrap',tr:'Kac yasindasiniz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'ayu',tr:'yasindasiniz',role:'V - Yuklem'},{ro:'thao-rai',tr:'kac',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมอายุสามสิบห้าปีครับ',ro:'pom ayu saam-sip-haa pii khrap',tr:'35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'saam-sip-haa pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+       {en:"I'm fine, thank you. And you?", ro:'/aɪm faɪn θæŋk juː ænd juː/', tr:'İyiyim, teşekkür ederim. Ya sen?',
+        bd:[{ro:"I'm fine",tr:'İyiyim',role:'answer'},{ro:'thank you',tr:'teşekkür ederim',role:'courtesy'},{ro:'And you',tr:'Ya sen',role:'question'}]}
      ]},
-  {id:'w15',th:'ฉัน',ro:'chan',tr:'Ben (kadın)',
-     tip:'Kadin konusmacilar pom yerine chan der. Erkekler pom kullanir.',
-     ctx:'Günlük konuşmada kadınlar her zaman chan kullanır.',
+    {id:'w13', en:'Nice to meet you.', ro:'/naɪs tə miːt juː/', tr:'Tanıştığıma memnun oldum.',
+     tip:'Biriyle ilk kez tanışırken söylenir.', ctx:'Tanışma sırasında.',
      examples:[
-       {th:'ฉันชื่ออะไร',ro:'chan chue a-rai',tr:'Benim adım ne?',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'chue',tr:'adı',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'}]},
-       {th:'ฉันมาจากตุรกีค่ะ',ro:'chan maa jaak tur-gii kha',tr:'Türkiyeden geliyorum.',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'tur-gii',tr:'Türkiye',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ฉันเข้าใจค่ะ',ro:'chan khao-jai kha',tr:'Anlıyorum.',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ฉันอยู่ที่ภูเก็ตค่ะ',ro:'chan yuu thii phu-ket kha',tr:'Phuket te yasıyorum.',bd:[{ro:'chan',tr:'ben (kadın)',role:'S - Ozne'},{ro:'yuu thii',tr:'yasıyorum',role:'V - Yuklem'},{ro:'phu-ket',tr:'Phuket',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
+       {en:'Nice to meet you, I am Sara.', ro:'/naɪs tə miːt juː aɪ æm særə/', tr:'Tanıştığıma memnun oldum, ben Sara.',
+        bd:[{ro:'Nice to meet you',tr:'Memnun oldum',role:'phrase'},{ro:'I am',tr:'Ben (ım)',role:'intro'}]}
      ]},
-  {id:'w16',th:'เรา',ro:'rao',tr:'Biz / Ben (samimi)',
-     tip:'"Rao" hem "biz" hem de arkadaşça "ben" anlamına gelir.',
-     ctx:'Arkadaşlar arasında pom/chan yerine rao kullanmak çok yaygın ve samimi.',
+    {id:'w14', en:'Where are you from?', ro:'/wɛr ɑːr juː frɒm/', tr:'Nerelisin?',
+     tip:'Birinin nereli olduğunu sormak için.', ctx:'Tanışma konuşmalarında.',
      examples:[
-       {th:'เราไปด้วยกันครับ',ro:'rao pai duay-kan khrap',tr:'Birlikte gidelim.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'pai',tr:'gitmek',role:'V - Yuklem'},{ro:'duay-kan',tr:'birlikte',role:'Vurgu'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เราเป็นเพื่อนกัน',ro:'rao pen phuean-kan',tr:'Biz arkadaşız.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'pen',tr:'olmak',role:'V - Yuklem'},{ro:'phuean-kan',tr:'arkadaşlar',role:'O - Nesne'}]},
-       {th:'เราชอบภูเก็ตมาก',ro:'rao chop phu-ket maak',tr:'Phuket cok seviyoruz.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'chop',tr:'sevmek',role:'V - Yuklem'},{ro:'phu-ket maak',tr:'Phuket çok',role:'O - Nesne'}]},
+       {en:'Where are you from? I am from Turkey.', ro:'/wɛr ɑːr juː frɒm aɪ æm frɒm ˈtɜːrki/', tr:'Nerelisin? Ben Türkiye\'denim.',
+        bd:[{ro:'Where',tr:'Nere',role:'question'},{ro:'are you from',tr:'lisin',role:'verb'},{ro:'I am from Turkey',tr:'Türkiye\'denim',role:'answer'}]}
      ]},
-  {id:'w17',th:'เขา',ro:'khao',tr:'O (o kişi)',
-     tip:'"Khao" hem erkek hem kadin icin kullanilir. Thaice cinsiyet ayrimi yok.',
-     ctx:'Aynı kelime hem "he" hem "she" anlamına gelir.',
+    {id:'w15', en:'Please', ro:'/pliːz/', tr:'Lütfen',
+     tip:'Rica veya nezaket ifadesi.', ctx:'İstek yaparken.',
      examples:[
-       {th:'เขาชื่ออะไรครับ',ro:'khao chue a-rai khrap',tr:'Onun adı ne?',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'chue',tr:'adı',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เขามาจากไหนครับ',ro:'khao maa jaak nai khrap',tr:'O nereden geliyor?',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyor',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เขาพูดภาษาไทยได้',ro:'khao phut pha-saa-thai dai',tr:'O Tayca konuşabiliyor.',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'phut',tr:'konuşmak',role:'V - Yuklem'},{ro:'pha-saa-thai',tr:'Tayca',role:'O - Nesne'},{ro:'dai',tr:'yapabiliyor',role:'Aspect'}]},
+       {en:'Can you help me, please?', ro:'/kæn juː hɛlp miː pliːz/', tr:'Bana yardım edebilir misin, lütfen?',
+        bd:[{ro:'Can you',tr:'Yapabilir misin',role:'modal'},{ro:'help me',tr:'bana yardım et',role:'verb'},{ro:'please',tr:'lütfen',role:'courtesy'}]}
      ]},
+    {id:'w16', en:'Thank you', ro:'/θæŋk juː/', tr:'Teşekkür ederim',
+     tip:'Minnettarlık ifadesi.', ctx:'Her ortamda kullanılır.',
+     examples:[
+       {en:'Thank you very much!', ro:'/θæŋk juː ˈvɛri mʌtʃ/', tr:'Çok teşekkür ederim!',
+        bd:[{ro:'Thank you',tr:'Teşekkür ederim',role:'courtesy'},{ro:'very much',tr:'çok',role:'intensifier'}]}
+     ]},
+    {id:'w17', en:"You're welcome", ro:'/jɔːr ˈwɛlkəm/', tr:'Rica ederim',
+     tip:'Teşekküre karşı verilen cevap.', ctx:'"Thank you" dedikten sonra.',
+     examples:[
+       {en:"You're welcome! Happy to help.", ro:'/jɔːr ˈwɛlkəm hæpi tə hɛlp/', tr:'Rica ederim! Yardımcı olmaktan memnunum.',
+        bd:[{ro:"You're welcome",tr:'Rica ederim',role:'response'},{ro:'Happy to help',tr:'Yardımcı olmaktan memnun',role:'phrase'}]}
+     ]},
+    {id:'w18', en:'Excuse me', ro:'/ɪkˈskjuːz miː/', tr:'Pardon / Afedersiniz',
+     tip:'Dikkat çekmek veya özür dilemek için.', ctx:'Birine çarptığında veya soru sormak istediğinde.',
+     examples:[
+       {en:'Excuse me, where is the bathroom?', ro:'/ɪkˈskjuːz miː wɛr ɪz ðə ˈbæθruːm/', tr:'Pardon, tuvalet nerede?',
+        bd:[{ro:'Excuse me',tr:'Pardon',role:'courtesy'},{ro:'where is',tr:'nerede',role:'question'},{ro:'the bathroom',tr:'tuvalet',role:'noun'}]}
+     ]},
+    {id:'w19', en:'I do not understand.', ro:'/aɪ duː nɒt ˌʌndərˈstænd/', tr:'Anlamıyorum.',
+     tip:'Anlamamak için kullanılır.', ctx:'Dil öğrenme sürecinde çok işe yarar.',
+     examples:[
+       {en:'Sorry, I do not understand. Can you repeat?', ro:'/ˈsɒri aɪ duː nɒt ˌʌndərˈstænd kæn juː rɪˈpiːt/', tr:'Özür dilerim, anlamıyorum. Tekrar edebilir misin?',
+        bd:[{ro:'I do not understand',tr:'Anlamıyorum',role:'verb'},{ro:'Can you repeat',tr:'Tekrarlayabilir misin',role:'request'}]}
+     ]},
+    {id:'w20', en:'Yes / No', ro:'/jɛs / noʊ/', tr:'Evet / Hayır',
+     tip:'En temel onay ve ret kelimeleri.', ctx:'Her türlü soru cevabında.',
+     examples:[
+       {en:'Yes, I understand. No, I do not.', ro:'/jɛs aɪ ˌʌndərˈstænd noʊ aɪ duː nɒt/', tr:'Evet, anlıyorum. Hayır, anlamıyorum.',
+        bd:[{ro:'Yes',tr:'Evet',role:'affirmative'},{ro:'I understand',tr:'anlıyorum',role:'verb'},{ro:'No',tr:'Hayır',role:'negative'}]}
+     ]}
   ],
 
-  tones:[
-    {name:'กา — Orta Ton',symbol:'(isaret yok)',color:'#6b7280',
-     desc:'Duz ve dogal ses. Ne yuksek ne alcak. Hic isaretlenmemis harfler bu tondadir.',
-     words:[{th:'กา',ro:'gaa',tr:'Karga'},{th:'มา',ro:'maa',tr:'Gel'},{th:'ปลา',ro:'plaa',tr:'Balik'},{th:'ดี',ro:'dee',tr:'Iyi'},{th:'นา',ro:'naa',tr:'Tarla'}]},
-    {name:'ข่า — Alcak Ton',symbol:'◌่',color:'#3b82f6',
-     desc:'Normalden daha alcak ve duz. Sanki biraz uzgun veya sakin soylenir.',
-     words:[{th:'ข่า',ro:'khaa',tr:'Galangal'},{th:'ป่า',ro:'paa',tr:'Orman'},{th:'ข่าว',ro:'khaaw',tr:'Haber'},{th:'ยาก',ro:'yaak',tr:'Zor'},{th:'ล่าง',ro:'laang',tr:'Asagi'}]},
-    {name:'น้ำ — Dusen Ton',symbol:'◌้',color:'#ef4444',
-     desc:'Yuksekten baslar, asagiya duser. Kesin ve karali bir soylenis.',
-     words:[{th:'น้ำ',ro:'naam',tr:'Su'},{th:'ข้าว',ro:'khaaw',tr:'Pirinc'},{th:'ค่ะ',ro:'kha',tr:'Kibar eki (kadin)'},{th:'น้อย',ro:'noi',tr:'Az'},{th:'ฟ้า',ro:'faa',tr:'Gok'}]},
-    {name:'ขา — Yuksek Ton',symbol:'◌ (bazi harflerle)',color:'#f59e0b',
-     desc:'Normalden daha yuksek ve biraz kisa. Dikkat cekici, baskili soylenis.',
-     words:[{th:'ขา',ro:'khaa',tr:'Bacak'},{th:'ไม่',ro:'mai',tr:'Yok / Degil'},{th:'ใหม่',ro:'mai',tr:'Yeni'},{th:'หมา',ro:'maa',tr:'Kopek'},{th:'นา',ro:'naa',tr:'Yuz (on)'}]},
-    {name:'ม้า — Yukselen Ton',symbol:'◌้',color:'#10b981',
-     desc:'Alcaktan baslar, yukari cikar. Turkce soru tonuna benzer soylenis.',
-     words:[{th:'ม้า',ro:'maa',tr:'At'},{th:'หน้า',ro:'naa',tr:'Yuz / Ileri'},{th:'ป๊า',ro:'paa',tr:'Baba (argo)'},{th:'ฝา',ro:'faa',tr:'Kapak'},{th:'ข้า',ro:'khaa',tr:'Kole (eski)'}]},
+  tones: [
+    {id:'p1', en:'Vowel Sounds', ro:'Ünlü Sesler', tr:'Ünlü harflerin telaffuzu',
+     tip:'İngilizce\'de 5 ünlü harf 15+ farklı ses çıkarır.',
+     sounds:[
+       {symbol:'/æ/', example:'cat, hat, man', tr:'kısa "a" sesi — "kat" değil "kæt"'},
+       {symbol:'/ɑː/', example:'car, far, hard', tr:'uzun "a" sesi — boğazdan'},
+       {symbol:'/ɪ/', example:'sit, hit, bit', tr:'kısa "i" sesi'},
+       {symbol:'/iː/', example:'see, tree, need', tr:'uzun "i" sesi'},
+       {symbol:'/ʌ/', example:'cup, sun, run', tr:'kısa belirsiz "a/ö" sesi'},
+       {symbol:'/uː/', example:'food, moon, blue', tr:'uzun "u" sesi'}
+     ]},
+    {id:'p2', en:'Consonant Sounds', ro:'Ünsüz Sesler', tr:'Türkçe\'de olmayan ünsüzler',
+     tip:'th, w, v sesleri Türkçe\'de yok!',
+     sounds:[
+       {symbol:'/θ/', example:'think, three, bath', tr:'"th" sesi — dil üst dişlerin altına'},
+       {symbol:'/ð/', example:'the, this, that', tr:'"th" yumuşak — "dh" gibi'},
+       {symbol:'/w/', example:'water, win, way', tr:'"w" sesi — dudakları yuvarla'},
+       {symbol:'/v/', example:'very, love, have', tr:'"v" sesi — üst diş alt dudak'},
+       {symbol:'/r/', example:'red, run, car', tr:'"r" sesi — Türkçe r\'den farklı, yumuşak'}
+     ]}
   ],
 
-  grammar:[
-    {
-      title:'1. Thai Cumle Yapisi: SVO — Ozne + Yuklem + Nesne',
-      formula:'OZNE + YUKLEM + NESNE + KIBAR EKI',
-      explain:'Thai SVO sirasini takip eder — Turkce ile ayni! Ancak 3 onemli fark var: (1) Soru sozcukleri SONDA gelir, (2) Fiil hicbir zaman cekilmez, (3) Kibar eki her cumlenin sonuna gelir.',
-      tips:['Simdiki zaman: fiil + gam-lang (yapiyor)','Gecmis zaman: fiil + laeo (yapti)','Gelecek zaman: fiil + ja (yapacak)','Olumsuz: mai + fiil'],
-      examples:[
-        {th:'ผมชื่อทอมครับ',ro:'pom chue Tom khrap',tr:'Benim adim Tom.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adim / adi',role:'V - Yuklem'},{ro:'Tom',tr:'Tom',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'คุณชื่ออะไร',ro:'khun chue a-rai',tr:'Senin adin ne?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'O - Soru (SONDA)'}]},
-        {th:'ผมมาจากตุรกีครับ',ro:'pom maa jaak tur-gii khrap',tr:'Ben Turkiyeden geliyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'maa',tr:'gel-',role:'V - Yuklem'},{ro:'jaak',tr:'-den',role:'Edat'},{ro:'tur-gii',tr:'Turkiye',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมอยู่ที่ภูเก็ตครับ',ro:'pom yuu tii phu-get khrap',tr:'Ben Phukette yasiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yuu',tr:'yas-',role:'V - Yuklem'},{ro:'tii',tr:'yerde / konum',role:'Edat'},{ro:'phu-get',tr:'Phuket',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมกินข้าวครับ',ro:'pom kin kao khrap',tr:'Ben yemek yiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'kin',tr:'ye-',role:'V - Yuklem'},{ro:'kao',tr:'pirinc / yemek',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'2. Kibar Ekler: krap / kha (kadin)',
-      formula:'[Herhangi bir cumle] + KRAP veya KHA (kadin)',
-      explain:'Tayland\'da kibar konusmak cok onemlidir. Her cumle sonuna bu ekler gelir. Erkekler HEP krap, kadinlar HEP kha kullanir. Bu ek hem saygi hem cinsiyet gostergesidir.',
-      tips:['Krap: erkekler icin, -p sesi agizda yutulur','Kha: kadinlar icin, dusen ton ile uzun aa sesi','Ka (soru): kadinlar soru cumlelerinde kha yerine ka kullanir'],
-      examples:[
-        {th:'ขอบคุณครับ',ro:'khob-khun khrap',tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'Fiil'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-        {th:'ใช่ครับ',ro:'chai khrap',tr:'Evet. (erkek kibar)',bd:[{ro:'chai',tr:'evet / dogru',role:'Onay'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-        {th:'ได้ครับ',ro:'dai khrap',tr:'Olur. Yapabilirim.',bd:[{ro:'dai',tr:'olur / yapabilir',role:'Modal'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-        {th:'สบายดีไหมคะ',ro:'sa-bai-dee mai kha',tr:'Iyi misin? (kadin soru)',bd:[{ro:'sa-bai-dee',tr:'iyi / rahat',role:'Sifat'},{ro:'mai',tr:'soru eki',role:'Soru (SONDA)'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'3. Olumsuzluk: mai (yok / degil)',
-      formula:'MAI + Fiil = Olumsuz | MAI + Sifat = Olumsuz',
-      explain:'"Mai" yuksek tonda soylenmelidir. Dikkat: farkli tonlarda farkli anlam! Orta tonda "mai" = agac, yuksek tonda "mai" = degil/yok. Fiilin onune gelir.',
-      tips:['mai pen rai = sorun degil','mai dai = yapamam / olamaz','mai ao = istemiyorum','mai khao jai = anlamiyorum','mai saap = bilmiyorum'],
-      examples:[
-        {th:'ไม่เป็นไรครับ',ro:'mai pen rai khrap',tr:'Sorun degil.',bd:[{ro:'mai',tr:'yok / degil',role:'Olumsuz'},{ro:'pen',tr:'olmak',role:'V - Yuklem'},{ro:'rai',tr:'bir sey',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่ครับ',ro:'mai khrap',tr:'Hayir.',bd:[{ro:'mai',tr:'yok / degil / hayir',role:'Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่ทราบครับ',ro:'mai saap khrap',tr:'Bilmiyorum.',bd:[{ro:'mai',tr:'degil',role:'Olumsuz'},{ro:'saap',tr:'bil-',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่เข้าใจครับ',ro:'mai khao jai khrap',tr:'Anlamiyorum.',bd:[{ro:'mai',tr:'degil',role:'Olumsuz'},{ro:'khao-jai',tr:'anla- (lit: kafa gir-)',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่เอาครับ',ro:'mai ao khrap',tr:'Istemiyorum.',bd:[{ro:'mai',tr:'degil',role:'Olumsuz'},{ro:'ao',tr:'al- / iste-',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ไม่ได้ครับ',ro:'mai dai khrap',tr:'Yapamam / Olamaz.',bd:[{ro:'mai',tr:'degil',role:'Olumsuz'},{ro:'dai',tr:'olur / yapabilir',role:'Modal'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'4. Soru Yapisi: Evet/Hayir ve Soru Sozcukleri',
-      formula:'[Cumle] + MAI? = Evet/Hayir | [Cumle] + [Soru Sozcugu]?',
-      explain:'Thaide evet/hayir sorulari icin cumle sonuna "mai" eklenir. Diger soru sozcukleri cumlenin SONUNA gelir. Bu Turkceden cok farkli!',
-      tips:['a-rai = ne','tii-nai = nerede','khrai = kim','meua-rai = ne zaman','tham-mai = neden','yang-ngai = nasil'],
-      examples:[
-        {th:'สบายดีไหม',ro:'sa-bai dee mai',tr:'Iyi misin?',bd:[{ro:'sa-bai-dee',tr:'iyi / rahat',role:'Sifat'},{ro:'mai',tr:'soru eki (evet/hayir)',role:'Soru (SONDA)'}]},
-        {th:'คุณชื่ออะไร',ro:'khun chue a-rai',tr:'Adin ne?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru (SONDA)'}]},
-        {th:'ห้องน้ำอยู่ที่ไหน',ro:'hong-naam yuu tii-nai',tr:'Tuvalet nerede?',bd:[{ro:'hong-naam',tr:'tuvalet (lit: su odasi)',role:'S - Ozne'},{ro:'yuu',tr:'var / bulun-',role:'V - Yuklem'},{ro:'tii-nai',tr:'nerede',role:'Soru (SONDA)'}]},
-        {th:'คุณมาจากไหน',ro:'khun maa jaak nai',tr:'Nerelisin?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'maa',tr:'gel-',role:'V - Yuklem'},{ro:'jaak',tr:'-den',role:'Edat'},{ro:'nai',tr:'nerede / hangi',role:'Soru (SONDA)'}]},
-        {th:'นี่เท่าไร',ro:'nii thao-rai',tr:'Bu ne kadar?',bd:[{ro:'nii',tr:'bu',role:'S - Ozne'},{ro:'thao-rai',tr:'ne kadar / kac',role:'Soru (SONDA)'}]},
-      ]
-    },
-    {
-      title:'5. Kendini Tanıtma: pom chue... pen kon...',
-      formula:'POM + CHUE + [AD] + KHRAP | POM + PEN + [MİLLİYET/MESLEK]',
-      explain:'Erkek tanitma kalibinin temeli. "Pom" ozne, "chue" fiil (adim olmak). "Pen" = olmak — milliyet, meslek veya kimlik belirtmek icin kullanilir.',
-      tips:['Hep pom ile basla — bu seni kadin sesten ayirir','Kadin versiyonu: chan chue [ad] kha','pen kon... = ...milletindenim','Olumsuz: mai pen = degilim'],
-      examples:[
-        {th:'ผมชื่อทอมครับ',ro:'pom chue Tom khrap',tr:'Benim adim Tom.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Tom',tr:'Tom',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมเป็นคนตุรกีครับ',ro:'pom pen kon Tuerk khrap',tr:'Ben Turk um.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'pen kon',tr:'um',role:'V - Yuklem'},{ro:'Tuerk',tr:'Turk',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมมาจากอิสตันบูลครับ',ro:'pom maa jaak Istanbul khrap',tr:'Istanbul dan geliyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'Istanbul',tr:'Istanbul',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมอยู่ภูเก็ตมาสี่ปีแล้วครับ',ro:'pom yuu Phuket maa sii pii laeo khrap',tr:'Dort yildir Phuket teyim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yuu Phuket',tr:'Phuket teyim',role:'V - Yuklem'},{ro:'maa sii pii laeo',tr:'dort yildir',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-        {th:'ผมอายุ 35 ปีครับ',ro:'pom ayu saam-sip-haa pii khrap',tr:'35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'saam-sip-haa pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'6. Zaman Belirteci: Geçmiş / Şimdiki / Gelecek',
-      formula:'ZAMAN EKI + Fiil veya Fiil + ZAMAN EKI',
-      explain:'Thaide fiil cekilmez! Zaman ayri sozcuklerle belirtilir. Bunlar en temel zaman ifadeleridir.',
-      tips:['gam-lang = simdi yapiliyor (fiilden once)','laeo = bitti / oldu (fiilden sonra)','ja = yapacak (fiilden once)','koey = daha once yapti (deneyim)','yang = henuz yapmadi (yang + mai)'],
-      examples:[
-        {th:'ผมกำลังกินข้าวครับ',ro:'pom gam-lang kin khao khrap',tr:'Ben simdi yemek yiyorum.',bd:[{ro:'pom',tr:'pom',role:'Kelime'},{ro:'gam-lang',tr:'gam-lang',role:'Kelime'},{ro:'kin khao',tr:'yemek ye-',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'ผมกินข้าวแล้วครับ',ro:'pom kin khao laeo khrap',tr:'Yemegimi yedim.',bd:[{ro:'pom',tr:'pom',role:'Kelime'},{ro:'kin khao',tr:'yemek',role:'Kelime'},{ro:'laeo',tr:'bitti',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'ผมจะไปภูเก็ตครับ',ro:'pom ja pai phu-get khrap',tr:'Phukete gidecegim.',bd:[{ro:'pom',tr:'pom',role:'Kelime'},{ro:'ja',tr:'gelecek',role:'Kelime'},{ro:'pai phu-get',tr:'Phukete git-',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'ผมยังไม่ไปครับ',ro:'pom yang mai pai khrap',tr:'Henuz gitmedim.',bd:[{ro:'pom',tr:'pom',role:'Kelime'},{ro:'yang mai',tr:'henuz degil',role:'Soru'},{ro:'pai',tr:'git-',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'ผมเคยไปภูเก็ตครับ',ro:'pom koey pai phu-get khrap',tr:'Daha once Phukete gittim.',bd:[{ro:'pom',tr:'pom',role:'Kelime'},{ro:'koey',tr:'daha once',role:'Kelime'},{ro:'pai phu-get',tr:'Phukete git-',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-      ]
-    },
-    {
-      title:'7. Sahiplik: Khong (ait olan)',
-      formula:'ISIM + KHONG + SAHIP',
-      explain:'"Khong" = ait, ...nin. Turkcedeki iyelik eki gibi ama ayri bir sozcuk olarak kullanilir.',
-      tips:['khong pom = benim','khong chan = benim (kadin)','khong khun = senin','khong khao = onun','khong rao = bizim'],
-      examples:[
-        {th:'นั่นของผมครับ',ro:'nan khong pom khrap',tr:'O benim.',bd:[{ro:'nan',tr:'o',role:'Kelime'},{ro:'khong',tr:'ait',role:'Kelime'},{ro:'pom',tr:'ben',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'รถของคุณอยู่ที่ไหน',ro:'rot khong khun yuu tii-nai',tr:'Arabin nerede?',bd:[{ro:'rot',tr:'araba',role:'Kelime'},{ro:'khong khun',tr:'senin',role:'Kelime'},{ro:'yuu tii-nai',tr:'nerede',role:'Kelime'}]},
-        {th:'นี่ของคุณไหม',ro:'nii khong khun mai',tr:'Bu senin mi?',bd:[{ro:'nii',tr:'bu',role:'Kelime'},{ro:'khong khun',tr:'senin',role:'Kelime'},{ro:'mai',tr:'soru eki',role:'Soru'}]},
-        {th:'บ้านของผมอยู่ภูเก็ต',ro:'baankhong pom yuu phu-get',tr:'Benim evim Phukette.',bd:[{ro:'baan khong pom',tr:'benim evim',role:'Kelime'},{ro:'yuu phu-get',tr:'Phuket te',role:'Kelime'}]},
-      ]
-    },
-    {
-      title:'8. Karşılaştırma: Kwaa (daha) ve Tii-sut (en)',
-      formula:'SIFAT + KWAA = daha ... | SIFAT + TII-SUT = en ...',
-      explain:'Karsilastirma yapilarinda sifatin sonuna kwaa (daha) veya tii-sut (en) eklenir. Turkcedeki "daha" ve "en" gibi — ama sifattan sonra gelir!',
-      tips:['dee = iyi | dee kwaa = daha iyi | dee tii-sut = en iyi','phaeng = pahali | phaeng kwaa = daha pahali','yen = soguk | yen kwaa = daha soguk'],
-      examples:[
-        {th:'อาหารไทยดีกว่าครับ',ro:'ahan thai dee kwaa khrap',tr:'Thai yemegi daha iyi.',bd:[{ro:'ahan thai',tr:'thai yemegi',role:'Kelime'},{ro:'dee',tr:'iyi',role:'Kelime'},{ro:'kwaa',tr:'daha',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'ภูเก็ตดีที่สุดครับ',ro:'phu-get dee tii-sut khrap',tr:'Phuket en guzel.',bd:[{ro:'phu-get',tr:'Phuket',role:'Kelime'},{ro:'dee tii-sut',tr:'en iyi',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'นี่แพงกว่าครับ',ro:'nii phaeng kwaa khrap',tr:'Bu daha pahali.',bd:[{ro:'nii',tr:'bu',role:'Kelime'},{ro:'phaeng kwaa',tr:'daha pahali',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-        {th:'วันนี้ร้อนกว่าเมื่อวานครับ',ro:'wan-nii ron kwaa meua-waan khrap',tr:'Bugun dunden daha sicak.',bd:[{ro:'wan-nii',tr:'bugun',role:'Kelime'},{ro:'ron kwaa',tr:'daha sicak',role:'Kelime'},{ro:'meua-waan',tr:'dun',role:'Kelime'},{ro:'khrap',tr:'khrap',role:'Kibar'}]},
-      ]
-    },
-    {title:'9. Kisi Zamirleri — Ben / Sen / O / Biz / Siz / Onlar',
-     formula:'[Ozne] + [Yuklem] + [Nesne/Tamamlayici]',
-     explain:'Thai zamirlerinde cinsiyet ayrimi yoktur (o = hem he hem she). Konusmacilik cinsiyeti kibar ekte belli olur: erkek khrap, kadin kha der. Ozne cogu zaman baglamdan anlasildiginda atlanabilir.',
-     tips:[
-       'Erkek: pom (ben) | Kadin: chan (ben)',
-       'Khun = sen/siz — kibar, yabanciya ve buyuklere',
-       'Khao = o — hem erkek hem kadin, cinsiyet farki yok',
-       'Rao = biz — ayrica samimi ortamda tek basina "ben" yerine de kullanilir',
-       'Phuak-khao = onlar — phuak (grup) + khao (o)',
-       'Ozne cogu zaman baglamdan anlasilinca atlanir: "Pai" = (Ben) gidiyorum',
+  grammar: [
+    {id:'g1', title:'To Be — am/is/are', title_en:'To Be Verb',
+     explanation:'İngilizce\'de "to be" fiili 3 şekilde kullanılır: I am, you/we/they are, he/she/it is.',
+     table:[
+       {pronoun:'I', form:'am', example:'I am Ali.', tr:'Ben Ali\'yim.'},
+       {pronoun:'You', form:'are', example:'You are kind.', tr:'Sen naziksin.'},
+       {pronoun:'He/She/It', form:'is', example:'She is here.', tr:'O burada.'},
+       {pronoun:'We/They', form:'are', example:'They are friends.', tr:'Onlar arkadaş.'}
      ],
-     examples:[
-       {th:'ผมมาจากตุรกีครับ',ro:'pom maa jaak tur-gii khrap',tr:'Ben Turkiyeden geliyorum.',bd:[{ro:'pom',tr:'ben (erkek)',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'tur-gii',tr:'Turkiye',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ผมอยู่ที่ภูเก็ตครับ',ro:'pom yuu thii phu-ket khrap',tr:'Ben Phuket te yasiyorum.',bd:[{ro:'pom',tr:'ben (erkek)',role:'S - Ozne'},{ro:'yuu thii',tr:'yasiyorum',role:'V - Yuklem'},{ro:'phu-ket',tr:'Phuket',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ฉันทำงานที่นี่ค่ะ',ro:'chan tham-ngaan thii-nii kha',tr:'Ben burada calisiyorum.',bd:[{ro:'chan',tr:'ben (kadin)',role:'S - Ozne'},{ro:'tham-ngaan',tr:'calismak',role:'V - Yuklem'},{ro:'thii-nii',tr:'burada',role:'O - Nesne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {th:'ฉันไม่เข้าใจค่ะ',ro:'chan mai khao-jai kha',tr:'Ben anlamiyorum.',bd:[{ro:'chan',tr:'ben (kadin)',role:'S - Ozne'},{ro:'mai',tr:'degil',role:'Soru/Olumsuz'},{ro:'khao-jai',tr:'anlamak',role:'V - Yuklem'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณชื่ออะไรครับ',ro:'khun chue a-rai khrap',tr:'Senin adin ne?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'คุณอยู่ที่นี่นานไหมครับ',ro:'khun yuu thii-nii naan mai khrap',tr:'Burada uzun suredir misin?',bd:[{ro:'khun',tr:'sen',role:'S - Ozne'},{ro:'yuu thii-nii',tr:'buradasin',role:'V - Yuklem'},{ro:'naan mai',tr:'uzun suredir mi',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เขาชื่ออะไรครับ',ro:'khao chue a-rai khrap',tr:'Onun adi ne?',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'a-rai',tr:'ne',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เขาไม่ได้อยู่ที่นี่ครับ',ro:'khao mai dai yuu thii-nii khrap',tr:'O burada degil.',bd:[{ro:'khao',tr:'o',role:'S - Ozne'},{ro:'mai dai',tr:'degil',role:'Soru/Olumsuz'},{ro:'yuu thii-nii',tr:'burada',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เราสบายดีครับ',ro:'rao sa-bai-dee khrap',tr:'Biz iyiyiz.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'sa-bai-dee',tr:'iyiyiz',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'เราไม่รู้จักเขาครับ',ro:'rao mai ruu-jak khao khrap',tr:'Biz onu tanımıyoruz.',bd:[{ro:'rao',tr:'biz',role:'S - Ozne'},{ro:'mai ruu-jak',tr:'tanimiyoruz',role:'V - Yuklem'},{ro:'khao',tr:'onu',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'พวกคุณมาจากไหนครับ',ro:'phuak-khun maa jaak nai khrap',tr:'Siz nereden geliyorsunuz?',bd:[{ro:'phuak-khun',tr:'siz',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorsunuz',role:'V - Yuklem'},{ro:'nai',tr:'nereden',role:'Soru/Olumsuz'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {th:'พวกเขาทำงานที่ภูเก็ตครับ',ro:'phuak-khao tham-ngaan thii phu-ket khrap',tr:'Onlar Phuket te calisiyor.',bd:[{ro:'phuak-khao',tr:'onlar',role:'S - Ozne'},{ro:'tham-ngaan',tr:'calismak',role:'V - Yuklem'},{ro:'thii phu-ket',tr:'Phuket te',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]
-    },
+     note:'Kısaltmalar: I\'m, you\'re, he\'s, she\'s, it\'s, we\'re, they\'re'},
+    {id:'g2', title:'Soru Cümlesi — Am/Is/Are?', title_en:'Yes/No Questions',
+     explanation:'"To be" ile soru yapmak için fiili öne alırsın.',
+     table:[
+       {pronoun:'Am I?', form:'', example:'Am I late?', tr:'Geç mi kaldım?'},
+       {pronoun:'Are you?', form:'', example:'Are you ready?', tr:'Hazır mısın?'},
+       {pronoun:'Is he/she?', form:'', example:'Is she happy?', tr:'O mutlu mu?'},
+       {pronoun:'Are they?', form:'', example:'Are they here?', tr:'Onlar burada mı?'}
+     ],
+     note:'Cevap: Yes, I am. / No, I\'m not.'}
   ],
 
-  speaking:[
-    {task:'Selamlas', th:'สวัสดีครับ', ro:'sa-wat-dee-khrap', tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'selam',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Tesekkur et', th:'ขอบคุณครับ', ro:'khob-khun-khrap', tr:'Tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Tanis', th:'ยินดีที่ได้รู้จักครับ', ro:'yin-dee-tii-dai-ruu-jak-khrap', tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'mutlu',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanismak',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Ozur dile', th:'ขอโทษครับ', ro:'khor-thot-khrap', tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dilerim',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Sorun degil de', th:'ไม่เป็นไรครับ', ro:'mai-pen-rai-khrap', tr:'Sorun degil.',bd:[{ro:'mai',tr:'degil',role:'Soru/Olumsuz'},{ro:'pen-rai',tr:'sorun',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Kendini tanitir (adi)', th:'ผมชื่อทอมครับ', ro:'pom chue Tom khrap', tr:'Benim adim Tom.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'chue',tr:'adi',role:'V - Yuklem'},{ro:'Tom',tr:'Tom',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Nerelisin soyle', th:'ผมมาจากตุรกีครับ', ro:'pom maa jaak Tuerkiye khrap', tr:'Turkiyeden geliyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'maa jaak',tr:'geliyorum',role:'V - Yuklem'},{ro:'Tuerkiye',tr:'Turkiye',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Nerede yasadigini soyle', th:'ผมอยู่ภูเก็ตครับ', ro:'pom yuu Phuket khrap', tr:'Phuket te yasiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'yuu',tr:'yasiyorum',role:'V - Yuklem'},{ro:'Phuket',tr:'Phuket',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Cok tesekkur', th:'ขอบคุณมากครับ', ro:'khob-khun-maak-khrap', tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'maak',tr:'cok',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yardim icin tesekkur', th:'ขอบคุณที่ช่วยครับ', ro:'khob-khun-tii-chuay-khrap', tr:'Yardiminiz icin tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur',role:'V - Yuklem'},{ro:'tii-chuay',tr:'yardim icin',role:'Kelime'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Meslegini soyle', th:'ผมทำงานที่โรงแรมครับ', ro:'pom tham ngaan thii hotel khrap', tr:'Otelde calisiyorum.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'tham ngaan',tr:'calisiyorum',role:'V - Yuklem'},{ro:'thii hotel',tr:'otelde',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-    {task:'Yasini soyle', th:'ผมอายุ 35 ปีครับ', ro:'pom ayu saam-sip-haa pii khrap', tr:'35 yasindayim.',bd:[{ro:'pom',tr:'ben',role:'S - Ozne'},{ro:'ayu',tr:'yasinda',role:'V - Yuklem'},{ro:'saam-sip-haa pii',tr:'35 yas',role:'O - Nesne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
+  speaking: [
+    {id:'sp1', en:'Hello! My name is...', ro:'/həˈloʊ maɪ neɪm ɪz/', tr:'Merhaba! Benim adım...',
+     tip:'Tanışma konuşmasının ilk cümlesi.',
+     prompt:'Kendinizi tanıtın'},
+    {id:'sp2', en:"Nice to meet you. I'm from Turkey.", ro:'/naɪs tə miːt juː aɪm frɒm ˈtɜːrki/', tr:'Tanıştığıma memnun oldum. Türkiye\'denim.',
+     tip:'Tanışma sonrası doğal devam.',
+     prompt:'Kendinizi tanıtmaya devam edin'},
+    {id:'sp3', en:"How are you? I'm fine, thank you.", ro:'/haʊ ɑːr juː aɪm faɪn θæŋk juː/', tr:'Nasılsın? İyiyim, teşekkür ederim.',
+     tip:'Hal hatır sorma ve cevap verme.',
+     prompt:'Hal hatır sorun ve cevap verin'},
+    {id:'sp4', en:'Excuse me, what is your name?', ro:'/ɪkˈskjuːz miː wɒt ɪz jɔːr neɪm/', tr:'Pardon, adınız ne?',
+     tip:'Nazikçe soru sorma.',
+     prompt:'Nazik bir soru sorun'},
+    {id:'sp5', en:'Goodbye! See you tomorrow.', ro:'/ɡʊdˈbaɪ siː juː təˈmɒroʊ/', tr:'Hoşça kal! Yarın görüşürüz.',
+     tip:'Vedalaşma cümlesi.',
+     prompt:'Vedalaşın'}
   ],
 
-  dialogues:[
-    {title:'🏪 Markette Karsilasma',
+  dialogues: [
+    {id:'d1', title:'Tanışma Konuşması', title_en:'Meeting Someone New',
      lines:[
-       {s:'Tom', th:'สวัสดีครับ',ro:'sa-wat-dee-khrap',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'สวัสดีค่ะ',ro:'sa-wat-dee-kha',tr:'Merhaba.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-       {s:'Tom', th:'ยินดีที่ได้รู้จักครับ',ro:'yin-dee-tii-dai-ruu-jak-khrap',tr:'Tanistigima memnun.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanistigima',role:'O - Nesne'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'ยินดีที่ได้รู้จักเช่นกันค่ะ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-kha',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanistigima',role:'O - Nesne'},{ro:'chen-kan',tr:'ayni sekilde',role:'Vurgu'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
+       {speaker:'A', gender:'m', en:'Hello! My name is Tom. What is your name?', ro:'/həˈloʊ maɪ neɪm ɪz tɒm wɒt ɪz jɔːr neɪm/', tr:'Merhaba! Benim adım Tom. Adın ne?'},
+       {speaker:'B', gender:'f', en:"Hi Tom! I'm Sara. Nice to meet you.", ro:'/haɪ tɒm aɪm særə naɪs tə miːt juː/', tr:'Selam Tom! Ben Sara. Tanıştığıma memnun oldum.'},
+       {speaker:'A', gender:'m', en:'Nice to meet you too, Sara. Where are you from?', ro:'/naɪs tə miːt juː tuː særə wɛr ɑːr juː frɒm/', tr:'Ben de memnun oldum, Sara. Nerelisin?'},
+       {speaker:'B', gender:'f', en:"I'm from Turkey. And you?", ro:'/aɪm frɒm ˈtɜːrki ænd juː/', tr:'Türkiye\'denim. Ya sen?'},
+       {speaker:'A', gender:'m', en:"I'm from England. How are you today?", ro:'/aɪm frɒm ˈɪŋɡlənd haʊ ɑːr juː təˈdeɪ/', tr:'İngiltere\'denim. Bugün nasılsın?'},
+       {speaker:'B', gender:'f', en:"I'm fine, thank you! And you?", ro:'/aɪm faɪn θæŋk juː ænd juː/', tr:'İyiyim, teşekkür ederim! Ya sen?'},
+       {speaker:'A', gender:'m', en:"I'm great, thanks. Goodbye Sara!", ro:'/aɪm ɡreɪt θæŋks ɡʊdˈbaɪ særə/', tr:'Harikayım, sağ ol. Hoşça kal Sara!'},
+       {speaker:'B', gender:'f', en:'Bye Tom! Nice to meet you.', ro:'/baɪ tɒm naɪs tə miːt juː/', tr:'Güle güle Tom! Tanıştığıma memnun oldum.'}
      ]},
-    {title:'🙏 Tesekkur Alisverisi',
+    {id:'d2', title:'Sınıfta Tanışma', title_en:'Meeting in Class',
      lines:[
-       {s:'Tom', th:'ขอบคุณมากครับ',ro:'khob-khun-maak-khrap',tr:'Cok tesekkur ederim.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'maak',tr:'cok',role:'Kelime'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'ไม่เป็นไรค่ะ',ro:'mai-pen-rai-kha',tr:'Sorun degil.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-       {s:'Tom', th:'คุณใจดีมากครับ',ro:'khun-jai-dee-maak-khrap',tr:'Cok iyi kalplisiniz.',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'jai-dee-maak',tr:'cok iyi kalpli',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'ขอบคุณค่ะ',ro:'khob-khun-kha',tr:'Tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'😅 Kazara Carpma',
-     lines:[
-       {s:'Tom', th:'ขอโทษครับ',ro:'khor-thot-khrap',tr:'Ozur dilerim.',bd:[{ro:'khor-thot',tr:'ozur dile',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'ไม่เป็นไรค่ะ',ro:'mai-pen-rai-kha',tr:'Sorun degil.',bd:[{ro:'mai-pen-rai',tr:'sorun degil',role:'Kelime'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-       {s:'Tom', th:'ขอบคุณครับ',ro:'khob-khun-khrap',tr:'Tesekkurler.',bd:[{ro:'khob-khun',tr:'tesekkur et',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'สบายดีไหมคะ',ro:'sa-bai-dee-mai-kha',tr:'Iyi misiniz?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-       {s:'Tom', th:'สบายดีครับ ขอบคุณ',ro:'sa-bai-dee-khrap khob-khun',tr:'Iyiyim, tesekkurler.',bd:[{ro:'sa-bai-dee',tr:'iyiyim',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'},{ro:'khob-khun',tr:'tesekkurler',role:'Kelime'}]},
-     ]},
-    {title:'🤝 Is Yerinde Tanisma',
-     lines:[
-       {s:'Tom', th:'สวัสดีครับ ผมชื่อทอมครับ',ro:'sa-wat-dee-khrap pom-chue-Tom-khrap',tr:'Merhaba, benim adim Tom.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'pom chue Tom',tr:'adim Tom',role:'S - Ozne'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'สวัสดีค่ะ ฉันชื่อลูซี่ค่ะ',ro:'sa-wat-dee-kha chan-chue-Lucy-kha',tr:'Merhaba, benim adim Lucy.',bd:[{ro:'sa-wat-dee',tr:'merhaba',role:'Kelime'},{ro:'chan chue Lucy',tr:'adim Lucy',role:'S - Ozne'},{ro:'kha',tr:'kibar eki',role:'Kibar'}]},
-       {s:'Tom', th:'ยินดีที่ได้รู้จักเช่นกันครับ',ro:'yin-dee-tii-dai-ruu-jak-chen-kan-khrap',tr:'Ben de memnun oldum.',bd:[{ro:'yin-dee',tr:'hoslanmak',role:'V - Yuklem'},{ro:'tii-dai-ruu-jak',tr:'tanistigima',role:'O - Nesne'},{ro:'chen-kan',tr:'ayni sekilde',role:'Vurgu'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'คุณมาจากไหนคะ',ro:'khun-maa-jaak-nai-kha',tr:'Nerelisiniz?',bd:[{ro:'khun',tr:'siz',role:'S - Ozne'},{ro:'maa-jaak-nai',tr:'nerelisiniz',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-       {s:'Tom', th:'ผมมาจากตุรกีครับ อยู่ภูเก็ต',ro:'pom-maa-jaak-tur-gii-khrap yuu-phu-get',tr:'Turkiyeden geliyorum, Phuket te yasiyorum.',bd:[{ro:'pom maa jaak tur-gii',tr:'Turkiyeden geliyorum',role:'S - Ozne'},{ro:'yuu phu-get',tr:'Phuket te yasiyorum',role:'V - Yuklem'},{ro:'khrap',tr:'kibar eki',role:'Kibar'}]},
-     ]},
-    {title:'🌅 Sabah Selamlasmasi',
-     lines:[
-       {s:'Tom', th:'สบายดีไหมครับ',ro:'sa-bai-dee-mai-khrap',tr:'Nasilsiniz?',bd:[{ro:'sa-bai-dee',tr:'iyi',role:'V - Yuklem'},{ro:'mai',tr:'soru eki',role:'Soru/Olumsuz'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'สบายดีค่ะ ขอบคุณค่ะ',ro:'sa-bai-dee-kha khob-khun-kha',tr:'Iyiyim, tesekkurler.',bd:[{ro:'sa-bai-dee',tr:'iyiyim',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'},{ro:'khob-khun',tr:'tesekkurler',role:'Kelime'}]},
-       {s:'Tom', th:'วันนี้อากาศดีมากครับ',ro:'wan-nii-a-gat-dee-maak-khrap',tr:'Bugun hava cok guzel.',bd:[{ro:'wan-nii',tr:'bugun',role:'S - Ozne'},{ro:'a-gat',tr:'hava',role:'O - Nesne'},{ro:'dee-maak',tr:'cok guzel',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'ใช่ค่ะ สวยมากค่ะ',ro:'chai-kha suay-maak-kha',tr:'Evet, cok guzel.',bd:[{ro:'chai',tr:'evet',role:'Kelime'},{ro:'suay-maak',tr:'cok guzel',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-       {s:'Tom', th:'แล้วเจอกันครับ',ro:'laeo-joe-kan-khrap',tr:'Gorusuruuz.',bd:[{ro:'laeo',tr:'sonra',role:'Zaman'},{ro:'joe-kan',tr:'gorusuruuz',role:'V - Yuklem'},{ro:'khrap',tr:'erkek kibar eki',role:'Kibar'}]},
-       {s:'Lucy',th:'แล้วเจอกันค่ะ',ro:'laeo-joe-kan-kha',tr:'Gorusuruuz.',bd:[{ro:'laeo',tr:'sonra',role:'Zaman'},{ro:'joe-kan',tr:'gorusuruuz',role:'V - Yuklem'},{ro:'kha',tr:'kadin kibar eki',role:'Kibar'}]},
-     ]},
+       {speaker:'A', gender:'f', en:'Excuse me, is this seat free?', ro:'/ɪkˈskjuːz miː ɪz ðɪs siːt friː/', tr:'Pardon, bu koltuk boş mu?'},
+       {speaker:'B', gender:'m', en:'Yes, please sit down. I am Ali.', ro:'/jɛs pliːz sɪt daʊn aɪ æm æli/', tr:'Evet, lütfen oturun. Ben Ali.'},
+       {speaker:'A', gender:'f', en:"Thank you! I'm Ayse. Nice to meet you.", ro:'/θæŋk juː aɪm ajʃe naɪs tə miːt juː/', tr:'Teşekkür ederim! Ben Ayşe. Tanıştığıma memnun oldum.'},
+       {speaker:'B', gender:'m', en:'Nice to meet you too! Are you a student here?', ro:'/naɪs tə miːt juː tuː ɑːr juː ə ˈstjuːdənt hɪr/', tr:'Ben de memnun oldum! Burada öğrenci misin?'},
+       {speaker:'A', gender:'f', en:'Yes, I am. I study English. And you?', ro:'/jɛs aɪ æm aɪ ˈstʌdi ˈɪŋɡlɪʃ ænd juː/', tr:'Evet. İngilizce çalışıyorum. Ya sen?'},
+       {speaker:'B', gender:'m', en:'Me too! This is great. Welcome!', ro:'/miː tuː ðɪs ɪz ɡreɪt ˈwɛlkəm/', tr:'Ben de! Harika. Hoş geldin!'}
+     ]}
   ],
 
-  listening:[
-    {diff:'easy',  th:'สวัสดีครับ',        q:'Ne duydu?', opts:['Selam','Tesekkur','Sorun degil'], c:0},
-    {diff:'easy',  th:'ขอบคุณค่ะ',         q:'Ne duydu?', opts:['Tesekkur ederim','Tanistigima memnun','Sorun degil'], c:0},
-    {diff:'easy',  th:'ยินดีที่ได้รู้จักครับ', q:'Ne duydu?', opts:['Tesekkur','Tanistigima memnun','Sorun degil'], c:1},
-    {diff:'medium',th:'ขอโทษครับ',          q:'Ne duydu?', opts:['Tesekkur','Ozur dilerim','Sorun degil'], c:1},
-    {diff:'medium',th:'สวัสดีครับ',         q:'Erkek mi kadin mi?', opts:['Erkek','Kadin','Belirtilmiyor'], c:0},
-    {diff:'medium',th:'สวัสดีค่ะ',          q:'Erkek mi kadin mi?', opts:['Erkek','Kadin','Belirtilmiyor'], c:1},
-    {diff:'medium',th:'ขอบคุณมากครับ',      q:'Ne duydu?', opts:['Tesekkur','Cok tesekkur','Sorun degil'], c:1},
-    {diff:'hard',  th:'ไม่เป็นไรค่ะ',       q:'"Ozur dilerim"e cevap?', opts:['Sorun degil','Tesekkur','Evet'], c:0},
-    {diff:'hard',  th:'ยินดีที่ได้รู้จักครับ',  q:'Selamlasmada sonraki adim?', opts:['Ozur dile','Hoscakal','Tanis cumlesi','Yemek ismarla'], c:2},
-    {diff:'hard',  th:'ขอบคุณที่ช่วยครับ',   q:'Ne demek?', opts:['Tesekkur yok','Yardim icin tesekkurler','Ozur dilerim','Sorun degil'], c:1},
-  ],
-
-  quiz:[
-    {q:'"pom" kimin icin kullanilir?',opts:['Kadin konusmaci','Erkek konusmaci','Ikisi de','Cocuklar'],c:1},
-    {q:'"chan" ne demek?',opts:['Sen (kadin)','Ben (kadin)','O (kadin)','Biz'],c:1},
-    {q:'"khun" hangi durumda kullanilir?',opts:['Sadece erkeklere','Sadece kadinlara','Kibar hitap - herkese','Sadece yaslilara'],c:2},
-    {q:'"khao" Taycada ne demek?',opts:['Ben','Sen','O (erkek veya kadin)','Biz'],c:2},
-    {q:'"rao" tek basina ne anlama gelir?',opts:['Sadece biz','Biz + samimi ben','Sadece sen','Onlar'],c:1},
-    {q:'"phuak-khao" ne demek?',opts:['Siz (cogul)','Onlar','Biz','Sen ve ben'],c:1},
-    {q:'"pom yuu thii phu-ket khrap" ne demek?',opts:['Phuket nerede?','Phuket e gidiyorum','Ben Phuket te yasiyorum','Phuket i seviyorum'],c:2},
-    {q:'"khun maa jaak nai" ne demek?',opts:['Adin ne?','Nerelisin?','Nereye gidiyorsun?','Ne yapiyorsun?'],c:1},
-    {q:'Taycada "o" zamiri kac cinsiyet icin kullanilir?',opts:['Sadece erkek','Sadece kadin','Ikisi de - ayni kelime','Uc cinsiyet var'],c:2},
-    {q:'"khao mai khao-jai" ne demek?',opts:['O anlıyor','O anlamiyor','O biliyor','O istemiyor'],c:1},
-    {q:'สวัสดีครับ ne demek?',opts:['Tesekkurler','Merhaba','Hoscakal','Ozur dilerim'],c:1},
-    {q:'ขอบคุณมากครับ ne demek?',opts:['Merhaba','Cok tesekkur ederim','Hoscakal','Sorun degil'],c:1},
-    {q:'ไม่เป็นไร ne demek?',opts:['Tesekkurler','Anliyorum','Sorun degil','Ozur dilerim'],c:2},
-    {q:'ยินดีที่ได้รู้จักครับ ne demek?',opts:['Nasilsin?','Merhaba','Tanistigima memnun','Ozur dilerim'],c:2},
-    {q:'Erkek kibar eki hangisi?',opts:['kha','mai','khun','khrap'],c:3},
-    {q:'"pom chue a-rai" cumlesinde "chue" ne demek?',opts:['Yasinda','Adi','Nereli','Nerede'],c:1},
-    {q:'"mai" kelimesi cumlede ne islevi gorur?',opts:['Kibar eki','Olumsuzluk eki','Zaman eki','Ozne'],c:1},
-    {q:'"sa-bai-dee mai" cumlesinin sonu neden "mai" ile bitiyor?',opts:['Olumsuz yapmak icin','Soru sormak icin','Zaman belirtmek icin','Kibar olmak icin'],c:1},
-    {q:'Thai ton sistemi kac ton icerir?',opts:['3','4','5','6'],c:2},
-    {q:'"phuak-khun maa jaak nai" ne demek?',opts:['Siz nereye gidiyorsunuz?','Siz nereden geliyorsunuz?','Siz nerede yasiyorsunuz?','Siz kimsiniz?'],c:1},
-  ],
+  listening: [
+    {id:'li1', audio:'', transcript:'Hello! My name is Emma. I am from London, England. I am twenty-five years old. Nice to meet you!',
+     tr:'Merhaba! Benim adım Emma. Londra, İngiltere\'denim. Yirmi beş yaşındayım. Tanıştığıma memnun oldum!',
+     questions:[
+       {q:'What is her name?', opts:['Emma','Sara','Anna','Lisa'], answer:0, tr:'Adı ne?'},
+       {q:'Where is she from?', opts:['Paris','New York','London','Berlin'], answer:2, tr:'Nerelidir?'},
+       {q:'How old is she?', opts:['20','25','30','35'], answer:1, tr:'Kaç yaşında?'}
+     ]}
+  ]
 };
-
 LESSONS[1] = L1;
-
-// words, speaking, dialogues: th degerleri yukarida dogrudan tanimli
-// listening/tones/grammar icin HTML'deki thai-data JSON'undan al
-(function(){
-  const thaiDataEl = document.getElementById('thai-data');
-  if(!thaiDataEl) return;
-  const THAI = JSON.parse(thaiDataEl.textContent);
-  (THAI.listening||[]).forEach((th,i)=>{ if(L1.listening[i]) L1.listening[i].th = th; });
-  (THAI.tones||[]).forEach((t,ti)=>{ (t.words||[]).forEach((th,wi)=>{ if(L1.tones[ti]&&L1.tones[ti].words[wi]) L1.tones[ti].words[wi].th = th; }); });
-  (THAI.grammar||[]).forEach((g,gi)=>{ if(L1.grammar[gi]) (g.examples||[]).forEach((th,ei)=>{ if(L1.grammar[gi].examples[ei]) L1.grammar[gi].examples[ei].th = th; }); });
-})();
