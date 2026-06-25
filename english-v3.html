@@ -182,6 +182,9 @@ main{padding:14px;}
 .dline.ali .dspeaker{color:#3b82f6;}
 .dline.nada .dspeaker{color:#ec4899;}
 .dbubble{padding:8px 10px;flex:1;}
+.dbubble-clickable{cursor:pointer;position:relative;}
+.dbubble-clickable:hover{background:#f0fdf9!important;}
+.dbubble-hint{font-size:9px;color:#0d9488;font-weight:700;margin-top:4px;opacity:.85;}
 .dbubble-th{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:1px;}
 .dbubble-ro{font-size:12px;color:#1a1a1a;font-weight:700;margin-top:1px;}
 .dbubble-tr{font-size:12px;color:#555;margin-top:2px;}
@@ -518,10 +521,14 @@ h2{font-size:15px;color:#0d9488;margin:4px 0 12px;font-weight:700;}
 .ex-sent-info{flex:1;}
 .ex-sent-th{font-size:19px;font-weight:700;color:#3c3c3c;margin-bottom:4px;}
 .ex-sent-ro{font-size:13px;color:#777;}
-/* Word bank */
-.ex-answer-area{min-height:52px;border-bottom:3px solid #e5e5e5;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-bottom:10px;}
-.ex-answer-placeholder{color:#afafaf;font-size:13px;font-style:italic;}
-.ex-answer-chip{background:#ddf4ff;border:2px solid #1cb0f6;border-radius:10px;padding:7px 12px;font-size:13px;font-weight:600;cursor:pointer;color:#1a3c5e;}
+/* Word bank — slot boxes */
+.ex-slots{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.ex-slot{min-width:64px;min-height:42px;border:2px dashed #d0d0d0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#555;background:#fafafa;padding:6px 10px;cursor:pointer;user-select:none;transition:.15s;}
+.ex-slot.filled{border-style:solid;border-color:#1cb0f6;background:#eaf6ff;color:#1a3c5e;}
+.ex-slot.marked{border-style:solid;border-color:#58cc02;background:#d7ffb8;color:#3a6b00;}
+.ex-slot.marked::before{content:'✓ ';font-weight:800;}
+.ex-slot-hint{font-size:11px;color:#999;margin-bottom:8px;}
+.ex-answer-area{min-height:0;border:none;margin:0;padding:0;display:none;}
 .ex-bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
 .ex-bank-btn{background:white;border:2px solid #e5e5e5;border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;color:#3c3c3c;box-shadow:0 3px 0 #e5e5e5;transition:.1s;}
 .ex-bank-btn:active{transform:translateY(2px);box-shadow:none;}
@@ -607,7 +614,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.4.4';
+const APP_VERSION = 'v1.5';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -672,7 +679,7 @@ const UI = {
     practice_intro:'Kelime ve cümle alıştırmaları. Kısa egzersiz modu.',
     practice_start:'Alıştırmaya Başla',
     // Ders içi
-    lesson_back:'← Dersler', lesson_back_list:'← Ders Listesine Dön', lesson_done_msg:'Bu dersi tamamladın!',
+    lesson_back:'← Dersler', lesson_back_list:'Ders Listesine Dön', lesson_done_msg:'Bu dersi tamamladın!',
     lesson_redo_hint:'İstersen tekrar işaretleyebilirsin',
     lesson_unmark:'↺ Tamamlanmadı olarak işaretle',
     lesson_mark_done:'✅ Dersi Tamamladım',
@@ -793,7 +800,7 @@ const UI = {
     practice_intro:'Word and sentence drills in a quick exercise mode.',
     practice_start:'Start Practice',
     // Lesson
-    lesson_back:'← Lessons', lesson_back_list:'← Back to Lesson List', lesson_done_msg:'You completed this lesson!',
+    lesson_back:'← Lessons', lesson_back_list:'Back to Lesson List', lesson_done_msg:'You completed this lesson!',
     lesson_redo_hint:'You can reset this if needed',
     lesson_unmark:'↺ Mark as Incomplete',
     lesson_mark_done:'✅ Mark as Complete',
@@ -956,7 +963,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v1.4.4</span>
+  <span class="vbadge" id="app-version">v1.5</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1091,7 +1098,7 @@ function listenResolve(lessonNum, idx){
 // =================== VERİ: DERSLER ===================
 // 20 senaryo dersi (1–20) + 29 BONUS kelime seti (21–49)
 const LESSONS_META = [
-  {num:1, emoji:'👋', title:'Selamlaşma ve Tanışma', title_en:'Greetings & Introductions', hasContent:true, hasTones:true},
+  {num:1, emoji:'👋', title:'Selamlaşma ve Tanışma', title_en:'Greetings & Introductions', hasContent:true, hasTones:false},
   {num:2, emoji:'📗', title:'Fiil Zamanları', title_en:'Verb Tenses', hasContent:true, hasTones:false},
   {num:3, emoji:'🔢', title:'Sayılar ve Para', title_en:'Numbers & Money', hasContent:true, hasTones:false},
   {num:4, emoji:'🕐', title:'Zaman ve Tarih', title_en:'Time & Dates', hasContent:true, hasTones:false},
@@ -1271,7 +1278,7 @@ async function speak(text, slow, gender){
   const apiKey = GTTS.key();
   if(!apiKey){ speakWebSpeech(text, slow, gender); return; }
   const voiceName = gender==='f' ? 'en-US-Chirp3-HD-Aoede' : 'en-US-Chirp3-HD-Orus';
-  const rate = slow ? 0.70 : 1.0;
+  const rate = slow ? 0.42 : 1.0;
   const cacheKey = text+'|'+voiceName+'|'+rate;
   let audioContent = GTTS.cache.get(cacheKey);
   if(!audioContent){
@@ -1297,9 +1304,9 @@ function speakWebSpeech(text, slow, gender){
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang='en-US';
-  if(gender==='m'){ u.pitch=slow?0.85:0.90; u.rate=slow?0.70:0.95; }
-  else if(gender==='f'){ u.pitch=slow?1.05:1.10; u.rate=slow?0.72:0.97; }
-  else { u.pitch=slow?1.00:1.00; u.rate=slow?0.70:0.95; }
+  if(gender==='m'){ u.pitch=slow?0.82:0.90; u.rate=slow?0.42:0.95; }
+  else if(gender==='f'){ u.pitch=slow?1.02:1.10; u.rate=slow?0.44:0.97; }
+  else { u.pitch=slow?0.95:1.00; u.rate=slow?0.42:0.95; }
   const voices=window.speechSynthesis.getVoices();
   const engVoices=voices.filter(x=>x.lang==='en-US'||x.lang==='en-GB'||x.lang.startsWith('en'));
   if(engVoices.length>0){
@@ -1501,7 +1508,6 @@ function insertPracticeTab(tabs){
 function getTabsForLesson(meta){
   if(meta.num>=21) return insertPracticeTab(['words','quiz']);
   const base = ['words','grammar','speaking','dialogue','listening','quiz'];
-  if(meta.hasTones) return insertPracticeTab(['words','tones','grammar','speaking','dialogue','listening','quiz']);
   if(meta.num===3) return insertPracticeTab(['numbers','calc','words','grammar','speaking','dialogue','listening','quiz']);
   return insertPracticeTab(base);
 }
@@ -1652,6 +1658,16 @@ function closeLessonDetail(){
   }
 }
 
+function lineBreakdown(line){
+  if(line.bd && line.bd.length) return line.bd;
+  const en = (line.en||'').replace(/[.!?,…]/g,'').trim();
+  const tr = (line.tr||'').trim();
+  if(!en) return [];
+  const ew = en.split(/\s+/).filter(Boolean);
+  const tw = tr.split(/\s+/).filter(Boolean);
+  return ew.map((w,i)=>({ro:w, tr:tw[i]||'—', role:i===0?'S':'V'}));
+}
+
 function buildLessonHTML(L, meta){
   window._gramBD = [];
   window._wordBD = [];
@@ -1706,6 +1722,10 @@ function buildLessonHTML(L, meta){
 
   // L1 için Sözcükler başına özne tablosu
   const pronounTable = meta.num===1 ? `
+    <div style="background:#fff8e1;border:1.5px solid #ffe082;border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#555;line-height:1.6;">
+      <strong style="color:#b45309;">${appLang==='en'?'Start here:':'Buradan başla:'}</strong>
+      ${appLang==='en'?'Learn one word at a time. Listen 🔊, repeat aloud, then try 🐢 slow mode. Build sentences only after you know the words.':'Önce tek tek kelimeleri öğren. 🔊 dinle, yüksek sesle tekrar et, sonra 🐢 yavaş modu dene. Cümlelere kelimeler oturduktan sonra geç.'}
+    </div>
     <div style="background:#f0fdf9;border:1.5px solid #b2dfdb;border-radius:12px;padding:12px 14px;margin-bottom:16px;">
       <div style="font-size:12px;font-weight:700;color:#0d9488;margin-bottom:10px;">👤 ${appLang==='en'?'Personal Pronouns — Quick Reference':'Kişi Zamirleri — Hızlı Referans'}</div>
       <table style="width:100%;border-collapse:collapse;font-size:12px;">
@@ -1808,22 +1828,22 @@ function buildLessonHTML(L, meta){
       </div>
       ${d.lines.map((l,li)=>{
         const dsk = starKey('dia'+meta.num+di, (l.en||l.ro)+li);
+        const bd = lineBreakdown(l);
         const dlineGramIdx = window._gramBD.length;
-        if(l.bd) window._gramBD.push({th:l.en||'', tr:l.tr, bd:l.bd});
-        const dHasBd = l.bd && l.bd.length>0;
+        window._gramBD.push({th:l.en||'', tr:l.tr, bd});
         const sp = dialogueSpeaker(l);
         const dg = dialogueGender(l);
         return `<div class="dline ${dg==='m'?'ali':'nada'}" id="dline-${di}-${li}">
           <div class="dspeaker">${sp}</div>
-          <div class="dbubble" ${dHasBd?'style="cursor:pointer" data-dline-idx="'+dlineGramIdx+'"':''}>
+          <div class="dbubble dbubble-clickable" data-dline-idx="${dlineGramIdx}">
             <div class="dbubble-th">${l.en||''}</div>
-            <div class="dbubble-ro">${l.ro||''}</div>
             <div class="dbubble-tr">${Lf(l,'tr')||l.tr}</div>
+            <div class="dbubble-hint">📖 ${appLang==='en'?'Tap for grammar breakdown':'Gramer için dokun'}</div>
           </div>
           <div class="dline-actions">
             <button class="sm-abtn" data-speak="${esc(l.en||l.ro)}" data-slow="0" data-gender="${dg}">🔊</button>
             <button class="sm-abtn" data-speak="${esc(l.en||l.ro)}" data-slow="1" data-gender="${dg}">🐢</button>
-            <button class="sbtn ${starred[dsk]?'on':''}" data-star="${esc(dsk)}" data-stype="dialogue" data-th="${esc(l.en||'')}" data-ro="${esc(l.ro||'')}" data-tr="${esc(l.tr)}" data-bd="${esc(JSON.stringify(l.bd||[]))}">⭐</button>
+            <button class="sbtn ${starred[dsk]?'on':''}" data-star="${esc(dsk)}" data-stype="dialogue" data-th="${esc(l.en||'')}" data-ro="${esc(l.ro||'')}" data-tr="${esc(l.tr)}" data-bd="${esc(JSON.stringify(bd))}">⭐</button>
           </div>
         </div>`;
       }).join('')}
@@ -3266,9 +3286,9 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
-          <div class="changelog-desc">${en?'Richer lesson titles with emoji badges and subtitles; clearer full-width back button':'Ders başlıkları görsel rozet ve alt başlıkla güçlendirildi; tam genişlikte geri dönüş butonu'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v1.4.3</div>
-          <div class="changelog-desc">${en?'Removed redundant open-lesson hint from cards':'Gereksiz Derse gir metni kaldırıldı'}</div></div>
+          <div class="changelog-desc">${en?'Slower audio, pronunciation tab removed, exercise word slots, clickable dialogues, Lesson 1 simplified for beginners':'Yavaş ses güçlendirildi, telaffuz kaldırıldı, alıştırma kelime kutuları, tıklanabilir diyaloglar, Ders 1 başlangıç seviyesine indirildi'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.4.4</div>
+          <div class="changelog-desc">${en?'Richer lesson titles; clearer back button':'Ders başlıkları görselleştirildi; geri dönüş butonu netleştirildi'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.4.2</div>
           <div class="changelog-desc">${en?'Unified lesson navigation into one tab row':'Ders navigasyonu tek sekme satırında birleştirildi'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.4.1</div>
@@ -3646,7 +3666,8 @@ let exExercises = [];
 let exIdx = 0;
 let exLives = 3;
 let exSelected = null;   // index of selected option (choice exercises)
-let exAnswerWords = [];  // built answer (wordbank exercise)
+let exAnswerWords = [];  // legacy
+let exSlotState = [];    // wordbank slots: {word, bankIdx, marked}
 let exAnswered = false;
 let exCorrectCount = 0;
 
@@ -3655,17 +3676,19 @@ function exShuffle(arr){
   return arr;
 }
 
-function buildExercises(LD){
+function buildExercises(LD, lessonNum){
   const words = (LD.words||[]).filter(w=>w.tr && (w.en||w.ro));
   if(words.length<2) return [];
   const hasEnText = words.some(w=>w.en||w.th);
   const ex = [];
+  const isBeginner = lessonNum===1;
+  const maxWbLen = isBeginner ? 3 : 5;
 
   function distractors(exclude_id, n){
     return exShuffle(words.filter(w=>w.id!==exclude_id)).slice(0,n);
   }
 
-  const wc_words = exShuffle([...words]).slice(0, Math.min(6, words.length));
+  const wc_words = exShuffle([...words]).slice(0, Math.min(isBeginner?8:6, words.length));
   wc_words.forEach(w=>{
     const dist = distractors(w.id, 3);
     if(dist.length<1) return;
@@ -3678,7 +3701,7 @@ function buildExercises(LD){
   });
 
   const allExamples = words.flatMap(w=>(w.examples||[]).map(e=>({...e, wordTr:w.tr})));
-  if(hasEnText){
+  if(hasEnText && !isBeginner){
     const lc_exs = exShuffle([...allExamples]).slice(0, 4);
     lc_exs.forEach(e=>{
       const audio = e.en||e.th;
@@ -3693,10 +3716,11 @@ function buildExercises(LD){
     });
   }
 
-  const tc_exs = exShuffle([...allExamples]).slice(0, 5);
+  const tc_exs = exShuffle([...allExamples]).slice(0, isBeginner?2:5);
   tc_exs.forEach(e=>{
     const src = e.en||e.th||e.ro;
     if(!src || !e.tr) return;
+    if(isBeginner && src.split(/\s+/).length>4) return;
     const dist = exShuffle(allExamples.filter(x=>x.tr!==e.tr)).slice(0,3);
     if(dist.length<1) return;
     const opts = exShuffle([
@@ -3706,14 +3730,14 @@ function buildExercises(LD){
     ex.push({type:'translate-choice', th:src, ro:e.ro, options:opts});
   });
 
-  const wb_exs = exShuffle([...allExamples]).slice(0, 4);
+  const wb_exs = exShuffle([...allExamples]).slice(0, isBeginner?3:4);
   wb_exs.forEach(e=>{
     const src = e.en||e.th||e.ro;
     if(!src || !e.tr) return;
     const correctWords = e.tr.split(/\s+/).filter(Boolean);
-    if(correctWords.length<2) return;
-    const distWords = ['değil','ama','çok','var','yok','bir','ve','de','da','ile','bu','sen','ben','o'];
-    const extra = exShuffle(distWords.filter(w=>!correctWords.includes(w))).slice(0,3);
+    if(correctWords.length<2 || correctWords.length>maxWbLen) return;
+    const distWords = ['değil','ama','çok','var','yok','bir','ve','de','ile','bu','ben','sen'];
+    const extra = exShuffle(distWords.filter(w=>!correctWords.includes(w))).slice(0, isBeginner?2:3);
     const bank = exShuffle([...correctWords, ...extra]);
     ex.push({type:'translate-wordbank', th:src, ro:e.ro, answer:e.tr, correctWords, bank});
   });
@@ -3756,7 +3780,7 @@ async function startExercise(lessonNum, event){
   }
   try{
     exLessonNum = lessonNum;
-    exExercises = buildExercises(LD);
+    exExercises = buildExercises(LD, lessonNum);
     if(exExercises.length===0){ alert(appLang==='en'?'Not enough exercise data for this lesson.':'Bu ders için yeterli egzersiz verisi yok.'); return; }
     exIdx = 0; exLives = 3; exSelected = null; exAnswerWords = []; exAnswered = false; exCorrectCount = 0;
     document.getElementById('exercise-overlay').classList.add('open');
@@ -3800,16 +3824,47 @@ function showExFeedback(correct, correctAnswer){
   }
 }
 
-function speakExEnglish(th){
+function speakExEnglish(th, slow){
   if(!th) return;
-  try{ speak(th); } catch(e){ console.warn('speakExEnglish error:',e); }
+  try{ speak(th, !!slow); } catch(e){ console.warn('speakExEnglish error:',e); }
+}
+
+function exSlotsReady(){
+  return exSlotState.length>0 && exSlotState.every(s=>s.word||s.marked);
+}
+
+function exRenderSlots(){
+  const area = document.getElementById('ex-slots');
+  if(!area) return;
+  area.querySelectorAll('.ex-slot').forEach((el,i)=>{
+    const s = exSlotState[i]||{};
+    el.textContent = s.word||'';
+    el.classList.toggle('filled', !!s.word);
+    el.classList.toggle('marked', !!s.marked);
+  });
+  if(exExercises[exIdx] && exExercises[exIdx].type==='translate-wordbank'){
+    setExBtn(exSlotsReady()?'ready':'disabled');
+  }
+}
+
+function exSlotDblClick(slotIdx){
+  if(exAnswered) return;
+  const s = exSlotState[slotIdx];
+  if(!s) return;
+  if(s.word){
+    const b = document.querySelector(`.ex-bank-btn[data-idx="${s.bankIdx}"]`);
+    if(b) b.classList.remove('used');
+  }
+  s.marked = !s.marked;
+  if(s.marked){ s.word = null; s.bankIdx = null; }
+  exRenderSlots();
 }
 
 function renderExercise(){
   updateExProgress();
   const fb = document.getElementById('ex-feedback');
   fb.className='ex-feedback-bar';
-  exAnswered = false; exSelected = null; exAnswerWords = [];
+  exAnswered = false; exSelected = null; exAnswerWords = []; exSlotState = [];
   setExBtn('disabled');
 
   if(exIdx >= exExercises.length){
@@ -3845,7 +3900,7 @@ function renderExercise(){
             <div class="ex-option-ro">${esc(o.ro)}</div>
           </div>`).join('')}
       </div>
-      <div class="ex-skip-listen" onclick="speakExEnglish('${e.audioEn.replace(/'/g,"\\'")}')">🐢 ${en?'Play slowly':'Yavaş dinle'}</div>`;
+      <div class="ex-skip-listen" onclick="speakExEnglish('${e.audioEn.replace(/'/g,"\\'")}',true)">🐢 ${en?'Play slowly':'Yavaş dinle'}</div>`;
     // Auto-play audio
     setTimeout(()=>{ try{ speakExEnglish(e.audioEn); }catch(err){} }, 400);
   }
@@ -3855,9 +3910,9 @@ function renderExercise(){
       <div class="ex-sentence-box">
         <div class="ex-sent-info">
           <div class="ex-sent-th">${esc(e.th)}</div>
-          <div class="ex-sent-ro">${esc(e.ro||'')}</div>
         </div>
-        <button class="ex-speak-sm" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}')">🔊</button>
+        <button class="ex-speak-sm" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}',false)">🔊</button>
+        <button class="ex-speak-sm" style="margin-left:4px" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}',true)">🐢</button>
       </div>
       <div class="ex-options" id="ex-opts">
         ${e.options.map((o,i)=>`
@@ -3866,17 +3921,19 @@ function renderExercise(){
       </div>`;
   }
   else if(e.type==='translate-wordbank'){
+    exSlotState = e.correctWords.map(()=>({word:null, bankIdx:null, marked:false}));
     content.innerHTML = `
       <div class="ex-q-label">${en?'Translate this sentence':'Bu cümleyi tercüme edin'}</div>
       <div class="ex-sentence-box">
         <div class="ex-sent-info">
           <div class="ex-sent-th">${esc(e.th)}</div>
-          <div class="ex-sent-ro">${esc(e.ro||'')}</div>
         </div>
-        <button class="ex-speak-sm" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}')">🔊</button>
+        <button class="ex-speak-sm" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}',false)">🔊</button>
+        <button class="ex-speak-sm" style="margin-left:4px" onclick="speakExEnglish('${e.th.replace(/'/g,"\\'")}',true)">🐢</button>
       </div>
-      <div class="ex-answer-area" id="ex-ans-area">
-        <span class="ex-answer-placeholder">${en?'Tap words below to build answer':'Aşağıdaki kelimelerle cevabı oluşturun'}</span>
+      <div class="ex-slot-hint">${en?`${e.correctWords.length} words — tap below, double-tap a box when done`:`${e.correctWords.length} kelime — aşağıdan seç, kutuya çift tıkla = yapıldı`}</div>
+      <div class="ex-slots" id="ex-slots">
+        ${e.correctWords.map((_,i)=>`<div class="ex-slot" data-slot="${i}" ondblclick="exSlotDblClick(${i})"></div>`).join('')}
       </div>
       <div class="ex-bank" id="ex-bank">
         ${e.bank.map((w,i)=>`<button class="ex-bank-btn" data-idx="${i}" data-word="${esc(w)}" onclick="exBankClick(this,'${w.replace(/'/g,"\\'")}',${i})">${esc(w)}</button>`).join('')}
@@ -3902,30 +3959,11 @@ function exSelectOpt(el, idx){
 
 function exBankClick(btn, word, idx){
   if(exAnswered) return;
-  exAnswerWords.push({word, idx});
+  const slotIdx = exSlotState.findIndex(s=>!s.word && !s.marked);
+  if(slotIdx===-1) return;
+  exSlotState[slotIdx] = {word, bankIdx:idx, marked:false};
   btn.classList.add('used');
-  const area = document.getElementById('ex-ans-area');
-  const ph = area.querySelector('.ex-answer-placeholder');
-  if(ph) ph.remove();
-  const chip = document.createElement('button');
-  chip.className='ex-answer-chip';
-  chip.textContent = word;
-  chip.dataset.bankIdx = idx;
-  chip.onclick = ()=>{
-    if(exAnswered) return;
-    // remove first occurrence of this idx from answer
-    const pos = exAnswerWords.findIndex(x=>x.idx===idx);
-    if(pos!==-1) exAnswerWords.splice(pos,1);
-    chip.remove();
-    const b = document.querySelector(`.ex-bank-btn[data-idx="${idx}"]`);
-    if(b) b.classList.remove('used');
-    if(!document.getElementById('ex-ans-area').querySelector('.ex-answer-chip')){
-      document.getElementById('ex-ans-area').innerHTML='<span class="ex-answer-placeholder">'+(appLang==='en'?'Tap words below to build answer':'Aşağıdaki kelimelerle cevabı oluşturun')+'</span>';
-      setExBtn('disabled');
-    }
-  };
-  area.appendChild(chip);
-  setExBtn('ready');
+  exRenderSlots();
 }
 
 function exBtnClick(){
@@ -3957,10 +3995,23 @@ function exBtnClick(){
       });
     }
     else if(e.type==='translate-wordbank'){
-      const built = exAnswerWords.map(x=>x.word).join(' ').trim().toLowerCase();
+      if(!exSlotsReady()){
+        showExFeedback(false, e.answer);
+        return;
+      }
+      const parts = exSlotState.map((s,i)=>{
+        if(s.marked && !s.word) return e.correctWords[i];
+        return s.word||'';
+      });
+      const built = parts.join(' ').trim().toLowerCase();
       const expected = e.answer.trim().toLowerCase();
       correct = built===expected;
       correctAnswer = e.answer;
+      document.querySelectorAll('.ex-slot').forEach((el,i)=>{
+        const ok = (exSlotState[i].word||e.correctWords[i])===e.correctWords[i] || exSlotState[i].marked;
+        if(ok) el.classList.add('marked');
+        else el.style.borderColor = '#ff4b4b';
+      });
     }
 
     exAnswered = true;
