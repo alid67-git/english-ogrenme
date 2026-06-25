@@ -576,7 +576,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.1';
+const APP_VERSION = 'v1.2';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -875,7 +875,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v1.1</span>
+  <span class="vbadge" id="app-version">v1.2</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1581,9 +1581,9 @@ function buildLessonHTML(L, meta){
   }).join('');
 
   // SÖZCÜKLER
-  const words = L.words.map(w=>{
+  const words = (L.words||[]).map(w=>{
     const sk = starKey('w'+meta.num,w.en||w.ro);
-    const exs = w.examples.map((e,ei)=>{
+    const exs = (w.examples||[]).map((e,ei)=>{
       const esk = starKey('ex'+meta.num+w.id,e.en||e.ro);
       // pieces hem e.pieces hem e.bd olabilir
       const exPieces = e.pieces || e.bd || [];
@@ -1617,8 +1617,8 @@ function buildLessonHTML(L, meta){
           <button class="abtn slow" data-speak="${esc(w.en||w.ro)}" data-slow="1">🐢</button>
         </div>
       </div>
-      <div class="word-note">${Lf(w,'tip')}<span class="ctx">${Lf(w,'ctx')}</span></div>
-      <div class="examples-wrap">${exs}</div>
+      ${(Lf(w,'tip')||Lf(w,'ctx'))?`<div class="word-note">${Lf(w,'tip')}<span class="ctx">${Lf(w,'ctx')}</span></div>`:''}
+      ${exs?`<div class="examples-wrap">${exs}</div>`:''}
     </div>`;
   }).join('');
 
@@ -1840,6 +1840,7 @@ function buildLessonHTML(L, meta){
       <div id="qo-${i}">${(q.opts||q.options||[]).map((o,j)=>`<div class="opt" onclick="checkQuiz(${i},${j},${q.c})">${o}</div>`).join('')}</div>
       <div id="qf-${i}"></div>
     </div>`).join('') + completeBtnHtml;
+  window._lessonQuiz = quizSrc;
 
   // NUMBERS (sadece L2)
   let numbersHtml = '';
@@ -2115,12 +2116,15 @@ function checkListen(idx, sel, correct){
 }
 function checkQuiz(idx, sel, correct){
   const lessonData = LESSONS[currentLesson.num];
+  const quizList = window._lessonQuiz || lessonData.quiz || [];
+  const q = quizList[idx] || {};
+  const opts = q.opts || q.options || [];
   document.getElementById('qo-'+idx).querySelectorAll('.opt').forEach((o,i)=>{
     o.onclick=null;
     if(i===correct) o.classList.add('correct');
     else if(i===sel) o.classList.add('wrong');
   });
-  document.getElementById('qf-'+idx).innerHTML=`<div class="fb ${sel===correct?'ok':'nope'}">${sel===correct?s('test_correct_fb'):s('test_wrong_prefix')+' '+lessonData.quiz[idx].opts[correct]}</div>`;
+  document.getElementById('qf-'+idx).innerHTML=`<div class="fb ${sel===correct?'ok':'nope'}">${sel===correct?s('test_correct_fb'):s('test_wrong_prefix')+' '+(opts[correct]||'')}</div>`;
   // Skor kaydet
   const st = getStats(currentLesson.num);
   st.quizTotal++;
@@ -2768,10 +2772,10 @@ const SRS = {
       added++;
     };
     (L.words||[]).forEach(w=>{
-      mk(`L${num}_w_${w.id}`, w.th, w.ro, w.tr, 'word', w.bd);
-      (w.examples||[]).forEach((e,i)=> mk(`L${num}_ex_${w.id}_${i}`, e.th, e.ro, e.tr, 'example', e.bd));
+      mk(`L${num}_w_${w.id}`, w.en||w.th, w.ro, w.tr, 'word', w.bd);
+      (w.examples||[]).forEach((e,i)=> mk(`L${num}_ex_${w.id}_${i}`, e.en||e.th, e.ro, e.tr, 'example', e.bd));
     });
-    (L.speaking||[]).forEach((s,i)=> mk(`L${num}_sp_${i}`, s.th, s.ro, s.tr, 'speaking', s.bd));
+    (L.speaking||[]).forEach((s,i)=> mk(`L${num}_sp_${i}`, s.en||s.th, s.ro, s.tr, 'speaking', s.bd));
     this.save(db);
     return added;
   }
