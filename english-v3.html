@@ -614,7 +614,7 @@ if('serviceWorker' in navigator){
   });
 }
 // Versiyon kontrolü — yeni versiyon varsa cache temizle
-const APP_VERSION = 'v1.5';
+const APP_VERSION = 'v1.5.1';
 const storedVersion = localStorage.getItem('app_version');
 if(storedVersion && storedVersion !== APP_VERSION){
   // Yeni versiyon → caches temizle
@@ -963,7 +963,7 @@ function setLang(lang){
     <span class="ltimer-icon">⏱️</span>
     <span id="lesson-live-timer">00:00</span>
   </div>
-  <span class="vbadge" id="app-version">v1.5</span>
+  <span class="vbadge" id="app-version">v1.5.1</span>
   <button class="hbtn" onclick="openModal('help-overlay')">❓</button>
   <button class="hbtn" onclick="openModal('settings-overlay')">⚙️</button>
 </header>
@@ -1499,23 +1499,21 @@ function renderLessonList(){
 
 function insertPracticeTab(tabs){
   if(tabs.includes('practice')) return tabs;
-  const qi = tabs.indexOf('quiz');
-  return qi === -1 ? [...tabs, 'practice'] : [...tabs.slice(0, qi), 'practice', ...tabs.slice(qi)];
+  return [...tabs, 'practice'];
 }
 
 // =================== DERS DETAY ===================
-// hasTones → Ders 1 telaffuz sekmesi
 function getTabsForLesson(meta){
-  if(meta.num>=21) return insertPracticeTab(['words','quiz']);
-  const base = ['words','grammar','speaking','dialogue','listening','quiz'];
-  if(meta.num===3) return insertPracticeTab(['numbers','calc','words','grammar','speaking','dialogue','listening','quiz']);
+  if(meta.num>=21) return insertPracticeTab(['words']);
+  const base = ['words','grammar','speaking','dialogue','listening'];
+  if(meta.num===3) return insertPracticeTab(['numbers','calc','words','grammar','speaking','dialogue','listening']);
   return insertPracticeTab(base);
 }
 function getTabLabels(){
   return {
     words:s('tab_words'), tones:s('tab_tones'), grammar:s('tab_grammar'),
     speaking:s('tab_speaking'), dialogue:s('tab_dialogue'), listening:s('tab_listening'),
-    quiz:s('tab_quiz'), practice:s('tab_practice'), numbers:s('tab_numbers'), calc:s('tab_calc')
+    practice:s('tab_practice'), numbers:s('tab_numbers'), calc:s('tab_calc')
   };
 }
 
@@ -1919,38 +1917,13 @@ function buildLessonHTML(L, meta){
         </div>`}
     </div>`;
 
-  let quizSrc = L.quiz||[];
-  if(quizSrc.length===0 && meta.num<21){
-    (L.listening||[]).forEach(item=>{
-      (item.questions||[]).forEach(q=>{
-        if(q.q && q.opts) quizSrc.push({q:q.q, opts:q.opts, c:q.answer!=null?q.answer:q.c});
-      });
-    });
-  }
-  if(quizSrc.length===0 && meta.num>=21){
-    const wds = (L.words||[]).filter(w=>w.ro&&w.tr);
-    const pick = wds.length>15 ? wds.filter((_,i)=>i%Math.floor(wds.length/15)===0).slice(0,15) : wds;
-    quizSrc = pick.map(w=>{
-      const wrong = wds.filter(x=>x.id!==w.id).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.tr);
-      const opts = [w.tr,...wrong].sort(()=>Math.random()-0.5);
-      return {q:`"${w.ro}" ${s('quiz_q_suffix')}`, opts, c:opts.indexOf(w.tr)};
-    });
-  }
-  const quiz = quizSrc.map((q,i)=>`
-    <div class="listen-card">
-      <div class="listen-q">${i+1}. ${q.q||q.question||''}</div>
-      <div id="qo-${i}">${(q.opts||q.options||[]).map((o,j)=>`<div class="opt" onclick="checkQuiz(${i},${j},${q.c})">${o}</div>`).join('')}</div>
-      <div id="qf-${i}"></div>
-    </div>`).join('') + completeBtnHtml;
-  window._lessonQuiz = quizSrc;
-
   const practiceHtml = `
     <div class="practice-intro-card">
       <div class="practice-intro-icon">🎯</div>
       <div class="practice-intro-title">${s('tab_practice')}</div>
       <div class="practice-intro-body">${s('practice_intro')}</div>
       <button type="button" class="practice-start-btn" onclick="startExercise(${meta.num},event)">${s('practice_start')}</button>
-    </div>`;
+    </div>${completeBtnHtml}`;
 
   // NUMBERS (sadece L3)
   let numbersHtml = '';
@@ -2053,7 +2026,7 @@ function buildLessonHTML(L, meta){
       t==='speaking'?speaking:t==='dialogue'?dialogues:
       t==='listening'?listening:t==='practice'?practiceHtml:
       t==='numbers'?numbersHtml:
-      t==='calc'?calcHtml:quiz
+      t==='calc'?calcHtml:''
     }</div>`).join('')}
   `;
 }
@@ -3196,8 +3169,8 @@ function buildHelpContent(){
         <span>${en?'Realistic dialogues between two speakers (A and B). Tap ▶ Play All to listen in sequence.':'İki konuşmacı (A ve B) arasında gerçekçi diyaloglar. ▶ Tümü ile sırayla dinle.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#e8eaf6;color:#283593;">🎧 ${en?'Listening':'Dinleme'}</span>
         <span>${en?'Tap listen, hear English, choose the correct option. Easy / Medium / Hard levels.':'Dinle butonuna bas, Ingilizceyi dinle, dogru sikki sec. Kolay / Orta / Zor seviyeleri var.'}</span></div>
-      <div class="help-tab-row"><span class="htag" style="background:#e0f2f1;color:#004d40;">📝 Quiz</span>
-        <span>${en?'Multiple-choice questions testing the full lesson content.':'Dersin tüm içeriğini test eden çoktan seçmeli sorular.'}</span></div>
+      <div class="help-tab-row"><span class="htag" style="background:#fff9db;color:#b45309;">🎯 ${en?'Practice':'Alıştırma'}</span>
+        <span>${en?'Interactive word and sentence drills. Mark the lesson complete here after visiting all tabs.':'Etkileşimli kelime ve cümle alıştırmaları. Tüm sekmeleri gezdikten sonra dersi burada tamamla.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🔢 ${en?'Numbers':'Sayılar'}</span>
         <span>${en?'Lesson 2 only. All digits + compound number examples. Tap a card to hear it.':'Sadece Ders 2\'de. Tüm rakamlar + bileşik sayı örnekleri. Her karta dokun → sesini duy.'}</span></div>
       <div class="help-tab-row"><span class="htag" style="background:#fafafa;color:#0d9488;border:1px solid #b2dfdb;">🧮 ${en?'Calculator':'Hesapla'}</span>
@@ -3286,11 +3259,9 @@ function buildHelpContent(){
       <div class="help-section-header" style="margin-top:16px;">📦 ${en?'Version History':'Versiyon Geçmişi'}</div>
       <div class="help-changelog">
         <div class="changelog-item"><div class="changelog-ver">${APP_VERSION}</div>
-          <div class="changelog-desc">${en?'Slower audio, pronunciation tab removed, exercise word slots, clickable dialogues, Lesson 1 simplified for beginners':'Yavaş ses güçlendirildi, telaffuz kaldırıldı, alıştırma kelime kutuları, tıklanabilir diyaloglar, Ders 1 başlangıç seviyesine indirildi'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v1.4.4</div>
-          <div class="changelog-desc">${en?'Richer lesson titles; clearer back button':'Ders başlıkları görselleştirildi; geri dönüş butonu netleştirildi'}</div></div>
-        <div class="changelog-item"><div class="changelog-ver">v1.4.2</div>
-          <div class="changelog-desc">${en?'Unified lesson navigation into one tab row':'Ders navigasyonu tek sekme satırında birleştirildi'}</div></div>
+          <div class="changelog-desc">${en?'Removed redundant Quiz tab from lessons; practice tab is the final step':'Derslerden gereksiz Quiz sekmesi kaldırıldı; son adım Alıştırma'}</div></div>
+        <div class="changelog-item"><div class="changelog-ver">v1.5</div>
+          <div class="changelog-desc">${en?'Slower audio, pronunciation removed, exercise word slots, clickable dialogues, Lesson 1 simplified':'Yavaş ses, telaffuz kaldırıldı, alıştırma kutuları, tıklanabilir diyaloglar, Ders 1 sadeleştirildi'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.4.1</div>
           <div class="changelog-desc">${en?'Lesson list simplified: tap card to open':'Ders listesi sadeleştirildi'}</div></div>
         <div class="changelog-item"><div class="changelog-ver">v1.4</div>
